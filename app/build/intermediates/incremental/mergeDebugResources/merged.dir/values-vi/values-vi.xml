@@ -43,7 +43,7 @@
     <string name="action_filter">Lọc</string>
     <string name="action_search">Tìm kiếm</string>
     <string name="action_settings">Cài đặt</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Đăng xuất</string>
     <string name="cart">Giỏ hàng của tôi</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Truy cập &lt;b>facebook.com/device&lt;/b> và nhập mã được hiển thị bên trên.</string>
@@ -87,7 +87,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Mở trên điện thoại"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Đăng nhập"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Đăng nhập bằng Google"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">Đang hủy, các quyền đã yêu cầu không được cấp</string>
     <string name="crop_image_activity_title"/>
     <string name="crop_image_menu_crop">Cắt</string>
@@ -221,7 +221,7 @@
     <string name="lbl_height">Chiều cao</string>
     <string name="lbl_help">Cứu giúp</string>
     <string name="lbl_help_center">Trung tâm trợ giúp</string>
-    <string name="lbl_hi_we_re_woobox">Hi, Chúng tôi là Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Hi, Chúng tôi là Mirai Technologies!</string>
     <string name="lbl_high_price">Giá cao</string>
     <string name="lbl_home">Địa chỉ nhà</string>
     <string name="lbl_in_stock">Trong kho</string>
@@ -388,7 +388,7 @@
     <string name="msg_selectcolorsize">Vui lòng chọn giá trị màu &amp; kích thước</string>
     <string name="msg_sold_out">Bán hết</string>
     <string name="msg_successpwd">Thành công mật khẩu đã thay đổi</string>
-    <string name="msg_walkHeading1">Hi, Chúng tôi \'tái Woobox!</string>
+    <string name="msg_walkHeading1">Hi, Chúng tôi \'tái NightowlDevelopers!</string>
     <string name="msg_walkHeading2">Hầu hết các phong cách độc đáo!</string>
     <string name="msg_walkHeading3">Mua sắm đến khi bạn thả!</string>
     <string name="msg_walkSubHeading1">Chúng tôi làm cho xung quanh thành phố của bạn Giá cả phải chăng, \n dễ dàng và hiệu quả.</string>
@@ -400,6 +400,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
     <string name="navigation_drawer_open">Mở ngăn navigation</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">thông báo</string>
     <string name="order_summary">Tóm tắt theo thứ tự</string>
     <string name="pick_image_intent_chooser_title">Chọn nguồn</string>
@@ -420,7 +421,7 @@
     <string name="text_collection_2019">Bộ sưu tập 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Tài khoản khách</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Offer Không Khả dụng</string>
     <string name="text_start_to_shopping">Bắt đầu mua sắm</string>

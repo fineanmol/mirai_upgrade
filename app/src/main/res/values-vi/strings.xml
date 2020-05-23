@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="lbl_night_mode">Chế độ ban đêm</string>
     <string name="lbl_sign_up">Đăng ký</string>
     <string name="lbl_sign_in_with">Đăng nhập</string>
@@ -12,7 +12,7 @@
     <string name="lbl_did_not_receive">Không nhận?</string>
     <string name="lbl_resend_code">Mã gửi lại</string>
     <string name="lbl_verify">Kiểm chứng</string>
-    <string name="lbl_hi_we_re_woobox">Hi, Chúng tôi là Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Hi, Chúng tôi là Mirai Technologies!</string>
     <string name="lbl_subheading">Chúng tôi làm cho xung quanh thành phố của bạn Giá cả phải chăng, dễ dàng và hiệu quả.</string>
     <string name="lbl_my_order">Đơn hàng của tôi</string>
     <string name="lbl_reward">Phần thưởng</string>
@@ -156,7 +156,7 @@
     <string name="btn_sign_out">Đăng xuất</string>
     <string name="msg_loading">Đang tải</string>
     <string name="msg_please_wait">Please Wait</string>
-    <string name="msg_walkHeading1">Hi, Chúng tôi \'tái Woobox!</string>
+    <string name="msg_walkHeading1">Hi, Chúng tôi \'tái NightowlDevelopers!</string>
     <string name="msg_walkHeading2">Hầu hết các phong cách độc đáo!</string>
     <string name="msg_walkHeading3">Mua sắm đến khi bạn thả!</string>
     <string name="msg_walkSubHeading2">Cửa hàng thời trang xu hướng nhất trên trang web mua sắm lớn nhất.</string>
@@ -262,7 +262,7 @@
     <string name="error_enter_valid_contact">Nhập số điện thoại hợp lệ</string>
     <string name="title_contactus">Liên hệ chúng tôi</string>
     <string name="lbl_card_number">Số thẻ</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="lbl_length">Chiều dài</string>
     <string name="lbl_width">Chiều rộng</string>
     <string name="days">ngày</string>
@@ -337,7 +337,7 @@
     <string name="lbl_sign_in">Đăng nhập</string>
     <string name="lbl_total_item_count">Tổng item- \u0020</string>
     <string name="lbl_total_items">Tổng số mục (</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="lbl_send_email">Gửi email...</string>
     <string name="lbl_great_deal">Ưu đãi lớn</string>
     <string name="load_more">load More</string>
@@ -353,4 +353,5 @@
         <item>Giống cái</item>
         <item>khác</item>
     </array>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
 </resources>

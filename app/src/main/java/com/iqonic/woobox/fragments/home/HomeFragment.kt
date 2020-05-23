@@ -66,7 +66,7 @@ class HomeFragment : BaseFragment() {
 
         imgLayoutParams = activity?.productLayoutParams()
 
-        rcvRecentSearch.setHorizontalLayout(); rcvNewestProduct.setHorizontalLayout(); rcvFeaturedProducts.setHorizontalLayout(); rcvCategory.setHorizontalLayout()
+        rcvRecentSearch.setHorizontalLayout(); rcvFeaturedProducts.setHorizontalLayout(); rcvCategory.setHorizontalLayout()
         rcvDealProducts.setHorizontalLayout(); rcvYouMayLikeProducts.setHorizontalLayout(); rcvOfferProducts.setHorizontalLayout(); rcvSuggestedProducts.setHorizontalLayout()
         rcvTestimonials.setHorizontalLayout()
         mCategoryAdapter = activity!!.getCategoryAdapter(); rcvCategory.adapter = mCategoryAdapter
@@ -167,10 +167,10 @@ class HomeFragment : BaseFragment() {
 
             if (it.newest.isEmpty()) {
                 rlNewestProduct.hide()
-                rcvNewestProduct.hide()
+               /* rcvNewestProduct.hide()*/
             } else {
                 rlNewestProduct.show()
-                rcvNewestProduct.show()
+              /*  rcvNewestProduct.show()*/
                 mNewArrivalProductAdapter?.addItems(it.newest)
             }
             if (it.featured.isEmpty()) {
@@ -309,7 +309,7 @@ class HomeFragment : BaseFragment() {
 
     private fun setupNewArrivalProductAdapter() {
         mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvNewestProduct.adapter = mNewArrivalProductAdapter
+       /* rcvNewestProduct.adapter = mNewArrivalProductAdapter*/
 
         mNewArrivalProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)

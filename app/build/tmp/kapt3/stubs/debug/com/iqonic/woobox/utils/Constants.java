@@ -136,21 +136,21 @@ public final class Constants {
         @org.jetbrains.annotations.NotNull()
         public static final java.lang.String DEFAULT_CURRENCY = "default_currency";
         @org.jetbrains.annotations.NotNull()
-        public static final java.lang.String WHATSAPP = "whatsapp";
+        public static final java.lang.String WHATSAPP = "919876543210";
         @org.jetbrains.annotations.NotNull()
-        public static final java.lang.String FACEBOOK = "facebook";
+        public static final java.lang.String FACEBOOK = "https://www.facebook.com/nightowldevelopers";
         @org.jetbrains.annotations.NotNull()
         public static final java.lang.String TWITTER = "twitter";
         @org.jetbrains.annotations.NotNull()
-        public static final java.lang.String INSTAGRAM = "instagram";
+        public static final java.lang.String INSTAGRAM = "https://www.instagram.com/nightowldevelopers";
         @org.jetbrains.annotations.NotNull()
-        public static final java.lang.String CONTACT = "contact";
+        public static final java.lang.String CONTACT = "919876543210";
         @org.jetbrains.annotations.NotNull()
         public static final java.lang.String PRIVACY_POLICY = "privacy_policy";
         @org.jetbrains.annotations.NotNull()
         public static final java.lang.String TERM_CONDITION = "term_condition";
         @org.jetbrains.annotations.NotNull()
-        public static final java.lang.String COPYRIGHT_TEXT = "copyright_text";
+        public static final java.lang.String COPYRIGHT_TEXT = "\u00a9 NightOwl Developers 2020 | All rights reserved";
         @org.jetbrains.annotations.NotNull()
         public static final java.lang.String LANGUAGE = "selected_language";
         @org.jetbrains.annotations.NotNull()

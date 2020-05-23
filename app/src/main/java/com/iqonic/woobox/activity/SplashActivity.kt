@@ -37,6 +37,7 @@ class SplashActivity : AppBaseActivity() {
         runDelayed(1000) {
             if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE)) {
                 launchActivity<DashBoardActivity>()
+
             } else {
                 launchActivity<WalkThroughActivity>()
             }

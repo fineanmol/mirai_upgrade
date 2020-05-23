@@ -33,13 +33,13 @@ class AboutActivity : AppBaseActivity() {
 
         getSharedPrefInstance().apply {
             whatsUp = getStringValue(WHATSAPP)
-            instagram = getStringValue(INSTAGRAM)
+            instagram = "https://www.instagram.com/nightowldevelopers"
             twitter = getStringValue(TWITTER)
-            facebook = getStringValue(FACEBOOK)
-            contact = getStringValue(CONTACT)
-            copyRight = getStringValue(COPYRIGHT_TEXT)
-            privacy = getStringValue(PRIVACY_POLICY)
-            toc = getStringValue(TERM_CONDITION)
+            facebook = "https://www.facebook.com/nightowldevelopers"
+            contact = "9876543210"
+            copyRight = "© ND 2020 | All rights reserved"
+            privacy = "https://nightowldevelopers.com/"
+            toc = "https://nightowldevelopers.com/"
         }
         if (copyRight.isEmpty()) {
             tvCopyRight.hide()

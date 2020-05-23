@@ -43,7 +43,7 @@
     <string name="action_filter">filtre</string>
     <string name="action_search">Arama</string>
     <string name="action_settings">Ayarlar</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Oturumu Kapat</string>
     <string name="cart">Sepetim</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">&lt;b>facebook.com/device&lt;/b> adresine git ve yukarıda gösterilen kodu gir.</string>
@@ -87,7 +87,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Telefonda aç"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Oturum aç"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Google\'da oturum aç"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">İptal ediliyor, gerekli izinler verilmiyor</string>
     <string name="crop_image_menu_crop">ekin</string>
     <string name="crop_image_menu_flip">fiske</string>
@@ -220,7 +220,7 @@
     <string name="lbl_height">Yükseklik</string>
     <string name="lbl_help">Yardım</string>
     <string name="lbl_help_center">Yardım Merkezi</string>
-    <string name="lbl_hi_we_re_woobox">Merhaba, Woobox vardır!</string>
+    <string name="lbl_hi_we_re_woobox">Merhaba, Mirai Technologies vardır!</string>
     <string name="lbl_high_price">Yüksek fiyat</string>
     <string name="lbl_home">Ev Adresi</string>
     <string name="lbl_in_stock">Stokta var</string>
@@ -387,7 +387,7 @@
     <string name="msg_selectcolorsize">renk ve boyut değerini seçiniz</string>
     <string name="msg_sold_out">Satıldı</string>
     <string name="msg_successpwd">Başarıyla şifre değiştirildi</string>
-    <string name="msg_walkHeading1">Merhaba, \'Woobox yeniden!</string>
+    <string name="msg_walkHeading1">Merhaba, \'NightowlDevelopers yeniden!</string>
     <string name="msg_walkHeading2">En Benzersiz Stiller!</string>
     <string name="msg_walkHeading3">Bayılana kadar alış-veriş yap!</string>
     <string name="msg_walkSubHeading1">Biz n kolay ve verimli \, şehrinizi Ekonomik etrafında olun.</string>
@@ -399,6 +399,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Gezinme çekmecesini</string>
     <string name="navigation_drawer_open">Gezinme menüsünü aç</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">Bildirim</string>
     <string name="order_summary">sipariş özeti</string>
     <string name="pick_image_intent_chooser_title">Kaynağı seçin</string>
@@ -419,7 +420,7 @@
     <string name="text_collection_2019">Koleksiyon 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Misafir kullanıcı</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Mevcut Değil Teklif</string>
     <string name="text_start_to_shopping">Alışveriş başlayın</string>

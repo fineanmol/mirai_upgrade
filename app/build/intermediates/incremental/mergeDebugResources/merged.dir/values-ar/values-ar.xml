@@ -44,7 +44,7 @@
     <string name="action_filter">منقي</string>
     <string name="action_search">بحث</string>
     <string name="action_settings">الإعدادات</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">خروج</string>
     <string name="cart">سلتي</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">تفضل بزيارة &lt;b>facebook.com/device&lt;/b> وإدخال الرمز الموضح أعلاه.</string>
@@ -88,7 +88,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"فتح على الهاتف"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"تسجل الدخول"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"‏تسجيل الدخول عبر Google"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">إلغاء؛ الأذونات المطلوبة غير ممنوحة</string>
     <string name="crop_image_activity_title"/>
     <string name="crop_image_menu_crop">قُصّ</string>
@@ -222,7 +222,7 @@
     <string name="lbl_height">ارتفاع</string>
     <string name="lbl_help">مساعدة</string>
     <string name="lbl_help_center">مركز المساعدة</string>
-    <string name="lbl_hi_we_re_woobox">مرحبا، نحن Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">مرحبا، نحن Mirai Technologies!</string>
     <string name="lbl_high_price">غالي السعر</string>
     <string name="lbl_home">عنوان المنزل</string>
     <string name="lbl_in_stock">في المخزن</string>
@@ -389,7 +389,7 @@
     <string name="msg_selectcolorsize">يرجى اختيار اللون والحجم قيمة</string>
     <string name="msg_sold_out">بيعت كلها</string>
     <string name="msg_successpwd">بنجاح تغيير كلمة المرور</string>
-    <string name="msg_walkHeading1">مرحبا، نحن \ \'إعادة Woobox!</string>
+    <string name="msg_walkHeading1">مرحبا، نحن \ \'إعادة NightowlDevelopers!</string>
     <string name="msg_walkHeading2">معظم أنماط فريدة من نوعها!</string>
     <string name="msg_walkHeading3">متجر حتى انك قطرة!</string>
     <string name="msg_walkSubHeading1">يمكننا أن نجعل جميع أنحاء مدينتك بأسعار معقولة، \ ن سهلة وفعالة.</string>
@@ -401,6 +401,7 @@
     <string name="nav_header_title">بيئة تطوير أندرويد</string>
     <string name="navigation_drawer_close">انهيار درج التنقل</string>
     <string name="navigation_drawer_open">فتح درج التنقل</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">تنبيه</string>
     <string name="order_summary">ملخص الطلب</string>
     <string name="pick_image_intent_chooser_title">اختر مصدرًا</string>
@@ -421,7 +422,7 @@
     <string name="text_collection_2019">جمع 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">حساب زائر</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">جوليان Deerman</string>
     <string name="text_offer_not_available">عرض غير متوفر</string>
     <string name="text_start_to_shopping">البدء في التسوق</string>

@@ -2245,6 +2245,7 @@ drawable img3
 drawable in
 drawable india
 drawable indonesia
+drawable logo_midi
 drawable mtrl_snackbar_background
 drawable mtrl_tabs_default_indicator
 drawable navigation_empty_icon
@@ -2638,7 +2639,6 @@ id llMoveTocart
 id llNightMode
 id llNoItems
 id llNotification
-id llOrders
 id llOtp
 id llPayment
 id llPaymentMethod
@@ -2655,7 +2655,6 @@ id llSize
 id llTrack
 id llWidth
 id llWishList
-id llWishlistData
 id ll_loader
 id lottieNoData
 id lottieNoInternet
@@ -2917,7 +2916,6 @@ id tvAllReviews
 id tvAppName
 id tvApply
 id tvAvailability
-id tvBlog
 id tvBrand
 id tvBrandName
 id tvCallRequest
@@ -2945,7 +2943,6 @@ id tvDiscountPrice
 id tvDone
 id tvEdit
 id tvEmail
-id tvFaq
 id tvFeatured
 id tvForget
 id tvHeading
@@ -2962,7 +2959,6 @@ id tvLbl2
 id tvLbl3
 id tvLbl4
 id tvLbl5
-id tvLblOffer
 id tvLblRatings
 id tvLblReview
 id tvLength
@@ -2975,7 +2971,6 @@ id tvNewestProduct
 id tvNoTracking
 id tvNotificationCount
 id tvOffer
-id tvOrderCount
 id tvOrderDate
 id tvOrderId
 id tvOrders
@@ -3027,7 +3022,6 @@ id tvVerifyHeading
 id tvVerifySubHeading
 id tvVersionCode
 id tvWidth
-id tvWishListCount
 id tvWishlist
 id tvYouMayLike
 id tv_notification_count
@@ -3706,6 +3700,7 @@ string nav_header_subtitle
 string nav_header_title
 string navigation_drawer_close
 string navigation_drawer_open
+string nightowl_developers
 string notification
 string order_summary
 string password_toggle_content_description

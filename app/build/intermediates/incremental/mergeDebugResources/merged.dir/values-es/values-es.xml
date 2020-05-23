@@ -43,7 +43,7 @@
     <string name="action_filter">Filtrar</string>
     <string name="action_search">Buscar</string>
     <string name="action_settings">ajustes</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Desconectar</string>
     <string name="cart">Mi carrito</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Ve a &lt;b>facebook.com/device&lt;/b> e ingresa el código que se muestra arriba.</string>
@@ -87,7 +87,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Abrir en teléfono"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Iniciar sesión"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Iniciar sesión con Google"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">Cancelando, los permisos requeridos no han sido otorgados</string>
     <string name="crop_image_activity_title"/>
     <string name="crop_image_menu_crop">Cortar</string>
@@ -221,7 +221,7 @@
     <string name="lbl_height">Altura</string>
     <string name="lbl_help">Ayuda</string>
     <string name="lbl_help_center">Centro de ayuda</string>
-    <string name="lbl_hi_we_re_woobox">Hola, Somos Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Hola, Somos Mirai Technologies!</string>
     <string name="lbl_high_price">Precio alto</string>
     <string name="lbl_home">Direccion de casa</string>
     <string name="lbl_in_stock">En stock</string>
@@ -388,7 +388,7 @@
     <string name="msg_selectcolorsize">Selecciona el color y valor del tamaño></string>
     <string name="msg_sold_out">Agotado</string>
     <string name="msg_successpwd">Con éxito la contraseña cambiada</string>
-    <string name="msg_walkHeading1">Hola, \'re Woobox!</string>
+    <string name="msg_walkHeading1">Hola, \'re NightowlDevelopers!</string>
     <string name="msg_walkHeading2">La mayoría de los estilos únicos!</string>
     <string name="msg_walkHeading3">¡Ir de compras hasta cansarse!</string>
     <string name="msg_walkSubHeading1">Hacemos alrededor de su ciudad asequible, \ n fácil y eficiente.</string>
@@ -400,6 +400,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Cerrar panel lateral de navegación</string>
     <string name="navigation_drawer_open">Abrir panel de navegación</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">Notificación</string>
     <string name="order_summary">Resumen del pedido</string>
     <string name="pick_image_intent_chooser_title">Seleccionar fuente</string>
@@ -420,7 +421,7 @@
     <string name="text_collection_2019">colección 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Usuario invitado</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Oferta no disponible</string>
     <string name="text_start_to_shopping">Comience a la cesta</string>

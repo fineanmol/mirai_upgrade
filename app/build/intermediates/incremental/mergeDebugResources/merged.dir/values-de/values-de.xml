@@ -43,7 +43,7 @@
     <string name="action_filter">Filter</string>
     <string name="action_search">Suche</string>
     <string name="action_settings">die Einstellungen</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Ausloggen</string>
     <string name="cart">Mein Warenkorb</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Gehe zu &lt;b>facebook.com/device&lt;/b> und gib den oben angezeigten Code ein.</string>
@@ -87,7 +87,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Auf Smartphone öffnen"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Anmelden"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Über Google anmelden"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">Vorgang wird abgebrochen, benötigte Berechtigungen wurden nicht erteilt.</string>
     <string name="crop_image_activity_title"/>
     <string name="crop_image_menu_crop">zuschneiden</string>
@@ -400,6 +400,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Schließen Navigationsleiste</string>
     <string name="navigation_drawer_open">Navigationsleiste öffnen</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">Benachrichtigung</string>
     <string name="order_summary">Bestellübersicht</string>
     <string name="pick_image_intent_chooser_title">Quelle wählen</string>
@@ -420,7 +421,7 @@
     <string name="text_collection_2019">Kollektion 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Gastbenutzer</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Das Angebot gilt nicht</string>
     <string name="text_start_to_shopping">Starten Sie den Einkauf</string>

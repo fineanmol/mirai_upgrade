@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="lbl_sign_in">Assinar em</string>
     <string name="lbl_sign_up">Inscrever-se</string>
     <string name="lbl_sign_in_with">Entrar com</string>
@@ -12,7 +12,7 @@
     <string name="lbl_did_not_receive">Didn\'t receber?</string>
     <string name="lbl_resend_code">Reenviar código</string>
     <string name="lbl_verify">Verificar</string>
-    <string name="lbl_hi_we_re_woobox">Oi, Estamos Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Oi, Estamos Mirai Technologies!</string>
     <string name="lbl_subheading">Fazemos em torno de sua cidade acessível, fácil e eficiente.</string>
     <string name="lbl_my_order">Meu pedido</string>
     <string name="lbl_reward">Recompensa</string>
@@ -156,7 +156,7 @@
     <string name="btn_sign_out">Sair</string>
     <string name="msg_loading">Carregando</string>
     <string name="msg_please_wait">Por favor, espere</string>
-    <string name="msg_walkHeading1">Oi, Nós\'re Woobox!</string>
+    <string name="msg_walkHeading1">Oi, Nós\'re NightowlDevelopers!</string>
     <string name="msg_walkHeading2">A maioria dos estilos!</string>
     <string name="msg_walkHeading3">Fazer compras até cair!</string>
     <string name="msg_walkSubHeading2">Compre o mais fashion tendência no maior site de compras.</string>
@@ -265,7 +265,7 @@
     <string name="error_enter_valid_contact">Digite o número de contato válido</string>
     <string name="title_contactus">Contate-Nos</string>
     <string name="lbl_card_number">Número do cartão</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="lbl_length">comprimento</string>
     <string name="lbl_width">Largura</string>
     <string name="days">Dias</string>
@@ -298,7 +298,7 @@
     <string name="lbl_brands">marcas</string>
     <string name="notification">Notificação</string>
     <string name="language">Língua</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="lbl_blog">Blog</string>
     <string name="lbl_no_data_found">Nenhum dado encontrado</string>
     <string name="llb_no_items_in_your_cart">Não há itens no seu carrinho</string>
@@ -356,5 +356,6 @@
         <item>Fêmea</item>
         <item>De outros</item>
     </array>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
 
 </resources>

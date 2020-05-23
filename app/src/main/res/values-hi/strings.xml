@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="lbl_night_mode">रात्री स्वरुप</string>
     <string name="lbl_sign_up">साइन अप करें</string>
     <string name="lbl_sign_in_with">के साथ साइन इन करें</string>
@@ -12,7 +12,7 @@
     <string name="lbl_did_not_receive">नहीं मिला?</string>
     <string name="lbl_resend_code">पुन: कोड भेजे</string>
     <string name="lbl_verify">सत्यापित करें</string>
-    <string name="lbl_hi_we_re_woobox">नमस्ते, हमें Woobox कर रहे हैं!</string>
+    <string name="lbl_hi_we_re_woobox">नमस्ते, हमें Mirai Technologies कर रहे हैं!</string>
     <string name="lbl_subheading">हम अपने शहर सस्ती, आसान और कुशल के आसपास हैं।</string>
     <string name="lbl_my_order">मेरा आदेश</string>
     <string name="lbl_reward">इनाम</string>
@@ -156,7 +156,7 @@
     <string name="btn_sign_out">प्रस्थान करें</string>
     <string name="msg_loading">लोड हो रहा है</string>
     <string name="msg_please_wait">कृपया प्रतीक्षा करें</string>
-    <string name="msg_walkHeading1">हाय, हम  Woobox!</string>
+    <string name="msg_walkHeading1">हाय, हम  NightowlDevelopers!</string>
     <string name="msg_walkHeading2">सबसे अनोखी शैली!</string>
     <string name="msg_walkHeading3">आखरी दम तक शॉपिंग करो!</string>
     <string name="msg_walkSubHeading2">दुकान सबसे बड़ा शॉपिंग वेबसाइट पर सबसे ट्रेंडिंग फैशन।</string>
@@ -261,7 +261,7 @@
     <string name="error_enter_valid_contact">मान्य संपर्क नंबर दर्ज करें</string>
     <string name="title_contactus">संपर्क करें</string>
     <string name="lbl_card_number">कार्ड नंबर</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="lbl_length">लंबाई</string>
     <string name="lbl_width">चौड़ाई</string>
     <string name="days">दिन</string>
@@ -345,7 +345,7 @@
         <item>4</item>
         <item>5</item>
     </string-array>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
 
     <array name="gender">
         <item>पुरुष</item>
@@ -353,5 +353,6 @@
         <item>अन्य</item>
 
     </array>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
 
 </resources>

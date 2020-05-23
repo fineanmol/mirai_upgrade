@@ -160,12 +160,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-mdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_chip_background_color.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\color\\mtrl_chip_background_color.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher_foreground.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_com_facebook_tooltip_black_bottomnub.png.flat",
@@ -248,12 +248,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xhdpi-v4\\abc_ic_star_black_36dp.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_btn_radio_off_mtrl.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\btn_radio_off_mtrl.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_shadoe_top_bottom.xml.flat",
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\shadoe_top_bottom.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_btn_radio_off_mtrl.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\btn_radio_off_mtrl.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\raw_rzp_config.json.flat",
@@ -328,28 +328,28 @@
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\activity_add_address.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_navigation_item_subheader.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\layout\\design_navigation_item_subheader.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_check_material.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\abc_btn_check_material.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_navigation_item_subheader.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\layout\\design_navigation_item_subheader.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_profile.xml.flat",
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\fragment_profile.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light_focused.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\f8f3953bb961195aae9efe17af0bfe7b\\play-services-base-17.1.0\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_menu_selectall_mtrl_alpha.png.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxxhdpi-v4\\abc_ic_menu_selectall_mtrl_alpha.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_check_to_on_mtrl_000.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-mdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_menu_selectall_mtrl_alpha.png.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxxhdpi-v4\\abc_ic_menu_selectall_mtrl_alpha.png"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_text_light_focused.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\f8f3953bb961195aae9efe17af0bfe7b\\play-services-base-17.1.0\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",
@@ -372,12 +372,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\color-v23\\abc_tint_spinner.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_com_facebook_tooltip_blue_background.9.png.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\c784e846dbb71d1a0970db68a87f777a\\jetified-facebook-login-4.42.0\\res\\drawable-xhdpi-v4\\com_facebook_tooltip_blue_background.9.png"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\f8f3953bb961195aae9efe17af0bfe7b\\play-services-base-17.1.0\\res\\drawable-xhdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_com_facebook_tooltip_blue_background.9.png.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\c784e846dbb71d1a0970db68a87f777a\\jetified-facebook-login-4.42.0\\res\\drawable-xhdpi-v4\\com_facebook_tooltip_blue_background.9.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_sihrt.png.flat",
@@ -408,12 +408,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bg_circle_category.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\bg_circle_category.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_tabs_colored_ripple_color.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\color\\mtrl_tabs_colored_ripple_color.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bg_circle_category.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\bg_circle_category.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_menu_overflow_material.xml.flat",
@@ -444,16 +444,16 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxxhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_wishlist.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\fragment_wishlist.xml"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-xxxhdpi-v17_abc_ic_menu_cut_mtrl_alpha.png.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-ldrtl-xxxhdpi-v17\\abc_ic_menu_cut_mtrl_alpha.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-hdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-ldrtl-xxxhdpi-v17_abc_ic_menu_cut_mtrl_alpha.png.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-ldrtl-xxxhdpi-v17\\abc_ic_menu_cut_mtrl_alpha.png"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_wishlist.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\fragment_wishlist.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_item_background_holo_light.xml.flat",
@@ -488,12 +488,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_item_recent_product_small.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\item_recent_product_small.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_tabs_legacy_text_color_selector.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\color\\mtrl_tabs_legacy_text_color_selector.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_item_recent_product_small.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\item_recent_product_small.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_seekbar_tick_mark_material.xml.flat",
@@ -564,12 +564,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\color\\abc_primary_text_material_dark.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_menu_item_action_area.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\layout\\design_menu_item_action_area.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_flag_turkey.png.flat",
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\flag_turkey.png"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_menu_item_action_area.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\layout\\design_menu_item_action_area.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_mtrl_tabs_default_indicator.xml.flat",
@@ -664,12 +664,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxhdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\menu_menu_search.xml.flat",
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\menu\\menu_search.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\anim_design_snackbar_out.xml.flat",
@@ -752,12 +752,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\6472edcc5bcf72c51b3ee5fedbf6ade3\\play-services-auth-17.0.0\\res\\drawable-watch-v20\\common_google_signin_btn_text_light_normal.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_ic_star_half_black_36dp.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-mdpi-v4\\abc_ic_star_half_black_36dp.png"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\color_mtrl_btn_bg_color_selector.xml.flat",
@@ -864,12 +864,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-hdpi-v4\\abc_popup_background_mtrl_mult.9.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_check_material_anim.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\abc_btn_check_material_anim.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\color-v23_abc_btn_colored_text_material.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\color-v23\\abc_btn_colored_text_material.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_btn_check_material_anim.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\abc_btn_check_material_anim.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_common_google_signin_btn_icon_light_normal_background.9.png.flat",
@@ -940,16 +940,16 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\dfddb8b183a8300471f33ce5e9ddc1a5\\android-image-cropper-2.8.0\\res\\drawable-hdpi-v4\\crop_image_menu_rotate_right.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_shadoe_left.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\shadoe_left.xml"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_cart.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\fragment_cart.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_left_mtrl_dark.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-xhdpi-v4\\abc_text_select_handle_left_mtrl_dark.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_cart.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\layout\\fragment_cart.xml"
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_shadoe_left.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\shadoe_left.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
@@ -1016,12 +1016,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\drawable-hdpi-v4\\design_ic_visibility.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_heart.xml.flat",
-        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\ic_heart.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_bg_ractangle_rounded_active.xml.flat",
         "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\bg_ractangle_rounded_active.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_heart.xml.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\ic_heart.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\layout_item_wishlist.xml.flat",
@@ -1048,16 +1048,20 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\1f44ad893cbfed118362d875a1415eec\\core-1.1.0\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_rzp_logo.png.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\a82a15c42ef71d5cb7621a6f2dac21ec\\checkout-1.5.12\\res\\drawable-mdpi-v4\\rzp_logo.png"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_switch_track_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable-mdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
     },
     {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_rzp_logo.png.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\a82a15c42ef71d5cb7621a6f2dac21ec\\checkout-1.5.12\\res\\drawable-mdpi-v4\\rzp_logo.png"
+    },
+    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_tab_indicator_material.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_logo_midi.png.flat",
+        "source": "F:\\MyApplication3\\woobox\\app\\src\\main\\res\\drawable\\logo_midi.png"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_cab_background_top_mtrl_alpha.9.png.flat",
@@ -1096,12 +1100,12 @@
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\fbcb3136f411d2d6f087164c45538c62\\appcompat-1.2.0-alpha01\\res\\drawable\\abc_cab_background_top_material.xml"
     },
     {
-        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\animator_design_fab_show_motion_spec.xml.flat",
-        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\animator\\design_fab_show_motion_spec.xml"
-    },
-    {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_mtrl_chip_checked_circle.xml.flat",
         "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\drawable\\ic_mtrl_chip_checked_circle.xml"
+    },
+    {
+        "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\animator_design_fab_show_motion_spec.xml.flat",
+        "source": "C:\\Users\\Anmol\\.gradle\\caches\\transforms-2\\files-2.1\\d20ba83723f928f9d6fc446f5de2eddc\\material-1.0.0\\res\\animator\\design_fab_show_motion_spec.xml"
     },
     {
         "merged": "F:\\MyApplication3\\woobox\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_com_facebook_button_icon_white.png.flat",

@@ -66,7 +66,7 @@ class DashBoardActivity : AppBaseActivity() {
 
         if (isLoggedIn()) {
             loadApis()
-            setWishCount(); setCartCountFromPref()
+            /*setWishCount(); setCartCountFromPref()*/
             llInfo.show()
             tvLogout.text = getString(R.string.lbl_logout)
             tvLogout.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_logout, 0, 0, 0)
@@ -79,9 +79,9 @@ class DashBoardActivity : AppBaseActivity() {
                 setCartCountFromPref()
                 if (mCartFragment.isAdded) mCartFragment.invalidateCartLayout(getCartListFromPref())
             }
-            onAction(ORDER_COUNT_CHANGE) { setOrderCount() }
+            /*onAction(ORDER_COUNT_CHANGE) { setOrderCount() }*/
             onAction(PROFILE_UPDATE) { setUserInfo() }
-            onAction(WISHLIST_UPDATE) { setWishCount() }
+          /*  onAction(WISHLIST_UPDATE) { setWishCount() }*/
         }
         setUserInfo(); tvVersionCode.text = String.format("%S %S", "V", getAppVersionName())
     }
@@ -95,7 +95,9 @@ class DashBoardActivity : AppBaseActivity() {
 
     private fun loadApis() {
         if (isNetworkAvailable()) {
+/*
             getOrderData(); fetchAndStoreCartData(); fetchAndStoreWishListData(); fetchAndStoreAddressData()
+*/
         }
     }
 
@@ -125,13 +127,13 @@ class DashBoardActivity : AppBaseActivity() {
             loadFragment(mWishListFragment)
             title = getString(R.string.lbl_wish_list)
         }
-        llWishlistData.onClick {
+     /*   llWishlistData.onClick {
             if (!isLoggedIn()) {
                 launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             loadWishListFragment()
-        }
+        }*/
 
         llCart.onClick {
             if (!isLoggedIn()) {
@@ -168,12 +170,12 @@ class DashBoardActivity : AppBaseActivity() {
             launchActivity<SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
             closeDrawer()
         }
-        tvBlog.onClick {
+        /*tvBlog.onClick {
             launchActivity<BlogActivity>()
             closeDrawer()
-        }
+        }*/
         tvHelp.onClick { launchActivity<HelpActivity>(); closeDrawer() }
-        tvFaq.onClick { launchActivity<FAQActivity>(); closeDrawer() }
+        /*tvFaq.onClick { launchActivity<FAQActivity>(); closeDrawer() }*/
         tvContactus.onClick { launchActivity<ContactUsActivity>(); closeDrawer() }
         tvAbout.onClick { launchActivity<AboutActivity>(); closeDrawer() }
         ivCloseDrawer.onClick { closeDrawer() }
@@ -195,16 +197,18 @@ class DashBoardActivity : AppBaseActivity() {
                 launchActivity<SignInUpActivity>()
             }
         }
-        llOrders.onClick {
+   /*     llOrders.onClick {
             if (isLoggedIn()) {
                 launchActivity<OrderActivity>()
             } else {
                 launchActivity<SignInUpActivity>()
             }
             closeDrawer()
-        }
+        }*/
         tvShareApp.onClick { closeDrawer(); shareMyApp(this@DashBoardActivity, "", "") }
+/*
         tvLblOffer.onClick { closeDrawer(); launchActivity<OfferActivity>() }
+*/
     }
     //endregion
 
@@ -217,14 +221,14 @@ class DashBoardActivity : AppBaseActivity() {
         }
     }
 
-    private fun setOrderCount() {
+  /*  private fun setOrderCount() {
         tvOrderCount.text =
             getSharedPrefInstance().getIntValue(KEY_ORDER_COUNT, 0).toDecimalFormat()
-    }
+    }*/
 
-    private fun getOrderData() {
+   /* private fun getOrderData() {
         getOrders { setOrderCount() }
-    }
+    }*/
 
     private fun setCartCountFromPref() {
         count = getCartCount()
@@ -238,12 +242,12 @@ class DashBoardActivity : AppBaseActivity() {
         changeProfile()
     }
 
-    private fun setWishCount() {
+ /*   private fun setWishCount() {
         tvWishListCount.text =
             getSharedPrefInstance().getIntValue(KEY_WISHLIST_COUNT, 0).toDecimalFormat()
         if (mWishListFragment.isAdded) mWishListFragment.wishListItemChange()
     }
-
+*/
     //endregion
 
     //region Fragment Setups

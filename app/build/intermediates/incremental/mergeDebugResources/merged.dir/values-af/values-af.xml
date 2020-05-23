@@ -43,7 +43,7 @@
     <string name="action_filter">filter</string>
     <string name="action_search">Soek</string>
     <string name="action_settings">instellings</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Teken uit</string>
     <string name="cart">my Cart</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Besoek &lt;b>facebook.com/device&lt;/b> en voer die kode wat hierbo gewys word, in.</string>
@@ -87,7 +87,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Maak oop op foon"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Meld aan"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Meld aan met Google"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="days">dae</string>
     <string name="error_address_type">Kies Adres Tipe</string>
     <string name="error_enter_valid_contact">Voer\'n geldige kontaknommer</string>
@@ -213,7 +213,7 @@
     <string name="lbl_height">Hoogte</string>
     <string name="lbl_help">hulp</string>
     <string name="lbl_help_center">Hulp Sentrum</string>
-    <string name="lbl_hi_we_re_woobox">Hi, Ons is Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Hi, Ons is Mirai Technologies!</string>
     <string name="lbl_high_price">Hoë prys</string>
     <string name="lbl_home">Adres huis</string>
     <string name="lbl_in_stock">in Stock</string>
@@ -380,7 +380,7 @@
     <string name="msg_selectcolorsize">Kies kleur en grootte waarde</string>
     <string name="msg_sold_out">Uitverkoop</string>
     <string name="msg_successpwd">Suksesvol wagwoord verander</string>
-    <string name="msg_walkHeading1">Hi, Ons\'re Woobox!</string>
+    <string name="msg_walkHeading1">Hi, Ons\'re NightowlDevelopers!</string>
     <string name="msg_walkHeading2">Die meeste unieke style!</string>
     <string name="msg_walkHeading3">Koop tot jy neerslaan!</string>
     <string name="msg_walkSubHeading1">Ons maak rondom jou stad Bekostigbare, \n maklike en doeltreffende.</string>
@@ -392,6 +392,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Close navigasie laai</string>
     <string name="navigation_drawer_open">Oop navigasie laai</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">kennisgewing</string>
     <string name="order_summary">bestelling opsomming</string>
     <string name="profile">profiel</string>
@@ -411,7 +412,7 @@
     <string name="text_collection_2019">versameling 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Guest Gebruikers</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Aanbod nie beskikbaar</string>
     <string name="text_start_to_shopping">Begin by Winkel</string>

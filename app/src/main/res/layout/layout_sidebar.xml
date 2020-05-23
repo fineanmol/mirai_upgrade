@@ -61,7 +61,7 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:id="@+id/llOrders"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -108,7 +108,7 @@
                         android:gravity="center_horizontal"
                         android:text="@string/lbl_wish_list" />
 
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -131,18 +131,18 @@
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/tvLblOffer"
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_offers"
                     android:gravity="center_vertical"
-                    android:text="@string/lbl_my_offers" />
-                <TextView
+                    android:text="@string/lbl_my_offers" />-->
+                <!--<TextView
                     android:id="@+id/tvBlog"
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_blog"
                     android:gravity="center_vertical"
-                    android:text="@string/lbl_blog" />
+                    android:text="@string/lbl_blog" />-->
 
                 <TextView
                     android:id="@+id/tvAccount"
@@ -172,12 +172,12 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
-
+<!--
                 <TextView
                     android:id="@+id/tvFaq"
                     style="@style/SidebarLabel.SidebarOption"
                     android:paddingStart="@dimen/_46sdp"
-                    android:text="@string/lbl_faq" />
+                    android:text="@string/lbl_faq" />-->
 
                 <TextView
                     android:id="@+id/tvHelp"
@@ -228,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ivAppLogo"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/app_name"
+                    android:text="NDC"
                     android:textAppearance="@style/FontBold"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/font_size_medium" />

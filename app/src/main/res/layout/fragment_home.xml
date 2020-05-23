@@ -89,12 +89,12 @@
                     layout="@layout/layout_view_all" />
             </RelativeLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <!--<androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvNewestProduct"
                 style="@style/RecycleView"
                 android:layout_marginTop="@dimen/spacing_standard"
                 android:paddingStart="@dimen/spacing_standard"
-                android:paddingEnd="@dimen/spacing_standard" />
+                android:paddingEnd="@dimen/spacing_standard" />-->
 
             <RelativeLayout
                 android:id="@+id/rlFeatured"

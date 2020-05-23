@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_walk_through.*
 
 class WalkThroughActivity : AppBaseActivity() {
     private var mCount: Int? = null
-    private var mHeading = arrayOf("Hi, We are Woobox!", "Most Unique Styles!", "Shop Till You Drop!")
+    private var mHeading = arrayOf("Hi, We are Mirai Technologies!", "Most Unique Styles!", "Shop Till You Drop!")
     private val mSubHeading = arrayOf("We make around your city Affordable,\n easy and efficient.", "Shop the most trending fashion on the biggest shopping website.", "Grab the best seller pieces at bargain prices.")
 
     override fun onCreate(savedInstanceState: Bundle?) {

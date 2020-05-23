@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="lbl_sign_in">Oturum aç</string>
     <string name="lbl_sign_up">Kaydol</string>
     <string name="lbl_sign_in_with">Şununla giriş yap</string>
@@ -13,7 +13,7 @@
     <string name="lbl_did_not_receive">Değil mi\'t almak?</string>
     <string name="lbl_resend_code">Yeniden gönderme kodu</string>
     <string name="lbl_verify">Doğrulayın</string>
-    <string name="lbl_hi_we_re_woobox">Merhaba, Woobox vardır!</string>
+    <string name="lbl_hi_we_re_woobox">Merhaba, Mirai Technologies vardır!</string>
     <string name="lbl_subheading">Biz Şehrinizi Uygun fiyatlı, kolay ve verimli etrafında olun.</string>
     <string name="lbl_my_order">Benim siparişim</string>
     <string name="lbl_reward">Ödül</string>
@@ -157,7 +157,7 @@
     <string name="btn_sign_out">Oturumu Kapat</string>
     <string name="msg_loading">Yükleniyor</string>
     <string name="msg_please_wait">Lütfen bekle</string>
-    <string name="msg_walkHeading1">Merhaba, \'Woobox yeniden!</string>
+    <string name="msg_walkHeading1">Merhaba, \'NightowlDevelopers yeniden!</string>
     <string name="msg_walkHeading2">En Benzersiz Stiller!</string>
     <string name="msg_walkHeading3">Bayılana kadar alış-veriş yap!</string>
     <string name="msg_walkSubHeading2">büyük alışveriş sitesinde en trend moda alışveriş yapın.</string>
@@ -266,7 +266,7 @@
     <string name="error_enter_valid_contact">Geçerli bir iletişim numarasını girin</string>
     <string name="title_contactus">Bize Ulaşın</string>
     <string name="lbl_card_number">Kart numarası</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="lbl_length">uzunluk</string>
     <string name="lbl_width">Genişlik</string>
     <string name="days">günler</string>
@@ -307,7 +307,7 @@
     <string name="lbl_review">gözden geçirmek</string>
     <string name="lbl_out_stock">Stoklar tükendi</string>
     <string name="lbl_qty_error">Miktar az olmalıdır</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
 
    <string name="lbl_night_mode">Gece modu</string>
     <string name="lbl_testimonials">Görüşler</string>
@@ -358,4 +358,5 @@
         <item>Kadın</item>
         <item>Diğer</item>
     </array>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
 </resources>

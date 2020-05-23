@@ -44,7 +44,7 @@
     <string name="action_filter">Saring</string>
     <string name="action_search">Cari</string>
     <string name="action_settings">pengaturan</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Keluar</string>
     <string name="cart">Cart saya</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Kunjungi &lt;b>facebook.com/device&lt;/b> dan masukkan kode yang ditampilkan di bawah ini.</string>
@@ -88,7 +88,7 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Buka di ponsel"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Login"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Login dengan Google"</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="crop_image_activity_no_permissions">Membatalkan, tidak mendapatkan izin yang diperlukan</string>
     <string name="crop_image_menu_crop">Potong</string>
     <string name="crop_image_menu_flip">Balik</string>
@@ -221,7 +221,7 @@
     <string name="lbl_height">Tinggi</string>
     <string name="lbl_help">Tolong</string>
     <string name="lbl_help_center">Pusat Bantuan</string>
-    <string name="lbl_hi_we_re_woobox">Hi, Kami adalah Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Hi, Kami adalah Mirai Technologies!</string>
     <string name="lbl_high_price">Harga tinggi</string>
     <string name="lbl_home">Alamat rumah</string>
     <string name="lbl_in_stock">Persediaan</string>
@@ -388,7 +388,7 @@
     <string name="msg_selectcolorsize">Silakan pilih warna &amp; ukuran nilai</string>
     <string name="msg_sold_out">Habis terjual</string>
     <string name="msg_successpwd">Berhasil sandi berubah</string>
-    <string name="msg_walkHeading1">Hi, Kami \'re Woobox!</string>
+    <string name="msg_walkHeading1">Hi, Kami \'re NightowlDevelopers!</string>
     <string name="msg_walkHeading2">Kebanyakan Styles Unik!</string>
     <string name="msg_walkHeading3">Belanja habis-habisan!</string>
     <string name="msg_walkSubHeading1">Kami membuat sekitar kota Anda Terjangkau, \ n mudah dan efisien.</string>
@@ -400,6 +400,7 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="navigation_drawer_close">Tutup laci navigasi</string>
     <string name="navigation_drawer_open">Terbuka laci navigasi</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">Pemberitahuan</string>
     <string name="order_summary">Ringkasan rangka</string>
     <string name="pick_image_intent_chooser_title">Pilih sumber</string>
@@ -420,7 +421,7 @@
     <string name="text_collection_2019">Koleksi 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Guest User</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Penawaran Tidak Tersedia</string>
     <string name="text_start_to_shopping">Mulai Belanja</string>

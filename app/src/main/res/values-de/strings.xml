@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="lbl_sign_in">Einloggen</string>
     <string name="lbl_sign_up">Anmelden</string>
     <string name="lbl_sign_in_with">Anmelden mit</string>
@@ -263,7 +263,7 @@
     <string name="error_enter_valid_contact">Geben Sie eine gültige Telefonnummer</string>
     <string name="title_contactus">Kontaktiere uns</string>
     <string name="lbl_card_number">Kartennummer</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="lbl_length">Länge</string>
     <string name="lbl_width">Breite</string>
     <string name="days">Tage</string>
@@ -303,7 +303,7 @@
     <string name="lbl_review">Rezension</string>
     <string name="lbl_out_stock">Nicht vorrättig</string>
     <string name="lbl_qty_error">Menge sollte weniger als</string>
-    <string name="contact_phone">+91 5435436</string>
+    <string name="contact_phone">+91 7906795249</string>
     <string name="lbl_night_mode">Nacht-Modus</string>
     <string name="lbl_testimonials">Referenzen</string>
     <string name="lbl_google">Google</string>
@@ -353,5 +353,6 @@
         <item>Weiblich</item>
         <item>Andere</item>
     </array>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
 
 </resources>

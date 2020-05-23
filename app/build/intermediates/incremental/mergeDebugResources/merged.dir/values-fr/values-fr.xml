@@ -44,7 +44,7 @@
     <string name="action_filter">Filtre</string>
     <string name="action_search">Chercher</string>
     <string name="action_settings">Réglages</string>
-    <string name="app_name">WooBox</string>
+    <string name="app_name">Midi</string>
     <string name="btn_sign_out">Déconnexion</string>
     <string name="cart">mon panier</string>
     <string gender="unknown" name="com_facebook_device_auth_instructions">Consultez &lt;b>facebook.com/device&lt;/b> et entrez le code affiché ci-dessus.</string>
@@ -222,7 +222,7 @@
     <string name="lbl_height">la taille</string>
     <string name="lbl_help">Aidez-moi</string>
     <string name="lbl_help_center">Centre d\'aide</string>
-    <string name="lbl_hi_we_re_woobox">Salut, Nous sommes Woobox!</string>
+    <string name="lbl_hi_we_re_woobox">Salut, Nous sommes Mirai Technologies!</string>
     <string name="lbl_high_price">Prix ​​élevé</string>
     <string name="lbl_home">Adresse du domicile</string>
     <string name="lbl_in_stock">En stock</string>
@@ -389,7 +389,7 @@
     <string name="msg_selectcolorsize">S\'il vous plaît sélectionner la valeur de la taille et la couleur></string>
     <string name="msg_sold_out">Épuisé</string>
     <string name="msg_successpwd">Avec succès le mot de passe changé</string>
-    <string name="msg_walkHeading1">Salut, Nous sommes Woobox!</string>
+    <string name="msg_walkHeading1">Salut, Nous sommes NightowlDevelopers!</string>
     <string name="msg_walkHeading2">La plupart des styles uniques!</string>
     <string name="msg_walkHeading3">Envolez vous!</string>
     <string name="msg_walkSubHeading1">Nous faisons autour de votre ville abordable, \ n simple et efficace.</string>
@@ -401,6 +401,7 @@
     <string name="nav_header_title">Android studio</string>
     <string name="navigation_drawer_close">Fermer le tiroir de navigation</string>
     <string name="navigation_drawer_open">Ouvrez le tiroir de navigation</string>
+    <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="notification">Notification</string>
     <string name="order_summary">Récapitulatif de la commande</string>
     <string name="pick_image_intent_chooser_title">Sélectionner la source</string>
@@ -421,7 +422,7 @@
     <string name="text_collection_2019">collection 2019</string>
     <string name="text_colon">:</string>
     <string name="text_guest_user">Utilisateur invité</string>
-    <string name="text_iqonicdesign_gmail_com">iqonicdesign@gmail.com</string>
+    <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
     <string name="text_juliane_deerman">Juliane Deerman</string>
     <string name="text_offer_not_available">Offre non disponible</string>
     <string name="text_start_to_shopping">Commencez au</string>
