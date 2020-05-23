@@ -6,6 +6,7 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.iqonic.woobox.AppBaseActivity
 import com.iqonic.woobox.R
 import com.iqonic.woobox.WooBoxApp
@@ -69,14 +70,21 @@ class SettingActivity : AppBaseActivity() {
         val languageAdapter = RecyclerViewAdapter<String>(
             R.layout.spinner_language,
             onBind = { view: View, s: String, i: Int ->
+
                 view.ivLogo.setImageResource(mCountryImg[i])
                 view.tvName.text = languages[i]
             })
         languageAdapter.onItemClick = { i: Int, view: View, s: String ->
-            ivLanguage.loadImageFromDrawable(mCountryImg[i])
-            tvLanguage.text = languages[i]
+            /** for multi language change below mCountryImg[0],languages[0] to mCountryImg[i],languages[i] */
+
+            ivLanguage.loadImageFromDrawable(mCountryImg[0])
+            tvLanguage.text = languages[0]
             dialog.dismiss()
-            setNewLocale(codes[i])
+            /** for multi language change below codes[0] to codes[i] */
+            setNewLocale(codes[0])
+            if(i>0){
+                snackBar("Multi-Language Coming Soon",Snackbar.LENGTH_SHORT)
+            }
         }
         dialog.listLanguage.apply {
             setVerticalLayout()
@@ -86,12 +94,12 @@ class SettingActivity : AppBaseActivity() {
         llLanguage.onClick {
             dialog.show()
         }
-        llDashboard.onClick {
+        /*llDashboard.onClick {
             if (mDashboardListFragment == null) {
                 mDashboardListFragment = DashboardListFragment.newInstance()
             }
             mDashboardListFragment?.show(supportFragmentManager, DashboardListFragment.tag)
-        }
+        }*/
         codes.forEachIndexed { i: Int, s: String ->
             if (lan == s) {
                 ivLanguage.loadImageFromDrawable(mCountryImg[i])

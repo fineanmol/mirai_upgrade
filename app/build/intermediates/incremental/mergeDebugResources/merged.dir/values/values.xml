@@ -7,16 +7,16 @@
     </array>
     <string-array name="language">
         <item>English</item>
-        <item>Hindi</item>
-        <item>French</item>
-        <item>Spanish</item>
-        <item>German</item>
-        <item>Indonesian</item>
-        <item>Afrikaans</item>
-        <item>Portuguese</item>
-        <item>Turkish</item>
-        <item>Arabic</item>
-        <item>Vietnamese</item>
+        <item>Hindi (Coming Soon)</item>
+        <item>French (Coming Soon)</item>
+        <item>Spanish (Coming Soon)</item>
+        <item>German (Coming Soon)</item>
+        <item>Indonesian (Coming Soon)</item>
+        <item>Afrikaans (Coming Soon)</item>
+        <item>Portuguese (Coming Soon)</item>
+        <item>Turkish (Coming Soon)</item>
+        <item>Arabic (Coming Soon)</item>
+        <item>Vietnamese (Coming Soon)</item>
     </string-array>
     <string-array name="qty_array">
         <item>1</item>
@@ -1469,7 +1469,7 @@
     <string name="cart">My Cart</string>
     <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
-    <string name="com.crashlytics.android.build_id" ns2:ignore="UnusedResources,TypographyDashes" translatable="false">6d52f6be-45f3-44e5-913d-6ad4ef8cf2be</string>
+    <string name="com.crashlytics.android.build_id" ns2:ignore="UnusedResources,TypographyDashes" translatable="false">65b238fb-d52e-45ae-b656-397db31edb9d</string>
     <string name="com_facebook_device_auth_instructions">Visit &lt;b>facebook.com/device&lt;/b> and enter the code shown above.</string>
     <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
     <string name="com_facebook_internet_permission_error_message">WebView login requires INTERNET permission</string>
@@ -1692,7 +1692,7 @@
     <string name="lbl_net_banking">Net Banking</string>
     <string name="lbl_new_arrival">New Arrival</string>
     <string name="lbl_newest_product">Newest Product</string>
-    <string name="lbl_night_mode">Night Mode</string>
+    <string name="lbl_night_mode">Night Mode(Coming Soon)</string>
     <string name="lbl_no">NO</string>
     <string name="lbl_no_data_found">No Products found</string>
     <string name="lbl_no_reviews">No Reviews Found</string>

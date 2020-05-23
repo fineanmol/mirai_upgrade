@@ -307,7 +307,7 @@
     <string name="lbl_review">Reviews</string>
     <string name="lbl_out_stock">Out of stock</string>
     <string name="lbl_qty_error">Quantity should be less than</string>
-    <string name="lbl_night_mode">Night Mode</string>
+    <string name="lbl_night_mode">Night Mode(Coming Soon)</string>
     <string name="lbl_availability">Availability :</string>
     <string name="lbl_in_stock">In Stock</string>
     <string name="lbl_select_quantity">Select Quantity</string>
@@ -374,15 +374,15 @@
     </array>
     <string-array name="language">
         <item>English</item>
-        <item>Hindi</item>
-        <item>French</item>
-        <item>Spanish</item>
-        <item>German</item>
-        <item>Indonesian</item>
-        <item>Afrikaans</item>
-        <item>Portuguese</item>
-        <item>Turkish</item>
-        <item>Arabic</item>
-        <item>Vietnamese</item>
+        <item>Hindi (Coming Soon)</item>
+        <item>French (Coming Soon)</item>
+        <item>Spanish (Coming Soon)</item>
+        <item>German (Coming Soon)</item>
+        <item>Indonesian (Coming Soon)</item>
+        <item>Afrikaans (Coming Soon)</item>
+        <item>Portuguese (Coming Soon)</item>
+        <item>Turkish (Coming Soon)</item>
+        <item>Arabic (Coming Soon)</item>
+        <item>Vietnamese (Coming Soon)</item>
     </string-array>
 </resources>

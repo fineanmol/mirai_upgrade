@@ -60,9 +60,9 @@
                     style="@style/Heading"
                     android:text="@string/lbl_Featured" />
 
-                <include
+               <!-- <include
                     android:id="@+id/viewFeatured"
-                    layout="@layout/layout_view_all" />
+                    layout="@layout/layout_view_all" />-->
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView

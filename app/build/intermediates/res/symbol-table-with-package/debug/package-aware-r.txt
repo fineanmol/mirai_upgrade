@@ -2619,7 +2619,6 @@ id llCallRequest
 id llCart
 id llChangePswd
 id llColors
-id llDashboard
 id llDeliveryDate
 id llDeliveryInfo
 id llDynamicProductColor
@@ -2930,7 +2929,6 @@ id tvColour
 id tvContactus
 id tvContinue
 id tvCopyRight
-id tvDashboard
 id tvDate
 id tvDeal
 id tvDefault
