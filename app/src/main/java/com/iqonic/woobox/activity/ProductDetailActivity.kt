@@ -94,28 +94,28 @@ class ProductDetailActivity : AppBaseActivity() {
         }
         setCartCountFromPref()
         BroadcastReceiverExt(this) {
-           onAction(CART_COUNT_CHANGE) { setCartCountFromPref() }
+            onAction(CART_COUNT_CHANGE) { setCartCountFromPref() }
         }
-        rlCart.onClick {
-            if (isLoggedIn()){
+        /*rlCart.onClick {
+            if (isLoggedIn()) {
                 launchActivity<MyCartActivity>()
-            }else{
+            } else {
                 launchActivity<SignInUpActivity>()
             }
-        }
+        }*/
 
 
     }
 
 
     private fun setCartCountFromPref() {
-        if (isLoggedIn()){
+        if (isLoggedIn()) {
             val count = getCartCount()
-            if ( !count.checkIsEmpty() && !count.equals("0", false)) {
-                tvNotificationCount.text = count
-                tvNotificationCount.show()
+            if (!count.checkIsEmpty() && !count.equals("0", false)) {
+                /*tvNotificationCount.text = count
+                tvNotificationCount.show()*/
             } else {
-                tvNotificationCount.hide()
+                /*tvNotificationCount.hide()*/
             }
         }
 
@@ -135,20 +135,20 @@ class ProductDetailActivity : AppBaseActivity() {
         tvItemProductOriginalPrice.applyStrike()
         if (mProductModel.regular_price != null && mProductModel.regular_price.isNotEmpty()) {
             val mrp = mProductModel.regular_price.toDouble()
-            var discountPrice:Double = when {
+            var discountPrice: Double = when {
                 mProductModel.sale_price.isNotEmpty() -> mProductModel.sale_price.toDouble()
                 else -> mProductModel.price!!.toDouble()
             }
-            if (mrp!=0.0){
+            if (mrp != 0.0) {
                 val sub = mrp - discountPrice
-                val discount = round(((sub * 100) / mrp),2)
+                val discount = round(((sub * 100) / mrp), 2)
                 if (discount == 0.0) {
                     tvItemProductDiscount.hide()
                 } else {
                     tvItemProductDiscount.show()
                     tvItemProductDiscount.text = "${discount.toInt()}% Off"
                 }
-            }else{
+            } else {
                 tvItemProductDiscount.hide()
             }
 
@@ -161,20 +161,20 @@ class ProductDetailActivity : AppBaseActivity() {
 
         intHeaderView()
         checkWishListAndCart()
-         if (mProductModel.stock_status=="instock"){
-            if (mProductModel.manage_stock!!){
-                if ( mProductModel.stock_quantity==null || mProductModel.stock_quantity<1){
+        if (mProductModel.stock_status == "instock") {
+            if (mProductModel.manage_stock!!) {
+                if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
                     tvAvailability.text = getString(R.string.lbl_out_stock)
                     btnOutOfStock.show()
                     btnAddCard.hide()
-                }else{
-                    setStock(mProductModel,mProductModel.stock_quantity)
+                } else {
+                    setStock(mProductModel, mProductModel.stock_quantity)
                 }
 
-            }else{
-                setStock(mProductModel,null)
+            } else {
+                setStock(mProductModel, null)
             }
-        }else{
+        } else {
             tvAvailability.text = getString(R.string.lbl_out_stock)
             btnOutOfStock.show()
             btnAddCard.hide()
@@ -183,11 +183,11 @@ class ProductDetailActivity : AppBaseActivity() {
 
 
         ivFavourite.onClick { onFavouriteClick() }
-        llReviews.onClick {
+        /*llReviews.onClick {
             launchActivity<ReviewsActivity> {
                 putExtra(DATA, mProductModel)
             }
-        }
+        }*/
 
         tvAllReviews.onClick {
             launchActivity<ReviewsActivity> {
@@ -195,7 +195,8 @@ class ProductDetailActivity : AppBaseActivity() {
             }
         }
     }
- private fun setStock(
+
+    private fun setStock(
         mProductModel: ProductDataNew,
         stockQuantity: Int?
     ) {
@@ -210,12 +211,13 @@ class ProductDetailActivity : AppBaseActivity() {
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
 
-        val size = if (stockQuantity==null ||  stockQuantity >= 5) 5 else stockQuantity
+        val size = if (stockQuantity == null || stockQuantity >= 5) 5 else stockQuantity
         val list: ArrayList<String> = ArrayList()
         for (i in 1..size) {
             list.add(i.toString())
         }
-        dialog.listQuantity.adapter = ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
+        dialog.listQuantity.adapter =
+            ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
         dialog.listQuantity.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 mQuntity = list[position]
@@ -234,6 +236,7 @@ class ProductDetailActivity : AppBaseActivity() {
         val tmp = double.roundToInt()
         return tmp.toDouble() / factor
     }
+
     private fun onFavouriteClick() {
         if (isExistInWishList(mProductModel!!)) {
             changeFavIcon(R.drawable.ic_heart, R.color.gray_80); ivFavourite.isClickable = false
@@ -283,7 +286,6 @@ class ProductDetailActivity : AppBaseActivity() {
         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
         setDescription()
         setMoreInfo()
-        tvItemProductRating.rating = mProductModel?.average_rating?.toFloat()!!
         tvItemProductOriginalPrice.applyStrike()
     }
 
@@ -444,16 +446,16 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun getSelectedColors(): String? {
-        return   when (mColorFlag) {
+        return when (mColorFlag) {
             -1 -> null
-            else ->  colorAdapter?.getModel()!![mColorFlag]
+            else -> colorAdapter?.getModel()!![mColorFlag]
         }
     }
 
     private fun getSelectedSize(): String? {
-        return   when (mSizeFlag) {
+        return when (mSizeFlag) {
             -1 -> null
-            else ->  sizeAdapter?.getModel()!![mSizeFlag]
+            else -> sizeAdapter?.getModel()!![mSizeFlag]
         }
     }
 
@@ -555,7 +557,6 @@ class ProductDetailActivity : AppBaseActivity() {
 
     private fun setRating(data: List<ProductReviewData>) {
         if (data.isEmpty()) {
-            tvItemProductRating.rating = 0f
             return
         }
         var fiveStar = 0
@@ -577,13 +578,13 @@ class ProductDetailActivity : AppBaseActivity() {
         }
         val mAvgRating =
             (5 * fiveStar + 4 * fourStar + 3 * threeStar + 2 * twoStar + 1 * oneStar) / (fiveStar + fourStar + threeStar + twoStar + oneStar)
-        tvItemProductRating.rating = mAvgRating.toFloat()
+
     }
 
     override fun onResume() {
         checkWishListAndCart()
         super.onResume()
-        if (!isAdShown){
+        if (!isAdShown) {
             showInterstitialAd()
         }
     }
@@ -594,7 +595,8 @@ class ProductDetailActivity : AppBaseActivity() {
             mIsInWishList = isExistInWishList(mProductModel!!)
 
             if (isAddedToCart) btnAddCard.text =
-                getString(R.string.lbl_remove_cart) else btnAddCard.text = getString(R.string.lbl_add_to_cart)
+                getString(R.string.lbl_remove_cart) else btnAddCard.text =
+                getString(R.string.lbl_add_to_cart)
             if (mIsInWishList) changeFavIcon(
                 R.drawable.ic_heart_fill,
                 R.color.favourite_background,

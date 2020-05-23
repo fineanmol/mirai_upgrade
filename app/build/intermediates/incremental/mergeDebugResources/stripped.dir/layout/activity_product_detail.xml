@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+        
 
-    <data>
+    
 
-        <variable
-            name="model"
-            type="com.iqonic.woobox.models.ProductDataNew" />
+                 
+                        
+                                                             
 
-    </data>
+           
     <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:hnc="http://schemas.android.com/apk/res-auto"
@@ -17,7 +17,7 @@
         android:layout_height="match_parent"
         android:background="@color/background_color"
         android:fitsSystemWindows="true"
-        tools:ignore="MissingPrefix">
+        tools:ignore="MissingPrefix" android:tag="layout/activity_product_detail_0">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"
@@ -168,7 +168,7 @@
                         android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{model.name}"
+                        android:tag="binding_1"     
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_toStartOf="@id/tvItemProductDiscount"
                         android:textAppearance="@style/FontMedium"
@@ -536,4 +536,4 @@
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-</layout>
+         

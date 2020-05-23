@@ -2564,7 +2564,6 @@ id ivExpandDiscount
 id ivExpandRating
 id ivFaceBook
 id ivFavourite
-id ivGoToReview
 id ivGoogle
 id ivGrid
 id ivHidePwd
@@ -2647,7 +2646,6 @@ id llProductSize
 id llProfile
 id llRemove
 id llResend
-id llReviews
 id llSeePriceDetail
 id llSignIn
 id llSize
@@ -2753,7 +2751,6 @@ id right_icon
 id right_side
 id right_to_left
 id rlBrand
-id rlCart
 id rlCategory
 id rlContent
 id rlDeal
@@ -2950,7 +2947,6 @@ id tvHelpCenter
 id tvItemDeliverHere
 id tvItemProductDiscount
 id tvItemProductOriginalPrice
-id tvItemProductRating
 id tvLanguage
 id tvLbl1
 id tvLbl2

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -48,13 +47,7 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
   public final ImageView ivBack;
 
   @NonNull
-  public final ImageView ivCart;
-
-  @NonNull
   public final ImageView ivFavourite;
-
-  @NonNull
-  public final ImageView ivGoToReview;
 
   @NonNull
   public final LinearLayout llHeight;
@@ -66,16 +59,10 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
   public final LinearLayout llMoreInfo;
 
   @NonNull
-  public final LinearLayout llReviews;
-
-  @NonNull
   public final LinearLayout llWidth;
 
   @NonNull
   public final ViewPager productViewPager;
-
-  @NonNull
-  public final RelativeLayout rlCart;
 
   @NonNull
   public final RelativeLayout rlInfo;
@@ -126,16 +113,10 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
   public final TextView tvItemProductOriginalPrice;
 
   @NonNull
-  public final RatingBar tvItemProductRating;
-
-  @NonNull
   public final TextView tvLength;
 
   @NonNull
   public final TextView tvName;
-
-  @NonNull
-  public final TextView tvNotificationCount;
 
   @NonNull
   public final TextView tvPrice;
@@ -163,18 +144,16 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
 
   protected ActivityProductDetailBinding(Object _bindingComponent, View _root, int _localFieldCount,
       AppBarLayout appBar, MaterialButton btnAddCard, MaterialButton btnOutOfStock,
-      DotsIndicator dots, CoordinatorLayout htabMaincontent, ImageView ivBack, ImageView ivCart,
-      ImageView ivFavourite, ImageView ivGoToReview, LinearLayout llHeight, LinearLayout llLength,
-      LinearLayout llMoreInfo, LinearLayout llReviews, LinearLayout llWidth,
-      ViewPager productViewPager, RelativeLayout rlCart, RelativeLayout rlInfo,
+      DotsIndicator dots, CoordinatorLayout htabMaincontent, ImageView ivBack,
+      ImageView ivFavourite, LinearLayout llHeight, LinearLayout llLength, LinearLayout llMoreInfo,
+      LinearLayout llWidth, ViewPager productViewPager, RelativeLayout rlInfo,
       RelativeLayout rlViewPager, RecyclerView rvColors, RecyclerView rvSize, Toolbar toolbar,
       CollapsingToolbarLayout toolbarLayout, TextView tvAllReviews, TextView tvAvailability,
       TextView tvBrand, TextView tvBrandName, TextView tvClouser, TextView tvColors,
       TextView tvColour, TextView tvHeight, TextView tvItemProductDiscount,
-      TextView tvItemProductOriginalPrice, RatingBar tvItemProductRating, TextView tvLength,
-      TextView tvName, TextView tvNotificationCount, TextView tvPrice, TextView tvSelectedQuantity,
-      TextView tvSize, TextView tvSolid, TextView tvWidth, TextView txAvailability,
-      ExpandableTextView txtDescription) {
+      TextView tvItemProductOriginalPrice, TextView tvLength, TextView tvName, TextView tvPrice,
+      TextView tvSelectedQuantity, TextView tvSize, TextView tvSolid, TextView tvWidth,
+      TextView txAvailability, ExpandableTextView txtDescription) {
     super(_bindingComponent, _root, _localFieldCount);
     this.appBar = appBar;
     this.btnAddCard = btnAddCard;
@@ -182,16 +161,12 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
     this.dots = dots;
     this.htabMaincontent = htabMaincontent;
     this.ivBack = ivBack;
-    this.ivCart = ivCart;
     this.ivFavourite = ivFavourite;
-    this.ivGoToReview = ivGoToReview;
     this.llHeight = llHeight;
     this.llLength = llLength;
     this.llMoreInfo = llMoreInfo;
-    this.llReviews = llReviews;
     this.llWidth = llWidth;
     this.productViewPager = productViewPager;
-    this.rlCart = rlCart;
     this.rlInfo = rlInfo;
     this.rlViewPager = rlViewPager;
     this.rvColors = rvColors;
@@ -208,10 +183,8 @@ public abstract class ActivityProductDetailBinding extends ViewDataBinding {
     this.tvHeight = tvHeight;
     this.tvItemProductDiscount = tvItemProductDiscount;
     this.tvItemProductOriginalPrice = tvItemProductOriginalPrice;
-    this.tvItemProductRating = tvItemProductRating;
     this.tvLength = tvLength;
     this.tvName = tvName;
-    this.tvNotificationCount = tvNotificationCount;
     this.tvPrice = tvPrice;
     this.tvSelectedQuantity = tvSelectedQuantity;
     this.tvSize = tvSize;

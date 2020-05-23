@@ -1469,7 +1469,7 @@
     <string name="cart">My Cart</string>
     <string name="character_counter_content_description">Character limit exceeded %1$d of %2$d</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
-    <string name="com.crashlytics.android.build_id" ns2:ignore="UnusedResources,TypographyDashes" translatable="false">65b238fb-d52e-45ae-b656-397db31edb9d</string>
+    <string name="com.crashlytics.android.build_id" ns2:ignore="UnusedResources,TypographyDashes" translatable="false">98d43290-417a-4d86-8a8c-7aeac33eaae0</string>
     <string name="com_facebook_device_auth_instructions">Visit &lt;b>facebook.com/device&lt;/b> and enter the code shown above.</string>
     <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
     <string name="com_facebook_internet_permission_error_message">WebView login requires INTERNET permission</string>
@@ -1594,14 +1594,14 @@
     <string name="lbl_add_address">Add New Address</string>
     <string name="lbl_add_card">Add Card</string>
     <string name="lbl_add_new_address">Add New address</string>
-    <string name="lbl_add_to_cart">Add to Cart</string>
+    <string name="lbl_add_to_cart">Submit Ads</string>
     <string name="lbl_address_manager">Address Manager</string>
     <string name="lbl_already_have_a_account">Already have a account?</string>
     <string name="lbl_apply">Apply</string>
     <string name="lbl_availability">Availability :</string>
     <string name="lbl_bags">Bags</string>
     <string name="lbl_blog">Blog</string>
-    <string name="lbl_brand">Brand</string>
+    <string name="lbl_brand">Start Date</string>
     <string name="lbl_brands">Brands</string>
     <string name="lbl_buy_now">Buy Now</string>
     <string name="lbl_call_request">Call Request</string>
@@ -1620,9 +1620,9 @@
     <string name="lbl_choose_item">Choose an item</string>
     <string name="lbl_clear_cart">Clear Cart</string>
     <string name="lbl_cloths">Cloths</string>
-    <string name="lbl_clouser">Clouser</string>
-    <string name="lbl_colors">Colors</string>
-    <string name="lbl_colour">Colour</string>
+    <string name="lbl_clouser">Start Time</string>
+    <string name="lbl_colors">Gender</string>
+    <string name="lbl_colour">End Date</string>
     <string name="lbl_coming_soon">Coming Soon</string>
     <string name="lbl_contact_us">Contact us</string>
     <string name="lbl_continue">Continue</string>
@@ -1671,7 +1671,7 @@
     <string name="lbl_item_delivering">Item Delivering</string>
     <string name="lbl_item_price">Item Price -</string>
     <string name="lbl_kids">Kids</string>
-    <string name="lbl_lace_ups">Lace-ups</string>
+    <string name="lbl_lace_ups">Range</string>
     <string name="lbl_language">Language</string>
     <string name="lbl_length">Length</string>
     <string name="lbl_less">Less</string>
@@ -1710,8 +1710,8 @@
     <string name="lbl_order_id">Order ID -</string>
     <string name="lbl_order_pending">Order Pending</string>
     <string name="lbl_other_wallet">Other Wallet</string>
-    <string name="lbl_out_stock">Out of stock</string>
-    <string name="lbl_pattern">Pattern</string>
+    <string name="lbl_out_stock">Submit Ads disabled</string>
+    <string name="lbl_pattern">End Time</string>
     <string name="lbl_pay_with_debit_credit_card">Pay with PayPal</string>
     <string name="lbl_payment_details">Payment Detail</string>
     <string name="lbl_payment_method">Payment Method -</string>
@@ -1765,7 +1765,7 @@
     <string name="lbl_sign_up">Sign Up</string>
     <string name="lbl_sign_up_success">Sign up success</string>
     <string name="lbl_sign_up_with">Sign up with</string>
-    <string name="lbl_size">Size</string>
+    <string name="lbl_size">Age Group</string>
     <string name="lbl_sms_notification">SMS Notification</string>
     <string name="lbl_sort">Sort</string>
     <string name="lbl_sports">Sports</string>
@@ -1825,7 +1825,7 @@
     <string name="msg_loading">Loading</string>
     <string name="msg_not_allowed">This is demo version. You are not allowed to perform this action.</string>
     <string name="msg_please_wait">Please Wait</string>
-    <string name="msg_selectcolorsize"><![CDATA[Please select color & size value]]></string>
+    <string name="msg_selectcolorsize"><![CDATA[Please select Gender & Age Group value]]></string>
     <string name="msg_sold_out">Sold Out</string>
     <string name="msg_successpwd">Successfully password changed</string>
     <string name="msg_walkHeading1">Hi, We\'re NightowlDevelopers!</string>
