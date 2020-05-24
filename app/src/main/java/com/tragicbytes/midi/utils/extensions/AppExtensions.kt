@@ -339,22 +339,26 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
     })
 }
 
-fun AppBaseActivity.createCustomerByEmail(user: FirebaseUser, onApiSuccess: (FirebaseUser) -> Unit) {
+fun AppBaseActivity.createCustomerByEmail(user: FirebaseUser, onApiSuccess: () -> Unit) {
     showProgress(true)
-    println(user.displayName)
     showProgress(false)
-    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName)
+
     getSharedPrefInstance().setValue(USER_EMAIL, user.email)
+    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName.toString())
     var firstName = ""
-    var lastName = ""
-    if (user.displayName != null && user?.displayName?.split(" ")?.size!! >= 2) {
-        firstName = user.displayName?.split(" ")?.get(0)!!
-        lastName = user.displayName?.split(" ")?.get(1)!!
-    }
-    getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
-    getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
-    onApiSuccess(user)
-    sendProfileUpdateBroadcast()
+        var lastName = ""
+        if (user.displayName != null && user?.displayName?.split(" ")?.size!! >= 2) {
+            firstName = user.displayName?.split(" ")?.get(0)!!
+            lastName = user.displayName?.split(" ")?.get(1)!!
+        }
+        getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
+        getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
+        onApiSuccess()
+        sendProfileUpdateBroadcast()
+//    }
+//    catch(e:Exception){
+//        println(e.message.toString()+ " errorrrrrr")
+//    }
 
 }
 
