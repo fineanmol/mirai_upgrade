@@ -60,7 +60,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvSubHeading" />
 
-    <com.iqonic.woobox.utils.dotsindicator.DotsIndicator
+    <com.tragicbytes.midi.utils.dotsindicator.DotsIndicator
         android:id="@+id/dots"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_30sdp"

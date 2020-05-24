@@ -29,7 +29,7 @@
                 android:padding="@dimen/spacing_control"
                 android:src="@drawable/ic_close_black" />
 
-            <com.iqonic.woobox.utils.CircleImageView
+            <com.tragicbytes.midi.utils.CircleImageView
                 android:id="@+id/civProfile"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_100sdp"

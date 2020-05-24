@@ -5,13 +5,13 @@
 
         <variable
             name="model"
-            type="com.iqonic.woobox.models.Address" />
+            type="com.tragicbytes.midi.models.Address" />
 
         <variable
             name="callback"
-            type="com.iqonic.woobox.base.BaseRecyclerAdapter.OnClickListener" />
+            type="com.tragicbytes.midi.base.BaseRecyclerAdapter.OnClickListener" />
     </data>
-<com.iqonic.woobox.utils.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.tragicbytes.midi.utils.swipereveallayout.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -94,5 +94,5 @@
 
     </FrameLayout>
 
-</com.iqonic.woobox.utils.swipereveallayout.SwipeRevealLayout>
+</com.tragicbytes.midi.utils.swipereveallayout.SwipeRevealLayout>
 </layout>

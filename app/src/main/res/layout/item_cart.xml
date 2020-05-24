@@ -5,11 +5,11 @@
 
         <variable
             name="model"
-            type="com.iqonic.woobox.models.CartResponse" />
+            type="com.tragicbytes.midi.models.CartResponse" />
 
         <variable
             name="callback"
-            type="com.iqonic.woobox.base.BaseRecyclerAdapter.OnClickListener" />
+            type="com.tragicbytes.midi.base.BaseRecyclerAdapter.OnClickListener" />
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

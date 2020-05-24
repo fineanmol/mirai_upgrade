@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.iqonic.woobox.utils.CustomSwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
+<com.tragicbytes.midi.utils.CustomSwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                     android:layout_height="match_parent"
                     android:focusable="false" />
 
-                <com.iqonic.woobox.utils.dotsindicator.DotsIndicator
+                <com.tragicbytes.midi.utils.dotsindicator.DotsIndicator
                     android:id="@+id/dots"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/_30sdp"
@@ -302,5 +302,5 @@
         </LinearLayout>
 
     </ScrollView>
-</com.iqonic.woobox.utils.CustomSwipeToRefresh>
+</com.tragicbytes.midi.utils.CustomSwipeToRefresh>
 

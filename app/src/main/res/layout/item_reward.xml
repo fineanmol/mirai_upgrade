@@ -5,11 +5,11 @@
 
         <variable
                 name="model"
-                type="com.iqonic.woobox.models.Reward"/>
+                type="com.tragicbytes.midi.models.Reward"/>
 
         <variable
                 name="callback"
-                type="com.iqonic.woobox.base.BaseRecyclerAdapter.OnClickListener"/>
+                type="com.tragicbytes.midi.base.BaseRecyclerAdapter.OnClickListener"/>
     </data>
 
     <RelativeLayout

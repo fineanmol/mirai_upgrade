@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.iqonic.woobox.utils.CircleImageView
+            <com.tragicbytes.midi.utils.CircleImageView
                 android:id="@+id/ivProfileImage"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_120sdp"

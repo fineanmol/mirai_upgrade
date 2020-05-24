@@ -9,7 +9,7 @@
     android:layout_margin="@dimen/spacing_standard"
     >
 
-    <com.iqonic.woobox.utils.CircleImageView
+    <com.tragicbytes.midi.utils.CircleImageView
         android:id="@+id/ivAuthor"
         android:layout_gravity="center_horizontal"
         android:layout_width="@dimen/_40sdp"
