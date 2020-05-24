@@ -300,9 +300,9 @@ class ViewAllProductFragment : BaseFragment() {
             val brandAdapter = RecyclerViewAdapter<FilterBrands>(
                 R.layout.item_filter_brand,
                 onBind = { view, item, position ->
-                    view.tvBrandName.text = item.name
+                    view.rangeValue.text = item.name
                     if (item.isSelected != null && item.isSelected!!) {
-                        view.tvBrandName.setTextColor(activity!!.color(R.color.colorPrimary))
+                        view.rangeValue.setTextColor(activity!!.color(R.color.colorPrimary))
                         view.ivSelect.setImageResource(R.drawable.ic_check)
                         view.ivSelect.setColorFilter(activity!!.color(R.color.colorAccent))
                         view.ivSelect.setStrokedBackground(
@@ -311,7 +311,7 @@ class ViewAllProductFragment : BaseFragment() {
                             0.4f
                         )
                     } else {
-                        view.tvBrandName.setTextColor(activity!!.color(R.color.textColorSecondary))
+                        view.rangeValue.setTextColor(activity!!.color(R.color.textColorSecondary))
                         view.ivSelect.setImageResource(0)
                         view.ivSelect.setStrokedBackground(activity!!.color(R.color.checkbox_color))
                     }

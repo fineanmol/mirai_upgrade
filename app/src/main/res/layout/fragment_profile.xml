@@ -33,6 +33,7 @@
                     android:layout_marginEnd="@dimen/spacing_standard"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_profile"
+                    app:civ_border_overlay="true"
                     app:civ_border_color="@color/view_color"
                     app:civ_border_width="@dimen/_4sdp" />
 
@@ -99,7 +100,7 @@
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:hint="@string/hint_mobile_no"
                 android:inputType="number"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:maxEms="12"
                 android:gravity="start"
 
@@ -136,7 +137,7 @@
                 android:layout_marginBottom="@dimen/spacing_standard"
                 android:text="@string/lbl_change_pswd"
                 android:textColor="@color/textColorPrimary"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:textSize="@dimen/font_size_medium"
                 app:strokeColor="@color/editText_background" />
 

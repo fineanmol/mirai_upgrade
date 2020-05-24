@@ -115,9 +115,7 @@
         <activity
             android:name="com.tragicbytes.midi.activity.ViewAllProductActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".activity.RewardActivity"
-            android:screenOrientation="portrait" />
+
         <activity
             android:name="com.tragicbytes.midi.activity.AddressManagerActivity"
             android:screenOrientation="portrait" />

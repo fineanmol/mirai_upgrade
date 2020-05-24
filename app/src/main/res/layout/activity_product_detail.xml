@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,10 +10,7 @@
             type="com.tragicbytes.midi.models.ProductDataNew" />
 
     </data>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:hnc="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/htab_maincontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,13 +51,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/product_item_height"
                         android:background="@color/item_background_common">
-
-                        <androidx.viewpager.widget.ViewPager
-                            android:id="@+id/productViewPager"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fitsSystemWindows="true"
-                            android:overScrollMode="never" />
 
                         <com.tragicbytes.midi.utils.dotsindicator.DotsIndicator
                             android:id="@+id/dots"
@@ -296,21 +288,19 @@
                         app:hnc_defaultExpand="false"
                         app:hnc_moreLessGravity="right"
                         app:hnc_textSize="@dimen/font_size_micro"
-                        hnc:hnc_maxLine="3"
-                        hnc:hnc_moreLessShow="true"
-                        hnc:hnc_moreLessTextColor="@color/textColorSecondary"
-                        hnc:hnc_moreLessTextSize="@dimen/font_size_small"
-                        hnc:hnc_textColor="@color/textColorSecondary" />
+                        app:hnc_maxLine="3"
+                        app:hnc_moreLessShow="true"
+                        app:hnc_moreLessTextColor="@color/textColorSecondary"
+                        app:hnc_moreLessTextSize="@dimen/font_size_small"
+                        app:hnc_textColor="@color/textColorSecondary" >
 
-                    <TextView
-                        style="@style/Heading"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_standard_new"
-                        android:layout_marginTop="@dimen/spacing_standard"
-                        android:layout_marginEnd="@dimen/spacing_standard_new"
-                        android:text="@string/lbl_check_availability"
-                        android:visibility="gone" />
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/productViewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fitsSystemWindows="true"
+                            android:overScrollMode="never" />
+                    </com.tragicbytes.midi.utils.ExpandableTextView>
 
                     <TextView
                         android:id="@+id/tvColors"
@@ -377,9 +367,10 @@
                             android:text="@string/lbl_brand" />
 
                         <TextView
-                            android:id="@+id/tvBrand"
+                            android:id="@+id/startDateValue"
                             style="@style/MoreInfoSubheading"
-                             />
+                            android:textAlignment="center"
+                            android:text="Today" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -396,13 +387,15 @@
                             android:text="@string/lbl_colour" />
 
                         <TextView
-                            android:id="@+id/tvColour"
+                            android:id="@+id/endDateValue"
                             style="@style/MoreInfoSubheading"
+                            android:text="Choose Date"
                             />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llLength"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
@@ -421,6 +414,7 @@
 
                     <LinearLayout
                         android:id="@+id/llHeight"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
@@ -439,6 +433,7 @@
 
                     <LinearLayout
                         android:id="@+id/llWidth"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
@@ -468,8 +463,8 @@
                             style="@style/MoreInfo_heading"
                             android:text="@string/lbl_clouser" />
 
-                        <TextView
-                            android:id="@+id/tvClouser"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/startTime"
                             style="@style/MoreInfoSubheading"
                             />
                     </LinearLayout>
@@ -489,8 +484,8 @@
                             style="@style/MoreInfo_heading"
                             android:text="@string/lbl_pattern" />
 
-                        <TextView
-                            android:id="@+id/tvSolid"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/endTime"
                             style="@style/MoreInfoSubheading"
                            />
                     </LinearLayout>
@@ -509,16 +504,20 @@
                             android:gravity="center_vertical"
                             android:text="@string/lbl_lace_ups" />
 
-                        <TextView
-                            android:id="@+id/tvBrandName"
+                        <EditText
+                            android:id="@+id/rangeValue"
                             style="@style/MoreInfoSubheading"
-                            android:singleLine="false"
+                            android:singleLine="true"
+                            android:text="$"
+
                             />
                     </LinearLayout>
                 </LinearLayout>
 
+
                 <TextView
                     android:id="@+id/tvAllReviews"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/spacing_standard_new"

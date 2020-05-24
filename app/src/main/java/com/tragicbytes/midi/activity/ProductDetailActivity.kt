@@ -1,9 +1,12 @@
 package com.tragicbytes.midi.activity
 
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.tragicbytes.midi.AppBaseActivity
@@ -22,6 +25,8 @@ import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -42,6 +47,12 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
     private var sizeAdapter: RecyclerViewAdapter<String>? = null
+    lateinit var today1: TextView
+    lateinit var date: TextView
+    lateinit var button_grid: TextView
+    private var mMonth = 0
+    private var mYear: Int = 0
+    private var mDay: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +114,38 @@ class ProductDetailActivity : AppBaseActivity() {
                 launchActivity<SignInUpActivity>()
             }
         }*/
+        startDateValue.setOnClickListener(View.OnClickListener {
+            val c = Calendar.getInstance()
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    startDateValue.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+        })
+        endDateValue.setOnClickListener(View.OnClickListener {
+            val c = Calendar.getInstance()
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    endDateValue.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+        })
 
 
     }
