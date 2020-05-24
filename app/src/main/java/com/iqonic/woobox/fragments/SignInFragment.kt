@@ -29,14 +29,17 @@ class SignInFragment : BaseFragment() {
         edtPassword.transformationMethod = biggerDotTranformation
 
         edtEmail.setSelection(edtEmail.length())
-        btnSignIn.onClick { if (validate()) doLogin() }
+        btnSignIn.onClick { if (validate())
+            showProgress()
+            (activity as SignInUpActivity).doEmailLogin(edtEmail.textToString(),
+                edtPassword.textToString()) }
         tvForget.onClick { snackBar(context.getString(R.string.lbl_coming_soon)) }
-        ivFaceBook.onClick {
-            (activity as SignInUpActivity).doFacebookLogin()
-        }
-        ivGoogle.onClick {
-            (activity as SignInUpActivity).doGoogleLogin()
-        }
+//        ivFaceBook.onClick {
+//            (activity as SignInUpActivity).doFacebookLogin()
+//        }
+//        ivGoogle.onClick {
+//            (activity as SignInUpActivity).doGoogleLogin()
+//        }
         btnSignUp.onClick { (activity as SignInUpActivity).loadSignUpFragment() }
         tvForget.onClick { showChangePasswordDialog() }
     }
@@ -55,17 +58,17 @@ class SignInFragment : BaseFragment() {
         }
     }
 
-    private fun doLogin() {
-        (activity as AppBaseActivity).signIn(
-            edtEmail.textToString(),
-            edtPassword.textToString(),
-            onResult = {
-                if (it) activity?.launchActivityWithNewTask<DashBoardActivity>()
-            },
-            onError = {
-                activity?.snackBarError(it)
-            })
-    }
+//    private fun doLogin() {
+//        (activity as AppBaseActivity).signIn(
+//            edtEmail.textToString(),
+//            edtPassword.textToString(),
+//            onResult = {
+//                if (it) activity?.launchActivityWithNewTask<DashBoardActivity>()
+//            },
+//            onError = {
+//                activity?.snackBarError(it)
+//            })
+//    }
 
     private fun showChangePasswordDialog() {
         val changePasswordDialog = Dialog(activity!!)

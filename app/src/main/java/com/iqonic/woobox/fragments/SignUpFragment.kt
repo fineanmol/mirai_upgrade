@@ -36,17 +36,14 @@ class SignUpFragment : BaseFragment() {
     }
 
     private fun createCustomer() {
+        showProgress()
         val requestModel = RequestModel()
         requestModel.email = edtEmail.textToString()
         requestModel.first_name = edtFirstName.textToString()
         requestModel.last_name = edtLastName.textToString()
         requestModel.password = edtPassword.textToString()
         requestModel.username=edtFirstName.textToString()
-        (activity!! as AppBaseActivity).createCustomer(requestModel) {
-            runDelayedOnUiThread(1000) {
-                (activity as SignInUpActivity).loadSignInFragment()
-            }
-        }
+        (activity as SignInUpActivity).addUser(requestModel)
     }
 
     private fun validate(): Boolean {

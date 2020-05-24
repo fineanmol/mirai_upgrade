@@ -22,6 +22,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.firebase.auth.FirebaseUser
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.iqonic.woobox.AppBaseActivity
@@ -338,68 +339,120 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
     })
 }
 
-fun AppBaseActivity.signIn(email: String, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
-    val requestModel = RequestModel()
-    requestModel.username = email
-    requestModel.password = password
+fun AppBaseActivity.createCustomerByEmail(user: FirebaseUser, onApiSuccess: (FirebaseUser) -> Unit) {
     showProgress(true)
-    callApi(getRestApis(false).login(request = requestModel), onApiSuccess = {
-        saveLoginResponse(it,false, password, onResult, onError)
-    }, onApiError = {
-        showProgress(false)
-        onResult(false)
-        onError(it)
-    }, onNetworkError = {
-        showProgress(false)
-        openLottieDialog() {
-            signIn(email, password, onResult, onError)
-        }
-    })
+
+    showProgress(false)
+    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName)
+    getSharedPrefInstance().setValue(USER_EMAIL, user.email)
+    var firstName = ""
+    var lastName = ""
+    if (user.displayName != null && user?.displayName?.split(" ")?.size!! >= 2) {
+        firstName = user.displayName?.split(" ")?.get(0)!!
+        lastName = user.displayName?.split(" ")?.get(1)!!
+    }
+    getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
+    getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
+    onApiSuccess(user)
+    sendProfileUpdateBroadcast()
+
 }
 
-fun AppBaseActivity.socialLogin(email:String,accessToken: String, firstName: String, lastName: String, loginType: String, photoURL: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
-    val requestModel = RequestModel()
-    requestModel.email = email
-    requestModel.accessToken = accessToken
-    requestModel.firstName = firstName
-    requestModel.lastName = lastName
-    requestModel.loginType = loginType
-    requestModel.photoURL = photoURL
+//fun AppBaseActivity.signIn(email: String, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
+//    val requestModel = RequestModel()
+//    requestModel.username = email
+//    requestModel.password = password
+//    showProgress(true)
+//    callApi(getRestApis(false).login(request = requestModel), onApiSuccess = {
+//        saveLoginResponse(it,false, password, onResult, onError)
+//    }, onApiError = {
+//        showProgress(false)
+//        onResult(false)
+//        onError(it)
+//    }, onNetworkError = {
+//        showProgress(false)
+//        openLottieDialog() {
+//            signIn(email, password, onResult, onError)
+//        }
+//    })
+//}
+
+fun AppBaseActivity.signInEmail(user:FirebaseUser, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
     showProgress(true)
-    callApi(getRestApis(false).socialLogin(request = requestModel), onApiSuccess = {
-        saveLoginResponse(it,true, accessToken, onResult, onError)
-    }, onApiError = {
-        showProgress(false)
-        onResult(false)
-        onError(it)
-    }, onNetworkError = {
-        showProgress(false)
-        openLottieDialog() {
-            socialLogin(email,accessToken, firstName, lastName, loginType, photoURL, onResult, onError)
-        }
-    })
+//    callApi(getRestApis(false).login(request = requestModel), onApiSuccess = {
+//        saveLoginResponse(it,false, password, onResult, onError)
+//    }, onApiError = {
+//        showProgress(false)
+//        onResult(false)
+//        onError(it)
+//    }, onNetworkError = {
+//        showProgress(false)
+//        openLottieDialog() {
+//            signInEmail(user, onResult, onError)
+//        }
+//    })
+    saveLoginResponse(user,false,"",onResult,onError)
 }
 
-fun AppBaseActivity.saveLoginResponse(it: LoginResponse,isSocialLogin:Boolean, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
-    if (it.user_role?.isNotEmpty()!!) {
-        if (it.user_role[0] == "administrator") {
+
+//fun AppBaseActivity.socialLogin(email:String,accessToken: String, firstName: String, lastName: String, loginType: String, photoURL: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
+//    val requestModel = RequestModel()
+//    requestModel.email = email
+//    requestModel.accessToken = accessToken
+//    requestModel.firstName = firstName
+//    requestModel.lastName = lastName
+//    requestModel.loginType = loginType
+//    requestModel.photoURL = photoURL
+//    showProgress(true)
+//    callApi(getRestApis(false).socialLogin(request = requestModel), onApiSuccess = {
+//        saveLoginResponse(it,true, accessToken, onResult, onError)
+//    }, onApiError = {
+//        showProgress(false)
+//        onResult(false)
+//        onError(it)
+//    }, onNetworkError = {
+//        showProgress(false)
+//        openLottieDialog() {
+//            socialLogin(email,accessToken, firstName, lastName, loginType, photoURL, onResult, onError)
+//        }
+//    })
+//}
+
+fun AppBaseActivity.saveLoginResponse(it: FirebaseUser,isSocialLogin:Boolean, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
+    if (true) {
+        if (false) {
             showProgress(false)
             onError("Admin is not allowed")
         } else {
-            if (it.user_id != null) {
-                getSharedPrefInstance().setValue(USER_ID, it.user_id)
+            if (it.uid != null) {
+                getSharedPrefInstance().setValue(USER_ID, it.uid)
             }
-            getSharedPrefInstance().setValue(USER_DISPLAY_NAME, it.user_display_name)
-            getSharedPrefInstance().setValue(USER_EMAIL, it.user_email)
-            getSharedPrefInstance().setValue(USER_NICE_NAME, it.user_nicename)
-            getSharedPrefInstance().setValue(USER_TOKEN, it.token)
-            if (it.profile_image.isNotEmpty()){
-                getSharedPrefInstance().setValue(USER_PROFILE, it.profile_image)
+            getSharedPrefInstance().setValue(USER_DISPLAY_NAME, it.displayName)
+            getSharedPrefInstance().setValue(USER_EMAIL, it.email)
+            getSharedPrefInstance().setValue(USER_NICE_NAME, it.displayName)
+            getSharedPrefInstance().setValue(USER_TOKEN, it.providerId)
+            if (it.displayName?.isNotEmpty()!!){
+                getSharedPrefInstance().setValue(USER_PROFILE, it.displayName)
             }
             getSharedPrefInstance().setValue(IS_SOCIAL_LOGIN,isSocialLogin)
             getSharedPrefInstance().setValue(Constants.SharedPref.USER_PASSWORD, password)
 
-            callApi(getRestApis().retrieveCustomer(), onApiSuccess = { response ->
+            getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
+            var firstName = ""
+            var lastName = ""
+            if (it.displayName != null && it.displayName?.split(" ")?.size!! >= 2) {
+                firstName = it.displayName?.split(" ")?.get(0)!!
+                lastName = it.displayName?.split(" ")?.get(1)!!
+            } else {
+                var userName = it.displayName!!
+            }
+            getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
+            getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
+            //getSharedPrefInstance().setValue(USER_ROLE, response.role)
+            getSharedPrefInstance().setValue(USER_USERNAME, it.email)
+            getSharedPrefInstance().setValue(IS_LOGGED_IN, true)
+            onResult(true)
+            /*callApi(getRestApis().retrieveCustomer(), onApiSuccess = { response ->
                 showProgress(false)
                 getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
                 getSharedPrefInstance().setValue(USER_FIRST_NAME, response.first_name)
@@ -415,7 +468,7 @@ fun AppBaseActivity.saveLoginResponse(it: LoginResponse,isSocialLogin:Boolean, p
             }, onNetworkError = {
                 showProgress(false)
                 noInternetSnackBar()
-            })
+            })*/
         }
     }
 }
