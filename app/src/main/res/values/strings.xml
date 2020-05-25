@@ -40,7 +40,7 @@
     <string name="lbl_optic">Optic</string>
     <string name="lbl_bags">Bags</string>
     <string name="lbl_1">1</string>
-    <string name="lbl_add_to_cart">Submit Ads</string>
+    <string name="lbl_add_to_cart">Create Your Ads</string>
     <string name="lbl_buy_now">Buy Now</string>
     <string name="lbl_check_availability">Check Availability</string>
     <string name="lbl_delivery_by">Delivery By</string>
@@ -359,6 +359,7 @@
     <string name="lbl_great_deal">Great Deals</string>
     <string name="load_more">Load More</string>
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
+    <string name="lbl_edit_form">Edit Form</string>
 
     <string-array name="qty_array">
         <item>1</item>

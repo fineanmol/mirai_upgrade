@@ -1,7 +1,10 @@
 package com.tragicbytes.midi.activity
 
+import android.app.DatePickerDialog
 import android.graphics.Color
+import android.icu.util.Calendar
 import android.os.Bundle
+import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
@@ -18,7 +21,31 @@ import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
+import kotlinx.android.synthetic.main.activity_ads_detail.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.activity_product_detail.btnAddCard
+import kotlinx.android.synthetic.main.activity_product_detail.btnOutOfStock
+import kotlinx.android.synthetic.main.activity_product_detail.dots
+import kotlinx.android.synthetic.main.activity_product_detail.ivBack
+import kotlinx.android.synthetic.main.activity_product_detail.ivFavourite
+import kotlinx.android.synthetic.main.activity_product_detail.llHeight
+import kotlinx.android.synthetic.main.activity_product_detail.llLength
+import kotlinx.android.synthetic.main.activity_product_detail.llMoreInfo
+import kotlinx.android.synthetic.main.activity_product_detail.llWidth
+import kotlinx.android.synthetic.main.activity_product_detail.productViewPager
+import kotlinx.android.synthetic.main.activity_product_detail.rvSize
+import kotlinx.android.synthetic.main.activity_product_detail.toolbar_layout
+import kotlinx.android.synthetic.main.activity_product_detail.tvAllReviews
+import kotlinx.android.synthetic.main.activity_product_detail.tvAvailability
+import kotlinx.android.synthetic.main.activity_product_detail.tvHeight
+import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductDiscount
+import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductOriginalPrice
+import kotlinx.android.synthetic.main.activity_product_detail.tvLength
+import kotlinx.android.synthetic.main.activity_product_detail.tvPrice
+import kotlinx.android.synthetic.main.activity_product_detail.tvSelectedQuantity
+import kotlinx.android.synthetic.main.activity_product_detail.tvSize
+import kotlinx.android.synthetic.main.activity_product_detail.tvWidth
+import kotlinx.android.synthetic.main.activity_product_detail.txtDescription
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
@@ -42,6 +69,9 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
     private var sizeAdapter: RecyclerViewAdapter<String>? = null
+    private var mMonth = 0
+    private var mYear: Int = 0
+    private var mDay: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +133,40 @@ class ProductDetailActivity : AppBaseActivity() {
                 launchActivity<SignInUpActivity>()
             }
         }*/
+
+        startDateVal.setOnClickListener(View.OnClickListener {
+            val c = Calendar.getInstance()
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    startDateVal.text =
+                        dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+        })
+        endDateVal.setOnClickListener(View.OnClickListener {
+            val c = Calendar.getInstance()
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+        })
 
 
     }
@@ -190,8 +254,9 @@ class ProductDetailActivity : AppBaseActivity() {
         }*/
 
         tvAllReviews.onClick {
-            launchActivity<ReviewsActivity> {
-                putExtra(DATA, mProductModel)
+
+            launchActivity<AdvertisementFormActivity> {
+                //  putExtra(DATA, mProductModel)
             }
         }
     }
@@ -203,7 +268,7 @@ class ProductDetailActivity : AppBaseActivity() {
         tvAvailability.text = getString(R.string.lbl_in_stock)
         btnAddCard.onClick {
             if (isLoggedIn()) {
-                if (isExistInCart(mProductModel)) removeCartItem() else addItemToCart()
+                launchActivity<AdvertisementFormActivity>()
             } else {
                 launchActivity<SignInUpActivity>()
             }

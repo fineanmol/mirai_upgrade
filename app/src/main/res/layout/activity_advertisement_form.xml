@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background_color"
+    tools:context=".activity.AdvertisementFormActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/editLogoImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_xlarge">
+
+                <com.tragicbytes.midi.utils.CircleImageView
+                    android:id="@+id/ivAdsImage"
+                    android:layout_width="@dimen/_110sdp"
+                    android:layout_height="@dimen/_110sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/spacing_standard"
+                    android:layout_marginEnd="@dimen/spacing_standard"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile"
+                    app:civ_border_overlay="true"
+                    app:civ_border_color="@color/view_color"
+                    app:civ_border_width="@dimen/_4sdp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_marginEnd="@dimen/spacing_standard"
+                    android:layout_marginBottom="@dimen/spacing_standard_new"
+                    android:background="@drawable/circle_white"
+                    android:padding="@dimen/_6sdp"
+                    android:src="@drawable/ic_camera"
+                    android:tint="@color/colorPrimaryDark"
+                    app:layout_anchor="@id/ivAdsImage"
+                    app:layout_anchorGravity="end|bottom" />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <EditText
+                    android:id="@+id/editAdsName"
+                    style="@style/TextInputEditTextStyle"
+                    android:lines="2" />
+
+                <TextView
+                    android:text="Ads Name"
+                    style="@style/TextInputLayoutStyle" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <EditText
+                    android:id="@+id/edtDescription"
+                    style="@style/TextInputEditTextStyle"
+                    android:singleLine="false"
+                    />
+
+                <TextView
+                    android:text="Description"
+                    style="@style/TextInputLayoutStyle" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <EditText
+                    android:id="@+id/edtTagline"
+                    style="@style/TextInputEditTextStyle"
+                    android:singleLine="true"
+                    android:lines="2"
+                    />
+                <TextView
+                    android:text="Tagline"
+                    style="@style/TextInputLayoutStyle" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/spacing_standard"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/edtBrandName"
+                        style="@style/TextInputEditTextStyle"
+                        android:singleLine="true"
+                        android:lines="2"
+                        />
+
+                    <TextView
+                        android:text="BrandName"
+                        style="@style/TextInputLayoutStyle" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/spacing_standard"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/edtState"
+                        style="@style/TextInputEditTextStyle"
+                        />
+
+                    <TextView
+                        android:text="@string/hint_state"
+                        style="@style/TextInputLayoutStyle" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginEnd="@dimen/spacing_standard"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/edtCountry"
+                        style="@style/TextInputEditTextStyle"
+                        />
+
+                    <TextView
+                        android:text="@string/lbl_country"
+                        style="@style/TextInputLayoutStyle" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:layout_marginStart="@dimen/spacing_standard"
+
+                    >
+
+                    <EditText
+                        android:id="@+id/edtPinCode"
+                        android:inputType="number"
+                        style="@style/TextInputEditTextStyle"
+                        />
+
+                    <TextView
+                        android:text="@string/hint_pin_code"
+                        style="@style/TextInputLayoutStyle" />
+
+                </RelativeLayout>
+
+
+
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard_new">
+
+                <EditText
+                    android:id="@+id/edtMobileNo"
+                    style="@style/TextInputEditTextStyle"
+                    android:maxEms="15"
+                    android:inputType="number"
+                    />
+
+                <TextView
+                    android:text="@string/hint_mobile_no"
+                    style="@style/TextInputLayoutStyle" />
+
+            </RelativeLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveAdsData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MaterialButtonStyle.Filled"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:text="Save Ads Data" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
