@@ -4,16 +4,19 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
 import androidx.core.content.FileProvider
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_advertisement_form.*
@@ -25,10 +28,13 @@ import java.io.File
 class AdvertisementFormActivity : AppBaseActivity() {
     private var encodedImage: String? = null
 
+    private lateinit var dbReference:DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advertisement_form)
         setToolbar(toolbar)
+        dbReference = FirebaseDatabase.getInstance().reference
         title=getString(R.string.lbl_edit_form)
         setUpListener()
     }
@@ -82,6 +88,22 @@ class AdvertisementFormActivity : AppBaseActivity() {
         btnSaveAdsData.onClick {
             if (validate()) {
                 showProgress(true)
+                var adDetails=AdDetails(
+                    editAdsName.textToString(),
+                    edtAdDescription.textToString(),
+                    edtAdTagline.textToString(),
+                    edtAdBrandName.textToString())
+
+                addAdvertisement(adDetails,
+                    getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
+                    dbReference,
+                    onSuccess = {
+                    showProgress(false)
+                    if (it){
+                        setResult(Activity.RESULT_OK)
+                        finish()
+                    }
+                })
                 /*updateProfile()*/
             }
         }
@@ -129,17 +151,17 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 editAdsName.showError(getString(R.string.error_field_required))
                 false
             }
-            edtDescription.checkIsEmpty() -> {
-                edtDescription.showError(getString(R.string.error_field_required))
+            edtAdDescription.checkIsEmpty() -> {
+                edtAdDescription.showError(getString(R.string.error_field_required))
                 false
             }
-            edtTagline.checkIsEmpty() -> {
-                edtTagline.showError(getString(R.string.error_field_required))
+            edtAdTagline.checkIsEmpty() -> {
+                edtAdTagline.showError(getString(R.string.error_field_required))
                 false
             }
 
-            edtBrandName.checkIsEmpty() -> {
-                edtBrandName.showError(getString(R.string.error_field_required))
+            edtAdBrandName.checkIsEmpty() -> {
+                edtAdBrandName.showError(getString(R.string.error_field_required))
                 false
             }
             /*editLogoImage.checkIsEmpty() -> {

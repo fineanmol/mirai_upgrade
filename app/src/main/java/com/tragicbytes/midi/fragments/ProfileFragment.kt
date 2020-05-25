@@ -27,12 +27,17 @@ import android.graphics.BitmapFactory
 import com.tragicbytes.midi.R
 import com.theartofdev.edmodo.cropper.CropImage
 import android.app.Activity.RESULT_OK
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.theartofdev.edmodo.cropper.CropImageView
+import com.tragicbytes.midi.utils.Constants
 
 
 class ProfileFragment : BaseFragment() {
 
+    private lateinit var dbReference: DatabaseReference
 
     private var encodedImage: String? = null
 
@@ -211,6 +216,40 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun updateProfile() {
+        val user = FirebaseAuth.getInstance().currentUser!!
+        dbReference = FirebaseDatabase.getInstance().reference
+
+        if(edtEmail.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)){
+            (activity as AppBaseActivity).updateEmail(user,edtEmail.textToString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
+        if(edtFirstName.textToString()+" "+edtLastName.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DISPLAY_NAME)){
+            (activity as AppBaseActivity).updateName(user,edtFirstName.textToString()+" "+edtLastName.textToString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
+        if(edtMobileNo.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)){
+            (activity as AppBaseActivity).updatePhone(user,edtMobileNo.textToString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
+        if(edtDOB.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB)){
+            (activity as AppBaseActivity).updateDOB(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtDOB.textToString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
+        if(spnGender.selectedItem.toString()!=getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_GENDER)){
+
+            (activity as AppBaseActivity).updateGender(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,spnGender.selectedItem.toString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
         val requestModel = RequestModel()
         requestModel.email = edtEmail.textToString()
         requestModel.first_name = edtFirstName.textToString()

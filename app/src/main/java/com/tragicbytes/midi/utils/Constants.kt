@@ -72,6 +72,9 @@ object Constants {
         const val IS_SOCIAL_LOGIN = "is_social_login"
         const val KEY_DASHBOARD = "selected_dashboard"
         const val KEY_ADDRESS = "selected_address"
+        const val USER_PHONE="phone_number"
+        const val USER_DOB="DOB"
+        const val USER_GENDER="GENDER"
     }
 
     object KeyIntent {

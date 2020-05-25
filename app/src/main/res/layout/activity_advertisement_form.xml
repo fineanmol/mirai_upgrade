@@ -79,7 +79,7 @@
                 android:layout_marginTop="@dimen/spacing_standard_new">
 
                 <EditText
-                    android:id="@+id/edtDescription"
+                    android:id="@+id/edtAdDescription"
                     style="@style/TextInputEditTextStyle"
                     android:singleLine="false"
                     />
@@ -98,7 +98,7 @@
                 android:layout_marginTop="@dimen/spacing_standard_new">
 
                 <EditText
-                    android:id="@+id/edtTagline"
+                    android:id="@+id/edtAdTagline"
                     style="@style/TextInputEditTextStyle"
                     android:singleLine="true"
                     android:lines="2"
@@ -125,7 +125,7 @@
                     >
 
                     <EditText
-                        android:id="@+id/edtBrandName"
+                        android:id="@+id/edtAdBrandName"
                         style="@style/TextInputEditTextStyle"
                         android:singleLine="true"
                         android:lines="2"

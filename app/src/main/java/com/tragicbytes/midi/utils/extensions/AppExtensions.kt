@@ -23,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tragicbytes.midi.AppBaseActivity
@@ -757,3 +759,120 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
         noInternetSnackBar();onSuccess(false)
     })
 }
+
+fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:DatabaseReference, onSuccess: (Boolean) -> Unit) {
+//    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
+//        fetchAndStoreAddressData()
+//        onSuccess(true)
+//    }, onApiError = {
+//        snackBarError(it); onSuccess(false)
+//    }, onNetworkError = {
+//        noInternetSnackBar(); onSuccess(false)
+//    })
+    dbReference.child(userId).child("adDetails").setValue(adDetails).addOnCompleteListener {
+        if(it.isSuccessful){
+            onSuccess(true)
+        }
+        else{
+            snackBarError(it.exception!!.localizedMessage); onSuccess(false)
+        }
+    }
+}
+
+fun AppBaseActivity.updateEmail(
+    user: FirebaseUser,
+    newUserEmail: String,
+    onApiSuccess: (String) -> Unit
+) {
+
+    user.updateEmail(newUserEmail).addOnCompleteListener {
+        if(it.isSuccessful){
+            showProgress(false)
+            getSharedPrefInstance().setValue(USER_EMAIL, user.email)
+            onApiSuccess("Email Updated!!!")
+            sendProfileUpdateBroadcast()
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+
+}
+
+fun AppBaseActivity.updateName(
+    user: FirebaseUser,
+    displayName: String,
+    onApiSuccess: (String) -> Unit
+) {
+    val profileUpdates = UserProfileChangeRequest.Builder()
+        .setDisplayName(displayName)
+        .build()
+    user.updateProfile(profileUpdates).addOnCompleteListener {
+        if(it.isSuccessful){
+            showProgress(false)
+            getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName)
+            getSharedPrefInstance().setValue(USER_NICE_NAME, user.displayName)
+            getSharedPrefInstance().setValue(USER_PROFILE, user.displayName)
+            var firstName = ""
+            var lastName = ""
+            if (user.displayName != null && user.displayName?.split(" ")?.size!! >= 2) {
+                firstName = user.displayName?.split(" ")?.get(0)!!
+                lastName = user.displayName?.split(" ")?.get(1)!!
+            } else {
+                var userName = user.displayName!!
+            }
+            getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
+            getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
+            onApiSuccess("Name Updated!!!")
+            sendProfileUpdateBroadcast()
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+}
+
+fun AppBaseActivity.updatePhone(
+    user: FirebaseUser,
+    phone: String,
+    onApiSuccess: (String) -> Unit
+) {
+
+}
+
+fun AppBaseActivity.updateDOB(
+    userId:String,
+    dbReference: DatabaseReference,
+    dob: String,
+    onApiSuccess: (String) -> Unit
+) {
+    dbReference.child(userId).child("profileExtras/DOB").setValue(dob).addOnCompleteListener {
+        if(it.isSuccessful){
+            onApiSuccess("DOB Updated")
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+}
+
+fun AppBaseActivity.updateGender(
+    userId:String,
+    dbReference: DatabaseReference,
+    gender: String,
+    onApiSuccess: (String) -> Unit
+) {
+    dbReference.child(userId).child("profileExtras/Gender").setValue(gender).addOnCompleteListener {
+        if(it.isSuccessful){
+            onApiSuccess("Gender Updated")
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+}
+
