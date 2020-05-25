@@ -360,7 +360,7 @@
     <string name="lbl_great_deal">Great Deals</string>
     <string name="load_more">Load More</string>
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
-    <string name="lbl_edit_form">Edit Form</string>
+
 
     <string-array name="qty_array">
         <item>1</item>
