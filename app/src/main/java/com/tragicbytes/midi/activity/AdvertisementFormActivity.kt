@@ -102,7 +102,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                             .setRequestedSize(300,300)
                             .setOutputCompressQuality(40)
                                 .start(this@AdvertisementFormActivity)
-                         // .start(context,this@AdvertisementFormActivity)
+
 
                     } else {
                         this@AdvertisementFormActivity!!.showPermissionAlert(this)
