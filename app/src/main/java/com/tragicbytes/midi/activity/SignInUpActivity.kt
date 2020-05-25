@@ -8,6 +8,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookSdk
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.*
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
@@ -199,6 +200,15 @@ class SignInUpActivity : AppBaseActivity() {
                     task.isSuccessful -> {
                         val user = mAuth!!.currentUser!!
                         println(user.email.toString())
+                        /*Send verification email*/
+                        if(!user!!.isEmailVerified) {
+                            user.sendEmailVerification()
+                                .addOnCompleteListener{ task ->
+                                    if(task.isSuccessful) snackBar("Verification mail sent to "+user.email.toString() ,Snackbar.LENGTH_SHORT)
+                                }
+                        }
+
+                        /*Send verification email End*/
 
                         val profileUpdates = UserProfileChangeRequest.Builder()
                             .setDisplayName(requestModel.first_name.toString()+" "+requestModel.last_name.toString())
@@ -207,6 +217,9 @@ class SignInUpActivity : AppBaseActivity() {
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     println(user.displayName.toString())
+
+
+
 
                                 }
                                 else{
