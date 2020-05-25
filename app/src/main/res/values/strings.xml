@@ -183,7 +183,7 @@
     <string name="hint_address">Address</string>
     <string name="hint_state">State</string>
     <string name="hint_address_type">Address Type</string>
-    <string name="hint_city">Brand Name</string>
+    <string name="hint_city">City</string>
     <string name="hint_pin_code">Pin code</string>
     <string name="hint_mobile_no">Phone number</string>
     <string name="text_collection_2019">Collection 2019</string>
@@ -235,6 +235,7 @@
     <string name="lbl_save_profile">Save Profile</string>
     <string name="lbl_change_pswd">Change Password</string>
     <string name="lbl_edit_profile">Edit Profile</string>
+    <string name="lbl_edit_form" translatable="false">Edit Form</string>
     <string name="error_phone_no">Enter Valid Phone Number</string>
     <string name="hint_first_name">First Name</string>
     <string name="hint_last_name">Last name</string>
@@ -338,8 +339,8 @@
     <string name="lbl_select_dashboard">Select Dashboard</string>
     <string name="lbl_done">Done</string>
     <string name="lbl_country">Country</string>
-    <string name="hint_address_line_1">Description*</string>
-    <string name="hint_address_line_2">Tagline</string>
+    <string name="hint_address_line_1">Address 1*</string>
+    <string name="hint_address_line_2">Address 2</string>
     <string name="lbl_change_dashboard">Change Dashboard</string>
     <string name="lbl_more_info">More Info</string>
     <string name="lbl_please_wait">Please Wait</string>
