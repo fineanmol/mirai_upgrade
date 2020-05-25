@@ -207,6 +207,7 @@ class SignInUpActivity : AppBaseActivity() {
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     println(user.displayName.toString())
+
                                 }
                                 else{
 

@@ -114,6 +114,13 @@
                 android:gravity="start"
 
                 android:inputType="textEmailAddress" />
+            <EditText
+                android:id="@+id/edtDOB"
+                style="@style/FieldRounded"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:hint="Date of Birth"
+                android:gravity="start"
+                android:inputType="textEmailAddress" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSaveProFile"
