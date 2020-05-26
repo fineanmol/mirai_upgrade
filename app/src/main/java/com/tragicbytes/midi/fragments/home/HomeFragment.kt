@@ -3,11 +3,13 @@ package com.tragicbytes.midi.fragments.home
 import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.gson.Gson
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
+import com.tragicbytes.midi.activity.ViewAllProductActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.base.BaseRecyclerAdapter
@@ -15,6 +17,8 @@ import com.tragicbytes.midi.databinding.ItemCategoryBinding
 import com.tragicbytes.midi.fragments.BaseFragment
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
+import com.tragicbytes.midi.utils.Constants.KeyIntent.TITLE
+import com.tragicbytes.midi.utils.Constants.KeyIntent.VIEWALLID
 import com.tragicbytes.midi.utils.Constants.SharedPref.CATEGORY_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CONTACT
 import com.tragicbytes.midi.utils.Constants.SharedPref.COPYRIGHT_TEXT
@@ -28,10 +32,13 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.TERM_CONDITION
 import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
 import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
+import com.tragicbytes.midi.utils.Constants.ViewAllCode.FEATURED
+import com.tragicbytes.midi.utils.Constants.ViewAllCode.NEWEST
+import com.tragicbytes.midi.utils.Constants.ViewAllCode.RECENTSEARCH
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.item_offer.*
 import kotlinx.android.synthetic.main.item_testimonial.view.*
-
 
 class HomeFragment : BaseFragment() {
 
@@ -47,6 +54,8 @@ class HomeFragment : BaseFragment() {
     private var mRecentProductAdapter: RecyclerViewAdapter<ProductDataNew>? = null
     private var mTestimonialsAdapter: RecyclerViewAdapter<Testimonials>? = null
 
+
+
     var onNetworkRetry: (() -> Unit)? = null
     //endregion
 
@@ -60,7 +69,10 @@ class HomeFragment : BaseFragment() {
 
         imgLayoutParams = activity?.productLayoutParams()
 
-     rcvFeaturedProducts.setHorizontalLayout(); rcvCategory.setHorizontalLayout()
+        rcvRecentSearch.setHorizontalLayout(); rcvNewestProduct.setHorizontalLayout();
+        rcvFeaturedProducts.setVerticalLayout();
+        rcvCategory.setHorizontalLayout()
+        rcvDealProducts.setHorizontalLayout(); rcvYouMayLikeProducts.setHorizontalLayout(); rcvOfferProducts.setHorizontalLayout(); rcvSuggestedProducts.setHorizontalLayout()
         rcvTestimonials.setHorizontalLayout()
         mCategoryAdapter = activity!!.getCategoryAdapter(); rcvCategory.adapter = mCategoryAdapter
 
@@ -159,9 +171,11 @@ class HomeFragment : BaseFragment() {
             }
 
             if (it.newest.isEmpty()) {
-
+                rlNewestProduct.hide()
+                rcvNewestProduct.hide()
             } else {
-
+                rlNewestProduct.show()
+                rcvNewestProduct.show()
                 mNewArrivalProductAdapter?.addItems(it.newest)
             }
             if (it.featured.isEmpty()) {
@@ -182,39 +196,47 @@ class HomeFragment : BaseFragment() {
             }
 
             if (it.deal_product.isEmpty()) {
-
+                rlDeal.hide()
+                rcvDealProducts.hide()
             } else {
-
+                rlDeal.show()
+                rcvDealProducts.show()
                 mDealProductAdapter?.addItems(it.deal_product)
             }
             if (it.you_may_like.isEmpty()) {
-
+                rlYouMayLike.hide()
+                rcvYouMayLikeProducts.hide()
             } else {
-
+                rlYouMayLike.show()
+                rcvYouMayLikeProducts.show()
                 mYouMayLikeProductAdapter?.addItems(it.newest)
             }
             if (it.offer.isEmpty()) {
-
+                rlOffer.hide()
+                rcvOfferProducts.hide()
             } else {
-
+                rlOffer.show()
+                rcvOfferProducts.show()
                 mOfferProductAdapter?.addItems(it.offer)
             }
             if (it.suggested_product.isEmpty()) {
-
+                rlSuggested.hide()
+                rcvSuggestedProducts.hide()
             } else {
-
+                rlSuggested.show()
+                rcvSuggestedProducts.show()
                 mSuggestedProductAdapter?.addItems(it.suggested_product)
             }
 
             if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
-
+                ivBanner1.show(); ivBanner1.loadImageFromUrl(it.banner_1.image); ivBanner1.onClick { activity?.openCustomTab(it.banner_1.url) }
             } else {
-
+                ivBanner1.hide()
             }
             if (it.banner_2 != null && it.banner_2.url.isNotEmpty()) {
-
+                ivBanner2.show(); ivBanner2.loadImageFromUrl(it.banner_2.image); ivBanner2.onClick { activity?.openCustomTab(it.banner_2.url) }
             } else {
-
+                ivBanner2.hide()
             }
             if (it.banner_3 != null && it.banner_3.url.isNotEmpty()) {
                 ivBanner3.show(); ivBanner3.loadImageFromUrl(it.banner_3.image); ivBanner3.onClick { activity?.openCustomTab(it.banner_3.url) }
@@ -278,7 +300,7 @@ class HomeFragment : BaseFragment() {
     //region RecyclerViews and Adapters
     private fun setupRecentProductAdapter() {
         mRecentProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-
+        rcvRecentSearch.adapter = mRecentProductAdapter
 
         mRecentProductAdapter?.onItemClick = { pos, view, item ->
             activity?.launchActivity<ProductDetailActivity> { putExtra(DATA, item) }
@@ -287,68 +309,75 @@ class HomeFragment : BaseFragment() {
         mRecentProductAdapter?.addItems(getRecentItems())
         mRecentProductAdapter?.setModelSize(5)
 
-
+        if (mRecentProductAdapter != null && mRecentProductAdapter!!.itemCount <= 0) rlRecentSearch.hide() else rlRecentSearch.show()
     }
 
     private fun setupNewArrivalProductAdapter() {
         mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-       /* rcvNewestProduct.adapter = mNewArrivalProductAdapter*/
+        rcvNewestProduct.adapter = mNewArrivalProductAdapter
 
         mNewArrivalProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
-
+            rlRecentSearch.show()
         }
     }
 
     private fun setupFeaturedProductAdapter() {
+
         mFeaturedProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
+        rcvFeaturedProducts.layoutManager = GridLayoutManager(activity,2)
         rcvFeaturedProducts.adapter = mFeaturedProductAdapter
 
         mFeaturedProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
-
+            rlRecentSearch.show()
         }
     }
 
     private fun setupOfferProductAdapter() {
         mOfferProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
+        rcvOfferProducts.adapter = mOfferProductAdapter
 
         mOfferProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
+            rlRecentSearch.show()
         }
     }
 
     private fun setupSuggestedProductAdapter() {
         mSuggestedProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
+        rcvSuggestedProducts.adapter = mSuggestedProductAdapter
 
         mSuggestedProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
+            rlRecentSearch.show()
         }
     }
 
     private fun setupYouMayLikeProductAdapter() {
         mYouMayLikeProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-
+        rcvYouMayLikeProducts.adapter = mYouMayLikeProductAdapter
 
         mYouMayLikeProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
-
+            rlRecentSearch.show()
         }
     }
 
     private fun setupDealProductAdapter() {
         mDealProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-
+        rcvDealProducts.adapter = mDealProductAdapter
 
         mDealProductAdapter?.onItemClick = { pos, view, item ->
             activity?.showProductDetail(item)
             mRecentProductAdapter?.addItems(getRecentItems())
-     }
+            rlRecentSearch.show()
+        }
     }
 
     private fun setTestimonialAdapter() {
@@ -373,9 +402,54 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setClickEventListener() {
+        viewRecentSearch.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_recent_search))
+                putExtra(VIEWALLID, RECENTSEARCH)
+            }
+        }
 
+        viewFeatured.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_Featured))
+                putExtra(VIEWALLID, FEATURED)
+            }
+        }
 
+        viewNewest.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_newest_product))
+                putExtra(VIEWALLID, NEWEST)
+            }
+        }
 
+        viewOffer.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_offers))
+                putExtra(VIEWALLID, NEWEST)
+            }
+        }
+
+        viewDeal.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_deal))
+                putExtra(VIEWALLID, NEWEST)
+            }
+        }
+
+        viewYouMayLike.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_you_may_like))
+                putExtra(VIEWALLID, NEWEST)
+            }
+        }
+
+        viewSuggested.onClick {
+            activity?.launchActivity<ViewAllProductActivity> {
+                putExtra(TITLE, getString(R.string.lbl_suggested))
+                putExtra(VIEWALLID, NEWEST)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -393,5 +467,4 @@ class HomeFragment : BaseFragment() {
         }
     }
     //endregion
-
 }
