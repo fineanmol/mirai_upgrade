@@ -278,6 +278,14 @@ class ProfileFragment : BaseFragment() {
                 edtEmail.showError(getString(R.string.error_enter_valid_email))
                 false
             }
+            edtMobileNo.checkIsEmpty() -> {
+                edtMobileNo.showError(getString(R.string.error_field_required))
+                false
+            }
+            edtDOB.checkIsEmpty() -> {
+                edtDOB.showError(getString(R.string.error_field_required))
+                false
+            }
             else -> true
         }
 
