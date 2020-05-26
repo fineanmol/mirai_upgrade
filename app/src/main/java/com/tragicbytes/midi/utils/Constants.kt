@@ -40,6 +40,8 @@ object Constants {
         const val USER_ID = "user_id"
         const val USER_DISPLAY_NAME = "user_display_name"
         const val USER_EMAIL = "user_email"
+        const val USER_ORG = "user_org"
+
         const val USER_FIRST_NAME = "user_first_name"
         const val USER_LAST_NAME = "user_last_name"
         const val USER_PASSWORD = "user_password"
@@ -48,6 +50,7 @@ object Constants {
         const val USER_NICE_NAME = "user_nice_name"
         const val USER_TOKEN = "token"
         const val USER_PROFILE = "user_profile"
+        const val USER_PROFILE_URL = "user_profile_url"
         const val SWIPE = "swipe"
         const val SHOW_SWIPE = "showswipe"
         const val KEY_USER_ADDRESS = "user_address"

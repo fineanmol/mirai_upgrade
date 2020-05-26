@@ -181,7 +181,8 @@ class DashBoardActivity : AppBaseActivity() {
                     getString(R.string.lbl_logout_confirmation),
                     onPositiveClick = { _, _ ->
                         clearLoginPref()
-                        launchActivityWithNewTask<DashBoardActivity>()
+                        launchActivityWithNewTask<SignInUpActivity>()
+
                         //recreate()
                     },
                     onNegativeClick = { dialog, _ ->
@@ -380,7 +381,7 @@ class DashBoardActivity : AppBaseActivity() {
 
     fun changeProfile() {
         if (isLoggedIn()) {
-            civProfile.loadImageFromUrl(getUserProfile(), aPlaceHolderImage = R.drawable.ic_profile)
+            civProfile.loadImageFromUrl(getProfileUrl(), aPlaceHolderImage = R.drawable.ic_profile)
         }
     }
 

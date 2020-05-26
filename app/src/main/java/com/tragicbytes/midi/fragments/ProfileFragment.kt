@@ -56,7 +56,11 @@ class ProfileFragment : BaseFragment() {
             edtFirstName.setText(getFirstName())
             edtLastName.setText(getLastName())
             edtFirstName.setSelection(edtFirstName.text.length)
-            ivProfileImage.loadImageFromUrl(getUserProfile(),aPlaceHolderImage = R.drawable.ic_profile)
+            edtMobileNo.setText(getMobile())
+            edtDOB.setText(getDob())
+            edtOrg.setText(getOrg())
+
+            ivProfileImage.loadImageFromUrl(getProfileUrl(),aPlaceHolderImage = R.drawable.ic_profile)
             if (getSharedPrefInstance().getBooleanValue(IS_SOCIAL_LOGIN)) {
                 btnChangePassword.hide()
             } else {
@@ -72,6 +76,7 @@ class ProfileFragment : BaseFragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
+                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, resultUri)
                 ivProfileImage.setImageURI(resultUri)
                 val imageStream = activity!!.contentResolver.openInputStream(resultUri)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
@@ -152,11 +157,19 @@ class ProfileFragment : BaseFragment() {
         showProgress()
         val requestModel = RequestModel()
         requestModel.base64_img = encodedImage
-        activity!!.saveProfileImage(requestModel, onSuccess = {
-            hideProgress()
+        val user = FirebaseAuth.getInstance().currentUser!!
+
+
+        dbReference = FirebaseDatabase.getInstance().reference
+        val photoUri= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PROFILE_URL)
+        (activity as AppBaseActivity).updateProfileUrl(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,photoUri) {
+                snackBar(it)
             encodedImage=null
             (activity as DashBoardActivity).changeProfile()
-        })
+                hideProgress()
+
+        }
+
 
     }
 
@@ -232,13 +245,19 @@ class ProfileFragment : BaseFragment() {
             }
         }
         if(edtMobileNo.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)){
-            (activity as AppBaseActivity).updatePhone(user,edtMobileNo.textToString()) {
+            (activity as AppBaseActivity).updatePhone(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtMobileNo.textToString()) {
                 snackBar(it)
                 hideProgress()
             }
         }
         if(edtDOB.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB)){
             (activity as AppBaseActivity).updateDOB(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtDOB.textToString()) {
+                snackBar(it)
+                hideProgress()
+            }
+        }
+        if(edtOrg.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ORG)){
+            (activity as AppBaseActivity).updateORG(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtOrg.textToString()) {
                 snackBar(it)
                 hideProgress()
             }
@@ -254,6 +273,8 @@ class ProfileFragment : BaseFragment() {
         requestModel.email = edtEmail.textToString()
         requestModel.first_name = edtFirstName.textToString()
         requestModel.last_name = edtLastName.textToString()
+        requestModel.user_org = edtOrg.textToString()
+        requestModel.mobile_no= edtMobileNo.textToString()
         (activity as AppBaseActivity).createCustomer(requestModel) {
             snackBar(getString(R.string.lbl_profile_saved))
                 hideProgress()

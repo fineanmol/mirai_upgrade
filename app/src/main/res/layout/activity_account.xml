@@ -45,7 +45,8 @@
                 android:textSize="@dimen/font_size_large" />
 
             <RelativeLayout
-                android:visibility="gone"
+                android:id="@+id/verifyColumn"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
@@ -130,16 +131,19 @@
                 android:text="@string/lbl_address_manager" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvOrders"
                 style="@style/AccountLabel"
                 android:text="@string/lbl_my_orders" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvOffer"
                 style="@style/AccountLabel"
                 android:text="@string/lbl_my_offers" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvWishlist"
                 style="@style/AccountLabel"
                 android:text="@string/lbl_wish_list" />

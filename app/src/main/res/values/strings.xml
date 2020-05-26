@@ -7,7 +7,7 @@
     <string name="lbl_already_have_a_account">Already have a account?</string>
     <string name="lbl_enter_the_code_nto_verify_email">Enter the Code to Verify Your Email</string>
     <string name="lbl_we_have_sent_you_mail_with_verification_code_to">We have sent you mail with verification code to-</string>
-    <string name="lbl_tep_email">jonndeo@gmail.com</string>
+    <string name="lbl_tep_email">youremail@gmail.com</string>
     <string name="lbl_did_not_receive">Didn\'t receive?</string>
     <string name="lbl_resend_code">Resend code</string>
     <string name="lbl_verify">Verify</string>

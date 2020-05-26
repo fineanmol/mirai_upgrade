@@ -79,7 +79,9 @@ data class LoginData(
     val last_name: String,
     val role: String,
     val shipping: Shipping,
-    val username: String
+    val username: String,
+    val user_dob:String,
+    val user_org:String
 ) : BaseResponse()
 
 data class Shipping(

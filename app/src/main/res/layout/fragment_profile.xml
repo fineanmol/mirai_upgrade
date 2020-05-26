@@ -120,7 +120,14 @@
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:hint="Date of Birth"
                 android:gravity="start"
-                android:inputType="textEmailAddress" />
+                android:inputType="date" />
+            <EditText
+                android:id="@+id/edtOrg"
+                style="@style/FieldRounded"
+                android:layout_marginTop="@dimen/spacing_middle"
+                android:hint="Organization Name"
+                android:gravity="start"
+                android:inputType="textCapWords" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSaveProFile"

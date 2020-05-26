@@ -139,7 +139,7 @@ class SignInUpActivity : AppBaseActivity() {
 
                     //region LoginMethod
                     val user = FirebaseAuth.getInstance().currentUser
-                    Toast.makeText(this, "Login Successfull", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                     var type = "Email"
                     var token = ""
                     if (user != null) {

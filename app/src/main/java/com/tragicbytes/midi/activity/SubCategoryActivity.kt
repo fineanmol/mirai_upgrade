@@ -75,7 +75,7 @@ class SubCategoryActivity : AppBaseActivity() {
         getFeaturedProducts()
         if (mCategoryData.subcategory?.isNotEmpty()!!) {
             setupSubCategory()
-            rcvSubCategory.show()
+            rcvSubCategory.hide()
         } else {
             rcvSubCategory.hide()
         }

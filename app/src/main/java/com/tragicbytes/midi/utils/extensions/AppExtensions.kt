@@ -20,8 +20,10 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
@@ -58,12 +60,17 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_WISHLIST_COUNT
 import com.tragicbytes.midi.utils.Constants.SharedPref.SLIDER_IMAGES_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DISPLAY_NAME
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DOB
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_FIRST_NAME
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_GENDER
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ID
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_LAST_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_NICE_NAME
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ORG
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PHONE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE_URL
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ROLE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_TOKEN
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_USERNAME
@@ -92,6 +99,10 @@ fun getFirstName(): String = getSharedPrefInstance().getStringValue(USER_FIRST_N
 fun getLastName(): String = getSharedPrefInstance().getStringValue(USER_LAST_NAME)
 fun getUserProfile(): String = getSharedPrefInstance().getStringValue(USER_PROFILE)
 fun getEmail(): String = getSharedPrefInstance().getStringValue(USER_EMAIL)
+fun getDob(): String = getSharedPrefInstance().getStringValue(USER_DOB)
+fun getOrg(): String = getSharedPrefInstance().getStringValue(USER_ORG)
+fun getMobile(): String = getSharedPrefInstance().getStringValue(USER_PHONE)
+fun getProfileUrl(): String = getSharedPrefInstance().getStringValue(USER_PROFILE_URL)
 fun getApiToken(): String = getSharedPrefInstance().getStringValue(USER_TOKEN)
 fun getCartCount(): String = getSharedPrefInstance().getIntValue(KEY_CART_COUNT, 0).toString()
 
@@ -109,6 +120,11 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(USER_FIRST_NAME)
     getSharedPrefInstance().removeKey(USER_LAST_NAME)
     getSharedPrefInstance().removeKey(USER_PROFILE)
+    getSharedPrefInstance().removeKey(USER_PROFILE_URL)
+    getSharedPrefInstance().removeKey(USER_DOB)
+    getSharedPrefInstance().removeKey(USER_ORG)
+    getSharedPrefInstance().removeKey(USER_FIRST_NAME)
+    getSharedPrefInstance().removeKey(USER_LAST_NAME)
     getSharedPrefInstance().removeKey(USER_ROLE)
     getSharedPrefInstance().removeKey(USER_USERNAME)
     getSharedPrefInstance().removeKey(WISHLIST_DATA)
@@ -329,6 +345,10 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
         getSharedPrefInstance().setValue(USER_EMAIL, it.email)
         getSharedPrefInstance().setValue(USER_FIRST_NAME, it.first_name)
         getSharedPrefInstance().setValue(USER_LAST_NAME, it.last_name)
+        getSharedPrefInstance().setValue(USER_DOB, it.user_dob)
+        getSharedPrefInstance().setValue(USER_ORG, it.user_org)
+
+
         onApiSuccess(it)
         sendProfileUpdateBroadcast()
     }, onApiError = {
@@ -772,6 +792,7 @@ fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:D
     dbReference.child(userId).child("adDetails").setValue(adDetails).addOnCompleteListener {
         if(it.isSuccessful){
             onSuccess(true)
+            snackBar("Ads Data Saved",Snackbar.LENGTH_SHORT)
         }
         else{
             snackBarError(it.exception!!.localizedMessage); onSuccess(false)
@@ -835,10 +856,40 @@ fun AppBaseActivity.updateName(
 }
 
 fun AppBaseActivity.updatePhone(
-    user: FirebaseUser,
+    userId:String,
+    dbReference: DatabaseReference,
     phone: String,
     onApiSuccess: (String) -> Unit
 ) {
+    dbReference.child(userId).child("profileExtras/Phone").setValue(phone).addOnCompleteListener {
+        if(it.isSuccessful){
+            getSharedPrefInstance().setValue(USER_PHONE, phone)
+            onApiSuccess("Phone Updated")
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+
+}
+fun AppBaseActivity.updateProfileUrl(
+    userId:String,
+    dbReference: DatabaseReference,
+    profileUrl: String,
+    onApiSuccess: (String) -> Unit
+) {
+    dbReference.child(userId).child("profileExtras/ProfileUrl").setValue(profileUrl).addOnCompleteListener {
+        if(it.isSuccessful){
+            getSharedPrefInstance().setValue(USER_PROFILE_URL, profileUrl)
+            onApiSuccess("Profile Pic Updated")
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+
+    }
 
 }
 
@@ -850,7 +901,27 @@ fun AppBaseActivity.updateDOB(
 ) {
     dbReference.child(userId).child("profileExtras/DOB").setValue(dob).addOnCompleteListener {
         if(it.isSuccessful){
+            getSharedPrefInstance().setValue(USER_DOB, dob)
             onApiSuccess("DOB Updated")
+        }
+        else{
+            showProgress(false)
+            snackBarError(it.exception!!.localizedMessage)
+        }
+    }
+}
+
+fun AppBaseActivity.updateORG(
+    userId:String,
+    dbReference: DatabaseReference,
+    org: String,
+    onApiSuccess: (String) -> Unit
+) {
+    dbReference.child(userId).child("profileExtras/ORG").setValue(org).addOnCompleteListener {
+        if(it.isSuccessful){
+            getSharedPrefInstance().setValue(USER_ORG,org)
+
+            onApiSuccess("Organization Name Updated")
         }
         else{
             showProgress(false)
@@ -867,6 +938,7 @@ fun AppBaseActivity.updateGender(
 ) {
     dbReference.child(userId).child("profileExtras/Gender").setValue(gender).addOnCompleteListener {
         if(it.isSuccessful){
+            getSharedPrefInstance().setValue(USER_GENDER,gender)
             onApiSuccess("Gender Updated")
         }
         else{

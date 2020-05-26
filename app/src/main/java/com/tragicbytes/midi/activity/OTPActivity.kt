@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.widget.EditText
+import com.google.firebase.auth.FirebaseAuth
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.utils.OTPEditText
@@ -15,10 +16,12 @@ class OTPActivity : AppBaseActivity() {
 
     private var mEds: Array<EditText?>? = null
     private var timer: CountDownTimer? = null
+    val user = FirebaseAuth.getInstance().currentUser!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otp)
+        emailId.text= user!!.email
         mEds = arrayOf(edDigit1, edDigit2, edDigit3, edDigit4)
         OTPEditText(mEds!!, this,getDrawable(R.color.transparent)!!,getDrawable(R.drawable.bg_unselected_dot)!!)
         mEds!!.forEachIndexed { index, editText ->
