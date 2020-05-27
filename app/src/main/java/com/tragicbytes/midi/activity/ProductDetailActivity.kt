@@ -10,6 +10,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.ProductImageAdapter
@@ -23,29 +24,6 @@ import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.activity_product_detail.btnAddCard
-import kotlinx.android.synthetic.main.activity_product_detail.btnOutOfStock
-import kotlinx.android.synthetic.main.activity_product_detail.dots
-import kotlinx.android.synthetic.main.activity_product_detail.ivBack
-import kotlinx.android.synthetic.main.activity_product_detail.ivFavourite
-import kotlinx.android.synthetic.main.activity_product_detail.llHeight
-import kotlinx.android.synthetic.main.activity_product_detail.llLength
-import kotlinx.android.synthetic.main.activity_product_detail.llMoreInfo
-import kotlinx.android.synthetic.main.activity_product_detail.llWidth
-import kotlinx.android.synthetic.main.activity_product_detail.productViewPager
-import kotlinx.android.synthetic.main.activity_product_detail.rvSize
-import kotlinx.android.synthetic.main.activity_product_detail.toolbar_layout
-import kotlinx.android.synthetic.main.activity_product_detail.tvAllReviews
-import kotlinx.android.synthetic.main.activity_product_detail.tvAvailability
-import kotlinx.android.synthetic.main.activity_product_detail.tvHeight
-import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductDiscount
-import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductOriginalPrice
-import kotlinx.android.synthetic.main.activity_product_detail.tvLength
-import kotlinx.android.synthetic.main.activity_product_detail.tvPrice
-import kotlinx.android.synthetic.main.activity_product_detail.tvSelectedQuantity
-import kotlinx.android.synthetic.main.activity_product_detail.tvSize
-import kotlinx.android.synthetic.main.activity_product_detail.tvWidth
-import kotlinx.android.synthetic.main.activity_product_detail.txtDescription
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
@@ -66,6 +44,12 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mQuntity: String = "1"
     private var mIsGenderExist: Boolean = false
     private var mIsAgeGroupExist: Boolean = false
+    private var mIsStartDateExist: Boolean = false
+    private var mIsEndDateExist: Boolean = false
+    private var mIsStartTimeExist: Boolean = false
+    private var mIsEndTimeExist: Boolean = false
+    private var mIsRangeExist: Boolean = false
+    private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
     private var ageGroupAdapter: RecyclerViewAdapter<String>? = null
@@ -99,6 +83,7 @@ class ProductDetailActivity : AppBaseActivity() {
             var adDetails = intent?.extras?.getSerializable("AdvFormData")
             if (adDetails != null) {
                 adDetails = adDetails as AdDetails
+                txtDescription.setText(adDetails.adDesc)
                 toast(adDetails.adBrandName + " " + adDetails.adDesc)
 
             }
@@ -186,8 +171,6 @@ class ProductDetailActivity : AppBaseActivity() {
         })
 
 
-
-
     }
 
 
@@ -270,14 +253,41 @@ class ProductDetailActivity : AppBaseActivity() {
             launchActivity<ReviewsActivity> {
                 putExtra(DATA, mProductModel)
             }
+
         }*/
 
-        tvAllReviews.onClick {
+        submitForPaymentBtn.onClick {
+            validateAllValue()
+            if(mIsAllDetailsFilled) snackBar("Details filled",Snackbar.LENGTH_SHORT)
 
-            launchActivity<AdvertisementFormActivity> {
-                //  putExtra(DATA, mProductModel)
-            }
         }
+    }
+
+    private fun validateAllValue() {
+        if(!mIsGenderExist) {
+            snackBar("Gender Required ",Snackbar.LENGTH_SHORT)}
+        else if(!mIsAgeGroupExist){
+            snackBar("Age Group Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsStartDateExist){
+            snackBar("Start Date Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsEndDateExist){
+            snackBar("End Date Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsStartTimeExist){
+            snackBar("Start Time Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsEndTimeExist){
+            snackBar("End Time Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsRangeExist){
+            snackBar("RangeRequired",Snackbar.LENGTH_SHORT)
+        }
+        else {
+            mIsAllDetailsFilled= true
+        }
+
     }
 
     private fun setStock(
@@ -405,9 +415,9 @@ class ProductDetailActivity : AppBaseActivity() {
     private fun bindData() {
         txtDescription.setText("short description of the product. We can add as many short description here according to product id")
         val genderList = ArrayList<String>()
-        val genders= listOf("Male","Female","Not Specified","All")
+        val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups= listOf("Teen","Adults","Old","Everyone")
+        val ageGroups = listOf("Teen", "Adults", "Old", "Everyone")
 
         if (genders.isNotEmpty()) {
 
@@ -485,39 +495,40 @@ class ProductDetailActivity : AppBaseActivity() {
 
         if (ageGroups.isNotEmpty()) {
 
-          //  val sizeList = ArrayList<String>()
-          //  val sizes = mProductModel?.size?.split(",")
+            //  val sizeList = ArrayList<String>()
+            //  val sizes = mProductModel?.size?.split(",")
             mIsAgeGroupExist = true && ageGroups.isNotEmpty()
             ageGroups.forEachIndexed { i, s -> ageGroupList.add(s.trim()) }
 
-            ageGroupAdapter = RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
-                if (item.isNotEmpty()) {
-                    view.llSize.show()
-                    view.ivSizeChecked.text = item
-                    if (mIsFirstTimeSize && mProductModel?.size == item) {
-                        mIsFirstTimeSize = false
-                        mSizeFlag = position
-                    }
-                    view.ivSizeChecked.apply {
-                        when (position) {
-                            mSizeFlag -> {
-                                setTextColor(color(R.color.commonColorWhite))
-                                setStrokedBackground(color(R.color.colorPrimary))
-                            }
-                            else -> {
-                                setTextColor(color(R.color.textColorPrimary))
-                                setStrokedBackground(
-                                    0,
-                                    strokeColor = color(R.color.view_color)
-                                )
-                            }
+            ageGroupAdapter =
+                RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
+                    if (item.isNotEmpty()) {
+                        view.llSize.show()
+                        view.ivSizeChecked.text = item
+                        if (mIsFirstTimeSize && mProductModel?.size == item) {
+                            mIsFirstTimeSize = false
+                            mSizeFlag = position
                         }
+                        view.ivSizeChecked.apply {
+                            when (position) {
+                                mSizeFlag -> {
+                                    setTextColor(color(R.color.commonColorWhite))
+                                    setStrokedBackground(color(R.color.colorPrimary))
+                                }
+                                else -> {
+                                    setTextColor(color(R.color.textColorPrimary))
+                                    setStrokedBackground(
+                                        0,
+                                        strokeColor = color(R.color.view_color)
+                                    )
+                                }
+                            }
 
+                        }
+                    } else {
+                        view.llSize.hide()
                     }
-                } else {
-                    view.llSize.hide()
-                }
-            })
+                })
             ageGroupAdapter?.onItemClick = { pos, view, item ->
                 mSizeFlag = pos
                 ageGroupAdapter?.notifyDataSetChanged()
@@ -555,74 +566,6 @@ class ProductDetailActivity : AppBaseActivity() {
         ivFavourite.setImageResource(drawable)
         ivFavourite.applyColorFilter(color(iconTint))
         ivFavourite.changeBackgroundTint(color(backgroundColor))
-    }
-
-    private fun addItemToCart() {
-        if (mProductModel?.stock_quantity != null && mProductModel?.stock_quantity!! < 1) {
-            toast(R.string.msg_sold_out); return
-        }
-        val requestModel = RequestModel(); requestModel.pro_id =
-            mProductModel?.pro_id.toString(); requestModel.quantity = mQuntity.toInt()
-        requestModel.color = "";requestModel.size = ""
-        if (mIsGenderExist) {
-            val selectedColors = getSelectedColors()
-            if (selectedColors != null) {
-                requestModel.color = selectedColors
-            } else {
-                snackBar(getString(R.string.msg_selectcolorsize))
-                return
-            }
-        }
-        if (mIsAgeGroupExist) {
-            val selectedSize = getSelectedSize()
-            if (selectedSize != null) {
-                requestModel.size = selectedSize
-            } else {
-                snackBar(getString(R.string.msg_selectcolorsize))
-                return
-            }
-        }
-        showProgress(true)
-        callApi(getRestApis(false).addItemToCart(request = requestModel), onApiSuccess = {
-            showProgress(false)
-            snackBar(getString(R.string.success_add))
-            fetchAndStoreCartData()
-        }, onApiError = {
-            showProgress(false)
-            snackBarError(it)
-            fetchAndStoreCartData()
-        }, onNetworkError = {
-            showProgress(false)
-            noInternetSnackBar()
-        })
-        btnAddCard.text = getString(R.string.lbl_remove_cart)
-        isAddedToCart = true
-    }
-
-    private fun removeCartItem() {
-        getAlertDialog(getString(R.string.msg_confirmation), onPositiveClick = { dialog, i ->
-            val requestModel = RequestModel()
-            requestModel.pro_id = mProductModel?.pro_id.toString()
-
-            showProgress(true)
-            callApi(getRestApis(false).removeCartItem(request = requestModel), onApiSuccess = {
-                showProgress(false)
-                isAddedToCart = false
-                btnAddCard.text = getString(R.string.lbl_add_to_cart)
-                snackBar(getString(R.string.success))
-                fetchAndStoreCartData()
-            }, onApiError = {
-                showProgress(false)
-                snackBarError(it)
-                //getCartItems()
-                fetchAndStoreCartData()
-            }, onNetworkError = {
-                showProgress(false)
-                noInternetSnackBar()
-            })
-        }, onNegativeClick = { dialog, i ->
-            dialog.dismiss()
-        }).show()
     }
 
     private fun listProductReviews() {

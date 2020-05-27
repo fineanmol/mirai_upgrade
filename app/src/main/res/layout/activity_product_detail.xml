@@ -518,7 +518,7 @@
 
                             android:text="@string/lbl_lace_ups" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/rangeVal"
                             android:text="$"
                             style="@style/MoreInfoSubheading"
@@ -528,7 +528,7 @@
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/tvAllReviews"
+                    android:id="@+id/submitForPaymentBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
