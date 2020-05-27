@@ -23,21 +23,21 @@ data class DashboardResponse(
         val desc: String = "",
         val image: String = "",
         val thumb: String = "",
-        val url: String = ""
+        val url: String = "https://nightowldevelopers.com"
     )
 
     data class Banner2(
         val desc: String = "",
         val image: String = "",
         val thumb: String = "",
-        val url: String = ""
+        val url: String = "https://nightowldevelopers.com"
     )
 
     data class Banner3(
         val desc: String = "",
         val image: String = "",
         val thumb: String = "",
-        val url: String = ""
+        val url: String = "https://nightowldevelopers.com"
     )
 
     data class CurrencySymbol(val currency: String = "", val currency_symbol: String = "")
@@ -521,7 +521,10 @@ data class ProductDataNew(
     val upsell_ids: List<Any?>? = null,
     val virtual: Boolean? = null,
     val weight: String? = null,
-    val width: String? = null
+    val width: String? = null,
+    val gender: String? = "Male",
+    val age_group: String? = "25"
+
 ) : Serializable
 
 data class Testimonials(

@@ -511,7 +511,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvAllReviews"
+                    android:id="@+id/submitForPaymentBtn"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

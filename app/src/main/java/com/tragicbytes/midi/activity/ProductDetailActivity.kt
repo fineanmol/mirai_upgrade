@@ -1,7 +1,6 @@
 package com.tragicbytes.midi.activity
 
 import android.app.DatePickerDialog
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
@@ -11,9 +10,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
@@ -21,35 +20,10 @@ import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ProductReviewData
 import com.tragicbytes.midi.models.RequestModel
-import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.activity_ads_detail.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.activity_product_detail.btnAddCard
-import kotlinx.android.synthetic.main.activity_product_detail.btnOutOfStock
-import kotlinx.android.synthetic.main.activity_product_detail.dots
-import kotlinx.android.synthetic.main.activity_product_detail.ivBack
-import kotlinx.android.synthetic.main.activity_product_detail.ivFavourite
-import kotlinx.android.synthetic.main.activity_product_detail.llHeight
-import kotlinx.android.synthetic.main.activity_product_detail.llLength
-import kotlinx.android.synthetic.main.activity_product_detail.llMoreInfo
-import kotlinx.android.synthetic.main.activity_product_detail.llWidth
-import kotlinx.android.synthetic.main.activity_product_detail.productViewPager
-import kotlinx.android.synthetic.main.activity_product_detail.rvSize
-import kotlinx.android.synthetic.main.activity_product_detail.toolbar_layout
-import kotlinx.android.synthetic.main.activity_product_detail.tvAllReviews
-import kotlinx.android.synthetic.main.activity_product_detail.tvAvailability
-import kotlinx.android.synthetic.main.activity_product_detail.tvHeight
-import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductDiscount
-import kotlinx.android.synthetic.main.activity_product_detail.tvItemProductOriginalPrice
-import kotlinx.android.synthetic.main.activity_product_detail.tvLength
-import kotlinx.android.synthetic.main.activity_product_detail.tvPrice
-import kotlinx.android.synthetic.main.activity_product_detail.tvSelectedQuantity
-import kotlinx.android.synthetic.main.activity_product_detail.tvSize
-import kotlinx.android.synthetic.main.activity_product_detail.tvWidth
-import kotlinx.android.synthetic.main.activity_product_detail.txtDescription
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
@@ -63,22 +37,25 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mProductId = 0
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
-    private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
     private var mIsInWishList = false
     private var mColorFlag: Int = -1
     private var mSizeFlag: Int = -1
     private var mQuntity: String = "1"
-    private var mIsColorExist: Boolean = false
-    private var mIsSizeExist: Boolean = false
+    private var mIsGenderExist: Boolean = false
+    private var mIsAgeGroupExist: Boolean = false
+    private var mIsStartDateExist: Boolean = false
+    private var mIsEndDateExist: Boolean = false
+    private var mIsStartTimeExist: Boolean = false
+    private var mIsEndTimeExist: Boolean = false
+    private var mIsRangeExist: Boolean = false
+    private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
-    private var sizeAdapter: RecyclerViewAdapter<String>? = null
+    private var ageGroupAdapter: RecyclerViewAdapter<String>? = null
     private var mMonth = 0
     private var mYear: Int = 0
     private var mDay: Int = 0
-    private var mPersonalizedProductImageAdapter: PersonalizedProductImageAdapter? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,15 +83,9 @@ class ProductDetailActivity : AppBaseActivity() {
             var adDetails = intent?.extras?.getSerializable("AdvFormData")
             if (adDetails != null) {
                 adDetails = adDetails as AdDetails
-                toast(adDetails.adBrandName)
-                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
-                if(bitmap!=null){
-                    myImages.add(bitmap)
-                    var imageAdapter = PersonalizedProductImageAdapter(myImages)
-                    productViewPager.adapter = imageAdapter
-                    dots.attachViewPager(productViewPager)
-                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-                }
+                txtDescription.setText(adDetails.adDesc)
+                toast(adDetails.adBrandName + " " + adDetails.adDesc)
+
             }
         }
         /**
@@ -200,8 +171,6 @@ class ProductDetailActivity : AppBaseActivity() {
         })
 
 
-
-
     }
 
 
@@ -284,14 +253,41 @@ class ProductDetailActivity : AppBaseActivity() {
             launchActivity<ReviewsActivity> {
                 putExtra(DATA, mProductModel)
             }
+
         }*/
 
-        tvAllReviews.onClick {
+        submitForPaymentBtn.onClick {
+            validateAllValue()
+            if(mIsAllDetailsFilled) snackBar("Details filled",Snackbar.LENGTH_SHORT)
 
-            launchActivity<AdvertisementFormActivity> {
-                //  putExtra(DATA, mProductModel)
-            }
         }
+    }
+
+    private fun validateAllValue() {
+        if(!mIsGenderExist) {
+            snackBar("Gender Required ",Snackbar.LENGTH_SHORT)}
+        else if(!mIsAgeGroupExist){
+            snackBar("Age Group Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsStartDateExist){
+            snackBar("Start Date Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsEndDateExist){
+            snackBar("End Date Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsStartTimeExist){
+            snackBar("Start Time Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsEndTimeExist){
+            snackBar("End Time Required",Snackbar.LENGTH_SHORT)
+        }
+        else if(!mIsRangeExist){
+            snackBar("RangeRequired",Snackbar.LENGTH_SHORT)
+        }
+        else {
+            mIsAllDetailsFilled= true
+        }
+
     }
 
     private fun setStock(
@@ -377,12 +373,11 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun intHeaderView() {
-        /*mProductModel?.gallery?.forEach { mImages.add(it!!) }
+        mProductModel?.gallery?.forEach { mImages.add(it!!) }
         val imageAdapter = ProductImageAdapter(mImages)
         productViewPager.adapter = imageAdapter
         dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
-        setPersonalizedAdvBanners()
+        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
         setDescription()
         setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
@@ -418,15 +413,19 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun bindData() {
-        txtDescription.setText(mProductModel?.short_description?.getHtmlString().toString())
+        txtDescription.setText("short description of the product. We can add as many short description here according to product id")
+        val genderList = ArrayList<String>()
+        val genders = listOf("Male", "Female", "Not Specified", "All")
+        val ageGroupList = ArrayList<String>()
+        val ageGroups = listOf("Teen", "Adults", "Old", "Everyone")
 
-        if (mProductModel?.color != null && mProductModel?.color?.isNotEmpty()!!) {
-            val colorList = ArrayList<String>()
+        if (genders.isNotEmpty()) {
+
             val colors = mProductModel?.color?.split(",")
-            mIsColorExist = colors != null && colors.isNotEmpty()
+            mIsGenderExist = true && genders.isNotEmpty()
 
-            colors?.forEachIndexed { _, s ->
-                colorList.add(s.trim())
+            genders.forEachIndexed { _, s ->
+                genderList.add(s.trim())
             }
             colorAdapter =
                 RecyclerViewAdapter(R.layout.item_color, onBind = { view, item, position ->
@@ -486,58 +485,59 @@ class ProductDetailActivity : AppBaseActivity() {
                 colorAdapter?.notifyDataSetChanged()
                 getSelectedColors()
             }
-            colorAdapter?.addItems(colorList)
+            colorAdapter?.addItems(genderList)
             rvColors.setHorizontalLayout()
             rvColors.adapter = colorAdapter
         } else {
-            tvColors.hide()
-            rvColors.hide()
+            tvColors.show()
+            rvColors.show()
         }
 
-        if (mProductModel?.size != null && mProductModel?.size?.isNotEmpty()!!) {
+        if (ageGroups.isNotEmpty()) {
 
-            val sizeList = ArrayList<String>()
-            val sizes = mProductModel?.size?.split(",")
-            mIsSizeExist = sizes != null && sizes.isNotEmpty()
-            sizes?.forEachIndexed { i, s -> sizeList.add(s.trim()) }
+            //  val sizeList = ArrayList<String>()
+            //  val sizes = mProductModel?.size?.split(",")
+            mIsAgeGroupExist = true && ageGroups.isNotEmpty()
+            ageGroups.forEachIndexed { i, s -> ageGroupList.add(s.trim()) }
 
-            sizeAdapter = RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
-                if (item.isNotEmpty()) {
-                    view.llSize.show()
-                    view.ivSizeChecked.text = item
-                    if (mIsFirstTimeSize && mProductModel?.size == item) {
-                        mIsFirstTimeSize = false
-                        mSizeFlag = position
-                    }
-                    view.ivSizeChecked.apply {
-                        when (position) {
-                            mSizeFlag -> {
-                                setTextColor(color(R.color.commonColorWhite))
-                                setStrokedBackground(color(R.color.colorPrimary))
-                            }
-                            else -> {
-                                setTextColor(color(R.color.textColorPrimary))
-                                setStrokedBackground(
-                                    0,
-                                    strokeColor = color(R.color.view_color)
-                                )
-                            }
+            ageGroupAdapter =
+                RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
+                    if (item.isNotEmpty()) {
+                        view.llSize.show()
+                        view.ivSizeChecked.text = item
+                        if (mIsFirstTimeSize && mProductModel?.size == item) {
+                            mIsFirstTimeSize = false
+                            mSizeFlag = position
                         }
+                        view.ivSizeChecked.apply {
+                            when (position) {
+                                mSizeFlag -> {
+                                    setTextColor(color(R.color.commonColorWhite))
+                                    setStrokedBackground(color(R.color.colorPrimary))
+                                }
+                                else -> {
+                                    setTextColor(color(R.color.textColorPrimary))
+                                    setStrokedBackground(
+                                        0,
+                                        strokeColor = color(R.color.view_color)
+                                    )
+                                }
+                            }
 
+                        }
+                    } else {
+                        view.llSize.hide()
                     }
-                } else {
-                    view.llSize.hide()
-                }
-            })
-            sizeAdapter?.onItemClick = { pos, view, item ->
+                })
+            ageGroupAdapter?.onItemClick = { pos, view, item ->
                 mSizeFlag = pos
-                sizeAdapter?.notifyDataSetChanged()
+                ageGroupAdapter?.notifyDataSetChanged()
                 getSelectedSize()
             }
 
-            sizeAdapter?.addItems(sizeList)
+            ageGroupAdapter?.addItems(ageGroupList)
             rvSize.setHorizontalLayout()
-            rvSize.adapter = sizeAdapter
+            rvSize.adapter = ageGroupAdapter
         } else {
             tvSize.hide()
             rvSize.hide()
@@ -554,7 +554,7 @@ class ProductDetailActivity : AppBaseActivity() {
     private fun getSelectedSize(): String? {
         return when (mSizeFlag) {
             -1 -> null
-            else -> sizeAdapter?.getModel()!![mSizeFlag]
+            else -> ageGroupAdapter?.getModel()!![mSizeFlag]
         }
     }
 
@@ -566,74 +566,6 @@ class ProductDetailActivity : AppBaseActivity() {
         ivFavourite.setImageResource(drawable)
         ivFavourite.applyColorFilter(color(iconTint))
         ivFavourite.changeBackgroundTint(color(backgroundColor))
-    }
-
-    private fun addItemToCart() {
-        if (mProductModel?.stock_quantity != null && mProductModel?.stock_quantity!! < 1) {
-            toast(R.string.msg_sold_out); return
-        }
-        val requestModel = RequestModel(); requestModel.pro_id =
-            mProductModel?.pro_id.toString(); requestModel.quantity = mQuntity.toInt()
-        requestModel.color = "";requestModel.size = ""
-        if (mIsColorExist) {
-            val selectedColors = getSelectedColors()
-            if (selectedColors != null) {
-                requestModel.color = selectedColors
-            } else {
-                snackBar(getString(R.string.msg_selectcolorsize))
-                return
-            }
-        }
-        if (mIsSizeExist) {
-            val selectedSize = getSelectedSize()
-            if (selectedSize != null) {
-                requestModel.size = selectedSize
-            } else {
-                snackBar(getString(R.string.msg_selectcolorsize))
-                return
-            }
-        }
-        showProgress(true)
-        callApi(getRestApis(false).addItemToCart(request = requestModel), onApiSuccess = {
-            showProgress(false)
-            snackBar(getString(R.string.success_add))
-            fetchAndStoreCartData()
-        }, onApiError = {
-            showProgress(false)
-            snackBarError(it)
-            fetchAndStoreCartData()
-        }, onNetworkError = {
-            showProgress(false)
-            noInternetSnackBar()
-        })
-        btnAddCard.text = getString(R.string.lbl_remove_cart)
-        isAddedToCart = true
-    }
-
-    private fun removeCartItem() {
-        getAlertDialog(getString(R.string.msg_confirmation), onPositiveClick = { dialog, i ->
-            val requestModel = RequestModel()
-            requestModel.pro_id = mProductModel?.pro_id.toString()
-
-            showProgress(true)
-            callApi(getRestApis(false).removeCartItem(request = requestModel), onApiSuccess = {
-                showProgress(false)
-                isAddedToCart = false
-                btnAddCard.text = getString(R.string.lbl_add_to_cart)
-                snackBar(getString(R.string.success))
-                fetchAndStoreCartData()
-            }, onApiError = {
-                showProgress(false)
-                snackBarError(it)
-                //getCartItems()
-                fetchAndStoreCartData()
-            }, onNetworkError = {
-                showProgress(false)
-                noInternetSnackBar()
-            })
-        }, onNegativeClick = { dialog, i ->
-            dialog.dismiss()
-        }).show()
     }
 
     private fun listProductReviews() {
@@ -701,32 +633,6 @@ class ProductDetailActivity : AppBaseActivity() {
                 R.color.favourite_background,
                 R.color.colorPrimary
             ) else changeFavIcon(R.drawable.ic_heart, R.color.gray_80)
-        }
-    }
-
-    private fun setPersonalizedAdvBanners(){
-        if (intent?.extras?.getSerializable("AdvFormData") != null) {
-            var adDetails = intent?.extras?.getSerializable("AdvFormData")
-            if (adDetails != null) {
-                adDetails = adDetails as AdDetails
-                toast(adDetails.adBrandName)
-                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
-                if(bitmap!=null){
-                    myImages.add(bitmap)
-                    var imageAdapter = PersonalizedProductImageAdapter(myImages)
-                    productViewPager.adapter = imageAdapter
-                    dots.attachViewPager(productViewPager)
-                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-                }
-                else{
-                    mProductModel?.gallery?.forEach { mImages.add(it!!) }
-                    mImages.add(bitmap)
-                    var imageAdapter = ProductImageAdapter(mImages)
-                    productViewPager.adapter = imageAdapter
-                    dots.attachViewPager(productViewPager)
-                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-                }
-            }
         }
     }
 }
