@@ -254,7 +254,7 @@
                         android:id="@+id/btnAddCard"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MaterialButtonStyle.Filled"
+                        style="@style/MaterialButtonStyle.Success"
                         android:text="@string/lbl_add_to_cart"
                         android:layout_weight="1"
                         android:layout_marginStart="@dimen/spacing_middle"
@@ -531,15 +531,13 @@
                     android:id="@+id/tvAllReviews"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_standard_new"
-                    style="@style/MaterialButtonStyle.Filled"
-                    android:gravity="center_vertical"
-                    android:padding="@dimen/spacing_standard"
-                    android:text="Submit Ads"
                     android:layout_weight="1"
-                    android:textAppearance="@style/FontSemiBold"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="@dimen/font_size_medium" />
+                    android:layout_marginStart="@dimen/spacing_middle"
+                    android:layout_marginEnd="@dimen/spacing_middle"
+                    app:cornerRadius="@dimen/spacing_control"
+                    style="@style/MaterialButtonStyle.Filled"
+                    android:text="Submit Ads"
+                   />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

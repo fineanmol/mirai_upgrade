@@ -19,11 +19,9 @@ import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ProductReviewData
 import com.tragicbytes.midi.models.RequestModel
-import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.activity_ads_detail.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_product_detail.btnAddCard
 import kotlinx.android.synthetic.main.activity_product_detail.btnOutOfStock
@@ -66,11 +64,11 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mColorFlag: Int = -1
     private var mSizeFlag: Int = -1
     private var mQuntity: String = "1"
-    private var mIsColorExist: Boolean = false
-    private var mIsSizeExist: Boolean = false
+    private var mIsGenderExist: Boolean = false
+    private var mIsAgeGroupExist: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
-    private var sizeAdapter: RecyclerViewAdapter<String>? = null
+    private var ageGroupAdapter: RecyclerViewAdapter<String>? = null
     private var mMonth = 0
     private var mYear: Int = 0
     private var mDay: Int = 0
@@ -401,19 +399,23 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun setDescription() {
-        //bindData()
+        bindData()
     }
 
     private fun bindData() {
-        txtDescription.setText(mProductModel?.short_description?.getHtmlString().toString())
+        txtDescription.setText("short description of the product. We can add as many short description here according to product id")
+        val genderList = ArrayList<String>()
+        val genders= listOf("Male","Female","Not Specified","All")
+        val ageGroupList = ArrayList<String>()
+        val ageGroups= listOf("Teen","Adults","Old","Everyone")
 
-        if (mProductModel?.color != null && mProductModel?.color?.isNotEmpty()!!) {
-            val colorList = ArrayList<String>()
+        if (genders.isNotEmpty()) {
+
             val colors = mProductModel?.color?.split(",")
-            mIsColorExist = colors != null && colors.isNotEmpty()
+            mIsGenderExist = true && genders.isNotEmpty()
 
-            colors?.forEachIndexed { _, s ->
-                colorList.add(s.trim())
+            genders.forEachIndexed { _, s ->
+                genderList.add(s.trim())
             }
             colorAdapter =
                 RecyclerViewAdapter(R.layout.item_color, onBind = { view, item, position ->
@@ -473,22 +475,22 @@ class ProductDetailActivity : AppBaseActivity() {
                 colorAdapter?.notifyDataSetChanged()
                 getSelectedColors()
             }
-            colorAdapter?.addItems(colorList)
+            colorAdapter?.addItems(genderList)
             rvColors.setHorizontalLayout()
             rvColors.adapter = colorAdapter
         } else {
-            tvColors.hide()
-            rvColors.hide()
+            tvColors.show()
+            rvColors.show()
         }
 
-        if (mProductModel?.size != null && mProductModel?.size?.isNotEmpty()!!) {
+        if (ageGroups.isNotEmpty()) {
 
-            val sizeList = ArrayList<String>()
-            val sizes = mProductModel?.size?.split(",")
-            mIsSizeExist = sizes != null && sizes.isNotEmpty()
-            sizes?.forEachIndexed { i, s -> sizeList.add(s.trim()) }
+          //  val sizeList = ArrayList<String>()
+          //  val sizes = mProductModel?.size?.split(",")
+            mIsAgeGroupExist = true && ageGroups.isNotEmpty()
+            ageGroups.forEachIndexed { i, s -> ageGroupList.add(s.trim()) }
 
-            sizeAdapter = RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
+            ageGroupAdapter = RecyclerViewAdapter(R.layout.item_size, onBind = { view, item, position ->
                 if (item.isNotEmpty()) {
                     view.llSize.show()
                     view.ivSizeChecked.text = item
@@ -516,15 +518,15 @@ class ProductDetailActivity : AppBaseActivity() {
                     view.llSize.hide()
                 }
             })
-            sizeAdapter?.onItemClick = { pos, view, item ->
+            ageGroupAdapter?.onItemClick = { pos, view, item ->
                 mSizeFlag = pos
-                sizeAdapter?.notifyDataSetChanged()
+                ageGroupAdapter?.notifyDataSetChanged()
                 getSelectedSize()
             }
 
-            sizeAdapter?.addItems(sizeList)
+            ageGroupAdapter?.addItems(ageGroupList)
             rvSize.setHorizontalLayout()
-            rvSize.adapter = sizeAdapter
+            rvSize.adapter = ageGroupAdapter
         } else {
             tvSize.hide()
             rvSize.hide()
@@ -541,7 +543,7 @@ class ProductDetailActivity : AppBaseActivity() {
     private fun getSelectedSize(): String? {
         return when (mSizeFlag) {
             -1 -> null
-            else -> sizeAdapter?.getModel()!![mSizeFlag]
+            else -> ageGroupAdapter?.getModel()!![mSizeFlag]
         }
     }
 
@@ -562,7 +564,7 @@ class ProductDetailActivity : AppBaseActivity() {
         val requestModel = RequestModel(); requestModel.pro_id =
             mProductModel?.pro_id.toString(); requestModel.quantity = mQuntity.toInt()
         requestModel.color = "";requestModel.size = ""
-        if (mIsColorExist) {
+        if (mIsGenderExist) {
             val selectedColors = getSelectedColors()
             if (selectedColors != null) {
                 requestModel.color = selectedColors
@@ -571,7 +573,7 @@ class ProductDetailActivity : AppBaseActivity() {
                 return
             }
         }
-        if (mIsSizeExist) {
+        if (mIsAgeGroupExist) {
             val selectedSize = getSelectedSize()
             if (selectedSize != null) {
                 requestModel.size = selectedSize
