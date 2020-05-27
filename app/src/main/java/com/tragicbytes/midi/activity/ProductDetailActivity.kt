@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.activity
 
 import android.app.DatePickerDialog
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
@@ -12,6 +13,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
@@ -61,6 +63,7 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mProductId = 0
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
+    private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
     private var mIsInWishList = false
     private var mColorFlag: Int = -1
@@ -74,6 +77,8 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mMonth = 0
     private var mYear: Int = 0
     private var mDay: Int = 0
+    private var mPersonalizedProductImageAdapter: PersonalizedProductImageAdapter? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,8 +106,15 @@ class ProductDetailActivity : AppBaseActivity() {
             var adDetails = intent?.extras?.getSerializable("AdvFormData")
             if (adDetails != null) {
                 adDetails = adDetails as AdDetails
-                toast(adDetails.adBrandName + " " + adDetails.adDesc)
-
+                toast(adDetails.adBrandName)
+                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
+                if(bitmap!=null){
+                    myImages.add(bitmap)
+                    var imageAdapter = PersonalizedProductImageAdapter(myImages)
+                    productViewPager.adapter = imageAdapter
+                    dots.attachViewPager(productViewPager)
+                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                }
             }
         }
         /**
@@ -365,11 +377,12 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun intHeaderView() {
-        mProductModel?.gallery?.forEach { mImages.add(it!!) }
+        /*mProductModel?.gallery?.forEach { mImages.add(it!!) }
         val imageAdapter = ProductImageAdapter(mImages)
         productViewPager.adapter = imageAdapter
         dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
+        setPersonalizedAdvBanners()
         setDescription()
         setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
@@ -401,7 +414,7 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun setDescription() {
-        //bindData()
+        bindData()
     }
 
     private fun bindData() {
@@ -688,6 +701,32 @@ class ProductDetailActivity : AppBaseActivity() {
                 R.color.favourite_background,
                 R.color.colorPrimary
             ) else changeFavIcon(R.drawable.ic_heart, R.color.gray_80)
+        }
+    }
+
+    private fun setPersonalizedAdvBanners(){
+        if (intent?.extras?.getSerializable("AdvFormData") != null) {
+            var adDetails = intent?.extras?.getSerializable("AdvFormData")
+            if (adDetails != null) {
+                adDetails = adDetails as AdDetails
+                toast(adDetails.adBrandName)
+                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
+                if(bitmap!=null){
+                    myImages.add(bitmap)
+                    var imageAdapter = PersonalizedProductImageAdapter(myImages)
+                    productViewPager.adapter = imageAdapter
+                    dots.attachViewPager(productViewPager)
+                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                }
+                else{
+                    mProductModel?.gallery?.forEach { mImages.add(it!!) }
+                    mImages.add(bitmap)
+                    var imageAdapter = ProductImageAdapter(mImages)
+                    productViewPager.adapter = imageAdapter
+                    dots.attachViewPager(productViewPager)
+                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                }
+            }
         }
     }
 }

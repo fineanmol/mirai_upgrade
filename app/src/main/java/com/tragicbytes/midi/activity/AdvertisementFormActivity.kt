@@ -38,7 +38,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
         setToolbar(toolbar)
         dbReference = FirebaseDatabase.getInstance().reference
         title=getString(R.string.lbl_edit_form)
-        val bmp = drawTextToBitmap(this, R.drawable.ic_profile, "Hello Android")!!
+        val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
         ivAdsImage.setImageBitmap(bmp)
         setUpListener()
     }

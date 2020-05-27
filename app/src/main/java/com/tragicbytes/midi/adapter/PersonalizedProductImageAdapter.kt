@@ -1,19 +1,19 @@
 package com.tragicbytes.midi.adapter
 
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.utils.extensions.loadImageFromUrl
 import kotlinx.android.synthetic.main.layout_itemimage.view.*
 
-class ProductImageAdapter(private var mImg: ArrayList<String>) : PagerAdapter() {
+class PersonalizedProductImageAdapter(private var mImg: ArrayList<Bitmap>) : PagerAdapter() {
 
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.layout_itemimage, parent, false)
 
-        view.imgSlider.loadImageFromUrl(mImg[position])
+        view.imgSlider.setImageBitmap(mImg[position])
 
         parent.addView(view)
         return view
@@ -24,5 +24,10 @@ class ProductImageAdapter(private var mImg: ArrayList<String>) : PagerAdapter() 
     override fun getCount(): Int = mImg!!.size
 
     override fun destroyItem(parent: ViewGroup, position: Int, `object`: Any) = parent.removeView(`object` as View)
+
+    override fun getItemPosition(`object`: Any): Int {
+        return POSITION_NONE
+    }
+
 
 }
