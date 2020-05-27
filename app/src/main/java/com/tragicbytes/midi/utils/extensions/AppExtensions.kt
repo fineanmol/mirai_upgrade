@@ -780,7 +780,7 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
     })
 }
 
-fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:DatabaseReference, onSuccess: (Boolean) -> Unit) {
+fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:DatabaseReference, onSuccess: (AdDetails) -> Unit,onFailure: () -> Unit) {
 //    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
 //        fetchAndStoreAddressData()
 //        onSuccess(true)
@@ -791,11 +791,12 @@ fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:D
 //    })
     dbReference.child(userId).child("adDetails").setValue(adDetails).addOnCompleteListener {
         if(it.isSuccessful){
-            onSuccess(true)
+            onSuccess(adDetails)
             snackBar("Ads Data Saved",Snackbar.LENGTH_SHORT)
         }
         else{
-            snackBarError(it.exception!!.localizedMessage); onSuccess(false)
+            snackBarError(it.exception!!.localizedMessage);
+            onFailure()
         }
     }
 }

@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+
 class AdvertisementFormActivity : AppBaseActivity() {
     private var encodedImage: String? = null
 
@@ -99,12 +100,17 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     dbReference,
                     onSuccess = {
                     showProgress(false)
-                    if (it){
+                    if (it!=null){
+                        launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
+
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
-                })
-                /*updateProfile()*/
+                },
+                onFailure={
+
+                    }
+                )
             }
         }
 

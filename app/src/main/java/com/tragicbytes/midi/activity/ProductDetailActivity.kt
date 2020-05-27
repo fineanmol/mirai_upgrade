@@ -3,6 +3,7 @@ package com.tragicbytes.midi.activity
 import android.app.DatePickerDialog
 import android.graphics.Color
 import android.icu.util.Calendar
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -14,6 +15,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
+import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ProductReviewData
 import com.tragicbytes.midi.models.RequestModel
@@ -76,23 +78,31 @@ class ProductDetailActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
-        if (intent?.extras?.get(DATA) == null && intent?.extras?.get(PRODUCT_ID) == null) {
-            toast(R.string.error_something_went_wrong)
-            finish()
-            return
-        }
-        BroadcastReceiverExt(this) {
-            onAction(CART_COUNT_CHANGE) {
-                setCartCountFromPref()
-            }
+//        if (intent?.extras?.get(DATA) == null && intent?.extras?.get(PRODUCT_ID) == null) {
+//            toast(R.string.error_something_went_wrong)
+//            finish()
+//            return
+//        }
+//        BroadcastReceiverExt(this) {
+//            onAction(CART_COUNT_CHANGE) {
+//                setCartCountFromPref()
+//            }
+//
+//        }
 
-        }
 
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
         setToolbarWithoutBackButton(mMainBinding.toolbar)
         toolbar_layout.title = ""
         ivBack.onClick {
             onBackPressed()
+        }
+        if (intent?.extras?.getSerializable("AdvFormData") != null) {
+            var adDetails = intent?.extras?.getSerializable("AdvFormData")
+            if (adDetails != null) {
+                adDetails = adDetails as AdDetails
+                toast(adDetails.adBrandName + " " + adDetails.adDesc)
+            }
         }
         /**
          * Fetch Product Detail From Server
@@ -123,9 +133,9 @@ class ProductDetailActivity : AppBaseActivity() {
             finish()
         }
         setCartCountFromPref()
-        BroadcastReceiverExt(this) {
-            onAction(CART_COUNT_CHANGE) { setCartCountFromPref() }
-        }
+//        BroadcastReceiverExt(this) {
+//            onAction(CART_COUNT_CHANGE) { setCartCountFromPref() }
+//        }
         /*rlCart.onClick {
             if (isLoggedIn()) {
                 launchActivity<MyCartActivity>()
@@ -135,7 +145,11 @@ class ProductDetailActivity : AppBaseActivity() {
         }*/
 
         startDateVal.setOnClickListener(View.OnClickListener {
-            val c = Calendar.getInstance()
+            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Calendar.getInstance()
+            } else {
+                TODO("VERSION.SDK_INT < N")
+            }
             mYear = c[Calendar.YEAR]
             mMonth = c[Calendar.MONTH]
             mDay = c[Calendar.DAY_OF_MONTH]
@@ -152,7 +166,11 @@ class ProductDetailActivity : AppBaseActivity() {
             val coDay = c[Calendar.DAY_OF_MONTH]
         })
         endDateVal.setOnClickListener(View.OnClickListener {
-            val c = Calendar.getInstance()
+            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Calendar.getInstance()
+            } else {
+                TODO("VERSION.SDK_INT < N")
+            }
             mYear = c[Calendar.YEAR]
             mMonth = c[Calendar.MONTH]
             mDay = c[Calendar.DAY_OF_MONTH]
@@ -167,6 +185,8 @@ class ProductDetailActivity : AppBaseActivity() {
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
         })
+
+
 
 
     }
@@ -380,7 +400,7 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun setDescription() {
-        bindData()
+        //bindData()
     }
 
     private fun bindData() {
