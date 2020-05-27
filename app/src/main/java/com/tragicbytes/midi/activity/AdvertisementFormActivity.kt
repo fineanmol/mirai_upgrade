@@ -1,9 +1,10 @@
 package com.tragicbytes.midi.activity
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.content.res.Resources
+import android.graphics.*
 import android.os.Bundle
 import android.util.Base64
 import androidx.core.content.FileProvider
@@ -37,6 +38,8 @@ class AdvertisementFormActivity : AppBaseActivity() {
         setToolbar(toolbar)
         dbReference = FirebaseDatabase.getInstance().reference
         title=getString(R.string.lbl_edit_form)
+        val bmp = drawTextToBitmap(this, R.drawable.ic_profile, "Hello Android")!!
+        ivAdsImage.setImageBitmap(bmp)
         setUpListener()
     }
 
@@ -178,4 +181,6 @@ class AdvertisementFormActivity : AppBaseActivity() {
         }
 
     }
+
+
 }

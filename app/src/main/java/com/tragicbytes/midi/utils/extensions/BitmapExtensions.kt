@@ -2,6 +2,7 @@ package com.tragicbytes.midi.utils.extensions
 
 import android.Manifest
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.*
 import android.graphics.Paint.ANTI_ALIAS_FLAG
 import android.graphics.drawable.BitmapDrawable
@@ -308,4 +309,40 @@ fun Drawable.toBitmap(): Bitmap? {
 fun Uri.toBitmap(context: Context): Bitmap {
     return MediaStore.Images.Media.getBitmap(context.contentResolver, this)
 }
+/**
+ * Draw text over bitmap
+ * **/
 
+fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap? {
+    return try {
+        val resources: Resources = mContext.resources
+        val scale: Float = resources.displayMetrics.density
+        var bitmap = BitmapFactory.decodeResource(resources, resourceId)
+        var bitmapConfig = bitmap.config
+        // set default bitmap config if none
+        if (bitmapConfig == null) {
+            bitmapConfig = Bitmap.Config.ARGB_8888
+        }
+        // resource bitmaps are imutable,
+        // so we need to convert it to mutable one
+        bitmap = bitmap.copy(bitmapConfig, true)
+        val canvas = Canvas(bitmap)
+        // new antialised Paint
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        // text color - #3D3D3D
+        paint.color = Color.rgb(110, 110, 110)
+        // text size in pixels
+        paint.textSize = (50 * scale).toFloat()
+        // text shadow
+        paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY)
+        // draw text to the Canvas center
+        val bounds = Rect()
+        paint.getTextBounds(mText, 0, mText.length, bounds)
+        val x: Int = (bitmap.width - bounds.width()) / 6
+        val y: Int = (bitmap.height + bounds.height()) / 5
+        canvas.drawText(mText, x * scale, y * scale, paint)
+        bitmap
+    } catch (e: Exception) {
+        null
+    }
+}

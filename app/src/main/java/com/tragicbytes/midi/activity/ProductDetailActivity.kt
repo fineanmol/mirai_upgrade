@@ -102,6 +102,7 @@ class ProductDetailActivity : AppBaseActivity() {
             if (adDetails != null) {
                 adDetails = adDetails as AdDetails
                 toast(adDetails.adBrandName + " " + adDetails.adDesc)
+
             }
         }
         /**
