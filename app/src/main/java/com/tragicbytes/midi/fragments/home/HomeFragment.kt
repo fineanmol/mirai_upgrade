@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
@@ -69,18 +70,28 @@ class HomeFragment : BaseFragment() {
 
         imgLayoutParams = activity?.productLayoutParams()
 
-        rcvRecentSearch.setHorizontalLayout(); rcvNewestProduct.setHorizontalLayout();
+        /*;
+        rcvNewestProduct.setHorizontalLayout();
         rcvFeaturedProducts.setVerticalLayout();
-        rcvCategory.setHorizontalLayout()
-        rcvDealProducts.setHorizontalLayout(); rcvYouMayLikeProducts.setHorizontalLayout(); rcvOfferProducts.setHorizontalLayout(); rcvSuggestedProducts.setHorizontalLayout()
+        rcvDealProducts.setHorizontalLayout();
+        rcvYouMayLikeProducts.setHorizontalLayout();
+        rcvOfferProducts.setHorizontalLayout();
+        rcvSuggestedProducts.setHorizontalLayout()
         rcvTestimonials.setHorizontalLayout()
-        mCategoryAdapter = activity!!.getCategoryAdapter(); rcvCategory.adapter = mCategoryAdapter
+        rcvCategory.setHorizontalLayout()
+
+*/
+        rcvNewestProduct.setVerticalLayout()
+        rcvRecentSearch.setHorizontalLayout()
+        /*mCategoryAdapter = activity!!.getCategoryAdapter();
+        rcvCategory.adapter = mCategoryAdapter*/
 
         setClickEventListener()
 
-        setupRecentProductAdapter(); setupNewArrivalProductAdapter(); setupFeaturedProductAdapter();setTestimonialAdapter()
-
-        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
+//        ; setupNewArrivalProductAdapter(); setupFeaturedProductAdapter();setTestimonialAdapter()
+        setupNewArrivalProductAdapter()
+        setupRecentProductAdapter()
+//        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
 
         loadApis()
         refreshLayout.setOnRefreshListener {
@@ -97,9 +108,12 @@ class HomeFragment : BaseFragment() {
     //region APIs
     private fun loadApis() {
         if (isNetworkAvailable()) {
-            listAllProducts(); listAllProductCategories(); getSliders();listFeaturedProducts()
+            listAllProducts();
+//            listAllProductCategories();
+            getSliders();
+//            listFeaturedProducts()
         } else {
-            listAllProductCategories(); getSliders()
+            getSliders()
             activity?.openLottieDialog { loadApis(); onNetworkRetry?.invoke() }
         }
     }
@@ -176,64 +190,65 @@ class HomeFragment : BaseFragment() {
             } else {
                 rlNewestProduct.show()
                 rcvNewestProduct.show()
+                it.newest.removeAt(4)
                 mNewArrivalProductAdapter?.addItems(it.newest)
             }
-            if (it.featured.isEmpty()) {
+/*            if (it.featured.isEmpty()) {
                 rlFeatured.hide()
                 rcvFeaturedProducts.hide()
             } else {
-                rlFeatured.show()
+                *//*rlFeatured.show()
                 rcvFeaturedProducts.show()
-                mFeaturedProductAdapter?.addItems(it.featured)
+                mFeaturedProductAdapter?.addItems(it.featured)*//*
             }
             if (it.testimonials.isEmpty()) {
                 rlTestimonials.hide()
                 rcvTestimonials.hide()
             } else {
-                rlTestimonials.show()
+                *//*rlTestimonials.show()
                 rcvTestimonials.show()
-                mTestimonialsAdapter?.addItems(it.testimonials)
+                mTestimonialsAdapter?.addItems(it.testimonials)*//*
             }
 
             if (it.deal_product.isEmpty()) {
                 rlDeal.hide()
                 rcvDealProducts.hide()
             } else {
-                rlDeal.show()
+                *//*rlDeal.show()
                 rcvDealProducts.show()
-                mDealProductAdapter?.addItems(it.deal_product)
+                mDealProductAdapter?.addItems(it.deal_product)*//*
             }
             if (it.you_may_like.isEmpty()) {
                 rlYouMayLike.hide()
                 rcvYouMayLikeProducts.hide()
             } else {
-                rlYouMayLike.show()
+                *//*rlYouMayLike.show()
                 rcvYouMayLikeProducts.show()
-                mYouMayLikeProductAdapter?.addItems(it.newest)
+                mYouMayLikeProductAdapter?.addItems(it.newest)*//*
             }
             if (it.offer.isEmpty()) {
                 rlOffer.hide()
                 rcvOfferProducts.hide()
             } else {
-                rlOffer.show()
+                *//*rlOffer.show()
                 rcvOfferProducts.show()
-                mOfferProductAdapter?.addItems(it.offer)
+                mOfferProductAdapter?.addItems(it.offer)*//*
             }
             if (it.suggested_product.isEmpty()) {
                 rlSuggested.hide()
                 rcvSuggestedProducts.hide()
             } else {
-                rlSuggested.show()
+                *//*rlSuggested.show()
                 rcvSuggestedProducts.show()
-                mSuggestedProductAdapter?.addItems(it.suggested_product)
-            }
+                mSuggestedProductAdapter?.addItems(it.suggested_product)*//*
+            }*/
 
             if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
                 ivBanner1.show(); ivBanner1.loadImageFromUrl(it.banner_1.image); ivBanner1.onClick { activity?.openCustomTab(it.banner_1.url) }
             } else {
                 ivBanner1.hide()
             }
-            if (it.banner_2 != null && it.banner_2.url.isNotEmpty()) {
+            /*if (it.banner_2 != null && it.banner_2.url.isNotEmpty()) {
                 ivBanner2.show(); ivBanner2.loadImageFromUrl(it.banner_2.image); ivBanner2.onClick { activity?.openCustomTab(it.banner_2.url) }
             } else {
                 ivBanner2.hide()
@@ -242,7 +257,7 @@ class HomeFragment : BaseFragment() {
                 ivBanner3.show(); ivBanner3.loadImageFromUrl(it.banner_3.image); ivBanner3.onClick { activity?.openCustomTab(it.banner_3.url) }
             } else {
                 ivBanner3.hide()
-            }
+            }*/
         }, onApiError = {
             //toast(it)
         }, onNetworkError = {
@@ -250,6 +265,7 @@ class HomeFragment : BaseFragment() {
         })
     }
 
+/*
     private fun listFeaturedProducts() {
         showProgress()
         val requestModel = FilterProductRequest()
@@ -274,6 +290,7 @@ class HomeFragment : BaseFragment() {
             activity?.noInternetSnackBar()
         })
     }
+*/
 
     private fun listAllProductCategories() {
         val categories = getCategoryDataFromPref()
@@ -314,6 +331,13 @@ class HomeFragment : BaseFragment() {
 
     private fun setupNewArrivalProductAdapter() {
         mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
+        //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
+        rcvNewestProduct.apply {
+            layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = mNewArrivalProductAdapter
+            rvItemAnimation()
+        }
         rcvNewestProduct.adapter = mNewArrivalProductAdapter
 
         mNewArrivalProductAdapter?.onItemClick = { pos, view, item ->
@@ -323,7 +347,7 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-    private fun setupFeaturedProductAdapter() {
+/*    private fun setupFeaturedProductAdapter() {
 
         mFeaturedProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
         rcvFeaturedProducts.layoutManager = GridLayoutManager(activity,2)
@@ -392,7 +416,7 @@ class HomeFragment : BaseFragment() {
             view.tvDescription.text = "\"" + item.message + "\""
         })
         rcvTestimonials.adapter = mTestimonialsAdapter
-    }
+    }*/
 
     //endregion
 
@@ -402,28 +426,30 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setClickEventListener() {
-        viewRecentSearch.onClick {
+        /*viewRecentSearch.onClick {
             activity?.launchActivity<ViewAllProductActivity> {
                 putExtra(TITLE, getString(R.string.lbl_recent_search))
                 putExtra(VIEWALLID, RECENTSEARCH)
             }
-        }
+        }*/
 
+/*
         viewFeatured.onClick {
             activity?.launchActivity<ViewAllProductActivity> {
                 putExtra(TITLE, getString(R.string.lbl_Featured))
                 putExtra(VIEWALLID, FEATURED)
             }
         }
+*/
 
-        viewNewest.onClick {
+        /*viewNewest.onClick {
             activity?.launchActivity<ViewAllProductActivity> {
                 putExtra(TITLE, getString(R.string.lbl_newest_product))
                 putExtra(VIEWALLID, NEWEST)
             }
-        }
+        }*/
 
-        viewOffer.onClick {
+/*        viewOffer.onClick {
             activity?.launchActivity<ViewAllProductActivity> {
                 putExtra(TITLE, getString(R.string.lbl_offers))
                 putExtra(VIEWALLID, NEWEST)
@@ -449,7 +475,7 @@ class HomeFragment : BaseFragment() {
                 putExtra(TITLE, getString(R.string.lbl_suggested))
                 putExtra(VIEWALLID, NEWEST)
             }
-        }
+        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

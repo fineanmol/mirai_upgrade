@@ -547,6 +547,7 @@ fun recentProduct(): ArrayList<ProductDataNew> {
 
 fun addToRecentProduct(product: ProductDataNew) {
     val list = recentProduct()
+    list.clear()
     val pos = getPositionIfExist(list, product)
     if (pos != -1) {
         list.removeAt(pos)
