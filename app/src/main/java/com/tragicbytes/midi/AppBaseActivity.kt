@@ -1,5 +1,6 @@
 package com.tragicbytes.midi
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.res.Configuration
@@ -14,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.ads.*
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.DashBoardActivity
+import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.utils.Constants.SharedPref.LANGUAGE
 import com.tragicbytes.midi.utils.Constants.THEME.DARK
 import com.tragicbytes.midi.utils.extensions.changeToolbarFont
@@ -150,6 +152,9 @@ open class AppBaseActivity : AppCompatActivity() {
         if (themeApp != 0 && themeApp != appTheme) {
             launchActivityWithNewTask<DashBoardActivity>()
         }
+//        val activity = applicationContext as Activity
+//        Log.d("onResume", activity.toString())
+
 
     }
 }

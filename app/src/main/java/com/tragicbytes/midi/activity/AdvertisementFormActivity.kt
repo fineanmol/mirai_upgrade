@@ -104,10 +104,13 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     onSuccess = {
                     showProgress(false)
                     if (it!=null){
-                        launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
-
-                        setResult(Activity.RESULT_OK)
+                        val intent = Intent()
+                        intent.putExtra("AdvFormData", it)
+                        setResult(Activity.RESULT_OK, intent)
                         finish()
+                        /*launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
+                        setResult(Activity.RESULT_OK)
+                        finish()*/
                     }
                 },
                 onFailure={

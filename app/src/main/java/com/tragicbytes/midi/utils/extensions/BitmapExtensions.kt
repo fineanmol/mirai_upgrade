@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.utils.extensions
 
 import android.Manifest
+import android.app.ActionBar
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.*
@@ -10,9 +11,16 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
 import android.provider.MediaStore
+import android.text.Layout
 import android.util.Base64
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
+import androidx.lifecycle.viewmodel.R
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -318,6 +326,8 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap?
     return try {
         val resources: Resources = mContext.resources
         val scale: Float = resources.displayMetrics.density
+        val widthPxl: Int = resources.displayMetrics.widthPixels
+        val heightPxl: Int = resources.displayMetrics.heightPixels
         var bitmap = BitmapFactory.decodeResource(resources, resourceId)
         var bitmapConfig = bitmap.config
         // set default bitmap config if none
@@ -329,19 +339,82 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap?
         bitmap = bitmap.copy(bitmapConfig, true)
         val canvas = Canvas(bitmap)
         // new antialised Paint
-        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        //val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         // text color - #3D3D3D
-        paint.color = Color.rgb(110, 110, 110)
+        //paint.color = Color.rgb(110, 110, 110)
         // text size in pixels
-        paint.textSize = (50 * scale).toFloat()
+        //paint.textSize = (50 * scale).toFloat()
         // text shadow
-        paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY)
+        //paint.setShadowLayer(1f, 0f, 1f, Color.DKGRAY)
         // draw text to the Canvas center
         val bounds = Rect()
-        paint.getTextBounds(mText, 0, mText.length, bounds)
-        val x: Int = (bitmap.width - bounds.width()) / 6
-        val y: Int = (bitmap.height + bounds.height()) / 5
-        canvas.drawText(mText, x * scale, y * scale, paint)
+        //paint.getTextBounds(mText, 0, mText.length, bounds)
+        /*val x: Int = (bitmap.width - bounds.width()) / 6
+        val y: Int = (bitmap.height + bounds.height()) / 5*/
+        val x=widthPxl-widthPxl/4
+        val y=heightPxl/4
+        /*val layout = LinearLayout(mContext)
+        layout.gravity=Gravity.CENTER
+        val textView = TextView(mContext)
+        textView.text = "Hello world"
+        textView.textSize=140F
+        textView.gravity=Gravity.CENTER
+        textView.layoutParams = LinearLayout.LayoutParams(canvas.width, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layout.addView(textView)*/
+        val parent = LinearLayout(mContext)
+
+        parent.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            ActionBar.LayoutParams.WRAP_CONTENT
+        )
+        parent.orientation = LinearLayout.VERTICAL
+        parent.gravity=Gravity.CENTER
+
+        //children of parent linearlayout
+        val iv = ImageView(mContext)
+        iv.setImageResource(com.tragicbytes.midi.R.drawable.ic_logo)
+
+
+        val layout2 = LinearLayout(mContext)
+
+        layout2.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        layout2.orientation = LinearLayout.VERTICAL
+
+        parent.addView(iv)
+        parent.addView(layout2)
+
+        //children of layout2 LinearLayout
+        val tv1 = TextView(mContext)
+        tv1.text = "Hello world"
+        tv1.textSize=140F
+        tv1.gravity=Gravity.CENTER
+        val tv2 = TextView(mContext)
+        tv2.text = "Hello worldddd2"
+        tv2.textSize=100F
+        tv2.gravity=Gravity.CENTER
+        val tv3 = TextView(mContext)
+        tv3.text = "Hellooooooo world"
+        tv3.textSize=80F
+        tv3.gravity=Gravity.CENTER
+        val tv4 = TextView(mContext)
+        tv4.text = "Hellodddddddddd worldddddddddddddddd"
+        tv4.textSize=50F
+        tv4.gravity=Gravity.CENTER
+
+        layout2.addView(tv1)
+        layout2.addView(tv2)
+        layout2.addView(tv3)
+        layout2.addView(tv4)
+        parent.measure(canvas.width, canvas.height)
+        parent.layout(0, 0, canvas.width, canvas.height)
+
+        // To place the text view somewhere specific:
+        //canvas.translate(x.toFloat(), y.toFloat());
+        parent.draw(canvas)
+        //canvas.drawText(mText, x.toFloat(), y.toFloat(), paint)
         bitmap
     } catch (e: Exception) {
         null

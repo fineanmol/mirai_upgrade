@@ -1,18 +1,24 @@
 package com.tragicbytes.midi.activity
 
+import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
+import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
@@ -37,6 +43,7 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mProductId = 0
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
+    private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
     private var mIsInWishList = false
     private var mColorFlag: Int = -1
@@ -79,15 +86,7 @@ class ProductDetailActivity : AppBaseActivity() {
         ivBack.onClick {
             onBackPressed()
         }
-        if (intent?.extras?.getSerializable("AdvFormData") != null) {
-            var adDetails = intent?.extras?.getSerializable("AdvFormData")
-            if (adDetails != null) {
-                adDetails = adDetails as AdDetails
-                txtDescription.setText(adDetails.adDesc)
-                toast(adDetails.adBrandName + " " + adDetails.adDesc)
 
-            }
-        }
         /**
          * Fetch Product Detail From Server
          */
@@ -297,7 +296,7 @@ class ProductDetailActivity : AppBaseActivity() {
         tvAvailability.text = getString(R.string.lbl_in_stock)
         btnAddCard.onClick {
             if (isLoggedIn()) {
-                launchActivity<AdvertisementFormActivity>()
+                launchActivity<AdvertisementFormActivity>(21)
             } else {
                 launchActivity<SignInUpActivity>()
             }
@@ -373,9 +372,17 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun intHeaderView() {
-        mProductModel?.gallery?.forEach { mImages.add(it!!) }
+        /*mProductModel?.gallery?.forEach { mImages.add(it!!) }
         val imageAdapter = ProductImageAdapter(mImages)
         productViewPager.adapter = imageAdapter
+        dots.attachViewPager(productViewPager)
+        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
+        val bitmap = drawTextToBitmap(this, R.drawable.banner1, "AAAAAAAAAAAAAAAAAA")!!
+        myImages.add(bitmap)
+        var imageAdapter = PersonalizedProductImageAdapter(myImages)
+        productViewPager.adapter = null
+        productViewPager.adapter = imageAdapter
+        productViewPager.adapter?.notifyDataSetChanged()
         dots.attachViewPager(productViewPager)
         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
         setDescription()
@@ -633,6 +640,28 @@ class ProductDetailActivity : AppBaseActivity() {
                 R.color.favourite_background,
                 R.color.colorPrimary
             ) else changeFavIcon(R.drawable.ic_heart, R.color.gray_80)
+        }
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // Check that it is the SecondActivity with an OK result
+        if (requestCode == 21) {
+            if (resultCode == Activity.RESULT_OK) { // Get String data from Intent
+                val returnString = data?.getSerializableExtra("AdvFormData")
+                // Set text view with string
+                val adDetails=returnString as AdDetails
+                myImages.clear()
+                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
+                myImages.add(bitmap)
+                var imageAdapter = PersonalizedProductImageAdapter(myImages)
+                productViewPager.adapter = null
+                productViewPager.adapter = imageAdapter
+                productViewPager.adapter?.notifyDataSetChanged()
+                dots.attachViewPager(productViewPager)
+                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+            }
         }
     }
 }

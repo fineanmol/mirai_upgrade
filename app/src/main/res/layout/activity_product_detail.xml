@@ -59,7 +59,12 @@
                             android:layout_height="wrap_content"
                             android:fitsSystemWindows="true"
                             android:overScrollMode="never" />
-
+                        <!--<ImageView
+                            android:id="@+id/productViewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fitsSystemWindows="true"
+                            android:overScrollMode="never"/>-->
                         <com.tragicbytes.midi.utils.dotsindicator.DotsIndicator
                             android:id="@+id/dots"
                             android:layout_width="wrap_content"
