@@ -8,16 +8,21 @@ import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.core.Tag
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.razorpay.Checkout
+import com.razorpay.PaymentResultListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
@@ -27,6 +32,7 @@ import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ProductReviewData
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
@@ -35,10 +41,13 @@ import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
+import org.json.JSONObject
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-class ProductDetailActivity : AppBaseActivity() {
+class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private lateinit var mMainBinding: ActivityProductDetailBinding
     private var mProductModel: ProductDataNew? = null
@@ -74,6 +83,8 @@ class ProductDetailActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
 
+
+        Checkout.preload(applicationContext)
         dbReference = FirebaseDatabase.getInstance().reference
         storageReference = FirebaseStorage.getInstance().reference
 //        if (intent?.extras?.get(DATA) == null && intent?.extras?.get(PRODUCT_ID) == null) {
@@ -157,7 +168,7 @@ class ProductDetailActivity : AppBaseActivity() {
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
         })
-        endDateVal.setOnClickListener(View.OnClickListener {
+        endDateVal.setOnClickListener {
             val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Calendar.getInstance()
             } else {
@@ -176,7 +187,11 @@ class ProductDetailActivity : AppBaseActivity() {
             datePickerDialog.show()
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
-        })
+        }
+
+        submitForPaymentBtn.setOnClickListener {
+            startPayment()
+        }
 
 
     }
@@ -693,4 +708,64 @@ class ProductDetailActivity : AppBaseActivity() {
             }
         }
     }
+    //region Payment Methods
+
+    private fun startPayment() {
+        /*
+        *  You need to pass current activity in order to let Razorpay create CheckoutActivity
+        * */
+        val activity:Activity = this
+        val co = Checkout()
+
+
+        try {
+            val PaymentAmount = "100" + ".00" //Rs 1
+            //    paymentValue.text = PaymentAmount
+
+            val options = JSONObject()
+            options.put("name", "Nightowl Developers")
+            options.put("description", "Dominal Charges")
+            //You can omit the image option to fetch the image from dashboard
+            options.put("image","https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            options.put("currency","INR")
+            options.put("amount", PaymentAmount)
+
+            val userNumber=getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
+            val prefill = JSONObject()
+            prefill.put("email",getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL))
+            if( userNumber !=null) prefill.put("contact",userNumber) else prefill.put("contact","9876543210")
+
+
+            options.put("prefill",prefill)
+            co.open(activity,options)
+        }catch (e: Exception){
+            Toast.makeText(activity,"Error in payment: "+ e.message, Toast.LENGTH_LONG).show()
+            e.printStackTrace()
+        }
+    }
+
+    override fun onPaymentError(errorCode: Int, response: String?) {
+        try{
+            Toast.makeText(this,"Payment failed $errorCode \n $response", Toast.LENGTH_LONG).show()
+        }catch (e: Exception){
+           Toast.makeText(applicationContext,e.message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onPaymentSuccess(razorpayPaymentId: String?) {
+        try{
+            val razorpayPaymentId = generateString()
+            Toast.makeText(this,"Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
+        }catch (e: Exception){
+            Toast.makeText(applicationContext,e.message,Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun generateString(): String? {
+        val uuid: String = UUID.randomUUID().toString()
+        return uuid.replace("-".toRegex(), "")
+    }
+
+
+    //endregion
 }

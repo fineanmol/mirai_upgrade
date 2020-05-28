@@ -27,6 +27,7 @@ class AccountActivity : AppBaseActivity() {
                 getString(R.string.lbl_logout_confirmation),
                 onPositiveClick = { dialog, i ->
                     clearLoginPref()
+
                     TODO("Need to add signout function here")
                     //  Firebase.user.signOut()
                     launchActivity<DashBoardActivity>()
