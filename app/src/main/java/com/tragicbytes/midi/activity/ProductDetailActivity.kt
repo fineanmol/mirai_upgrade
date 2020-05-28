@@ -5,27 +5,25 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.icu.text.DateTimePatternGenerator.PatternInfo.OK
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
-import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.AdDetails
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ProductReviewData
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
@@ -377,14 +375,14 @@ class ProductDetailActivity : AppBaseActivity() {
         productViewPager.adapter = imageAdapter
         dots.attachViewPager(productViewPager)
         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
-        val bitmap = drawTextToBitmap(this, R.drawable.banner1, "AAAAAAAAAAAAAAAAAA")!!
+        /*val bitmap = drawTextToBitmap(this, R.drawable.banner1, )!!
         myImages.add(bitmap)
         var imageAdapter = PersonalizedProductImageAdapter(myImages)
         productViewPager.adapter = null
         productViewPager.adapter = imageAdapter
         productViewPager.adapter?.notifyDataSetChanged()
         dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
         setDescription()
         setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
@@ -652,8 +650,9 @@ class ProductDetailActivity : AppBaseActivity() {
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
                 val adDetails=returnString as AdDetails
+                adDetails.logoUrl= getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
-                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails.adBrandName)!!
+                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
                 myImages.add(bitmap)
                 var imageAdapter = PersonalizedProductImageAdapter(myImages)
                 productViewPager.adapter = null

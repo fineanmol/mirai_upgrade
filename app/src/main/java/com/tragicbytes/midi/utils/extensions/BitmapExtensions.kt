@@ -11,16 +11,14 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.AsyncTask
 import android.provider.MediaStore
-import android.text.Layout
 import android.util.Base64
 import android.view.Gravity
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
-import androidx.lifecycle.viewmodel.R
+import com.tragicbytes.midi.models.AdDetails
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -322,7 +320,7 @@ fun Uri.toBitmap(context: Context): Bitmap {
  * Draw text over bitmap
  * **/
 
-fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap? {
+fun drawTextToBitmap(mContext: Context, resourceId: Int, adDetails: AdDetails): Bitmap? {
     return try {
         val resources: Resources = mContext.resources
         val scale: Float = resources.displayMetrics.density
@@ -372,7 +370,9 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap?
 
         //children of parent linearlayout
         val iv = ImageView(mContext)
-        iv.setImageResource(com.tragicbytes.midi.R.drawable.ic_logo)
+        val imageAsBytes=
+            Base64.decode(adDetails.logoUrl, Base64.DEFAULT)
+        iv.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
 
 
         val layout2 = LinearLayout(mContext)
@@ -388,19 +388,19 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap?
 
         //children of layout2 LinearLayout
         val tv1 = TextView(mContext)
-        tv1.text = "Hello world"
+        tv1.text = adDetails.adName
         tv1.textSize=140F
         tv1.gravity=Gravity.CENTER
         val tv2 = TextView(mContext)
-        tv2.text = "Hello worldddd2"
+        tv2.text = adDetails.adBrandName
         tv2.textSize=100F
         tv2.gravity=Gravity.CENTER
         val tv3 = TextView(mContext)
-        tv3.text = "Hellooooooo world"
+        tv3.text = adDetails.adTagline
         tv3.textSize=80F
         tv3.gravity=Gravity.CENTER
         val tv4 = TextView(mContext)
-        tv4.text = "Hellodddddddddd worldddddddddddddddd"
+        tv4.text = adDetails.adDesc
         tv4.textSize=50F
         tv4.gravity=Gravity.CENTER
 
@@ -420,3 +420,4 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, mText: String): Bitmap?
         null
     }
 }
+

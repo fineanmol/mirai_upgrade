@@ -1,5 +1,6 @@
 package com.tragicbytes.midi.utils
 
+import com.tragicbytes.midi.models.AdDetails
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -78,6 +79,17 @@ object Constants {
         const val USER_PHONE="phone_number"
         const val USER_DOB="DOB"
         const val USER_GENDER="GENDER"
+
+    }
+
+    object AdvDetails{
+        const val ADV_LOGO: String = "image_url"
+        const val ADV_NAME: String= "adv name"
+        const val ADV_DESC: String= "adv desc"
+        const val ADV_TAG: String= "adv tag"
+        const val ADV_BRAND: String= "adv brand"
+
+
     }
 
     object KeyIntent {

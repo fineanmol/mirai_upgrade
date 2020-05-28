@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.CountDownTimer
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -23,10 +24,14 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.tragicbytes.midi.AppBaseActivity
@@ -38,6 +43,11 @@ import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_NAME
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_TAG
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.ADDRESS_UPDATE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.ORDER_COUNT_CHANGE
@@ -79,6 +89,7 @@ import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
+import java.io.*
 import java.util.concurrent.TimeUnit
 
 fun isLoggedIn(): Boolean = getSharedPrefInstance().getBooleanValue(IS_LOGGED_IN)
@@ -780,7 +791,54 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
     })
 }
 
-fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:DatabaseReference, onSuccess: (AdDetails) -> Unit,onFailure: () -> Unit) {
+fun Activity.saveLogoImageToStorage(mContext: Context,dbReference: DatabaseReference,storageReference: StorageReference,requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
+
+    var imgBytesData = Base64.decode(requestModel.base64_img,Base64.DEFAULT);
+
+    var file = File.createTempFile("image", null, mContext.cacheDir);
+    var fileOutputStream = FileOutputStream(file)
+    var bufferedOutputStream = BufferedOutputStream(fileOutputStream)
+    try {
+        bufferedOutputStream.write(imgBytesData);
+    } catch (e:IOException) {
+        snackBarError(e.localizedMessage);onSuccess(false)
+    } finally {
+        try {
+            bufferedOutputStream.close();
+        } catch (e:IOException) {
+            snackBarError(e.localizedMessage);onSuccess(false)
+        }
+    }
+    val ref =
+        storageReference?.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
+    val uploadTask = ref?.putFile(file.toUri())
+    uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+        if (!task.isSuccessful) {
+            task.exception?.let {
+                throw it
+            }
+        }
+        return@Continuation ref.downloadUrl
+    })?.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val downloadUri = task.result
+            //addUploadRecordToDb(downloadUri.toString())
+            dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri).addOnCompleteListener {
+                if(task.isSuccessful){
+                    getSharedPrefInstance().setValue(ADV_LOGO,downloadUri)
+                    onSuccess(true)
+                }
+            }
+        } else {
+            snackBar(task.exception!!.localizedMessage);onSuccess(false)
+        }
+    }?.addOnFailureListener {
+        snackBar(it.localizedMessage);onSuccess(false)
+    }
+
+}
+
+fun Activity.addAdvertisement(adDetails: AdDetails,dbReference:DatabaseReference, onSuccess: (AdDetails) -> Unit) {
 //    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
 //        fetchAndStoreAddressData()
 //        onSuccess(true)
@@ -789,16 +847,26 @@ fun Activity.addAdvertisement(adDetails: AdDetails, userId: String,dbReference:D
 //    }, onNetworkError = {
 //        noInternetSnackBar(); onSuccess(false)
 //    })
-    dbReference.child(userId).child("adDetails").setValue(adDetails).addOnCompleteListener {
-        if(it.isSuccessful){
-            onSuccess(adDetails)
-            snackBar("Ads Data Saved",Snackbar.LENGTH_SHORT)
-        }
-        else{
-            snackBarError(it.exception!!.localizedMessage);
-            onFailure()
-        }
+
+    try {
+        getSharedPrefInstance().setValue(ADV_DESC,adDetails.adDesc)
+        getSharedPrefInstance().setValue(ADV_BRAND,adDetails.adBrandName)
+        getSharedPrefInstance().setValue(ADV_NAME,adDetails.adName)
+        getSharedPrefInstance().setValue(ADV_TAG,adDetails.adTagline)
+        onSuccess(adDetails)
     }
+    catch (e:java.lang.Exception){
+        snackBar(e.localizedMessage)
+    }
+//    dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("adDetails").setValue(adDetails).addOnCompleteListener {
+//        if(it.isSuccessful){
+//            onSuccess(adDetails)
+//            snackBar("Ads Data Saved",Snackbar.LENGTH_SHORT)
+//        }
+//        else{
+//            snackBarError(it.exception!!.localizedMessage);
+//        }
+//    }
 }
 
 fun AppBaseActivity.updateEmail(

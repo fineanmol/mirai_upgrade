@@ -1,23 +1,27 @@
 package com.tragicbytes.midi.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.graphics.*
 import android.os.Bundle
 import android.util.Base64
 import androidx.core.content.FileProvider
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.AdDetails
-import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.utils.Constants
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_NAME
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_TAG
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_advertisement_form.*
@@ -32,14 +36,25 @@ class AdvertisementFormActivity : AppBaseActivity() {
 
     private lateinit var dbReference:DatabaseReference
 
+    private var storageReference: StorageReference? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advertisement_form)
         setToolbar(toolbar)
         dbReference = FirebaseDatabase.getInstance().reference
+        storageReference = FirebaseStorage.getInstance().reference
         title=getString(R.string.lbl_edit_form)
-        val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
-        ivAdsImage.setImageBitmap(bmp)
+        /*val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
+        ivAdsImage.setImageBitmap(bmp)*/
+        val imageAsBytes=
+            Base64.decode(getSharedPrefInstance().getStringValue(ADV_LOGO), Base64.DEFAULT)
+        ivAdsImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
+        editAdsName.setText(getSharedPrefInstance().getStringValue(ADV_NAME))
+        edtAdDescription.setText(getSharedPrefInstance().getStringValue(ADV_DESC))
+        edtAdTagline.setText(getSharedPrefInstance().getStringValue(ADV_TAG))
+        edtAdBrandName.setText(getSharedPrefInstance().getStringValue(ADV_BRAND))
         setUpListener()
     }
 
@@ -54,7 +69,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-                    updateProfilePhoto()
+                    getSharedPrefInstance().setValue(Constants.AdvDetails.ADV_LOGO,encodedImage)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -73,8 +88,6 @@ class AdvertisementFormActivity : AppBaseActivity() {
             CropImage.activity(uri)
                 .setOutputCompressQuality(40)
                 .start(this@AdvertisementFormActivity!!)
-
-
         }
 
 
@@ -99,7 +112,6 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     edtAdBrandName.textToString())
 
                 addAdvertisement(adDetails,
-                    getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
                     dbReference,
                     onSuccess = {
                     showProgress(false)
@@ -109,13 +121,10 @@ class AdvertisementFormActivity : AppBaseActivity() {
                         setResult(Activity.RESULT_OK, intent)
                         finish()
                         /*launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
-                        setResult(Activity.RESULT_OK)
+                                                setResult(Activity.RESULT_OK)
                         finish()*/
                     }
-                },
-                onFailure={
-
-                    }
+                }
                 )
             }
         }
@@ -145,17 +154,17 @@ class AdvertisementFormActivity : AppBaseActivity() {
         }
 
     }
-    private fun updateProfilePhoto() {
+    /*private fun updateProfilePhoto() {
         showProgress(true)
         val requestModel = RequestModel()
         requestModel.base64_img = encodedImage
-        this@AdvertisementFormActivity!!.saveProfileImage(requestModel, onSuccess = {
+        this@AdvertisementFormActivity!!.saveLogoImageToStorage(this,dbReference,storageReference!!,requestModel, onSuccess = {
             showProgress(false)
             encodedImage=null
-            /* (activity as DashBoardActivity).changeProfile()*/
+            *//* (activity as DashBoardActivity).changeProfile()*//*
         })
 
-    }
+    }*/
 
     private fun validate(): Boolean {
         return when {
