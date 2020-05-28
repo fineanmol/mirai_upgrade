@@ -48,14 +48,26 @@ class AdvertisementFormActivity : AppBaseActivity() {
         title=getString(R.string.lbl_edit_form)
         /*val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
         ivAdsImage.setImageBitmap(bmp)*/
-        val imageAsBytes=
-            Base64.decode(getSharedPrefInstance().getStringValue(ADV_LOGO), Base64.DEFAULT)
-        ivAdsImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
-        editAdsName.setText(getSharedPrefInstance().getStringValue(ADV_NAME))
-        edtAdDescription.setText(getSharedPrefInstance().getStringValue(ADV_DESC))
-        edtAdTagline.setText(getSharedPrefInstance().getStringValue(ADV_TAG))
-        edtAdBrandName.setText(getSharedPrefInstance().getStringValue(ADV_BRAND))
+        showProgress(true)
+        loadStoredData()
+
         setUpListener()
+
+    }
+
+    private fun loadStoredData() {
+        if(getSharedPrefInstance().getStringValue(ADV_LOGO).isNotEmpty()){
+            val imageAsBytes=
+                Base64.decode(getSharedPrefInstance().getStringValue(ADV_LOGO), Base64.DEFAULT)
+            ivAdsImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
+        }
+        if(getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()){
+            editAdsName.setText(getSharedPrefInstance().getStringValue(ADV_NAME))
+            edtAdDescription.setText(getSharedPrefInstance().getStringValue(ADV_DESC))
+            edtAdTagline.setText(getSharedPrefInstance().getStringValue(ADV_TAG))
+            edtAdBrandName.setText(getSharedPrefInstance().getStringValue(ADV_BRAND))
+        }
+        showProgress(false)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -103,8 +115,8 @@ class AdvertisementFormActivity : AppBaseActivity() {
 
     private fun setUpListener() {
         btnSaveAdsData.onClick {
+            showProgress(true)
             if (validate()) {
-                showProgress(true)
                 var adDetails=AdDetails(
                     editAdsName.textToString(),
                     edtAdDescription.textToString(),
@@ -127,6 +139,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 }
                 )
             }
+            showProgress(false)
         }
 
 
@@ -185,9 +198,10 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 edtAdBrandName.showError(getString(R.string.error_field_required))
                 false
             }
-            /*editLogoImage.checkIsEmpty() -> {
+            /*editLogoImage.() -> {
                 edtEmail.showError(getString(R.string.error_field_required))
-                false*/
+                false
+            }*/
 
             else -> true
         }

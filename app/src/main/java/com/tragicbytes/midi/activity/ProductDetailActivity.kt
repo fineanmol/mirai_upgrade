@@ -370,24 +370,19 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun intHeaderView() {
-        /*mProductModel?.gallery?.forEach { mImages.add(it!!) }
-        val imageAdapter = ProductImageAdapter(mImages)
-        productViewPager.adapter = imageAdapter
-        dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
-        /*val bitmap = drawTextToBitmap(this, R.drawable.banner1, )!!
+        var adDetails=AdDetails("","","","","")
+        val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
         myImages.add(bitmap)
         var imageAdapter = PersonalizedProductImageAdapter(myImages)
         productViewPager.adapter = null
         productViewPager.adapter = imageAdapter
         productViewPager.adapter?.notifyDataSetChanged()
         dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)*/
+        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
         setDescription()
         setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
     }
-
     private fun setMoreInfo() {
         if (!mProductModel?.length?.checkIsEmpty()!!) {
             llMoreInfo.show()
