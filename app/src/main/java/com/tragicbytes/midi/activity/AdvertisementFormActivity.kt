@@ -34,17 +34,14 @@ import java.io.File
 class AdvertisementFormActivity : AppBaseActivity() {
     private var encodedImage: String? = null
 
-    private lateinit var dbReference:DatabaseReference
 
-    private var storageReference: StorageReference? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advertisement_form)
         setToolbar(toolbar)
-        dbReference = FirebaseDatabase.getInstance().reference
-        storageReference = FirebaseStorage.getInstance().reference
+
         title=getString(R.string.lbl_edit_form)
         /*val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
         ivAdsImage.setImageBitmap(bmp)*/
@@ -81,7 +78,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-                    getSharedPrefInstance().setValue(Constants.AdvDetails.ADV_LOGO,encodedImage)
+                    getSharedPrefInstance().setValue(ADV_LOGO,encodedImage)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -124,7 +121,6 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     edtAdBrandName.textToString())
 
                 addAdvertisement(adDetails,
-                    dbReference,
                     onSuccess = {
                     showProgress(false)
                     if (it!=null){
@@ -132,7 +128,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                         intent.putExtra("AdvFormData", it)
                         setResult(Activity.RESULT_OK, intent)
                         finish()
-                        /*launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
+                            /*launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
                                                 setResult(Activity.RESULT_OK)
                         finish()*/
                     }

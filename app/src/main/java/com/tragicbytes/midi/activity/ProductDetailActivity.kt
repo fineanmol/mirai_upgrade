@@ -14,6 +14,10 @@ import android.widget.ArrayAdapter
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
@@ -62,9 +66,16 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mYear: Int = 0
     private var mDay: Int = 0
 
+    private lateinit var dbReference: DatabaseReference
+
+    private var storageReference: StorageReference? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
+
+        dbReference = FirebaseDatabase.getInstance().reference
+        storageReference = FirebaseStorage.getInstance().reference
 //        if (intent?.extras?.get(DATA) == null && intent?.extras?.get(PRODUCT_ID) == null) {
 //            toast(R.string.error_something_went_wrong)
 //            finish()
@@ -254,8 +265,32 @@ class ProductDetailActivity : AppBaseActivity() {
         }*/
 
         submitForPaymentBtn.onClick {
-            validateAllValue()
-            if(mIsAllDetailsFilled) snackBar("Details filled",Snackbar.LENGTH_SHORT)
+            //validateAllValue()
+            if(true){
+                snackBar("Details filled")
+                myImages[0]
+                this@ProductDetailActivity.requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), onResult = {
+                        if (it) {
+                            showProgress(true)
+                            this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                dbReference,
+                                storageReference!!,
+                                myImages[0],
+                                onSuccess = {
+                                    showProgress(false)
+                                }
+                            )
+                        } else {
+                            showProgress(false)
+                            this@ProductDetailActivity!!.showPermissionAlert(this)
+                        }
+                    })
+
+            }
 
         }
     }
@@ -370,7 +405,7 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun intHeaderView() {
-        var adDetails=AdDetails("","","","","")
+        var adDetails=AdDetails("Test Name","Test adv description","#ourTagLine","Test Brand","")
         val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
         myImages.add(bitmap)
         var imageAdapter = PersonalizedProductImageAdapter(myImages)
@@ -647,8 +682,8 @@ class ProductDetailActivity : AppBaseActivity() {
                 val adDetails=returnString as AdDetails
                 adDetails.logoUrl= getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
-                val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
-                myImages.add(bitmap)
+                val personalizedBannerBitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
+                myImages.add(personalizedBannerBitmap)
                 var imageAdapter = PersonalizedProductImageAdapter(myImages)
                 productViewPager.adapter = null
                 productViewPager.adapter = imageAdapter

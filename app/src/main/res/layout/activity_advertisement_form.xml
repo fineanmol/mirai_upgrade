@@ -125,7 +125,7 @@
                     >
 
                     <EditText
-                        android:id="@+id/edtAdBrandName"
+                            android:id="@+id/edtAdBrandName"
                         style="@style/TextInputEditTextStyle"
                         android:singleLine="true"
                         android:lines="2"

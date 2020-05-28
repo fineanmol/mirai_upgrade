@@ -1,10 +1,14 @@
 package com.tragicbytes.midi.utils.extensions
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.CountDownTimer
@@ -20,6 +24,7 @@ import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
@@ -791,54 +796,39 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
     })
 }
 
-fun Activity.saveLogoImageToStorage(mContext: Context,dbReference: DatabaseReference,storageReference: StorageReference,requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
-
-    var imgBytesData = Base64.decode(requestModel.base64_img,Base64.DEFAULT);
-
-    var file = File.createTempFile("image", null, mContext.cacheDir);
-    var fileOutputStream = FileOutputStream(file)
-    var bufferedOutputStream = BufferedOutputStream(fileOutputStream)
-    try {
-        bufferedOutputStream.write(imgBytesData);
-    } catch (e:IOException) {
-        snackBarError(e.localizedMessage);onSuccess(false)
-    } finally {
-        try {
-            bufferedOutputStream.close();
-        } catch (e:IOException) {
-            snackBarError(e.localizedMessage);onSuccess(false)
-        }
-    }
-    val ref =
-        storageReference?.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
-    val uploadTask = ref?.putFile(file.toUri())
-    uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-        if (!task.isSuccessful) {
-            task.exception?.let {
-                throw it
-            }
-        }
-        return@Continuation ref.downloadUrl
-    })?.addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            val downloadUri = task.result
-            //addUploadRecordToDb(downloadUri.toString())
-            dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri).addOnCompleteListener {
-                if(task.isSuccessful){
-                    getSharedPrefInstance().setValue(ADV_LOGO,downloadUri)
-                    onSuccess(true)
+@SuppressLint("MissingPermission")
+fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (Boolean) -> Unit){
+    var file = File.createTempFile("image", null, mContext.cacheDir)
+    personalizedBannerBitmap.saveAsync(file.path
+    ) {
+        val ref =
+            storageReference?.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
+        val uploadTask = ref?.putFile(Uri.fromFile(file))
+        uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
                 }
             }
-        } else {
-            snackBar(task.exception!!.localizedMessage);onSuccess(false)
+            return@Continuation ref.downloadUrl
+        })?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri.toString()).addOnCompleteListener {
+                    if(task.isSuccessful){
+                        onSuccess(true)
+                    }
+                }
+            } else {
+                snackBar(task.exception!!.localizedMessage);onSuccess(false)
+            }
+        }?.addOnFailureListener {
+            snackBar(it.localizedMessage);onSuccess(false)
         }
-    }?.addOnFailureListener {
-        snackBar(it.localizedMessage);onSuccess(false)
     }
-
 }
 
-fun Activity.addAdvertisement(adDetails: AdDetails,dbReference:DatabaseReference, onSuccess: (AdDetails) -> Unit) {
+fun Activity.addAdvertisement(adDetails: AdDetails, onSuccess: (AdDetails) -> Unit) {
 //    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
 //        fetchAndStoreAddressData()
 //        onSuccess(true)
