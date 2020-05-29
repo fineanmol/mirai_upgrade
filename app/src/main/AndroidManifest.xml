@@ -52,7 +52,7 @@
             android:value="@string/ad_mob_app_id" />
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_Y4mSmdW0LMGQn0" />
+            android:value="rzp_test_kSmpsC9llnnHCj" />
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

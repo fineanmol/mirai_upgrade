@@ -407,7 +407,7 @@
                             android:id="@+id/endDateVal"
                             style="@style/MoreInfoSubheading"
                             android:textAlignment="center"
-                            android:text="Choose Date"
+                            android:text="@string/choose_date"
                             />
                     </LinearLayout>
 

@@ -8,8 +8,6 @@ import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -18,7 +16,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.core.Tag
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
@@ -28,10 +25,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
-import com.tragicbytes.midi.models.AdDetails
-import com.tragicbytes.midi.models.ProductDataNew
-import com.tragicbytes.midi.models.ProductReviewData
-import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
@@ -51,6 +45,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private lateinit var mMainBinding: ActivityProductDetailBinding
     private var mProductModel: ProductDataNew? = null
+    private var mAdsModel: AdsMoreDetails? = null
     private var mProductId = 0
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
@@ -64,9 +59,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var mIsAgeGroupExist: Boolean = false
     private var mIsStartDateExist: Boolean = false
     private var mIsEndDateExist: Boolean = false
+    private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
-    private var mIsRangeExist: Boolean = false
+
     private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
@@ -87,17 +83,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         Checkout.preload(applicationContext)
         dbReference = FirebaseDatabase.getInstance().reference
         storageReference = FirebaseStorage.getInstance().reference
-//        if (intent?.extras?.get(DATA) == null && intent?.extras?.get(PRODUCT_ID) == null) {
-//            toast(R.string.error_something_went_wrong)
-//            finish()
-//            return
-//        }
-//        BroadcastReceiverExt(this) {
-//            onAction(CART_COUNT_CHANGE) {
-//                setCartCountFromPref()
-//            }
-//
-//        }
 
 
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
@@ -136,77 +121,14 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             finish()
         }
         setCartCountFromPref()
-//        BroadcastReceiverExt(this) {
-//            onAction(CART_COUNT_CHANGE) { setCartCountFromPref() }
-//        }
-        /*rlCart.onClick {
-            if (isLoggedIn()) {
-                launchActivity<MyCartActivity>()
-            } else {
-                launchActivity<SignInUpActivity>()
-            }
-        }*/
 
-        startDateVal.setOnClickListener(View.OnClickListener {
-            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Calendar.getInstance()
-            } else {
-                TODO("VERSION.SDK_INT < N")
-            }
-            mYear = c[Calendar.YEAR]
-            mMonth = c[Calendar.MONTH]
-            mDay = c[Calendar.DAY_OF_MONTH]
-            val datePickerDialog = DatePickerDialog(
-                this@ProductDetailActivity,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    startDateVal.text =
-                        dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
-                }, mYear, mMonth, mDay
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
-            val coMonth = c[Calendar.MONTH]
-            val coDay = c[Calendar.DAY_OF_MONTH]
-        })
-        endDateVal.setOnClickListener {
-            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Calendar.getInstance()
-            } else {
-                TODO("VERSION.SDK_INT < N")
-            }
-            mYear = c[Calendar.YEAR]
-            mMonth = c[Calendar.MONTH]
-            mDay = c[Calendar.DAY_OF_MONTH]
-            val datePickerDialog = DatePickerDialog(
-                this@ProductDetailActivity,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
-                }, mYear, mMonth, mDay
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
-            val coMonth = c[Calendar.MONTH]
-            val coDay = c[Calendar.DAY_OF_MONTH]
-        }
 
-        submitForPaymentBtn.setOnClickListener {
-            startPayment()
-        }
 
 
     }
 
 
     private fun setCartCountFromPref() {
-        if (isLoggedIn()) {
-            val count = getCartCount()
-            if (!count.checkIsEmpty() && !count.equals("0", false)) {
-                /*tvNotificationCount.text = count
-                tvNotificationCount.show()*/
-            } else {
-                /*tvNotificationCount.hide()*/
-            }
-        }
 
     }
 
@@ -272,67 +194,107 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
 
         ivFavourite.onClick { onFavouriteClick() }
-        /*llReviews.onClick {
-            launchActivity<ReviewsActivity> {
-                putExtra(DATA, mProductModel)
-            }
-
-        }*/
 
         submitForPaymentBtn.onClick {
-            //validateAllValue()
-            if(true){
-                snackBar("Details filled")
-                myImages[0]
-                this@ProductDetailActivity.requestPermissions(
-                    arrayOf(
-                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    ), onResult = {
-                        if (it) {
-                            showProgress(true)
-                            this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                dbReference,
-                                storageReference!!,
-                                myImages[0],
-                                onSuccess = {
-                                    showProgress(false)
-                                }
-                            )
-                        } else {
-                            showProgress(false)
-                            this@ProductDetailActivity!!.showPermissionAlert(this)
-                        }
-                    })
+            validateAllValue()
+            /*    if (true) {
+                    snackBar("Details filled")
+                    myImages[0]
+                    this@ProductDetailActivity.requestPermissions(
+                        arrayOf(
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE
+                        ), onResult = {
+                            if (it) {
+                                showProgress(true)
+                                this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                    dbReference,
+                                    storageReference!!,
+                                    myImages[0],
+                                    onSuccess = {
+                                        showProgress(false)
+                                    }
+                                )
+                            } else {
+                                showProgress(false)
+                                this@ProductDetailActivity.showPermissionAlert(this)
+                            }
+                        })
 
-            }
-
+                }
+            */
         }
+
+        rangeVal.onClick {
+            mIsRangeExist= true && !rangeVal.text.isNullOrEmpty()
+        }
+
+        endDateVal.onClick {
+
+            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Calendar.getInstance()
+            } else {
+                TODO("VERSION.SDK_INT < N")
+            }
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+            mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
+        }
+
+        startDateVal.onClick {
+            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Calendar.getInstance()
+            } else {
+                TODO("VERSION.SDK_INT < N")
+            }
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    startDateVal.text =
+                        dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+            mIsStartDateExist = !startDateVal.text.isNullOrEmpty()
+        }
+
+
     }
 
     private fun validateAllValue() {
-        if(!mIsGenderExist) {
-            snackBar("Gender Required ",Snackbar.LENGTH_SHORT)}
-        else if(!mIsAgeGroupExist){
-            snackBar("Age Group Required",Snackbar.LENGTH_SHORT)
-        }
-        else if(!mIsStartDateExist){
-            snackBar("Start Date Required",Snackbar.LENGTH_SHORT)
-        }
-        else if(!mIsEndDateExist){
-            snackBar("End Date Required",Snackbar.LENGTH_SHORT)
-        }
-        else if(!mIsStartTimeExist){
-            snackBar("Start Time Required",Snackbar.LENGTH_SHORT)
-        }
-        else if(!mIsEndTimeExist){
-            snackBar("End Time Required",Snackbar.LENGTH_SHORT)
-        }
-        else if(!mIsRangeExist){
-            snackBar("RangeRequired",Snackbar.LENGTH_SHORT)
-        }
-        else {
-            mIsAllDetailsFilled= true
+        if (!mIsGenderExist) {
+            snackBar("Gender Required ", Snackbar.LENGTH_SHORT)
+        } else if (!mIsAgeGroupExist) {
+            snackBar("Age Group Required", Snackbar.LENGTH_SHORT)
+        } else if (!mIsAgeGroupExist) {
+            snackBar("Start Date Required", Snackbar.LENGTH_SHORT)
+        } else if (!mIsEndDateExist) {
+            snackBar("End Date Required", Snackbar.LENGTH_SHORT)
+        } else if (!mIsStartTimeExist) {
+            snackBar("Start Time Required", Snackbar.LENGTH_SHORT)
+        } else if (!mIsEndTimeExist) {
+            snackBar("End Time Required", Snackbar.LENGTH_SHORT)
+        } else if (!mIsRangeExist) {
+            snackBar("RangeRequired", Snackbar.LENGTH_SHORT)
+        } else {
+            mIsAllDetailsFilled = true
         }
 
     }
@@ -420,7 +382,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     }
 
     private fun intHeaderView() {
-        var adDetails=AdDetails("Test Name","Test adv description","#ourTagLine","Test Brand","")
+        var adDetails =
+            AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
         val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
         myImages.add(bitmap)
         var imageAdapter = PersonalizedProductImageAdapter(myImages)
@@ -433,6 +396,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
     }
+
     private fun setMoreInfo() {
         if (!mProductModel?.length?.checkIsEmpty()!!) {
             llMoreInfo.show()
@@ -545,8 +509,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         if (ageGroups.isNotEmpty()) {
 
-            //  val sizeList = ArrayList<String>()
-            //  val sizes = mProductModel?.size?.split(",")
             mIsAgeGroupExist = true && ageGroups.isNotEmpty()
             ageGroups.forEachIndexed { i, s -> ageGroupList.add(s.trim()) }
 
@@ -630,7 +592,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }, onApiError = {
             snackBarError(it)
         }, onNetworkError = {
-            openLottieDialog() {
+            openLottieDialog {
                 listProductReviews()
             }
         })
@@ -694,10 +656,11 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             if (resultCode == Activity.RESULT_OK) { // Get String data from Intent
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
-                val adDetails=returnString as AdDetails
-                adDetails.logoUrl= getSharedPrefInstance().getStringValue(ADV_LOGO)
+                val adDetails = returnString as AdDetails
+                adDetails.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
-                val personalizedBannerBitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
+                val personalizedBannerBitmap =
+                    drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
                 myImages.add(personalizedBannerBitmap)
                 var imageAdapter = PersonalizedProductImageAdapter(myImages)
                 productViewPager.adapter = null
@@ -714,7 +677,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         /*
         *  You need to pass current activity in order to let Razorpay create CheckoutActivity
         * */
-        val activity:Activity = this
+        val activity: Activity = this
         val co = Checkout()
 
 
@@ -726,38 +689,44 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             options.put("name", "Nightowl Developers")
             options.put("description", "Dominal Charges")
             //You can omit the image option to fetch the image from dashboard
-            options.put("image","https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
-            options.put("currency","INR")
+            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            options.put("currency", "INR")
             options.put("amount", PaymentAmount)
 
-            val userNumber=getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
+            val userNumber = getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
             val prefill = JSONObject()
-            prefill.put("email",getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL))
-            if( userNumber !=null) prefill.put("contact",userNumber) else prefill.put("contact","9876543210")
+            prefill.put(
+                "email",
+                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)
+            )
+            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put(
+                "contact",
+                "9876543210"
+            )
 
 
-            options.put("prefill",prefill)
-            co.open(activity,options)
-        }catch (e: Exception){
-            Toast.makeText(activity,"Error in payment: "+ e.message, Toast.LENGTH_LONG).show()
+            options.put("prefill", prefill)
+            co.open(activity, options)
+        } catch (e: Exception) {
+            Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_LONG).show()
             e.printStackTrace()
         }
     }
 
     override fun onPaymentError(errorCode: Int, response: String?) {
-        try{
-            Toast.makeText(this,"Payment failed $errorCode \n $response", Toast.LENGTH_LONG).show()
-        }catch (e: Exception){
-           Toast.makeText(applicationContext,e.message,Toast.LENGTH_SHORT).show()
+        try {
+            Toast.makeText(this, "Payment failed $errorCode \n $response", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
         }
     }
 
     override fun onPaymentSuccess(razorpayPaymentId: String?) {
-        try{
+        try {
             val razorpayPaymentId = generateString()
-            Toast.makeText(this,"Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
-        }catch (e: Exception){
-            Toast.makeText(applicationContext,e.message,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
+        } catch (e: Exception) {
+            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
         }
     }
 

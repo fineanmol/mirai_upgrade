@@ -527,6 +527,16 @@ data class ProductDataNew(
 
 ) : Serializable
 
+data class AdsMoreDetails(
+    val age_group: String? = null,
+    val gender: String? = null,
+    val start_date: String? = null,
+    val end_date: String? = null,
+    val start_time: String? = null,
+    val end_time: String? = null,
+    val range: String? = null
+) : Serializable
+
 data class Testimonials(
     val name: String? = null,
     val message: String? = null,

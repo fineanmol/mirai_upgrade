@@ -28,17 +28,17 @@ class AccountActivity : AppBaseActivity() {
                 onPositiveClick = { dialog, i ->
                     clearLoginPref()
 
-                    TODO("Need to add signout function here")
-                    //  Firebase.user.signOut()
-                    launchActivity<DashBoardActivity>()
+
+                    FirebaseAuth.getInstance().signOut()
+
+                    launchActivity<SignInUpActivity>()
                 },
                 onNegativeClick = { dialog, i ->
                     dialog.dismiss()
                 })
             dialog.show()
         }
-        /*  tvOrders.onClick { launchActivity<OrderActivity>() }*/
-        /*  tvOffer.onClick { launchActivity<OfferActivity>() }*/
+
         ivProfileImage.onClick { launchActivity<EditProfileActivity>() }
         tvHelpCenter.onClick { launchActivity<HelpActivity>() }
         btnVerify.onClick {
@@ -53,7 +53,7 @@ class AccountActivity : AppBaseActivity() {
                     }
             }
             /*Send verification email End*/
-            else if(user!!.phoneNumber==null){
+            else if(user.phoneNumber==null){
                 /* launchActivity<OTPActivity>()*/
             }
 
