@@ -6,7 +6,7 @@
         android:orderInCategory="100"
         android:icon="@drawable/ic_search"
         app:iconTint="@color/black"
-        android:visible="true"
+        android:visible="false"
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.widget.SearchView"/>
 

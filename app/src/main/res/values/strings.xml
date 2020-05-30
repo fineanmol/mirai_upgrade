@@ -215,7 +215,7 @@
     <string name="menu_send">Send</string>
     <string name="menu_profile">Profile</string>
     <string name="menu_order">Order</string>
-    <string name="menu_my_cart">My Cart</string>
+    <string name="menu_my_cart">My</string>
     <string name="menu_my_rewords">My Rewords</string>
     <string name="menu_account_setting">Account Setting</string>
     <string name="menu_help_center">Help Center</string>
@@ -302,8 +302,8 @@
     <string name="language">Language</string>
     <string name="lbl_blog">Blog</string>
     <string name="lbl_no_data_found">No Products found</string>
-    <string name="llb_no_items_in_your_cart">No items in your cart</string>
-    <string name="lbl_shop_now">Shop Now</string>
+    <string name="llb_no_items_in_your_cart">No Ads in your Account</string>
+    <string name="lbl_shop_now">Create Now</string>
     <string name="lbl_product_reviews">Product Reviews</string>
     <string name="lbl_review">Reviews</string>
     <string name="lbl_out_stock">Submit Ads disabled</string>

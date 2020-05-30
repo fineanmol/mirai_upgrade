@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import com.tragicbytes.midi.AppBaseActivity
@@ -41,6 +43,8 @@ import kotlin.math.roundToInt
 class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private lateinit var mMainBinding: ActivityProductDetailBinding
+    private lateinit var dbReference:DatabaseReference
+    private var storageReference: StorageReference? = null
     private var mProductModel: ProductDataNew? = null
     private var mAdsModel: AdsMoreDetails? = null
     private var mProductId = 0
@@ -201,8 +205,9 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         ivFavourite.onClick { onFavouriteClick() }
 
         submitForPaymentBtn.onClick {
-            validateAllValue()
-            /*    if (true) {
+
+            if(validateAllValue()) startPayment()
+              /*  if (true) {
                     snackBar("Details filled")
                     myImages[0]
                     this@ProductDetailActivity.requestPermissions(
@@ -226,8 +231,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                             }
                         })
 
-                }
-            */
+                }*/
         }
 
         rangeVal.onClick {
@@ -324,23 +328,31 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     }
 
-    private fun validateAllValue() {
+    private fun validateAllValue(): Boolean {
         if (!mIsGenderExist) {
             snackBar("Gender Required ", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsAgeGroupExist) {
             snackBar("Age Group Required", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsAgeGroupExist) {
             snackBar("Start Date Required", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsEndDateExist) {
             snackBar("End Date Required", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsStartTimeExist) {
             snackBar("Start Time Required", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
+            return false
         } else if (!mIsRangeExist) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
+            return false
         } else {
             mIsAllDetailsFilled = true
+            return true
         }
 
     }
@@ -744,7 +756,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             options.put("name", "Nightowl Developers")
             options.put("description", "Dominal Charges")
             //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png")
+            options.put("image", "https://nightowldevelopers.com/img/logo.webp")
             options.put("currency", "INR")
             options.put("amount", PaymentAmount)
 
@@ -779,6 +791,33 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     override fun onPaymentSuccess(razorpayPaymentId: String?) {
         try {
             val razorpayPaymentId = generateString()
+            /*    if (true) {
+                    snackBar("Details filled")
+                    myImages[0]
+                    this@ProductDetailActivity.requestPermissions(
+                        arrayOf(
+                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE
+                        ), onResult = {
+                            if (it) {
+                                showProgress(true)
+                                this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                    dbReference,
+                                    storageReference!!,
+                                    myImages[0],
+                                    onSuccess = {
+                                        showProgress(false)
+                                    }
+                                )
+                            } else {
+                                showProgress(false)
+                                this@ProductDetailActivity.showPermissionAlert(this)
+                            }
+                        })
+
+                }
+            */
+
             Toast.makeText(this, "Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
         } catch (e: Exception) {
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()

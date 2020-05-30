@@ -18,7 +18,7 @@ class AccountActivity : AppBaseActivity() {
         title = getString(R.string.title_account)
 
         txtDisplayName.text = getUserFullName()
-        ivProfileImage.loadImageFromUrl(getProfileUrl(), aPlaceHolderImage = R.drawable.ic_profile)
+        ivProfileImage.loadImageFromUrl(user.photoUrl.toString(), aPlaceHolderImage = R.drawable.ic_profile)
         if(!user.isEmailVerified) btnVerify.text="Verify Email" else verifyColumn.hide()
 
 

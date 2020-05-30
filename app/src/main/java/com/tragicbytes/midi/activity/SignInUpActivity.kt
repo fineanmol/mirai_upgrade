@@ -144,7 +144,7 @@ class SignInUpActivity : AppBaseActivity() {
                     var token = ""
                     if (user != null) {
                         getSharedPrefInstance().setValue(
-                            Constants.SharedPref.USER_PROFILE,
+                            Constants.SharedPref.USER_PROFILE_URL,
                             user.photoUrl.toString()
                         )
                         signInEmail(user, onResult = {

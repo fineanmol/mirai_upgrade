@@ -9,6 +9,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
@@ -40,6 +43,9 @@ class DashBoardActivity : AppBaseActivity() {
     private val mCartFragment = MyCartFragment()
     private val mProfileFragment = ProfileFragment()
     var selectedFragment: Fragment? = null
+    private lateinit var dbReference: DatabaseReference
+    private var storageReference: StorageReference? = null
+    val user = FirebaseAuth.getInstance().currentUser!!
     //endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -315,8 +321,11 @@ class DashBoardActivity : AppBaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == Constants.RequestCode.ACCOUNT) {
-            loadWishListFragment()
+
+        if (requestCode == 21) {
+            if (resultCode == Activity.RESULT_OK && requestCode == Constants.RequestCode.ACCOUNT) {
+              //  loadWishListFragment()
+            }
         }
     }
 
@@ -381,7 +390,7 @@ class DashBoardActivity : AppBaseActivity() {
 
     fun changeProfile() {
         if (isLoggedIn()) {
-            civProfile.loadImageFromUrl(getProfileUrl(), aPlaceHolderImage = R.drawable.ic_profile)
+            civProfile.loadImageFromUrl(user.photoUrl.toString(), aPlaceHolderImage = R.drawable.ic_profile)
         }
     }
 

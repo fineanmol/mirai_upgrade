@@ -127,22 +127,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/stroke_width"
                     android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/spacing_standard_new"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:layout_marginBottom="@dimen/spacing_standard"
+                    android:background="@color/view_color" />
+                <TextView
+                    android:id="@+id/new_Ads"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_create"
+                    android:gravity="center_vertical"
+                    android:text="Create Ads" />
+                <TextView
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_settings"
+                    android:gravity="center_vertical"
+                    android:text="Upload Ads" />
+                <TextView
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_settings"
+                    android:gravity="center_vertical"
+                    android:text="Dark Mode" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke_width"
+                    android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
 
-                <!--<TextView
-                    android:id="@+id/tvLblOffer"
-                    style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_offers"
-                    android:gravity="center_vertical"
-                    android:text="@string/lbl_my_offers" />-->
-                <!--<TextView
-                    android:id="@+id/tvBlog"
-                    style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_blog"
-                    android:gravity="center_vertical"
-                    android:text="@string/lbl_blog" />-->
+
 
                 <TextView
                     android:id="@+id/tvAccount"

@@ -1,17 +1,36 @@
 package com.tragicbytes.midi.fragments
 
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
+import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.StorageReference
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.BuildConfig
+import com.tragicbytes.midi.R
+import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PASSWORD
 import com.tragicbytes.midi.utils.ImagePicker
@@ -19,27 +38,16 @@ import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.dialog_reset.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.btnChangePassword
-import java.io.File
-import android.graphics.Bitmap
-import android.util.Base64
 import java.io.ByteArrayOutputStream
-import android.graphics.BitmapFactory
-import com.tragicbytes.midi.R
-import com.theartofdev.edmodo.cropper.CropImage
-import android.app.Activity.RESULT_OK
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.tragicbytes.midi.activity.DashBoardActivity
-import com.theartofdev.edmodo.cropper.CropImageView
-import com.tragicbytes.midi.utils.Constants
+import java.io.File
 
 
 class ProfileFragment : BaseFragment() {
 
     private lateinit var dbReference: DatabaseReference
-
+    private var storageReference: StorageReference? = null
     private var encodedImage: String? = null
+    val user = FirebaseAuth.getInstance().currentUser!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,7 +68,10 @@ class ProfileFragment : BaseFragment() {
             edtDOB.setText(getDob())
             edtOrg.setText(getOrg())
 
-            ivProfileImage.loadImageFromUrl(getProfileUrl(),aPlaceHolderImage = R.drawable.ic_profile)
+            ivProfileImage.loadImageFromUrl(
+                user.photoUrl.toString(),
+                aPlaceHolderImage = R.drawable.ic_profile
+            )
             if (getSharedPrefInstance().getBooleanValue(IS_SOCIAL_LOGIN)) {
                 btnChangePassword.hide()
             } else {
@@ -82,17 +93,19 @@ class ProfileFragment : BaseFragment() {
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-                    updateProfilePhoto()
+                    updateProfilePhoto(resultUri)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
-                if (error?.message != null){
+                if (error?.message != null) {
                     snackBar(error.message!!)
                 }
             }
-        }else{
+        } else {
             if (data != null && data.data != null) ivProfileImage.setImageURI(data.data)
-            val path: String? = ImagePicker.getImagePathFromResult(activity!!, requestCode, resultCode, data) ?: return
+            val path: String? =
+                ImagePicker.getImagePathFromResult(activity!!, requestCode, resultCode, data)
+                    ?: return
             val uri = FileProvider.getUriForFile(
                 activity!!,
                 BuildConfig.APPLICATION_ID + ".provider",
@@ -133,18 +146,18 @@ class ProfileFragment : BaseFragment() {
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ), onResult = {
                     if (it) {
-                       /* ImagePicker.pickImage(
-                            this@ProfileFragment,
-                            context.getString(R.string.lbl_select_image),
-                            ImagePicker.mPickImageRequestCode,
-                            false
-                        )*/
+                        /* ImagePicker.pickImage(
+                             this@ProfileFragment,
+                             context.getString(R.string.lbl_select_image),
+                             ImagePicker.mPickImageRequestCode,
+                             false
+                         )*/
                         CropImage.activity()
-                            .setAspectRatio(1,1)
+                            .setAspectRatio(1, 1)
                             .setGuidelines(CropImageView.Guidelines.OFF)
-                            .setRequestedSize(300,300)
+                            .setRequestedSize(300, 300)
                             .setOutputCompressQuality(40)
-                            .start(context,this@ProfileFragment)
+                            .start(context, this@ProfileFragment)
                     } else {
                         activity!!.showPermissionAlert(this)
                     }
@@ -153,22 +166,63 @@ class ProfileFragment : BaseFragment() {
 
     }
 
-    private fun updateProfilePhoto() {
+    private fun updateProfilePhoto(selectedImage: Uri) {
         showProgress()
         val requestModel = RequestModel()
         requestModel.base64_img = encodedImage
-        val user = FirebaseAuth.getInstance().currentUser!!
 
 
-        dbReference = FirebaseDatabase.getInstance().reference
-        val photoUri= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PROFILE_URL)
-        (activity as AppBaseActivity).updateProfileUrl(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,photoUri) {
-                snackBar(it)
-            encodedImage=null
-            (activity as DashBoardActivity).changeProfile()
+
+
+        val profileUpdates = UserProfileChangeRequest.Builder()
+            .setDisplayName(user.displayName.toString())
+            .setPhotoUri(Uri.parse(selectedImage.toString()))
+            .build();
+
+        user.updateProfile(profileUpdates).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
                 hideProgress()
+                Log.d(TAG, "User profile updated.")
+                snackBar("Profile Pic Uploaded")
+
+                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, user.photoUrl.toString())
+                (activity as DashBoardActivity).changeProfile()
+                Toast.makeText(context,user.photoUrl.toString(),Toast.LENGTH_SHORT).show()
+                hideProgress()
+            } else {
+                snackBar("Failed Upload")
+
+            }
 
         }
+
+
+        //  dbReference = FirebaseDatabase.getInstance().reference
+        //  val photoUri= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PROFILE_URL)
+
+//                    showProgress()
+//                    context?.let {
+//                        storageReference?.let { it1 ->
+//                            (activity as AppBaseActivity).saveProfileImageToStorage(it,
+//                                dbReference,
+//                                it1,
+//                                selectedImage,
+//                                onSuccess = {
+//                                    hideProgress()
+//                                }
+//
+//                            )
+//                        }
+//                    }
+
+
+        /*  (activity as AppBaseActivity).updateProfileUrl(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,photoUri) {
+                  snackBar(it)
+              encodedImage=null
+              (activity as DashBoardActivity).changeProfile()
+                  hideProgress()
+
+          }*/
 
 
     }
@@ -232,39 +286,61 @@ class ProfileFragment : BaseFragment() {
         val user = FirebaseAuth.getInstance().currentUser!!
         dbReference = FirebaseDatabase.getInstance().reference
 
-        if(edtEmail.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)){
-            (activity as AppBaseActivity).updateEmail(user,edtEmail.textToString()) {
+        if (edtEmail.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)) {
+            (activity as AppBaseActivity).updateEmail(user, edtEmail.textToString()) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if(edtFirstName.textToString()+" "+edtLastName.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DISPLAY_NAME)){
-            (activity as AppBaseActivity).updateName(user,edtFirstName.textToString()+" "+edtLastName.textToString()) {
+        if (edtFirstName.textToString() + " " + edtLastName.textToString() != getSharedPrefInstance().getStringValue(
+                Constants.SharedPref.USER_DISPLAY_NAME
+            )
+        ) {
+            (activity as AppBaseActivity).updateName(
+                user,
+                edtFirstName.textToString() + " " + edtLastName.textToString()
+            ) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if(edtMobileNo.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)){
-            (activity as AppBaseActivity).updatePhone(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtMobileNo.textToString()) {
+        if (edtMobileNo.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)) {
+            (activity as AppBaseActivity).updatePhone(
+                getSharedPrefInstance().getStringValue(
+                    Constants.SharedPref.USER_ID
+                ), dbReference, edtMobileNo.textToString()
+            ) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if(edtDOB.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB)){
-            (activity as AppBaseActivity).updateDOB(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtDOB.textToString()) {
+        if (edtDOB.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB)) {
+            (activity as AppBaseActivity).updateDOB(
+                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
+                dbReference,
+                edtDOB.textToString()
+            ) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if(edtOrg.textToString()!= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ORG)){
-            (activity as AppBaseActivity).updateORG(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,edtOrg.textToString()) {
+        if (edtOrg.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ORG)) {
+            (activity as AppBaseActivity).updateORG(
+                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
+                dbReference,
+                edtOrg.textToString()
+            ) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if(spnGender.selectedItem.toString()!=getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_GENDER)){
+        if (spnGender.selectedItem.toString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_GENDER)) {
 
-            (activity as AppBaseActivity).updateGender(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,spnGender.selectedItem.toString()) {
+            (activity as AppBaseActivity).updateGender(
+                getSharedPrefInstance().getStringValue(
+                    Constants.SharedPref.USER_ID
+                ), dbReference, spnGender.selectedItem.toString()
+            ) {
                 snackBar(it)
                 hideProgress()
             }
@@ -274,10 +350,10 @@ class ProfileFragment : BaseFragment() {
         requestModel.first_name = edtFirstName.textToString()
         requestModel.last_name = edtLastName.textToString()
         requestModel.user_org = edtOrg.textToString()
-        requestModel.mobile_no= edtMobileNo.textToString()
+        requestModel.mobile_no = edtMobileNo.textToString()
         (activity as AppBaseActivity).createCustomer(requestModel) {
             snackBar(getString(R.string.lbl_profile_saved))
-                hideProgress()
+            hideProgress()
         }
     }
 

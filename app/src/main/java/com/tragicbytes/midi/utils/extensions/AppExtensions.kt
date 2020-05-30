@@ -829,6 +829,52 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
     }
 }
 
+
+fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (Boolean) -> Unit){
+    var file = File.createTempFile("image", null, mContext.cacheDir)
+    if (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) != PackageManager.PERMISSION_GRANTED
+    ) {
+        // TODO: Consider calling
+        //    ActivityCompat#requestPermissions
+        // here to request the missing permissions, and then overriding
+        //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+        //                                          int[] grantResults)
+        // to handle the case where the user grants the permission. See the documentation
+        // for ActivityCompat#requestPermissions for more details.
+        return
+    }
+    personalizedBannerBitmap.saveAsync(file.path
+    ) {
+        val ref =
+            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)+"_Profile_Pic")
+        val uploadTask = ref.putFile(Uri.fromFile(file))
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
+                }
+            }
+            return@Continuation ref.downloadUrl
+        })?.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("profileExtras/User_Profile").setValue(downloadUri.toString()).addOnCompleteListener {
+                    if(task.isSuccessful){
+                        onSuccess(true)
+                    }
+                }
+            } else {
+                snackBar(task.exception!!.localizedMessage);onSuccess(false)
+            }
+        }?.addOnFailureListener {
+            snackBar(it.localizedMessage);onSuccess(false)
+        }
+    }
+}
+
 fun Activity.addAdvertisement(adDetails: AdDetails, onSuccess: (AdDetails) -> Unit) {
 //    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
 //        fetchAndStoreAddressData()
