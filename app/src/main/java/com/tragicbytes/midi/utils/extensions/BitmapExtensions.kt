@@ -390,19 +390,19 @@ fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetails): B
         //children of layout2 LinearLayout
         val tv1 = TextView(mContext)
         tv1.text = adDetails.adName
-        tv1.textSize=140F
+        tv1.textSize=50F
         tv1.gravity=Gravity.CENTER
         val tv2 = TextView(mContext)
         tv2.text = adDetails.adBrandName
-        tv2.textSize=100F
+        tv2.textSize=40F
         tv2.gravity=Gravity.CENTER
         val tv3 = TextView(mContext)
         tv3.text = adDetails.adTagline
-        tv3.textSize=80F
+        tv3.textSize=30F
         tv3.gravity=Gravity.CENTER
         val tv4 = TextView(mContext)
         tv4.text = adDetails.adDesc
-        tv4.textSize=50F
+        tv4.textSize=20F
         tv4.gravity=Gravity.CENTER
 
         layout2.addView(tv1)
