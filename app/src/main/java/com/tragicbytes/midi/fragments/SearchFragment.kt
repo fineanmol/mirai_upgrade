@@ -201,7 +201,7 @@ class SearchFragment : BaseFragment() {
                 dataBinding.tvProductActualPrice.applyStrike()
                 dataBinding.llProductColor.removeAllViews()
 
-                if (model.color != null && model.color?.isNotEmpty()!!) {
+                /*if (model.color != null && model.color?.isNotEmpty()!!) {
                     val colors = model.color?.split(",")
                     colors?.forEach {
                         try {
@@ -231,7 +231,7 @@ class SearchFragment : BaseFragment() {
                     dataBinding.tvSize.visibility=View.VISIBLE
                 }else{
                     dataBinding.tvSize.visibility=View.INVISIBLE
-                }
+                }*/
                 if (!isExistInWishList(model)) {
                     dataBinding.ivDislike.show()
                     dataBinding.ivlike.hide()

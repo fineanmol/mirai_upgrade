@@ -4,18 +4,18 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
@@ -36,6 +36,7 @@ import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import org.json.JSONObject
+import java.net.URL
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -71,18 +72,12 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var mYear: Int = 0
     private var mDay: Int = 0
 
-    private lateinit var dbReference: DatabaseReference
-
-    private var storageReference: StorageReference? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
 
 
         Checkout.preload(applicationContext)
-        dbReference = FirebaseDatabase.getInstance().reference
-        storageReference = FirebaseStorage.getInstance().reference
 
 
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
@@ -95,7 +90,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         /**
          * Fetch Product Detail From Server
          */
-        if (intent?.extras?.get(PRODUCT_ID) != null && intent?.extras?.get(PRODUCT_ID) != null) {
+        /*if (intent?.extras?.get(PRODUCT_ID) != null && intent?.extras?.get(PRODUCT_ID) != null) {
             mProductId = intent?.extras?.getInt(PRODUCT_ID)!!
 
             showProgress(true)
@@ -119,11 +114,25 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         } else {
             toast(R.string.error_something_went_wrong)
             finish()
+        }*/
+
+        if (intent?.extras?.getSerializable(DATA) != null) {
+            mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
+            setDetails(mProductModel!!)
+        } else {
+            toast(R.string.error_something_went_wrong)
+            finish()
         }
         setCartCountFromPref()
 
 
-
+        btnAddCard.onClick {
+            if (isLoggedIn()) {
+                launchActivity<AdvertisementFormActivity>(21)
+            } else {
+                launchActivity<SignInUpActivity>()
+            }
+        }
 
     }
 
@@ -172,7 +181,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         intHeaderView()
         checkWishListAndCart()
-        if (mProductModel.stock_status == "instock") {
+      /*  if (mProductModel.stock_status == "instock") {
             if (mProductModel.manage_stock!!) {
                 if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
                     tvAvailability.text = getString(R.string.lbl_out_stock)
@@ -189,7 +198,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             tvAvailability.text = getString(R.string.lbl_out_stock)
             btnOutOfStock.show()
             btnAddCard.hide()
-        }
+        }*/
 
 
 
@@ -304,13 +313,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         stockQuantity: Int?
     ) {
         tvAvailability.text = getString(R.string.lbl_in_stock)
-        btnAddCard.onClick {
-            if (isLoggedIn()) {
-                launchActivity<AdvertisementFormActivity>(21)
-            } else {
-                launchActivity<SignInUpActivity>()
-            }
-        }
+
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
 
@@ -384,20 +387,29 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private fun intHeaderView() {
         var adDetails =
             AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
-        val bitmap = drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
-        myImages.add(bitmap)
-        var imageAdapter = PersonalizedProductImageAdapter(myImages)
-        productViewPager.adapter = null
-        productViewPager.adapter = imageAdapter
-        productViewPager.adapter?.notifyDataSetChanged()
-        dots.attachViewPager(productViewPager)
-        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+        showProgress(true)
+
+        fetchImageAsync(mProductModel!!.full.toString()){
+            if (it != null) {
+                val personalizedBannerBitmap =
+                    drawTextToBitmap(this, it, adDetails)!!
+                myImages.add(personalizedBannerBitmap)
+                val imageAdapter = PersonalizedProductImageAdapter(myImages)
+                productViewPager.adapter = null
+                productViewPager.adapter = imageAdapter
+                productViewPager.adapter?.notifyDataSetChanged()
+                dots.attachViewPager(productViewPager)
+                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                showProgress(false)
+            }
+        }
+
         setDescription()
-        setMoreInfo()
+//        setMoreInfo()
         tvItemProductOriginalPrice.applyStrike()
     }
 
-    private fun setMoreInfo() {
+    /*private fun setMoreInfo() {
         if (!mProductModel?.length?.checkIsEmpty()!!) {
             llMoreInfo.show()
             tvLength.text = String.format("%s %s", mProductModel?.length, "cm")
@@ -421,7 +433,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }
 
     }
-
+*/
     private fun setDescription() {
         bindData()
     }
@@ -435,7 +447,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         if (genders.isNotEmpty()) {
 
-            val colors = mProductModel?.color?.split(",")
+//            val colors = mProductModel?.color?.split(",")
             mIsGenderExist = true && genders.isNotEmpty()
 
             genders.forEachIndexed { _, s ->
@@ -517,10 +529,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     if (item.isNotEmpty()) {
                         view.llSize.show()
                         view.ivSizeChecked.text = item
-                        if (mIsFirstTimeSize && mProductModel?.size == item) {
+                       /* if (mIsFirstTimeSize && mProductModel?.size == item) {
                             mIsFirstTimeSize = false
                             mSizeFlag = position
-                        }
+                        }*/
                         view.ivSizeChecked.apply {
                             when (position) {
                                 mSizeFlag -> {
@@ -659,15 +671,21 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 val adDetails = returnString as AdDetails
                 adDetails.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
-                val personalizedBannerBitmap =
-                    drawTextToBitmap(this, R.drawable.banner1, adDetails)!!
-                myImages.add(personalizedBannerBitmap)
-                var imageAdapter = PersonalizedProductImageAdapter(myImages)
-                productViewPager.adapter = null
-                productViewPager.adapter = imageAdapter
-                productViewPager.adapter?.notifyDataSetChanged()
-                dots.attachViewPager(productViewPager)
-                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                fetchImageAsync(mProductModel!!.full.toString()){
+                    if (it != null) {
+                        val personalizedBannerBitmap =
+                            drawTextToBitmap(this, it, adDetails)!!
+                        myImages.add(personalizedBannerBitmap)
+                        val imageAdapter = PersonalizedProductImageAdapter(myImages)
+                        productViewPager.adapter = null
+                        productViewPager.adapter = imageAdapter
+                        productViewPager.adapter?.notifyDataSetChanged()
+                        dots.attachViewPager(productViewPager)
+                        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                    }
+                }
+
+
             }
         }
     }

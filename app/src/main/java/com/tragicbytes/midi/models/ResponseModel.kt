@@ -475,7 +475,7 @@ data class Dimensions(
 data class ImagesData(var id: String? = null, var src: String? = null, var name: String? = null) :
     Serializable
 
-data class ProductDataNew(
+/*data class ProductDataNew(
     val average_rating: String? = null,
     val backorders: String? = null,
     val num_pages: Int? = null,
@@ -525,6 +525,24 @@ data class ProductDataNew(
     val gender: String? = "Male",
     val age_group: String? = "25"
 
+) : Serializable*/
+
+data class ProductDataNew(
+    val average_rating: String? = null,
+    val brand: String? = null,
+    val description: String? = null,
+    val dimensions: String? = null,
+    val full: String? = null,
+    val gallery: List<String?>? = null,
+    val manage_stock: Boolean? = null,
+    val name: String? = null,
+    val permalink: String? = null,
+    val price: String? = null,
+    val pro_id: Int? = null,
+    val regular_price: String? = null,
+    val sale_price: String? = null,
+    val short_description: String? = null,
+    val thumbnail: String? = null
 ) : Serializable
 
 data class AdsMoreDetails(

@@ -1,26 +1,26 @@
 package com.tragicbytes.midi.fragments.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
-import com.tragicbytes.midi.activity.ViewAllProductActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.base.BaseRecyclerAdapter
 import com.tragicbytes.midi.databinding.ItemCategoryBinding
 import com.tragicbytes.midi.fragments.BaseFragment
-import com.tragicbytes.midi.models.*
+import com.tragicbytes.midi.models.CategoryData
+import com.tragicbytes.midi.models.ProductDataNew
+import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.models.Testimonials
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
-import com.tragicbytes.midi.utils.Constants.KeyIntent.TITLE
-import com.tragicbytes.midi.utils.Constants.KeyIntent.VIEWALLID
-import com.tragicbytes.midi.utils.Constants.SharedPref.CATEGORY_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CONTACT
 import com.tragicbytes.midi.utils.Constants.SharedPref.COPYRIGHT_TEXT
 import com.tragicbytes.midi.utils.Constants.SharedPref.DEFAULT_CURRENCY
@@ -33,13 +33,9 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.TERM_CONDITION
 import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
 import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
-import com.tragicbytes.midi.utils.Constants.ViewAllCode.FEATURED
-import com.tragicbytes.midi.utils.Constants.ViewAllCode.NEWEST
-import com.tragicbytes.midi.utils.Constants.ViewAllCode.RECENTSEARCH
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.item_offer.*
-import kotlinx.android.synthetic.main.item_testimonial.view.*
+import java.util.HashMap
 
 class HomeFragment : BaseFragment() {
 
@@ -55,6 +51,8 @@ class HomeFragment : BaseFragment() {
     private var mRecentProductAdapter: RecyclerViewAdapter<ProductDataNew>? = null
     private var mTestimonialsAdapter: RecyclerViewAdapter<Testimonials>? = null
 
+    private lateinit var dbReference: DatabaseReference
+
 
 
     var onNetworkRetry: (() -> Unit)? = null
@@ -67,10 +65,10 @@ class HomeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-
+        dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
-        /*;
+        /*
         rcvNewestProduct.setHorizontalLayout();
         rcvFeaturedProducts.setVerticalLayout();
         rcvDealProducts.setHorizontalLayout();
@@ -93,6 +91,33 @@ class HomeFragment : BaseFragment() {
         setupRecentProductAdapter()
 //        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
 
+
+        dbReference.child("AppData/ListAvailableBannerData")
+            .addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            rlNewestProduct.show()
+                            rcvNewestProduct.show()
+                            var myBannerList=ArrayList<ProductDataNew>()
+//                                var myBannerList=dataSnapshot.value as ArrayList<ProductDataNew>
+                            dataSnapshot.children.forEach {
+                                val bannerData =
+                                    it.getValue(ProductDataNew::class.java)!!
+                                myBannerList.add(bannerData)
+                            }
+                            mNewArrivalProductAdapter?.addItems(myBannerList)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        rlNewestProduct.hide()
+                        rcvNewestProduct.hide()
+                        toast("Error Occured!")
+                    }
+                }
+
+            )
         loadApis()
         refreshLayout.setOnRefreshListener {
             loadApis()
@@ -158,7 +183,7 @@ class HomeFragment : BaseFragment() {
         val requestModel = RequestModel()
         if (isLoggedIn()) requestModel.user_id = getUserId()
 
-        callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = {
+        callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = { it ->
             if (activity == null) return@callApi
             hideProgress()
 
@@ -184,15 +209,15 @@ class HomeFragment : BaseFragment() {
                 setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
             }
 
-            if (it.newest.isEmpty()) {
+
+            /*if (myItems.isEmpty()) {
                 rlNewestProduct.hide()
                 rcvNewestProduct.hide()
             } else {
                 rlNewestProduct.show()
                 rcvNewestProduct.show()
-                it.newest.removeAt(4)
-                mNewArrivalProductAdapter?.addItems(it.newest)
-            }
+                mNewArrivalProductAdapter?.addItems(myItems)
+            }*/
 /*            if (it.featured.isEmpty()) {
                 rlFeatured.hide()
                 rcvFeaturedProducts.hide()
@@ -244,7 +269,9 @@ class HomeFragment : BaseFragment() {
             }*/
 
             if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
-                ivBanner1.show(); ivBanner1.loadImageFromUrl(it.banner_1.image); ivBanner1.onClick { activity?.openCustomTab(it.banner_1.url) }
+                Log.d("XXXX1",it.banner_1.image+"  "+it.banner_1.url)
+                ivBanner1.show(); ivBanner1.loadImageFromUrl("http://iqonic.design/wp-themes/woobox_api/wp-content/uploads/2020/01/167-scaled.jpg ")
+                ivBanner1.onClick { activity?.openCustomTab("https://www.google.com/") }
             } else {
                 ivBanner1.hide()
             }
@@ -292,6 +319,7 @@ class HomeFragment : BaseFragment() {
     }
 */
 
+/*
     private fun listAllProductCategories() {
         val categories = getCategoryDataFromPref()
         if (categories.isNotEmpty()) {
@@ -312,6 +340,7 @@ class HomeFragment : BaseFragment() {
             activity?.noInternetSnackBar()
         })
     }
+*/
     //endregion
 
     //region RecyclerViews and Adapters

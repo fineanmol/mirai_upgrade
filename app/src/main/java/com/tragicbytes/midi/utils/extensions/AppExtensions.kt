@@ -634,8 +634,8 @@ fun isExistInCart(product: ProductDataNew, selectedColor: Boolean = false): Bool
         cartList.forEachIndexed { i: Int, model: CartResponse ->
             if (product.pro_id == model.pro_id.toInt()) {
                 if (selectedColor) {
-                    product.size = model.size
-                    product.color = model.color
+                    /*product.size = model.size
+                    product.color = model.color*/
                 }
                 return true
             }

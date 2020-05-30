@@ -23,6 +23,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.net.URL
 
 
 /**
@@ -320,13 +321,13 @@ fun Uri.toBitmap(context: Context): Bitmap {
  * Draw text over bitmap
  * **/
 
-fun drawTextToBitmap(mContext: Context, resourceId: Int, adDetails: AdDetails): Bitmap? {
+fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetails): Bitmap? {
     return try {
         val resources: Resources = mContext.resources
         val scale: Float = resources.displayMetrics.density
         val widthPxl: Int = resources.displayMetrics.widthPixels
         val heightPxl: Int = resources.displayMetrics.heightPixels
-        var bitmap = BitmapFactory.decodeResource(resources, resourceId)
+        var bitmap = bitmap
         var bitmapConfig = bitmap.config
         // set default bitmap config if none
         if (bitmapConfig == null) {
@@ -420,4 +421,34 @@ fun drawTextToBitmap(mContext: Context, resourceId: Int, adDetails: AdDetails): 
         null
     }
 }
+
+/**
+ * Pull image from Path <b>Asynchronously</b> and private a callback when its done.
+ *
+ * Make Sure you have the permission to Internet
+ */
+@RequiresPermission(Manifest.permission.INTERNET)
+fun fetchImageAsync(imageUrl:String, onComplete: (bitmap: Bitmap?) -> Unit) = imageAsyncAwait({
+    val url = URL(imageUrl)
+    return@imageAsyncAwait BitmapFactory.decodeStream(url.openStream())
+}) {
+    onComplete(it)
+}
+
+fun <T> imageAsyncAwait(asyncRunnable: () -> T?, awaitRunnable: (result: T?) -> Unit) = object : AsyncTask<Void, Void, T>() {
+    override fun doInBackground(vararg params: Void?): T? {
+        return try {
+            asyncRunnable()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    override fun onPostExecute(result: T?) {
+        super.onPostExecute(result)
+        awaitRunnable(result)
+    }
+
+}.execute()!!
 
