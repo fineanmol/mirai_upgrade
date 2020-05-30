@@ -2,22 +2,19 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import com.tragicbytes.midi.AppBaseActivity
@@ -29,14 +26,13 @@ import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
-import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import org.json.JSONObject
-import java.net.URL
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -181,24 +177,24 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         intHeaderView()
         checkWishListAndCart()
-      /*  if (mProductModel.stock_status == "instock") {
-            if (mProductModel.manage_stock!!) {
-                if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
-                    tvAvailability.text = getString(R.string.lbl_out_stock)
-                    btnOutOfStock.show()
-                    btnAddCard.hide()
-                } else {
-                    setStock(mProductModel, mProductModel.stock_quantity)
-                }
+        /*  if (mProductModel.stock_status == "instock") {
+              if (mProductModel.manage_stock!!) {
+                  if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
+                      tvAvailability.text = getString(R.string.lbl_out_stock)
+                      btnOutOfStock.show()
+                      btnAddCard.hide()
+                  } else {
+                      setStock(mProductModel, mProductModel.stock_quantity)
+                  }
 
-            } else {
-                setStock(mProductModel, null)
-            }
-        } else {
-            tvAvailability.text = getString(R.string.lbl_out_stock)
-            btnOutOfStock.show()
-            btnAddCard.hide()
-        }*/
+              } else {
+                  setStock(mProductModel, null)
+              }
+          } else {
+              tvAvailability.text = getString(R.string.lbl_out_stock)
+              btnOutOfStock.show()
+              btnAddCard.hide()
+          }*/
 
 
 
@@ -235,31 +231,13 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }
 
         rangeVal.onClick {
-            mIsRangeExist= true && !rangeVal.text.isNullOrEmpty()
+            val amountVal = rangeVal.text
+           // rangeVal.text = "$$amountVal"
+            //  rangeVal.text.toString() = String.format("%s %s", "$", amountVal)
+            mIsRangeExist = true
         }
 
-        endDateVal.onClick {
 
-            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Calendar.getInstance()
-            } else {
-                TODO("VERSION.SDK_INT < N")
-            }
-            mYear = c[Calendar.YEAR]
-            mMonth = c[Calendar.MONTH]
-            mDay = c[Calendar.DAY_OF_MONTH]
-            val datePickerDialog = DatePickerDialog(
-                this@ProductDetailActivity,
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
-                }, mYear, mMonth, mDay
-            )
-            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-            datePickerDialog.show()
-            val coMonth = c[Calendar.MONTH]
-            val coDay = c[Calendar.DAY_OF_MONTH]
-            mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
-        }
 
         startDateVal.onClick {
             val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -284,6 +262,65 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             mIsStartDateExist = !startDateVal.text.isNullOrEmpty()
         }
 
+        endDateVal.onClick {
+
+            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Calendar.getInstance()
+            } else {
+                TODO("VERSION.SDK_INT < N")
+            }
+            mYear = c[Calendar.YEAR]
+            mMonth = c[Calendar.MONTH]
+            mDay = c[Calendar.DAY_OF_MONTH]
+            val datePickerDialog = DatePickerDialog(
+                this@ProductDetailActivity,
+                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                }, mYear, mMonth, mDay
+            )
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+
+            datePickerDialog.show()
+            val coMonth = c[Calendar.MONTH]
+            val coDay = c[Calendar.DAY_OF_MONTH]
+            mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
+        }
+
+        startTimeVal.onClick {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                startTimeVal.text = SimpleDateFormat("HH:mm").format(cal.time)
+
+            }
+            TimePickerDialog(
+                this@ProductDetailActivity,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+            mIsStartTimeExist = true
+        }
+
+        endTimeVal.onClick {
+            val cal = Calendar.getInstance()
+            val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
+                cal.set(Calendar.HOUR_OF_DAY, hour)
+                cal.set(Calendar.MINUTE, minute)
+                endTimeVal.text = SimpleDateFormat("HH:mm").format(cal.time)
+            }
+            TimePickerDialog(
+                this@ProductDetailActivity,
+                timeSetListener,
+                cal.get(Calendar.HOUR_OF_DAY),
+                cal.get(Calendar.MINUTE),
+                true
+            ).show()
+            mIsEndTimeExist = true
+        }
+
 
     }
 
@@ -301,7 +338,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
         } else if (!mIsRangeExist) {
-            snackBar("RangeRequired", Snackbar.LENGTH_SHORT)
+            snackBar("Range Required", Snackbar.LENGTH_SHORT)
         } else {
             mIsAllDetailsFilled = true
         }
@@ -389,7 +426,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
         showProgress(true)
 
-        fetchImageAsync(mProductModel!!.full.toString()){
+        fetchImageAsync(mProductModel!!.full.toString()) {
             if (it != null) {
                 val personalizedBannerBitmap =
                     drawTextToBitmap(this, it, adDetails)!!
@@ -529,10 +566,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     if (item.isNotEmpty()) {
                         view.llSize.show()
                         view.ivSizeChecked.text = item
-                       /* if (mIsFirstTimeSize && mProductModel?.size == item) {
-                            mIsFirstTimeSize = false
-                            mSizeFlag = position
-                        }*/
+                        /* if (mIsFirstTimeSize && mProductModel?.size == item) {
+                             mIsFirstTimeSize = false
+                             mSizeFlag = position
+                         }*/
                         view.ivSizeChecked.apply {
                             when (position) {
                                 mSizeFlag -> {
@@ -671,7 +708,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 val adDetails = returnString as AdDetails
                 adDetails.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
-                fetchImageAsync(mProductModel!!.full.toString()){
+                fetchImageAsync(mProductModel!!.full.toString()) {
                     if (it != null) {
                         val personalizedBannerBitmap =
                             drawTextToBitmap(this, it, adDetails)!!

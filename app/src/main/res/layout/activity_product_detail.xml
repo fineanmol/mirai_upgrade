@@ -481,7 +481,7 @@
                             style="@style/MoreInfo_heading"
                             android:text="@string/lbl_clouser" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/startTimeVal"
                             style="@style/MoreInfoSubheading"
                             />
@@ -502,7 +502,7 @@
                             style="@style/MoreInfo_heading"
                             android:text="@string/lbl_pattern" />
 
-                        <EditText
+                        <TextView
                             android:id="@+id/endTimeVal"
                             style="@style/MoreInfoSubheading"
                            />
@@ -523,9 +523,9 @@
 
                             android:text="@string/lbl_lace_ups" />
 
-                        <EditText
+                        <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/rangeVal"
-                            android:text="$"
+
                             style="@style/MoreInfoSubheading"
                             android:singleLine="true"
                             />
