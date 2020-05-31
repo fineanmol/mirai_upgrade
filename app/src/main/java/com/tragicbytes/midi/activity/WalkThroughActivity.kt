@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_walk_through.*
 
 class WalkThroughActivity : AppBaseActivity() {
     private var mCount: Int? = null
-    private var mHeading = arrayOf("Hi, We are Mirai Technologies!", "Most Unique Styles!", "Shop Till You Drop!")
-    private val mSubHeading = arrayOf("We make around your city Affordable,\n easy and efficient.", "Shop the most trending fashion on the biggest shopping website.", "Grab the best seller pieces at bargain prices.")
+    private var mHeading = arrayOf("Hi, We are Mirai Technologies!", "Most Unique Styles!", "Create Till You Drop!")
+    private val mSubHeading = arrayOf("We make around your city Affordable,\n easy and efficient.", "Crate the most trending ads on the biggest Android Platform.", "Grab the best ads pieces at bargain prices.")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class WalkThroughActivity : AppBaseActivity() {
 
         btnStatShopping.onClick {
             getSharedPrefInstance().setValue(SHOW_SWIPE, true)
-            launchActivityWithNewTask<DashBoardActivity>()
+            launchActivityWithNewTask<SignInUpActivity>()
         }
         llSignIn.onClick {
             launchActivity<SignInUpActivity>()

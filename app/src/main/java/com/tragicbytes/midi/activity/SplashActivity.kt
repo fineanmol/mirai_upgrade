@@ -34,7 +34,7 @@ class SplashActivity : AppBaseActivity() {
         } catch (e: NoSuchAlgorithmException) { }
         runDelayed(1000) {
             if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE)) {
-                launchActivity<DashBoardActivity>()
+                launchActivity<WalkThroughActivity>()
 
             } else {
                 launchActivity<WalkThroughActivity>()
