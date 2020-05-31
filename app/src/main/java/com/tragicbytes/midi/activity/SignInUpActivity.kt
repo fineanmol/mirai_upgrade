@@ -1,15 +1,20 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
-import android.util.Log
-import com.tragicbytes.midi.AppBaseActivity
-import com.tragicbytes.midi.R
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookSdk
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.tragicbytes.midi.AppBaseActivity
+import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
 import com.tragicbytes.midi.models.RequestModel
@@ -131,18 +136,15 @@ class SignInUpActivity : AppBaseActivity() {
 
     fun doEmailLogin(email: String, password: String) {
         mAuth?.signInWithEmailAndPassword(email, password)
-            ?.addOnCompleteListener(this) {
-
-                    task ->
-
+            ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-
                     //region LoginMethod
                     val user = FirebaseAuth.getInstance().currentUser
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                     var type = "Email"
                     var token = ""
                     if (user != null) {
+                        accountDataFetch(user)
                         getSharedPrefInstance().setValue(
                             Constants.SharedPref.USER_PROFILE_URL,
                             user.photoUrl.toString()
@@ -193,25 +195,30 @@ class SignInUpActivity : AppBaseActivity() {
 //    }
 
     fun addUser(requestModel: RequestModel) {
-        mAuth?.createUserWithEmailAndPassword(requestModel.email.toString(),requestModel.password.toString())
-            ?.addOnCompleteListener(this) {
-                    task ->
+        mAuth?.createUserWithEmailAndPassword(
+            requestModel.email.toString(),
+            requestModel.password.toString()
+        )
+            ?.addOnCompleteListener(this) { task ->
                 when {
                     task.isSuccessful -> {
                         val user = mAuth!!.currentUser!!
                         println(user.email.toString())
                         /*Send verification email*/
-                        if(!user!!.isEmailVerified) {
+                        if (!user!!.isEmailVerified) {
                             user.sendEmailVerification()
-                                .addOnCompleteListener{ task ->
-                                    if(task.isSuccessful) snackBar("Verification mail sent to "+user.email.toString() ,Snackbar.LENGTH_SHORT)
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) snackBar(
+                                        "Verification mail sent to " + user.email.toString(),
+                                        Snackbar.LENGTH_SHORT
+                                    )
                                 }
                         }
 
                         /*Send verification email End*/
 
                         val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(requestModel.first_name.toString()+" "+requestModel.last_name.toString())
+                            .setDisplayName(requestModel.first_name.toString() + " " + requestModel.last_name.toString())
                             .build()
                         user.updateProfile(profileUpdates)
                             .addOnCompleteListener { task ->
@@ -219,10 +226,7 @@ class SignInUpActivity : AppBaseActivity() {
                                     println(user.displayName.toString())
 
 
-
-
-                                }
-                                else{
+                                } else {
 
                                     println(task.exception.toString())
                                 }
@@ -249,5 +253,58 @@ class SignInUpActivity : AppBaseActivity() {
                     }
                 }
             }
+    }
+
+
+    fun accountDataFetch(user: FirebaseUser) {
+        showProgress(true)
+        val database = FirebaseDatabase.getInstance().reference
+
+        try {
+            var localDatabaseRef = database.child(user.uid).child("profileExtras")
+            val dataListener = object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    if (dataSnapshot.exists()) {
+                        val dbContent =
+                            dataSnapshot.getValue(RequestModel.AccountDetails::class.java)
+                        if (dbContent != null) {
+                            getSharedPrefInstance().setValue(
+                                Constants.SharedPref.USER_PHONE,
+                                dbContent.phone
+                            )
+                            getSharedPrefInstance().setValue(
+                                Constants.SharedPref.USER_DOB,
+                                dbContent.dob
+                            )
+                            getSharedPrefInstance().setValue(
+                                Constants.SharedPref.USER_ORG,
+                                dbContent.org_name
+                            )
+                           /** dbContext doesn't store DataSnapshot value*/
+
+                        }
+
+                        showProgress(false)
+
+                    } else {
+                        showProgress(false)
+                        snackBar("Erorr occurred while fetching details!")
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Getting Post failed, log a message
+                    //Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
+                    // ...
+                    showProgress(false)
+                    snackBar("Cancelled while fetching details!")
+
+                }
+            }
+            localDatabaseRef.addValueEventListener(dataListener)
+        } catch (e: Exception) {
+            e.message?.let { snackBar(it) }
+        }
     }
 }

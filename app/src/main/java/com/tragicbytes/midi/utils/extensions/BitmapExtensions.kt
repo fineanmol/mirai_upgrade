@@ -18,7 +18,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
-import com.tragicbytes.midi.models.AdDetails
+import com.tragicbytes.midi.models.AdDetailsModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -321,7 +321,7 @@ fun Uri.toBitmap(context: Context): Bitmap {
  * Draw text over bitmap
  * **/
 
-fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetails): Bitmap? {
+fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetailsModel.AdDetails): Bitmap? {
     return try {
         val resources: Resources = mContext.resources
         val scale: Float = resources.displayMetrics.density

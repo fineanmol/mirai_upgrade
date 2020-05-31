@@ -154,7 +154,10 @@ class WishListFragment : BaseFragment() {
                 val imageStream = activity!!.contentResolver.openInputStream(resultUri)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
+
                 if (encodedImage != null) {
+                    snackBar("Activity need to be Run")
+
 //                    getSharedPrefInstance().setValue(Constants.AdvDetails.ADV_LOGO,encodedImage)
                     activity!!.launchActivity<ProductDetailActivity> {
                         putExtra(Constants.KeyIntent.USER_UPLOAD_BANNER, encodedImage)
@@ -188,6 +191,7 @@ class WishListFragment : BaseFragment() {
         bm.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val b = baos.toByteArray()
         return Base64.encodeToString(b, Base64.DEFAULT)
+
     }
 
 }

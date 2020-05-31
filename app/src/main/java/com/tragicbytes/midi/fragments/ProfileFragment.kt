@@ -65,7 +65,7 @@ class ProfileFragment : BaseFragment() {
             edtLastName.setText(getLastName())
             edtFirstName.setSelection(edtFirstName.text.length)
             edtMobileNo.setText(getMobile())
-            edtDOB.setText(getDob())
+            edtDOB.setText(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB))
             edtOrg.setText(getOrg())
 
             ivProfileImage.loadImageFromUrl(

@@ -875,7 +875,7 @@ fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: Da
     }
 }
 
-fun Activity.addAdvertisement(adDetails: AdDetails, onSuccess: (AdDetails) -> Unit) {
+fun Activity.addAdvertisement(adDetails: AdDetailsModel.AdDetails, onSuccess: (AdDetailsModel.AdDetails) -> Unit) {
 //    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
 //        fetchAndStoreAddressData()
 //        onSuccess(true)

@@ -2,21 +2,17 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
 import androidx.core.content.FileProvider
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.models.AdDetails
-import com.tragicbytes.midi.utils.Constants
+import com.tragicbytes.midi.models.AdDetailsModel
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
@@ -35,14 +31,12 @@ class AdvertisementFormActivity : AppBaseActivity() {
     private var encodedImage: String? = null
 
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_advertisement_form)
         setToolbar(toolbar)
 
-        title=getString(R.string.lbl_edit_form)
+        title = getString(R.string.lbl_edit_form)
         /*val bmp = drawTextToBitmap(this, R.drawable.banner1, "Hello Android")!!
         ivAdsImage.setImageBitmap(bmp)*/
         showProgress(true)
@@ -53,12 +47,18 @@ class AdvertisementFormActivity : AppBaseActivity() {
     }
 
     private fun loadStoredData() {
-        if(getSharedPrefInstance().getStringValue(ADV_LOGO).isNotEmpty()){
-            val imageAsBytes=
+        if (getSharedPrefInstance().getStringValue(ADV_LOGO).isNotEmpty()) {
+            val imageAsBytes =
                 Base64.decode(getSharedPrefInstance().getStringValue(ADV_LOGO), Base64.DEFAULT)
-            ivAdsImage.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
+            ivAdsImage.setImageBitmap(
+                BitmapFactory.decodeByteArray(
+                    imageAsBytes,
+                    0,
+                    imageAsBytes.size
+                )
+            )
         }
-        if(getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()){
+        if (getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()) {
             editAdsName.setText(getSharedPrefInstance().getStringValue(ADV_NAME))
             edtAdDescription.setText(getSharedPrefInstance().getStringValue(ADV_DESC))
             edtAdTagline.setText(getSharedPrefInstance().getStringValue(ADV_TAG))
@@ -74,21 +74,27 @@ class AdvertisementFormActivity : AppBaseActivity() {
             if (resultCode == Activity.RESULT_OK) {
                 val resultUri = result.uri
                 ivAdsImage.setImageURI(resultUri)
-                val imageStream = this@AdvertisementFormActivity!!.contentResolver.openInputStream(resultUri)
+                val imageStream =
+                    this@AdvertisementFormActivity!!.contentResolver.openInputStream(resultUri)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-                    getSharedPrefInstance().setValue(ADV_LOGO,encodedImage)
+                    getSharedPrefInstance().setValue(ADV_LOGO, encodedImage)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
-                if (error?.message != null){
+                if (error?.message != null) {
                     snackBar(error.message!!)
                 }
             }
-        }else{
+        } else {
             if (data != null && data.data != null) ivProfileImage.setImageURI(data.data)
-            val path: String? = ImagePicker.getImagePathFromResult(this@AdvertisementFormActivity!!, requestCode, resultCode, data) ?: return
+            val path: String? = ImagePicker.getImagePathFromResult(
+                this@AdvertisementFormActivity!!,
+                requestCode,
+                resultCode,
+                data
+            ) ?: return
             val uri = FileProvider.getUriForFile(
                 this@AdvertisementFormActivity!!,
                 BuildConfig.APPLICATION_ID + ".provider",
@@ -114,25 +120,26 @@ class AdvertisementFormActivity : AppBaseActivity() {
         btnSaveAdsData.onClick {
             showProgress(true)
             if (validate()) {
-                var adDetails=AdDetails(
+                var adDetails = AdDetailsModel.AdDetails(
                     editAdsName.textToString(),
                     edtAdDescription.textToString(),
                     edtAdTagline.textToString(),
-                    edtAdBrandName.textToString())
+                    edtAdBrandName.textToString()
+                )
 
                 addAdvertisement(adDetails,
                     onSuccess = {
-                    showProgress(false)
-                    if (it!=null){
-                        val intent = Intent()
-                        intent.putExtra("AdvFormData", it)
-                        setResult(Activity.RESULT_OK, intent)
-                        finish()
+                        showProgress(false)
+                        if (it != null) {
+                            val intent = Intent()
+                            intent.putExtra("AdvFormData", it)
+                            setResult(Activity.RESULT_OK, intent)
+                            finish()
                             /*launchActivity<ProductDetailActivity> { putExtra("AdvFormData", it) }
                                                 setResult(Activity.RESULT_OK)
                         finish()*/
+                        }
                     }
-                }
                 )
             }
             showProgress(false)
@@ -149,9 +156,9 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     if (it) {
 
                         CropImage.activity()
-                            .setAspectRatio(1,1)
+                            .setAspectRatio(1, 1)
                             .setGuidelines(CropImageView.Guidelines.OFF)
-                            .setRequestedSize(300,300)
+                            .setRequestedSize(300, 300)
                             .setOutputCompressQuality(40)
                             .start(this@AdvertisementFormActivity)
                         // .start(context,this@AdvertisementFormActivity)

@@ -16,6 +16,7 @@ class AccountActivity : AppBaseActivity() {
         setContentView(R.layout.activity_account)
         setToolbar(toolbar)
         title = getString(R.string.title_account)
+        user.reload()
 
         txtDisplayName.text = getUserFullName()
         ivProfileImage.loadImageFromUrl(user.photoUrl.toString(), aPlaceHolderImage = R.drawable.ic_profile)
@@ -27,10 +28,7 @@ class AccountActivity : AppBaseActivity() {
                 getString(R.string.lbl_logout_confirmation),
                 onPositiveClick = { dialog, i ->
                     clearLoginPref()
-
-
-                    FirebaseAuth.getInstance().signOut()
-
+  //                  FirebaseAuth.getInstance().signOut()
                     launchActivity<SignInUpActivity>()
                 },
                 onNegativeClick = { dialog, i ->

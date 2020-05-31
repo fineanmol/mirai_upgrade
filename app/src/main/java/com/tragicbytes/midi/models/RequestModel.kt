@@ -9,7 +9,7 @@ class RequestModel {
 
     var user_id: String? = null
 
-    var userPhone:String?=null
+    var userPhone: String? = null
     /**
      * Request for social login
      */
@@ -120,6 +120,15 @@ class RequestModel {
         var cat_name: String? = null,
         var slug: String? = null,
         var isSelected: Boolean? = false
+    )
+
+    data class AccountDetails(
+        var name: String = "",
+        var gender: String = "",
+        var phone: String = "",
+        var email: String = "",
+        var dob: String = "",
+        var org_name: String = ""
     )
 
 }

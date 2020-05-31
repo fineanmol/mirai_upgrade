@@ -272,6 +272,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 TODO("VERSION.SDK_INT < N")
             }
             mYear = c[Calendar.YEAR]
+
             mMonth = c[Calendar.MONTH]
             mDay = c[Calendar.DAY_OF_MONTH]
             val datePickerDialog = DatePickerDialog(
@@ -457,7 +458,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private fun intHeaderView() {
         var adDetails =
-            AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
+            AdDetailsModel.AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
         showProgress(true)
 
         fetchImageAsync(mProductModel!!.full.toString()) {
@@ -739,7 +740,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             if (resultCode == Activity.RESULT_OK) { // Get String data from Intent
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
-                val adDetails = returnString as AdDetails
+                val adDetails = returnString as AdDetailsModel.AdDetails
                 adDetails.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
                 fetchImageAsync(mProductModel!!.full.toString()) {
@@ -812,35 +813,44 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     override fun onPaymentSuccess(razorpayPaymentId: String?) {
         try {
+            showProgress(true)
             val razorpayPaymentId = generateString()
+
             /*    if (true) {
-                    snackBar("Details filled")
-                    myImages[0]
-                    this@ProductDetailActivity.requestPermissions(
-                        arrayOf(
-                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE
-                        ), onResult = {
-                            if (it) {
-                                showProgress(true)
-                                this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                    dbReference,
-                                    storageReference!!,
-                                    myImages[0],
-                                    onSuccess = {
-                                        showProgress(false)
-                                    }
-                                )
-                            } else {
-                                showProgress(false)
-                                this@ProductDetailActivity.showPermissionAlert(this)
-                            }
-                        })
+                   snackBar("Details filled")
+                   myImages[0]
+                   this@ProductDetailActivity.requestPermissions(
+                       arrayOf(
+                           android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                           android.Manifest.permission.READ_EXTERNAL_STORAGE
+                       ), onResult = {
+                           if (it) {
+                               showProgress(true)
+                               this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                   dbReference,
+                                   storageReference!!,
+                                   myImages[0],
+                                   onSuccess = {
+                                       showProgress(false)
+                                   }
+                               )
+                           } else {
+                               showProgress(false)
+                               this@ProductDetailActivity.showPermissionAlert(this)
+                           }
+                       })
 
-                }
-            */
+               }
+           */
 
-            Toast.makeText(this, "Payment Successful $razorpayPaymentId", Toast.LENGTH_LONG).show()
+            val returnString = intent.getSerializableExtra("AdvFormData")
+            val adDetails = returnString as AdDetailsModel.AdDetails
+            var adsDetails =
+                AdDetailsModel.AdsCompleteDetails(adDetails.adName, adDetails.adDesc, adDetails.adTagline, adDetails.adBrandName, adDetails.logoUrl, "gender","ageGroup",startDateVal.text.toString(),endDateVal.text.toString(),startTimeVal.text.toString(),endTimeVal.text.toString(),rangeVal.text.toString())
+
+
+            Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show()
+            showProgress(false)
         } catch (e: Exception) {
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
         }

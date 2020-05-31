@@ -1,6 +1,6 @@
 package com.tragicbytes.midi.utils
 
-import com.tragicbytes.midi.models.AdDetails
+import com.tragicbytes.midi.models.AdDetailsModel
 import java.text.SimpleDateFormat
 import java.util.*
 
