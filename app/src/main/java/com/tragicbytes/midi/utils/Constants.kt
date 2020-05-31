@@ -94,7 +94,7 @@ object Constants {
 
     object KeyIntent {
         const val PRODUCT_ID: String = "product_id"
-        const val CATEGORY_DATA = "category_data"
+        const val USER_UPLOAD_BANNER = "upload_banner"
         const val IS_ADDED_TO_CART = "isAddedToCart"
         const val TITLE = "title"
         const val ADDRESS_ID = "address_id"

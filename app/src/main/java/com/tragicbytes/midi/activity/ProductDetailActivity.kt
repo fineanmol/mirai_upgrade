@@ -28,6 +28,7 @@ import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
+import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
@@ -119,7 +120,28 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         if (intent?.extras?.getSerializable(DATA) != null) {
             mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
             setDetails(mProductModel!!)
-        } else {
+        }
+        else if (intent?.extras?.get(USER_UPLOAD_BANNER) != null){
+            var userUploadBannerModel= ProductDataNew(
+                5.00.toString(),
+                "Midi",
+                "This is custom banner upload section. Please add some more details to publish your advertisements",
+                "N/A",
+                intent?.extras?.get(USER_UPLOAD_BANNER).toString(),
+                listOf(),
+                true,
+                "Custom Banner",
+                "",
+                100.toString(),
+                99999,
+                500.toString(),
+                200.toString(),
+                "",
+                ""
+            )
+            setDetails(userUploadBannerModel!!)
+        }
+        else {
             toast(R.string.error_something_went_wrong)
             finish()
         }
