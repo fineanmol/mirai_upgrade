@@ -27,12 +27,14 @@
             android:id="@+id/edtOldPwd"
             style="@style/FieldRounded"
             android:hint="@string/hint_enter_old_password"
+            android:visibility="gone"
             android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/edtNewPwd"
             style="@style/FieldRounded"
             android:layout_marginTop="@dimen/spacing_middle"
+            android:visibility="gone"
             android:hint="@string/hint_new_password"
             android:inputType="textPassword" />
 
@@ -41,7 +43,9 @@
             style="@style/FieldRounded"
             android:layout_marginTop="@dimen/spacing_middle"
             android:hint="@string/hint_confirm_password"
-            android:inputType="textPassword" />
+            android:inputType="textEmailAddress"
+
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnChangePassword"

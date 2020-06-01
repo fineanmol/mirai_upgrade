@@ -17,7 +17,6 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
@@ -32,6 +31,7 @@ import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PASSWORD
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
@@ -47,6 +47,8 @@ class ProfileFragment : BaseFragment() {
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
     private var encodedImage: String? = null
+    val mAuth = FirebaseAuth.getInstance()
+    val user = FirebaseAuth.getInstance().currentUser
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +68,8 @@ class ProfileFragment : BaseFragment() {
             edtMobileNo.setText(getMobile())
             edtDOB.setText(getDob())
             edtOrg.setText(getOrg())
+            //edtConfirmPwd.setText(getEmail())
+
 
             ivProfileImage.loadImageFromUrl(
                 FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
@@ -171,111 +175,71 @@ class ProfileFragment : BaseFragment() {
         requestModel.base64_img = encodedImage
 
 
-
-
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(FirebaseAuth.getInstance().currentUser!!.displayName.toString())
             .setPhotoUri(Uri.parse(selectedImage.toString()))
             .build();
 
-        FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                hideProgress()
-                Log.d(TAG, "User profile updated.")
-                snackBar("Profile Pic Uploaded")
+        FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    hideProgress()
+                    Log.d(TAG, "User profile updated.")
+                    snackBar("Profile Pic Uploaded")
 
-                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, FirebaseAuth.getInstance().currentUser!!.photoUrl.toString())
-                (activity as DashBoardActivity).changeProfile()
-                Toast.makeText(context,FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),Toast.LENGTH_SHORT).show()
-                hideProgress()
-            } else {
-                snackBar("Failed Upload")
+                    getSharedPrefInstance().setValue(
+                        Constants.SharedPref.USER_PROFILE_URL,
+                        FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
+                    )
+                    (activity as DashBoardActivity).changeProfile()
+                    Toast.makeText(
+                        context,
+                        FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    hideProgress()
+                } else {
+                    snackBar("Failed Upload")
+
+                }
 
             }
-
-        }
-
-
-        //  dbReference = FirebaseDatabase.getInstance().reference
-        //  val photoUri= getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PROFILE_URL)
-
-//                    showProgress()
-//                    context?.let {
-//                        storageReference?.let { it1 ->
-//                            (activity as AppBaseActivity).saveProfileImageToStorage(it,
-//                                dbReference,
-//                                it1,
-//                                selectedImage,
-//                                onSuccess = {
-//                                    hideProgress()
-//                                }
-//
-//                            )
-//                        }
-//                    }
-
-
-        /*  (activity as AppBaseActivity).updateProfileUrl(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),dbReference,photoUri) {
-                  snackBar(it)
-              encodedImage=null
-              (activity as DashBoardActivity).changeProfile()
-                  hideProgress()
-
-          }*/
-
-
     }
 
     private fun showChangePasswordDialog() {
+        var userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
+
         val changePasswordDialog = Dialog(activity!!)
         changePasswordDialog.window?.setBackgroundDrawable(ColorDrawable(0))
         changePasswordDialog.setContentView(R.layout.dialog_reset)
         changePasswordDialog.window?.setLayout(
             RelativeLayout.LayoutParams.MATCH_PARENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
+
         )
-        changePasswordDialog.edtOldPwd.transformationMethod = biggerDotTranformation
-        changePasswordDialog.edtConfirmPwd.transformationMethod = biggerDotTranformation
-        changePasswordDialog.edtNewPwd.transformationMethod = biggerDotTranformation
         changePasswordDialog.btnChangePassword.onClick {
-            val mPassword = getSharedPrefInstance().getStringValue(USER_PASSWORD)
-            when {
-                changePasswordDialog.edtOldPwd.checkIsEmpty() -> {
-                    changePasswordDialog.edtOldPwd.showError(getString(R.string.error_field_required))
+            try {
+                if(userEmail=="user_email"){
+                    userEmail = edtConfirmPwd.textToString()
                 }
-                changePasswordDialog.edtNewPwd.checkIsEmpty() -> {
-                    changePasswordDialog.edtNewPwd.showError(getString(R.string.error_field_required))
+                if(edtConfirmPwd.text.isNullOrEmpty()){
+                    snackBarError("Email Address Required")
                 }
-                changePasswordDialog.edtNewPwd.validPassword() -> {
-                    changePasswordDialog.edtNewPwd.showError(getString(R.string.error_pwd_digit_required))
+                mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener { task ->
+                    when {
+                        task.isSuccessful -> {
+                           // val user = FirebaseAuth.getInstance().currentUser
+
+                            snackBar("Forget Password Mail Sent to :$userEmail")
+                            changePasswordDialog.dismiss()
+                        }
+                        task.isCanceled -> {
+                            snackBar("Forget Password Cancelled")
+                        }
+                    }
                 }
-                changePasswordDialog.edtConfirmPwd.checkIsEmpty() -> {
-                    changePasswordDialog.edtConfirmPwd.showError(getString(R.string.error_field_required))
-                }
-                changePasswordDialog.edtConfirmPwd.validPassword() -> {
-                    changePasswordDialog.edtConfirmPwd.showError(getString(R.string.error_pwd_digit_required))
-                }
-                !changePasswordDialog.edtConfirmPwd.text.toString().equals(
-                    changePasswordDialog.edtNewPwd.text.toString(),
-                    false
-                ) -> {
-                    changePasswordDialog.edtConfirmPwd.showError(getString(R.string.error_password_not_matches))
-                }
-                !changePasswordDialog.edtOldPwd.text.toString().equals(mPassword, false) -> {
-                    changePasswordDialog.edtOldPwd.showError(getString(R.string.error_old_password_not_matches))
-                }
-                changePasswordDialog.edtNewPwd.text.toString().equals(mPassword, false) -> {
-                    changePasswordDialog.edtNewPwd.showError(getString(R.string.error_new_password_same))
-                }
-                else -> {
-                    val requestModel = RequestModel()
-                    requestModel.password = changePasswordDialog.edtNewPwd.text.toString()
-                    showProgress()
-                    activity!!.changePassword(requestModel, onSuccess = {
-                        hideProgress()
-                        changePasswordDialog.dismiss()
-                    })
-                }
+            } catch (e: Exception) {
+                snackBar(e.message.toString())
             }
         }
         changePasswordDialog.show()
