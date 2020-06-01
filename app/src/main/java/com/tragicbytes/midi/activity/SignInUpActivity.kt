@@ -148,6 +148,17 @@ class SignInUpActivity : AppBaseActivity() {
                         getSharedPrefInstance().setValue(
                             Constants.SharedPref.USER_PROFILE_URL,
                             user.photoUrl.toString()
+
+                        )
+                        getSharedPrefInstance().setValue(
+                            Constants.SharedPref.USER_ID,
+                            user.uid
+
+                        )
+                        getSharedPrefInstance().setValue(
+                            Constants.SharedPref.USER_DISPLAY_NAME,
+                            user.displayName
+
                         )
                         signInEmail(user, onResult = {
                             showProgress(false)
@@ -269,20 +280,10 @@ class SignInUpActivity : AppBaseActivity() {
                         val dbContent =
                             dataSnapshot.getValue(RequestModel.AccountDetails::class.java)
                         if (dbContent != null) {
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_PHONE,
-                                dbContent.phone
-                            )
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_DOB,
-                                dbContent.dob
-                            )
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_ORG,
-                                dbContent.org_name
-                            )
-                           /** dbContext doesn't store DataSnapshot value*/
-
+                            getSharedPrefInstance().setValue(Constants.SharedPref.USER_PHONE, dbContent.Phone)
+                            getSharedPrefInstance().setValue(Constants.SharedPref.USER_DOB, dbContent.DOB)
+                            getSharedPrefInstance().setValue(Constants.SharedPref.USER_ORG, dbContent.ORG)
+                            getSharedPrefInstance().setValue(Constants.SharedPref.USER_GENDER, dbContent.Gender)
                         }
 
                         showProgress(false)

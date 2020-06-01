@@ -123,12 +123,12 @@ class RequestModel {
     )
 
     data class AccountDetails(
-        var name: String = "",
-        var gender: String = "",
-        var phone: String = "",
-        var email: String = "",
-        var dob: String = "",
-        var org_name: String = ""
+        var Name: String = "",
+        var Gender: String = "",
+        var Phone: String = "",
+        var Email: String = "",
+        var DOB: String = "",
+        var ORG: String = ""
     )
 
 }

@@ -111,6 +111,7 @@ fun Context.getUserFullName(): String {
 }
 
 fun getUserName(): String = getSharedPrefInstance().getStringValue(USER_USERNAME)
+fun getUserfullName(): String = getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)
 fun getFirstName(): String = getSharedPrefInstance().getStringValue(USER_FIRST_NAME)
 fun getLastName(): String = getSharedPrefInstance().getStringValue(USER_LAST_NAME)
 fun getUserProfile(): String = getSharedPrefInstance().getStringValue(USER_PROFILE)

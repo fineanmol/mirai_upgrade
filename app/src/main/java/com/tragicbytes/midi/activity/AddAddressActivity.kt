@@ -2,6 +2,7 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.os.Bundle
+import com.google.firebase.database.DatabaseReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.Address
@@ -15,6 +16,7 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
 
     private var address: Address? = null
     private var simpleLocation: SimpleLocation? = null
+    private lateinit var dbReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +32,7 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
 
         if (address != null) {
             title = getString(R.string.lbl_edit_address)
-            edtName.setText("""${address?.first_name} ${address?.last_name}""")
+            edtName.setText(address?.first_name)
             edtCountry.setText(address?.country)
             edtCity.setText(address?.city!!)
             edtState.setText(address?.state!!)
@@ -49,13 +51,16 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
                     address = Address()
                 }
                 assignData()
-                addAddress(address!!,onSuccess = {
+
+                addAddress(address!!)
+
+               /* addAddress(address!!,onSuccess = {
                     showProgress(false)
                     if (it){
                         setResult(Activity.RESULT_OK)
                         finish()
                     }
-                })
+                })*/
             }
         }
 
@@ -77,6 +82,31 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
                 }
             })
         }
+    }
+
+    private fun addAddress(address: Address) {
+
+        try {
+            val userID = getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID)
+
+            showProgress(true)
+            dbReference.child(userID)
+                .child("Address").setValue(address)
+                .addOnSuccessListener {
+                    snackBar("Address Saved")
+                    showProgress(false)
+                    finish()
+                }
+                .addOnFailureListener {
+                    snackBar(it.message.toString())
+                    showProgress(false)
+
+                }
+        } catch (e: Exception) {
+            snackBar(e.message.toString())
+            showProgress(false)
+        }
+
     }
 
 

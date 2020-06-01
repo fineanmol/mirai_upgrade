@@ -46,7 +46,7 @@ import kotlin.math.roundToInt
 class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private lateinit var mMainBinding: ActivityProductDetailBinding
-    private lateinit var dbReference:DatabaseReference
+    private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
     private var mProductModel: ProductDataNew? = null
     private var mAdsModel: AdsMoreDetails? = null
@@ -122,9 +122,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         if (intent?.extras?.getSerializable(DATA) != null) {
             mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
             setDetails(mProductModel!!)
-        }
-        else if (intent?.extras?.get(USER_UPLOAD_BANNER) != null){
-            var userUploadBannerModel= ProductDataNew(
+        } else if (intent?.extras?.get(USER_UPLOAD_BANNER) != null) {
+            var userUploadBannerModel = ProductDataNew(
                 5.00.toString(),
                 "Midi",
                 "This is custom banner upload section. Please add some more details to publish your advertisements",
@@ -141,10 +140,9 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 "",
                 ""
             )
-            mProductModel=userUploadBannerModel
+            mProductModel = userUploadBannerModel
             setDetails(mProductModel!!)
-        }
-        else {
+        } else {
             toast(R.string.error_something_went_wrong)
             finish()
         }
@@ -231,37 +229,37 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         submitForPaymentBtn.onClick {
 
-            if(validateAllValue()) startPayment()
-              /*  if (true) {
-                    snackBar("Details filled")
-                    myImages[0]
-                    this@ProductDetailActivity.requestPermissions(
-                        arrayOf(
-                            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE
-                        ), onResult = {
-                            if (it) {
-                                showProgress(true)
-                                this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                    dbReference,
-                                    storageReference!!,
-                                    myImages[0],
-                                    onSuccess = {
-                                        showProgress(false)
-                                    }
-                                )
-                            } else {
-                                showProgress(false)
-                                this@ProductDetailActivity.showPermissionAlert(this)
-                            }
-                        })
+            if (validateAllValue()) updateDbValues()
+            /*  if (true) {
+                  snackBar("Details filled")
+                  myImages[0]
+                  this@ProductDetailActivity.requestPermissions(
+                      arrayOf(
+                          android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                          android.Manifest.permission.READ_EXTERNAL_STORAGE
+                      ), onResult = {
+                          if (it) {
+                              showProgress(true)
+                              this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                  dbReference,
+                                  storageReference!!,
+                                  myImages[0],
+                                  onSuccess = {
+                                      showProgress(false)
+                                  }
+                              )
+                          } else {
+                              showProgress(false)
+                              this@ProductDetailActivity.showPermissionAlert(this)
+                          }
+                      })
 
-                }*/
+              }*/
         }
 
         rangeVal.onClick {
             val amountVal = rangeVal.text
-           // rangeVal.text = "$$amountVal"
+            // rangeVal.text = "$$amountVal"
             //  rangeVal.text.toString() = String.format("%s %s", "$", amountVal)
             mIsRangeExist = true
         }
@@ -461,10 +459,16 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     private fun intHeaderView() {
         var adDetails =
-            AdDetailsModel.AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
+            AdDetailsModel.AdDetails(
+                "Test Name",
+                "Test adv description",
+                "#ourTagLine",
+                "Test Brand",
+                ""
+            )
         showProgress(true)
 
-        if(mProductModel!!.full.toString().isNotEmpty()){
+        if (mProductModel!!.full.toString().isNotEmpty()) {
             fetchImageAsync(mProductModel!!.full.toString()) {
                 if (it != null) {
                     val personalizedBannerBitmap =
@@ -479,21 +483,21 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     showProgress(false)
                 }
             }
-        }
-        else{
-                val encodeByte: ByteArray = Base64.decode(intent?.extras?.getString(USER_UPLOAD_BANNER), Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+        } else {
+            val encodeByte: ByteArray =
+                Base64.decode(intent?.extras?.getString(USER_UPLOAD_BANNER), Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
 
-                val personalizedBannerBitmap =
-                    drawTextToBitmap(this, bitmap, adDetails)!!
-                myImages.add(personalizedBannerBitmap)
-                val imageAdapter = PersonalizedProductImageAdapter(myImages)
-                productViewPager.adapter = null
-                productViewPager.adapter = imageAdapter
-                productViewPager.adapter?.notifyDataSetChanged()
-                dots.attachViewPager(productViewPager)
-                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-                showProgress(false)
+            val personalizedBannerBitmap =
+                drawTextToBitmap(this, bitmap, adDetails)!!
+            myImages.add(personalizedBannerBitmap)
+            val imageAdapter = PersonalizedProductImageAdapter(myImages)
+            productViewPager.adapter = null
+            productViewPager.adapter = imageAdapter
+            productViewPager.adapter?.notifyDataSetChanged()
+            dots.attachViewPager(productViewPager)
+            dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+            showProgress(false)
         }
 
         setDescription()
@@ -863,16 +867,59 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                }
            */
 
-            val returnString = intent.getSerializableExtra("AdvFormData")
-            val adDetails = returnString as AdDetailsModel.AdDetails
-            var adsDetails =
-                AdDetailsModel.AdsCompleteDetails(adDetails.adName, adDetails.adDesc, adDetails.adTagline, adDetails.adBrandName, adDetails.logoUrl, "gender","ageGroup",startDateVal.text.toString(),endDateVal.text.toString(),startTimeVal.text.toString(),endTimeVal.text.toString(),rangeVal.text.toString())
+
+            updateDbValues()
+
+
+
 
 
             Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show()
             showProgress(false)
         } catch (e: Exception) {
             Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateDbValues() {
+        showProgress(true)
+
+        try {
+            val returnString = intent.getSerializableExtra("AdvFormData")
+            val adDetails = returnString as AdDetailsModel.AdDetails
+            var adsDetails =
+                AdDetailsModel.AdsCompleteDetails(
+                    adDetails.adName,
+                    adDetails.adDesc,
+                    adDetails.adTagline,
+                    adDetails.adBrandName,
+                    adDetails.logoUrl,
+                    "gender",
+                    "ageGroup",
+                    startDateVal.text.toString(),
+                    endDateVal.text.toString(),
+                    startTimeVal.text.toString(),
+                    endTimeVal.text.toString(),
+                    rangeVal.text.toString()
+                )
+
+
+
+            dbReference.child("PaidAds")
+                .child("AdsDetails").setValue(adsDetails)
+                .addOnSuccessListener {
+                    snackBar("Ads Saved")
+                    showProgress(false)
+                }
+                .addOnFailureListener {
+                    snackBar(it.message.toString())
+                    showProgress(false)
+
+                }
+
+        } catch (e: Exception) {
+            e.message?.let { snackBar(it) }
+            showProgress(false)
         }
     }
 
