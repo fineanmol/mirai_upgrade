@@ -75,8 +75,7 @@ class WishListFragment : BaseFragment() {
                             .setGuidelines(CropImageView.Guidelines.OFF)
                             .setRequestedSize(300,300)
                             .setOutputCompressQuality(40)
-                            .start(activity!!)
-                        // .start(context,this@AdvertisementFormActivity)
+                            .start(context, this@WishListFragment)
 
                     } else {
                         activity!!.showPermissionAlert(this)
@@ -157,8 +156,6 @@ class WishListFragment : BaseFragment() {
 
                 if (encodedImage != null) {
                     snackBar("Activity need to be Run")
-
-//                    getSharedPrefInstance().setValue(Constants.AdvDetails.ADV_LOGO,encodedImage)
                     activity!!.launchActivity<ProductDetailActivity> {
                         putExtra(Constants.KeyIntent.USER_UPLOAD_BANNER, encodedImage)
                     }

@@ -5,10 +5,12 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Base64
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -127,7 +129,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 "Midi",
                 "This is custom banner upload section. Please add some more details to publish your advertisements",
                 "N/A",
-                intent?.extras?.get(USER_UPLOAD_BANNER).toString(),
+                "",
                 listOf(),
                 true,
                 "Custom Banner",
@@ -139,7 +141,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 "",
                 ""
             )
-            setDetails(userUploadBannerModel!!)
+            mProductModel=userUploadBannerModel
+            setDetails(mProductModel!!)
         }
         else {
             toast(R.string.error_something_went_wrong)
@@ -166,7 +169,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
-        listProductReviews()
+        //listProductReviews()
 
         when {
             mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
@@ -461,10 +464,28 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             AdDetailsModel.AdDetails("Test Name", "Test adv description", "#ourTagLine", "Test Brand", "")
         showProgress(true)
 
-        fetchImageAsync(mProductModel!!.full.toString()) {
-            if (it != null) {
+        if(mProductModel!!.full.toString().isNotEmpty()){
+            fetchImageAsync(mProductModel!!.full.toString()) {
+                if (it != null) {
+                    val personalizedBannerBitmap =
+                        drawTextToBitmap(this, it, adDetails)!!
+                    myImages.add(personalizedBannerBitmap)
+                    val imageAdapter = PersonalizedProductImageAdapter(myImages)
+                    productViewPager.adapter = null
+                    productViewPager.adapter = imageAdapter
+                    productViewPager.adapter?.notifyDataSetChanged()
+                    dots.attachViewPager(productViewPager)
+                    dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                    showProgress(false)
+                }
+            }
+        }
+        else{
+                val encodeByte: ByteArray = Base64.decode(intent?.extras?.getString(USER_UPLOAD_BANNER), Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+
                 val personalizedBannerBitmap =
-                    drawTextToBitmap(this, it, adDetails)!!
+                    drawTextToBitmap(this, bitmap, adDetails)!!
                 myImages.add(personalizedBannerBitmap)
                 val imageAdapter = PersonalizedProductImageAdapter(myImages)
                 productViewPager.adapter = null
@@ -473,7 +494,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 dots.attachViewPager(productViewPager)
                 dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
                 showProgress(false)
-            }
         }
 
         setDescription()
