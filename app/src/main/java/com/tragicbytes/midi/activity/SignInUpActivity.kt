@@ -160,6 +160,11 @@ class SignInUpActivity : AppBaseActivity() {
                             user.displayName
 
                         )
+                        getSharedPrefInstance().setValue(
+                            Constants.SharedPref.USER_EMAIL,
+                            user.email
+
+                        )
                         signInEmail(user, onResult = {
                             showProgress(false)
                             if (it) launchActivityWithNewTask<DashBoardActivity>()
