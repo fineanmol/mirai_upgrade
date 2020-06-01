@@ -5,6 +5,7 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.WalkAdapter
 import com.tragicbytes.midi.utils.CarouselEffectTransformer
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.SHOW_SWIPE
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_walk_through.*
@@ -32,7 +33,9 @@ class WalkThroughActivity : AppBaseActivity() {
             launchActivityWithNewTask<SignInUpActivity>()
         }
         llSignIn.onClick {
-            launchActivity<SignInUpActivity>()
+            launchActivity<SignInUpActivity>{
+//                putExtra(Constants.KeyIntent.LOGIN, true)
+            }
         }
     }
 

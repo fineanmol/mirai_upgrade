@@ -62,7 +62,6 @@ class DashBoardActivity : AppBaseActivity() {
             mHomeFragment=HomeFragment2()
         }
 
-//        mHomeFragment=HomeFragment()
 
         setToolbar(toolbar); setUpDrawerToggle(); loadHomeFragment(); setListener()
 
@@ -298,8 +297,8 @@ class DashBoardActivity : AppBaseActivity() {
 
     fun loadHomeFragment() {
         enable(ivHome)
-        //if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
-        loadFragment(mHomeFragment)
+        if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
+//        loadFragment(mHomeFragment)
         title = getString(R.string.home)
         if (mHomeFragment is HomeFragment){
             (mHomeFragment as HomeFragment).onNetworkRetry = { loadApis() }

@@ -5,12 +5,14 @@ import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import com.google.firebase.auth.FirebaseAuth
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.getSharedPrefInstance
 import com.tragicbytes.midi.utils.extensions.launchActivity
 import com.tragicbytes.midi.utils.extensions.runDelayed
+import java.io.File
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import java.util.*
@@ -21,6 +23,12 @@ class SplashActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        /*FirebaseAuth.getInstance().signOut()
+        val sharedPreferenceFile = File("/data/data/$packageName/shared_prefs/")
+        val listFiles: Array<File> = sharedPreferenceFile.listFiles()
+        for (file in listFiles) {
+            file.delete()
+        }*/
         try {
             val info = packageManager.getPackageInfo(packageName, GET_SIGNATURES)
             for (signature in info.signatures) {
@@ -34,8 +42,7 @@ class SplashActivity : AppBaseActivity() {
         } catch (e: NoSuchAlgorithmException) { }
         runDelayed(1000) {
             if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE)) {
-                launchActivity<WalkThroughActivity>()
-
+                launchActivity<DashBoardActivity>()
             } else {
                 launchActivity<WalkThroughActivity>()
             }

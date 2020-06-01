@@ -92,32 +92,7 @@ class HomeFragment : BaseFragment() {
 //        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
 
 
-        dbReference.child("AppData/ListAvailableBannerData")
-            .addValueEventListener(
-                object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            rlNewestProduct.show()
-                            rcvNewestProduct.show()
-                            var myBannerList=ArrayList<ProductDataNew>()
-//                                var myBannerList=dataSnapshot.value as ArrayList<ProductDataNew>
-                            dataSnapshot.children.forEach {
-                                val bannerData =
-                                    it.getValue(ProductDataNew::class.java)!!
-                                myBannerList.add(bannerData)
-                            }
-                            mNewArrivalProductAdapter?.addItems(myBannerList)
-                        }
-                    }
 
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        rlNewestProduct.hide()
-                        rcvNewestProduct.hide()
-                        toast("Error Occured!")
-                    }
-                }
-
-            )
         loadApis()
         refreshLayout.setOnRefreshListener {
             loadApis()
@@ -208,6 +183,33 @@ class HomeFragment : BaseFragment() {
                 setValue(TERM_CONDITION, it.social_link?.term_condition)
                 setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
             }
+
+            dbReference.child("AppData/ListAvailableBannerData")
+                .addValueEventListener(
+                    object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                rlNewestProduct.show()
+                                rcvNewestProduct.show()
+                                var myBannerList=ArrayList<ProductDataNew>()
+//                                var myBannerList=dataSnapshot.value as ArrayList<ProductDataNew>
+                                dataSnapshot.children.forEach {
+                                    val bannerData =
+                                        it.getValue(ProductDataNew::class.java)!!
+                                    myBannerList.add(bannerData)
+                                }
+                                mNewArrivalProductAdapter?.addItems(myBannerList)
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            rlNewestProduct.hide()
+                            rcvNewestProduct.hide()
+                            toast("Error Occured!")
+                        }
+                    }
+
+                )
 
 
             /*if (myItems.isEmpty()) {

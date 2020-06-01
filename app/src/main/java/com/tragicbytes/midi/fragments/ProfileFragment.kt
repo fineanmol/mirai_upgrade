@@ -47,7 +47,6 @@ class ProfileFragment : BaseFragment() {
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
     private var encodedImage: String? = null
-    val user = FirebaseAuth.getInstance().currentUser!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +68,7 @@ class ProfileFragment : BaseFragment() {
             edtOrg.setText(getOrg())
 
             ivProfileImage.loadImageFromUrl(
-                user.photoUrl.toString(),
+                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
                 aPlaceHolderImage = R.drawable.ic_profile
             )
             if (getSharedPrefInstance().getBooleanValue(IS_SOCIAL_LOGIN)) {
@@ -175,19 +174,19 @@ class ProfileFragment : BaseFragment() {
 
 
         val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(user.displayName.toString())
+            .setDisplayName(FirebaseAuth.getInstance().currentUser!!.displayName.toString())
             .setPhotoUri(Uri.parse(selectedImage.toString()))
             .build();
 
-        user.updateProfile(profileUpdates).addOnCompleteListener { task ->
+        FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 hideProgress()
                 Log.d(TAG, "User profile updated.")
                 snackBar("Profile Pic Uploaded")
 
-                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, user.photoUrl.toString())
+                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, FirebaseAuth.getInstance().currentUser!!.photoUrl.toString())
                 (activity as DashBoardActivity).changeProfile()
-                Toast.makeText(context,user.photoUrl.toString(),Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),Toast.LENGTH_SHORT).show()
                 hideProgress()
             } else {
                 snackBar("Failed Upload")
