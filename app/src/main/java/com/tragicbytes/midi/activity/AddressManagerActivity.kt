@@ -82,10 +82,8 @@ class AddressManagerActivity : AppBaseActivity() {
         title = getString(R.string.lbl_address_manager)
 
         BroadcastReceiverExt(this) { onAction(ADDRESS_UPDATE) { loadAddressList() } }
-
         rvAddress.setVerticalLayout(); rvAddress.adapter = addressAdapter
         loadAddressList()
-
         btnAddNew.onClick { launchActivity<AddAddressActivity>(ADD_ADDRESS) }
 
 

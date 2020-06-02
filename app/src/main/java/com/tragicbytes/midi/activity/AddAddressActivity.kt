@@ -23,6 +23,8 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_address)
         setToolbar(toolbar)
+        dbReference = FirebaseDatabase.getInstance().reference
+
 
         dbReference = FirebaseDatabase.getInstance().reference
 
@@ -57,13 +59,7 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
 
                 addAddress(address!!)
 
-               /* addAddress(address!!,onSuccess = {
-                    showProgress(false)
-                    if (it){
-                        setResult(Activity.RESULT_OK)
-                        finish()
-                    }
-                })*/
+
             }
         }
 
@@ -96,9 +92,9 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
             dbReference.child(userID)
                 .child("Address").setValue(address)
                 .addOnSuccessListener {
-                    snackBar("Address Saved")
                     showProgress(false)
-                    finish()
+                    snackBar("Address Saved")
+
                 }
                 .addOnFailureListener {
                     snackBar(it.message.toString())
