@@ -6,9 +6,7 @@ class RequestModel {
      */
     var username: String? = null
     var password: String? = null
-
     var user_id: String? = null
-
     var userPhone: String? = null
     /**
      * Request for social login

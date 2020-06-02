@@ -28,7 +28,7 @@ class AccountActivity : AppBaseActivity() {
                 getString(R.string.lbl_logout_confirmation),
                 onPositiveClick = { dialog, i ->
                     clearLoginPref()
-  //                  FirebaseAuth.getInstance().signOut()
+                    FirebaseAuth.getInstance().signOut()
                     launchActivity<SignInUpActivity>()
                 },
                 onNegativeClick = { dialog, i ->
@@ -41,7 +41,8 @@ class AccountActivity : AppBaseActivity() {
         tvHelpCenter.onClick { launchActivity<HelpActivity>() }
         btnVerify.onClick {
             /*Send verification email*/
-            if (!user!!.isEmailVerified) {
+            if (!user.isEmailVerified) {
+
                 user.sendEmailVerification()
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) snackBar(
@@ -49,6 +50,7 @@ class AccountActivity : AppBaseActivity() {
                             Snackbar.LENGTH_SHORT
                         )
                     }
+                user.reload()
             }
             /*Send verification email End*/
             else if(user.phoneNumber==null){

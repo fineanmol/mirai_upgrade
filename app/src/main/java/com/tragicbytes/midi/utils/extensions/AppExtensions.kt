@@ -140,6 +140,7 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(USER_PROFILE_URL)
     getSharedPrefInstance().removeKey(USER_DOB)
     getSharedPrefInstance().removeKey(USER_ORG)
+    getSharedPrefInstance().removeKey(USER_PHONE)
     getSharedPrefInstance().removeKey(USER_FIRST_NAME)
     getSharedPrefInstance().removeKey(USER_LAST_NAME)
     getSharedPrefInstance().removeKey(USER_ROLE)
@@ -370,10 +371,10 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
         sendProfileUpdateBroadcast()
     }, onApiError = {
         showProgress(false)
-        snackBarError(it)
+      //  snackBarError(it)
     }, onNetworkError = {
         openLottieDialog {
-            createCustomer(requestModel, onApiSuccess)
+           // createCustomer(requestModel, onApiSuccess)
         }
     })
 }

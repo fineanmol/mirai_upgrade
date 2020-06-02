@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
@@ -36,6 +37,8 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PASSWORD
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.dialog_reset.*
+import kotlinx.android.synthetic.main.dialog_reset.edtResetEmail
+import kotlinx.android.synthetic.main.dialog_reset.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.btnChangePassword
 import java.io.ByteArrayOutputStream
@@ -68,7 +71,7 @@ class ProfileFragment : BaseFragment() {
             edtMobileNo.setText(getMobile())
             edtDOB.setText(getDob())
             edtOrg.setText(getOrg())
-            //edtConfirmPwd.setText(getEmail())
+
 
 
             ivProfileImage.loadImageFromUrl(
@@ -215,28 +218,20 @@ class ProfileFragment : BaseFragment() {
         changePasswordDialog.window?.setLayout(
             RelativeLayout.LayoutParams.MATCH_PARENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
-
         )
+        changePasswordDialog.findViewById<EditText>(R.id.edtResetEmail).setText(getEmail())
+        changePasswordDialog.findViewById<EditText>(R.id.edtResetEmail).isEnabled=false
+
         changePasswordDialog.btnChangePassword.onClick {
             try {
-                val userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
-               //
-                //
-                //
-                //
-                //
-                // edtConfirmPwd.setText()= userEmail
-
-                if(edtConfirmPwd.text.isNullOrEmpty()){
-                    snackBarError("Email Address Required")
-                }
+                var userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
                 mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener { task ->
                     when {
                         task.isSuccessful -> {
-                           // val user = FirebaseAuth.getInstance().currentUser
 
-                            snackBar("Forget Password Mail Sent to :$userEmail")
                             changePasswordDialog.dismiss()
+                            snackBar("Forget Password Mail Sent to :$userEmail")
+
                         }
                         task.isCanceled -> {
                             snackBar("Forget Password Cancelled")

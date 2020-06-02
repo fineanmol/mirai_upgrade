@@ -39,7 +39,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/edtConfirmPwd"
+            android:id="@+id/edtResetEmail"
             style="@style/FieldRounded"
             android:layout_marginTop="@dimen/spacing_middle"
             android:hint="@string/hint_confirm_password"
