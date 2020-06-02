@@ -78,7 +78,7 @@ class DashBoardActivity : AppBaseActivity() {
         BroadcastReceiverExt(this) {
             onAction(CART_COUNT_CHANGE) {
                 setCartCountFromPref()
-                if (mCartFragment.isAdded) mCartFragment.invalidateCartLayout(getCartListFromPref())
+//                if (mCartFragment.isAdded) mCartFragment.invalidateCartLayout(getCartListFromPref())
             }
             /*onAction(ORDER_COUNT_CHANGE) { setOrderCount() }*/
             onAction(PROFILE_UPDATE) { setUserInfo() }
@@ -145,7 +145,7 @@ class DashBoardActivity : AppBaseActivity() {
             tvNotificationCount.hide()
             loadFragment(mCartFragment)
             if (mCartFragment.isAdded) {
-                mCartFragment.invalidateCartLayout(getCartListFromPref())
+//                mCartFragment.invalidateCartLayout(getCartListFromPref())
             }
             title = getString(R.string.cart)
         }

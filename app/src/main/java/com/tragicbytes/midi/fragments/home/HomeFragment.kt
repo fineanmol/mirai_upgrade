@@ -92,8 +92,8 @@ class HomeFragment : BaseFragment() {
 //        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
 
 
-
         loadApis()
+
         refreshLayout.setOnRefreshListener {
             loadApis()
             refreshLayout.isRefreshing=false

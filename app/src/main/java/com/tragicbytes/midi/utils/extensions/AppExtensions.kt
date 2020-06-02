@@ -92,6 +92,7 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.USER_USERNAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.WISHLIST_DATA
 import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
+import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import java.io.*
@@ -284,6 +285,12 @@ fun Activity.showProductDetail(model: ProductDataNew) {
         putExtra(DATA, model)
     }
     addToRecentProduct(model)
+}
+
+fun Activity.showBannerDetail(model: AdDetailsModel.AdsCompleteDetails) {
+    launchActivity<ProductDetailActivity> {
+        putExtra(DATA, model)
+    }
 }
 
 fun Activity.sendCartCountChangeBroadcast() {
@@ -745,6 +752,11 @@ fun setProductItem(view: View, item: ProductDataNew) {
     view.tvOriginalPrice.text = item.regular_price?.currencyFormat()
     view.tvOriginalPrice.applyStrike()
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
+}
+
+fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
+    view.snackBarError("coooooool")
+    if (item.bannerImageUrl != null) view.bannerImage.loadImageFromUrl(item.bannerImageUrl)
 }
 fun Activity.fetchAndStoreAddressData() {
     callApi(getRestApis(false).getAddress(), onApiSuccess = {
