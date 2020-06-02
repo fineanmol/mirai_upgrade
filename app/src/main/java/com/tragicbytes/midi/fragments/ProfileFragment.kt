@@ -207,7 +207,12 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun showChangePasswordDialog() {
+/*
+        getSharedPrefInstance().setValue(USER_EMAIL,"nikkrnishad@gmail.com")
+*/
+
         var userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
+
 
         val changePasswordDialog = Dialog(activity!!)
         changePasswordDialog.window?.setBackgroundDrawable(ColorDrawable(0))
@@ -217,11 +222,15 @@ class ProfileFragment : BaseFragment() {
             RelativeLayout.LayoutParams.WRAP_CONTENT
 
         )
+        changePasswordDialog.edtConfirmPwd.setText(getSharedPrefInstance().getStringValue(USER_EMAIL))
+
+
         changePasswordDialog.btnChangePassword.onClick {
             try {
-                if(userEmail=="user_email"){
+                /*if(userEmail=="user_email"){
                     userEmail = edtConfirmPwd.textToString()
-                }
+                }*/
+
                 if(edtConfirmPwd.text.isNullOrEmpty()){
                     snackBarError("Email Address Required")
                 }

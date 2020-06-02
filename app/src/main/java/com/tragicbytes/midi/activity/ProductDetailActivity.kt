@@ -167,7 +167,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
-        //listProductReviews()
+        listProductReviews()
 
         when {
             mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
@@ -780,8 +780,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
                     }
                 }
-
-
             }
         }
     }

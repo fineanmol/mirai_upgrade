@@ -178,8 +178,6 @@ class WishListFragment : BaseFragment() {
                 .setOutputCompressQuality(40)
                 .start(activity!!)
         }
-
-
     }
 
 
