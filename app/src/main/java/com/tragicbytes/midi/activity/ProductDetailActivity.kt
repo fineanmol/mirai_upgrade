@@ -169,7 +169,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
-        //listProductReviews()
+        listProductReviews()
 
         when {
             mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
@@ -782,8 +782,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
                     }
                 }
-
-
             }
         }
     }
@@ -892,21 +890,23 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 val adsDetails =
 
                         AdDetailsModel.AdsCompleteDetails(
+                            "123",
                             adDetails!!.adName,
                             adDetails!!.adDesc,
                             adDetails!!.adTagline,
                             adDetails!!.adBrandName,
-                            adDetails!!.logoUrl,
+                            "",
                             "gender",
                             "ageGroup",
                             startDateVal.text.toString(),
                             endDateVal.text.toString(),
                             startTimeVal.text.toString(),
                             endTimeVal.text.toString(),
-                            rangeVal.text.toString()
+                            rangeVal.text.toString(),
+                            ""
                         )
 
-                dbReference.child("PaidAds")
+                dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
                     .child("AdsDetails").setValue(adsDetails)
                     .addOnSuccessListener {
                         snackBar("Ads Saved")

@@ -5,233 +5,106 @@ import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.MyCartActivity
 import com.tragicbytes.midi.activity.OrderSummaryActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
+import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.base.BaseRecyclerAdapter
 import com.tragicbytes.midi.databinding.ItemCartBinding
+import com.tragicbytes.midi.models.AdDetailsModel
 import com.tragicbytes.midi.models.CartResponse
+import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.fragment_cart.*
+import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.refreshLayout
+import kotlinx.android.synthetic.main.fragment_home.scrollView
+import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 
 class MyCartFragment : BaseFragment() {
 
-    private var mCartAdapter: BaseRecyclerAdapter<CartResponse, ItemCartBinding> =
-        object : BaseRecyclerAdapter<CartResponse, ItemCartBinding>() {
-            override val layoutResId: Int = R.layout.item_cart
+    var onNetworkRetry: (() -> Unit)? = null
+    private var mAdsCompleteDetailsAdapter: RecyclerViewAdapter<AdDetailsModel.AdsCompleteDetails>? = null
 
-            override fun onBindData(
-                model: CartResponse,
-                position: Int,
-                dataBinding: ItemCartBinding
-            ) {
-                dataBinding.llButton.show()
-                dataBinding.llMoveTocart.hide()
-                dataBinding.tvOriginalPrice.applyStrike()
-                dataBinding.edtQty.setText(model.quantity)
-                if (model.full != null) dataBinding.ivProduct.loadImageFromUrl(model.full)
-                if (model.sale_price.isNotEmpty()) {
-                    dataBinding.tvPrice.text =
-                        (model.sale_price.toInt() * model.quantity.toInt()).toString()
-                            .currencyFormat()
-                } else if (model.price.isNotEmpty()) {
-                    dataBinding.tvPrice.text =
-                        (model.price.toFloat().toInt() * model.quantity.toInt()).toString()
-                            .currencyFormat()
-                }
-                dataBinding.tvOriginalPrice.text = model.regular_price.currencyFormat()
-            }
-
-            override fun onItemClick(
-                view: View,
-                model: CartResponse,
-                position: Int,
-                dataBinding: ItemCartBinding
-            ) {
-                when (view.id) {
-                    R.id.llRemove -> {
-                        val requestModel = RequestModel()
-                        requestModel.pro_id = model.pro_id
-
-                        removeCartItem(requestModel)
-                    }
-                    R.id.ivIncreaseQuantity -> {
-                        val qty = model.quantity.toInt()
-                        if (model.stock_quantity != null) {
-                            if (qty < model.stock_quantity) {
-                                mModelList[position].quantity = qty.plus(1).toString()
-                                notifyItemChanged(position)
-                                updateCartItem(mModelList[position])
-                            } else {
-                                activity?.snackBarError("${getString(R.string.lbl_qty_error)} ${model.stock_quantity}")
-                            }
-                        } else {
-                            if (qty < 10) {
-                                mModelList[position].quantity = qty.plus(1).toString()
-                                notifyItemChanged(position)
-                                updateCartItem(mModelList[position])
-                            }else{
-                                activity?.snackBarError("${getString(R.string.lbl_qty_error)} 10")
-                            }
-                        }
-                    }
-                    R.id.ivDecreaseQuantity -> {
-                        val qty = model.quantity.toInt()
-                        if (qty >1) {
-                            mModelList[position].quantity = qty.minus(1).toString()
-                            notifyItemChanged(position)
-                            updateCartItem(mModelList[position])
-                        }
-                    }
-                    else -> {
-                        activity?.launchActivity<ProductDetailActivity> {
-                            putExtra(
-                                PRODUCT_ID,
-                                model.pro_id.toInt()
-                            )
-                        }
-                    }
-                }
-            }
-
-            override fun onItemLongClick(view: View, model: CartResponse, position: Int) {}
-        }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_cart, container, false)
+        return inflater.inflate(R.layout.fragment_show_my_banners, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
-        rvCart.setVerticalLayout()
-        rvCart.adapter = mCartAdapter
-        tvClear.onClick {
-            clearCartItems()
+
+        setupAdsCompleteDetailsAdapter()
+
+        refreshLayout.setOnRefreshListener {
+            loadApis()
+            refreshLayout.isRefreshing=false
         }
-        btnShopNow.onClick {
-            if (activity!! is DashBoardActivity) {
-                (activity as DashBoardActivity).loadHomeFragment()
-            } else if (activity!! is MyCartActivity) {
-                (activity as MyCartActivity).shopNow()
-            }
+        refreshLayout.viewTreeObserver.addOnScrollChangedListener {
+            refreshLayout.isEnabled = scrollView.scrollY == 0
         }
-        tvContinue.onClick { activity?.launchActivity<OrderSummaryActivity> { } }
-        llSeePriceDetail.onClick { scrollToPriceDetail() }
+
     }
 
-    private fun clearCartItems() {
-        showProgress()
-        callApi(getRestApis(false).clearCartItems(), onApiSuccess = {
-            activity?.fetchAndStoreCartData()
-        })
-    }
-
-    private fun scrollToPriceDetail() {
-        Handler().post { nsvCart.scrollTo(nsvCart.top, llPayment.top) }
-    }
-
-    private fun invalidatePaymentLayout(b: Boolean) {
-        if (!b) {
-            if (activity != null) {
-                llNoItems.show()
-                llPayment.hide()
-                lay_button.hide()
-                rvCart.hide()
-                tvTotalItem.hide()
-                tvClear.hide()
-            }
+    //region APIs
+    private fun loadApis() {
+        if (isNetworkAvailable()) {
+            loadImages()
         } else {
-            if (activity != null) {
-                llNoItems.hide()
-                llPayment.show()
-                lay_button.show()
-                rvCart.show()
-                tvTotalItem.show()
-                tvClear.show()
-            }
-        }
-
-    }
-
-    private fun removeCartItem(model: RequestModel) {
-        activity?.getAlertDialog(
-            getString(R.string.msg_confirmation),
-            onPositiveClick = { dialog, i ->
-                showProgress()
-                callApi(getRestApis(false).removeCartItem(request = model), onApiSuccess = {
-                    hideProgress()
-                    snackBar(activity!!.getString(R.string.success))
-                    activity?.fetchAndStoreCartData()
-                }, onApiError = {
-                    hideProgress()
-                    if (activity != null && activity is DashBoardActivity) {
-                        if ((activity as DashBoardActivity).selectedFragment is MyCartFragment) {
-                            activity?.snackBarError(it)
-                        }
-                    }
-                }, onNetworkError = {
-                    hideProgress()
-                    activity?.noInternetSnackBar()
-                })
-            },
-            onNegativeClick = { dialog, i ->
-                dialog.dismiss()
-            })?.show()
-    }
-
-    private fun updateCartItem(model: CartResponse) {
-        showProgress()
-        val requestModel = RequestModel(); requestModel.pro_id = model.pro_id; requestModel.quantity = model.quantity.toInt(); requestModel.cart_id = model.cart_id.toInt()
-        callApi(getRestApis(false).updateItemInCart(request = requestModel), onApiSuccess = {
-            snackBar(getString(R.string.lbl_success))
-            activity?.fetchAndStoreCartData()
-            hideProgress()
-        }, onApiError = {
-            hideProgress()
-            activity?.snackBarError(it)
-        }, onNetworkError = {
-            hideProgress()
-            activity?.noInternetSnackBar()
-        })
-    }
-    fun invalidateCartLayout(it: ArrayList<CartResponse>) {
-        hideProgress()
-        if (it.size == 0) {
-            invalidatePaymentLayout(false)
-        } else {
-            if (activity != null) {
-                llNoItems.hide()
-                if (it.size == 1) {
-                    tvTotalItem.text = getString(R.string.lbl_total_items) + "${it.size})"
-                } else {
-                    tvTotalItem.text = getString(R.string.lbl_total_items) + "${it.size})"
-                }
-                if (it.size > 5) txtSeePriceDetails.text =
-                    getString(R.string.lbl_see_price_detail) else txtSeePriceDetails.text =
-                    getString(R.string.lbl_total_amount)
-                val total = (activity as AppBaseActivity).getCartTotal()
-                tvTotalCartAmount.text = total.toString().currencyFormat()
-                tvShippingCharge.text = getString(R.string.lbl_free)
-                tvTotalAmount.text = total.toString().currencyFormat()
-                invalidatePaymentLayout(true)
-                mCartAdapter.addItems(it)
-            }
+            activity?.openLottieDialog { loadApis(); onNetworkRetry?.invoke() }
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        invalidateCartLayout(getCartListFromPref())
+    private fun loadImages(){
+        var adv=AdDetailsModel.AdsCompleteDetails(
+            "123",
+            "adDetails!!.adName",
+            "adDetails!!.adDesc",
+            "adDetails!!.adTagline",
+            "adDetails!!.adBrandName",
+            "",
+            "gender",
+            "ageGroup",
+            "startDateVal.text.toString()",
+            "endDateVal.text.toString()",
+            "startTimeVal.text.toString()",
+            "endTimeVal.text.toString()",
+            "rangeVal.text.toString()",
+            "https://i.pinimg.com/originals/6b/20/16/6b201623685e7093fe7df8970b1d26b5.jpg"
+        )
+        var myBannerList=ArrayList<AdDetailsModel.AdsCompleteDetails>()
+        myBannerList.add(adv)
+        snackBar("coooooool")
+        mAdsCompleteDetailsAdapter?.addItems(myBannerList)
+    }
+
+    private fun setupAdsCompleteDetailsAdapter() {
+        mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item) })
+        //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
+        publishedBannersList.apply {
+            layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
+            setHasFixedSize(true)
+            adapter = mAdsCompleteDetailsAdapter
+            rvItemAnimation()
+        }
+        publishedBannersList.adapter = mAdsCompleteDetailsAdapter
+
+        mAdsCompleteDetailsAdapter?.onItemClick = { pos, view, item ->
+            activity?.showBannerDetail(item)
+        }
     }
 }

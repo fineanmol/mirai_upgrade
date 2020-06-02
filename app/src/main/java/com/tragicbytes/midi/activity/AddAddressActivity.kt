@@ -26,6 +26,8 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
         dbReference = FirebaseDatabase.getInstance().reference
 
 
+        dbReference = FirebaseDatabase.getInstance().reference
+
         simpleLocation = SimpleLocation(this)
         simpleLocation?.setListener(this)
 

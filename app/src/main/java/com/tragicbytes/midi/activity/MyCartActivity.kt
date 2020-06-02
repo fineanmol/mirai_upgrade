@@ -24,7 +24,7 @@ class MyCartActivity : AppBaseActivity() {
         BroadcastReceiverExt(this) {
             onAction(CART_COUNT_CHANGE) {
                 if (fr.isAdded) {
-                    fr.invalidateCartLayout(getCartListFromPref())
+//                    fr.invalidateCartLayout(getCartListFromPref())
                 }
             }
         }

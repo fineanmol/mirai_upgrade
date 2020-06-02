@@ -16,6 +16,7 @@ class AdDetailsModel {
 
     data class AdsCompleteDetails (
 
+        var adId:String,
         var adName: String,
         var adDesc: String,
         var adTagline: String,
@@ -27,7 +28,8 @@ class AdDetailsModel {
         var endDate:String,
         var startTime:String,
         var endTime:String,
-        var range:String
+        var range:String,
+        var bannerImageUrl:String
 
     ) : Serializable
 
