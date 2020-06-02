@@ -1,34 +1,18 @@
 package com.tragicbytes.midi.fragments
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.activity.DashBoardActivity
-import com.tragicbytes.midi.activity.MyCartActivity
-import com.tragicbytes.midi.activity.OrderSummaryActivity
-import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.base.BaseRecyclerAdapter
-import com.tragicbytes.midi.databinding.ItemCartBinding
 import com.tragicbytes.midi.models.AdDetailsModel
-import com.tragicbytes.midi.models.CartResponse
-import com.tragicbytes.midi.models.ProductDataNew
-import com.tragicbytes.midi.models.RequestModel
-import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.fragment_cart.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import kotlinx.android.synthetic.main.fragment_home.scrollView
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
-import kotlinx.android.synthetic.main.layout_paymentdetail.*
 
 class MyCartFragment : BaseFragment() {
 

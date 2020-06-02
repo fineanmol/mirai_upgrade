@@ -31,6 +31,7 @@ object Constants {
         const val ACCOUNT = 204
         const val SETTINGS = 205
         const val SIGN_IN = 206
+
     }
 
     object SharedPref {
@@ -40,8 +41,10 @@ object Constants {
         const val IS_LOGGED_IN = "isLoggedIn"
         const val USER_ID = "user_id"
         const val USER_DISPLAY_NAME = "user_display_name"
+        const val ADS_BANNER_URL = "ads_banner_url"
         const val USER_EMAIL = "user_email"
         const val USER_ORG = "user_org"
+        const val ADS_COUNTER = "0"
 
         const val USER_FIRST_NAME = "user_first_name"
         const val USER_LAST_NAME = "user_last_name"

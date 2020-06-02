@@ -524,11 +524,11 @@
 
                             android:text="@string/lbl_lace_ups" />
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <EditText
                             android:id="@+id/rangeVal"
-
                             style="@style/MoreInfoSubheading"
                             android:singleLine="true"
+                            android:inputType="number"
                             />
                     </LinearLayout>
                 </LinearLayout>

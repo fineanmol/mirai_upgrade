@@ -14,6 +14,7 @@ import android.util.Base64
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -32,14 +33,16 @@ import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
+import com.tragicbytes.midi.utils.Constants.SharedPref.ADS_BANNER_URL
+import com.tragicbytes.midi.utils.Constants.SharedPref.ADS_COUNTER
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import org.json.JSONObject
-import java.io.Serializable
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -58,6 +61,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private val myImages = ArrayList<Bitmap>()
 
     var i: Int = 0
+    private var adsGender: String = ""
+    private var adsAgeGroup: String = ""
     private var mIsInWishList = false
     private var mColorFlag: Int = -1
     private var mSizeFlag: Int = -1
@@ -69,7 +74,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
-    private var adDetails : AdDetailsModel.AdDetails? = null
+    private var adDetails: AdDetailsModel.AdDetails? = null
     private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
@@ -92,61 +97,38 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             onBackPressed()
         }
 
-        /**
-         * Fetch Product Detail From Server
-         */
-        /*if (intent?.extras?.get(PRODUCT_ID) != null && intent?.extras?.get(PRODUCT_ID) != null) {
-            mProductId = intent?.extras?.getInt(PRODUCT_ID)!!
 
-            showProgress(true)
-            val requestModel = RequestModel(); requestModel.pro_id = mProductId.toString()
-            callApi(getRestApis().listSingleProducts(requestModel), onApiSuccess = {
-                showProgress(false)
-                mProductModel = it
-                setDetails(it)
-            }, onApiError = {
-                showProgress(false)
-                snackBarError(it)
-                runDelayed(1000) { finish() }
-            }, onNetworkError = {
-                showProgress(false)
-                noInternetSnackBar()
-                runDelayed(1000) { finish() }
-            })
-        } else if (intent?.extras?.getSerializable(DATA) != null) {
-            mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
-            setDetails(mProductModel!!)
-        } else {
-            toast(R.string.error_something_went_wrong)
-            finish()
-        }*/
 
-        if (intent?.extras?.getSerializable(DATA) != null) {
-            mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
-            setDetails(mProductModel!!)
-        } else if (intent?.extras?.get(USER_UPLOAD_BANNER) != null) {
-            var userUploadBannerModel = ProductDataNew(
-                5.00.toString(),
-                "Midi",
-                "This is custom banner upload section. Please add some more details to publish your advertisements",
-                "N/A",
-                "",
-                listOf(),
-                true,
-                "Custom Banner",
-                "",
-                100.toString(),
-                99999,
-                500.toString(),
-                200.toString(),
-                "",
-                ""
-            )
-            mProductModel = userUploadBannerModel
-            setDetails(mProductModel!!)
-        } else {
-            toast(R.string.error_something_went_wrong)
-            finish()
+        when {
+            intent?.extras?.getSerializable(DATA) != null -> {
+                mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
+                setDetails(mProductModel!!)
+            }
+            intent?.extras?.get(USER_UPLOAD_BANNER) != null -> {
+                var userUploadBannerModel = ProductDataNew(
+                    5.00.toString(),
+                    "Midi",
+                    "This is custom banner upload section. Please add some more details to publish your advertisements",
+                    "N/A",
+                    "",
+                    listOf(),
+                    true,
+                    "Custom Banner",
+                    "",
+                    100.toString(),
+                    99999,
+                    500.toString(),
+                    200.toString(),
+                    "",
+                    ""
+                )
+                mProductModel = userUploadBannerModel
+                setDetails(mProductModel!!)
+            }
+            else -> {
+                toast(R.string.error_something_went_wrong)
+                finish()
+            }
         }
         setCartCountFromPref()
 
@@ -166,6 +148,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
@@ -203,9 +186,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         toolbar_layout.setCollapsedTitleTypeface(fontSemiBold())
         toolbar_layout.setExpandedTitleTypeface(fontSemiBold())
         toolbar_layout.title = mProductModel.name
+        if (mProductModel.name.toString() == "Custom Banner") btnAddCard.hide() else btnAddCard.show()
 
         intHeaderView()
-        checkWishListAndCart()
+        //checkWishListAndCart()
         /*  if (mProductModel.stock_status == "instock") {
               if (mProductModel.manage_stock!!) {
                   if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
@@ -226,45 +210,41 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
           }*/
 
 
-
-        ivFavourite.onClick { onFavouriteClick() }
+        //  ivFavourite.onClick { onFavouriteClick() }
 
         submitForPaymentBtn.onClick {
 
-            if (validateAllValue()) updateDbValues()
-            /*  if (true) {
-                  snackBar("Details filled")
-                  myImages[0]
-                  this@ProductDetailActivity.requestPermissions(
-                      arrayOf(
-                          android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                          android.Manifest.permission.READ_EXTERNAL_STORAGE
-                      ), onResult = {
-                          if (it) {
-                              showProgress(true)
-                              this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                  dbReference,
-                                  storageReference!!,
-                                  myImages[0],
-                                  onSuccess = {
-                                      showProgress(false)
-                                  }
-                              )
-                          } else {
-                              showProgress(false)
-                              this@ProductDetailActivity.showPermissionAlert(this)
-                          }
-                      })
+            if (validateAllValue()) {
+                /* if (true) {
+                     snackBar("Details filled")
+                     myImages[0]
+                     this@ProductDetailActivity.requestPermissions(
+                         arrayOf(
+                             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                             android.Manifest.permission.READ_EXTERNAL_STORAGE
+                         ), onResult = {
+                             if (it) {
+                                 showProgress(true)
+                                 this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                     dbReference,
+                                     storageReference!!,
+                                     myImages[0],
+                                     onSuccess = {
+                                         showProgress(false)
+                                     }
+                                 )
+                             } else {
+                                 showProgress(false)
+                                 this@ProductDetailActivity.showPermissionAlert(this)
+                             }
+                         })
 
-              }*/
+                 }*/
+                updateDbValues()
+            }
         }
 
-        rangeVal.onClick {
-            val amountVal = rangeVal.text
-            // rangeVal.text = "$$amountVal"
-            //  rangeVal.text.toString() = String.format("%s %s", "$", amountVal)
-            mIsRangeExist = true
-        }
+        mIsRangeExist = true
 
 
 
@@ -373,7 +353,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } else if (!mIsRangeExist) {
+        } else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
         } else {
@@ -507,31 +487,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         tvItemProductOriginalPrice.applyStrike()
     }
 
-    /*private fun setMoreInfo() {
-        if (!mProductModel?.length?.checkIsEmpty()!!) {
-            llMoreInfo.show()
-            tvLength.text = String.format("%s %s", mProductModel?.length, "cm")
-        } else {
-            llLength.hide()
-            tvLength.text = ""
-        }
-        if (!mProductModel?.height?.checkIsEmpty()!!) {
-            llMoreInfo.show()
-            tvHeight.text = String.format("%s %s", mProductModel?.height, "cm")
-        } else {
-            llHeight.hide()
-            tvHeight.text = ""
-        }
-        if (!mProductModel?.width?.checkIsEmpty()!!) {
-            llMoreInfo.show()
-            tvWidth.text = String.format("%s %s", mProductModel?.width, "cm")
-        } else {
-            llWidth.hide()
-            tvWidth.text = ""
-        }
 
-    }
-*/
     private fun setDescription() {
         bindData()
     }
@@ -546,7 +502,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         if (genders.isNotEmpty()) {
 
 //            val colors = mProductModel?.color?.split(",")
-            mIsGenderExist = true && genders.isNotEmpty()
+
 
             genders.forEachIndexed { _, s ->
                 genderList.add(s.trim())
@@ -606,6 +562,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 })
             colorAdapter?.onItemClick = { pos, view, item ->
                 mColorFlag = pos
+                adsGender = genderList[pos]
+                mIsGenderExist = true && adsGender.isNotEmpty()
                 colorAdapter?.notifyDataSetChanged()
                 getSelectedColors()
             }
@@ -619,7 +577,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         if (ageGroups.isNotEmpty()) {
 
-            mIsAgeGroupExist = true && ageGroups.isNotEmpty()
             ageGroups.forEachIndexed { i, s -> ageGroupList.add(s.trim()) }
 
             ageGroupAdapter =
@@ -636,6 +593,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                 mSizeFlag -> {
                                     setTextColor(color(R.color.commonColorWhite))
                                     setStrokedBackground(color(R.color.colorPrimary))
+                                    //          adsGender= genderList[position]
                                 }
                                 else -> {
                                     setTextColor(color(R.color.textColorPrimary))
@@ -653,6 +611,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 })
             ageGroupAdapter?.onItemClick = { pos, view, item ->
                 mSizeFlag = pos
+                adsAgeGroup = ageGroupList[pos]
+                mIsAgeGroupExist = true && adsAgeGroup.isNotEmpty()
                 ageGroupAdapter?.notifyDataSetChanged()
                 getSelectedSize()
             }
@@ -691,7 +651,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     }
 
     private fun listProductReviews() {
-        callApi(getRestApis().listProductReviews(mProductModel?.pro_id!!), onApiSuccess = {
+        /*callApi(getRestApis().listProductReviews(mProductModel?.pro_id!!), onApiSuccess = {
             val mReview: ArrayList<String> = ArrayList()
             it.forEach { review ->
                 if (!mReview.contains(review.email)) {
@@ -705,7 +665,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             openLottieDialog {
                 listProductReviews()
             }
-        })
+        })*/
     }
 
     private fun setRating(data: List<ProductReviewData>) {
@@ -840,32 +800,31 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             showProgress(true)
             val razorpayPaymentId = generateString()
 
-            /*    if (true) {
-                   snackBar("Details filled")
-                   myImages[0]
-                   this@ProductDetailActivity.requestPermissions(
-                       arrayOf(
-                           android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                           android.Manifest.permission.READ_EXTERNAL_STORAGE
-                       ), onResult = {
-                           if (it) {
-                               showProgress(true)
-                               this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                   dbReference,
-                                   storageReference!!,
-                                   myImages[0],
-                                   onSuccess = {
-                                       showProgress(false)
-                                   }
-                               )
-                           } else {
-                               showProgress(false)
-                               this@ProductDetailActivity.showPermissionAlert(this)
-                           }
-                       })
+            if (true) {
+                snackBar("Details filled")
+                myImages[0]
+                this@ProductDetailActivity.requestPermissions(
+                    arrayOf(
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), onResult = {
+                        if (it) {
+                            showProgress(true)
+                            this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                                dbReference,
+                                storageReference!!,
+                                myImages[0],
+                                onSuccess = {
+                                    showProgress(false)
+                                }
+                            )
+                        } else {
+                            showProgress(false)
+                            //    this@ProductDetailActivity.showPermissionAlert(this)
+                        }
+                    })
 
-               }
-           */
+            }
 
 
             updateDbValues()
@@ -886,40 +845,85 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         try {
 
-            if (adDetails!=null) {
-                val adsDetails =
+            /** BannerImageToDB*/
 
-                        AdDetailsModel.AdsCompleteDetails(
-                            "123",
-                            adDetails!!.adName,
-                            adDetails!!.adDesc,
-                            adDetails!!.adTagline,
-                            adDetails!!.adBrandName,
-                            "",
-                            "gender",
-                            "ageGroup",
-                            startDateVal.text.toString(),
-                            endDateVal.text.toString(),
-                            startTimeVal.text.toString(),
-                            endTimeVal.text.toString(),
-                            rangeVal.text.toString(),
-                            ""
-                        )
+            /*  myImages[0]
+              this@ProductDetailActivity.requestPermissions(
+                  arrayOf(
+                      android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                      android.Manifest.permission.READ_EXTERNAL_STORAGE
+                  ), onResult = {
+                      if (it) {
+                          showProgress(true)
+                          this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                              dbReference,
+                              storageReference!!,
+                              myImages[0],
+                              onSuccess = {
+                                  showProgress(false)
+                              }
+                          )
+                      } else {
+                          showProgress(false)
+                          snackBarError("failed")
+                       // this@ProductDetailActivity.showPermissionAlert(this)
+                      }
+                  })
+  */
+            /** BannerImageToDB Ends*/
 
-                dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
-                    .child("AdsDetails").setValue(adsDetails)
-                    .addOnSuccessListener {
-                        snackBar("Ads Saved")
-                        showProgress(false)
-                    }
-                    .addOnFailureListener {
-                        snackBar(it.message.toString())
-                        showProgress(false)
+            var startDate = startDateVal.text.toString()
+            if (startDate == "Today") startDate = LocalDate.now().toString()
 
-                    }
+            mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
+
+            //region When Create Ads
+            if (mProductModel!!.name!="Custom Banner") {
+                if (adDetails != null) {
+                    val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                        mProductModel!!.pro_id.toString(),
+                        adDetails!!.adName,
+                        adDetails!!.adDesc,
+                        adDetails!!.adTagline,
+                        adDetails!!.adBrandName,
+                        "",
+                        adsGender,
+                        adsAgeGroup,
+                        startDate,
+                        endDateVal.text.toString(),
+                        startTimeVal.text.toString(),
+                        endTimeVal.text.toString(),
+                        "₹" + rangeVal.textToString(),
+                        ADS_BANNER_URL
+                    )
+
+                    // val counter = getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_COUNTER)
+                    dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
+                        .child("AdsDetails").child(ADS_COUNTER).setValue(adsDetails)
+                        .addOnSuccessListener {
+                            snackBar("Ads Saved")
+                            showProgress(false)
+                            //val newCounter =
+                            //  Gson().toJson(list)
+                            getSharedPrefInstance().setValue(
+                                ADS_COUNTER,
+                                (ADS_COUNTER.toInt() + 1).toString()
+                            )
+                        }
+                        .addOnFailureListener {
+                            snackBar(it.message.toString())
+                            showProgress(false)
+
+                        }
+                } else {
+                    snackBar("Please Create ads First")
+                }
+                //endregion
             } else {
-                snackBar("Please Create ads First")
+
+
             }
+
 
         } catch (e: Exception) {
             e.message?.let { snackBar(it) }

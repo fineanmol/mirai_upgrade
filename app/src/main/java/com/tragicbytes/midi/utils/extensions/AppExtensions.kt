@@ -60,6 +60,7 @@ import com.tragicbytes.midi.utils.Constants.AppBroadcasts.PROFILE_UPDATE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.WISHLIST_UPDATE
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.PLAY_STORE_URL_PREFIX
+import com.tragicbytes.midi.utils.Constants.SharedPref.ADS_BANNER_URL
 import com.tragicbytes.midi.utils.Constants.SharedPref.CART_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CATEGORY_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.DEFAULT_CURRENCY
@@ -817,18 +818,19 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
     personalizedBannerBitmap.saveAsync(file.path
     ) {
         val ref =
-            storageReference?.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
-        val uploadTask = ref?.putFile(Uri.fromFile(file))
-        uploadTask?.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
+        val uploadTask = ref.putFile(Uri.fromFile(file))
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
                 }
             }
             return@Continuation ref.downloadUrl
-        })?.addOnCompleteListener { task ->
+        }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
+                getSharedPrefInstance().setValue(ADS_BANNER_URL,downloadUri)
                 dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri.toString()).addOnCompleteListener {
                     if(task.isSuccessful){
                         onSuccess(true)
@@ -837,7 +839,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
             } else {
                 snackBar(task.exception!!.localizedMessage);onSuccess(false)
             }
-        }?.addOnFailureListener {
+        }.addOnFailureListener {
             snackBar(it.localizedMessage);onSuccess(false)
         }
     }
