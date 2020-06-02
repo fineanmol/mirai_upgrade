@@ -219,9 +219,14 @@ class ProfileFragment : BaseFragment() {
         )
         changePasswordDialog.btnChangePassword.onClick {
             try {
-                if(userEmail=="user_email"){
-                    userEmail = edtConfirmPwd.textToString()
-                }
+                val userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
+               //
+                //
+                //
+                //
+                //
+                // edtConfirmPwd.setText()= userEmail
+
                 if(edtConfirmPwd.text.isNullOrEmpty()){
                     snackBarError("Email Address Required")
                 }

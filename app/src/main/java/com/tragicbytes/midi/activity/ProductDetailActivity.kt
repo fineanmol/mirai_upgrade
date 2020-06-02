@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
@@ -37,6 +38,7 @@ import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import org.json.JSONObject
+import java.io.Serializable
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -54,6 +56,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
     private val myImages = ArrayList<Bitmap>()
+
     var i: Int = 0
     private var mIsInWishList = false
     private var mColorFlag: Int = -1
@@ -66,7 +69,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
-
+    private var adDetails : AdDetailsModel.AdDetails? = null
     private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
@@ -81,8 +84,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
 
         Checkout.preload(applicationContext)
-
-
+        dbReference = FirebaseDatabase.getInstance().reference
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
         setToolbarWithoutBackButton(mMainBinding.toolbar)
         toolbar_layout.title = ""
@@ -764,13 +766,13 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             if (resultCode == Activity.RESULT_OK) { // Get String data from Intent
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
-                val adDetails = returnString as AdDetailsModel.AdDetails
-                adDetails.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
+                adDetails = returnString as AdDetailsModel.AdDetails
+                adDetails!!.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
                 fetchImageAsync(mProductModel!!.full.toString()) {
                     if (it != null) {
                         val personalizedBannerBitmap =
-                            drawTextToBitmap(this, it, adDetails)!!
+                            drawTextToBitmap(this, it, adDetails!!)!!
                         myImages.add(personalizedBannerBitmap)
                         val imageAdapter = PersonalizedProductImageAdapter(myImages)
                         productViewPager.adapter = null
@@ -885,37 +887,39 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         showProgress(true)
 
         try {
-            val returnString = intent.getSerializableExtra("AdvFormData")
-            val adDetails = returnString as AdDetailsModel.AdDetails
-            var adsDetails =
-                AdDetailsModel.AdsCompleteDetails(
-                    adDetails.adName,
-                    adDetails.adDesc,
-                    adDetails.adTagline,
-                    adDetails.adBrandName,
-                    adDetails.logoUrl,
-                    "gender",
-                    "ageGroup",
-                    startDateVal.text.toString(),
-                    endDateVal.text.toString(),
-                    startTimeVal.text.toString(),
-                    endTimeVal.text.toString(),
-                    rangeVal.text.toString()
-                )
 
+            if (adDetails!=null) {
+                val adsDetails =
 
+                        AdDetailsModel.AdsCompleteDetails(
+                            adDetails!!.adName,
+                            adDetails!!.adDesc,
+                            adDetails!!.adTagline,
+                            adDetails!!.adBrandName,
+                            adDetails!!.logoUrl,
+                            "gender",
+                            "ageGroup",
+                            startDateVal.text.toString(),
+                            endDateVal.text.toString(),
+                            startTimeVal.text.toString(),
+                            endTimeVal.text.toString(),
+                            rangeVal.text.toString()
+                        )
 
-            dbReference.child("PaidAds")
-                .child("AdsDetails").setValue(adsDetails)
-                .addOnSuccessListener {
-                    snackBar("Ads Saved")
-                    showProgress(false)
-                }
-                .addOnFailureListener {
-                    snackBar(it.message.toString())
-                    showProgress(false)
+                dbReference.child("PaidAds")
+                    .child("AdsDetails").setValue(adsDetails)
+                    .addOnSuccessListener {
+                        snackBar("Ads Saved")
+                        showProgress(false)
+                    }
+                    .addOnFailureListener {
+                        snackBar(it.message.toString())
+                        showProgress(false)
 
-                }
+                    }
+            } else {
+                snackBar("Please Create ads First")
+            }
 
         } catch (e: Exception) {
             e.message?.let { snackBar(it) }

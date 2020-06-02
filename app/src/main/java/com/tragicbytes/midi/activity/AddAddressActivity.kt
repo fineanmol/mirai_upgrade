@@ -3,6 +3,7 @@ package com.tragicbytes.midi.activity
 import android.app.Activity
 import android.os.Bundle
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.Address
@@ -22,6 +23,8 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_address)
         setToolbar(toolbar)
+        dbReference = FirebaseDatabase.getInstance().reference
+
 
         simpleLocation = SimpleLocation(this)
         simpleLocation?.setListener(this)
@@ -54,13 +57,7 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
 
                 addAddress(address!!)
 
-               /* addAddress(address!!,onSuccess = {
-                    showProgress(false)
-                    if (it){
-                        setResult(Activity.RESULT_OK)
-                        finish()
-                    }
-                })*/
+
             }
         }
 
@@ -93,9 +90,9 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
             dbReference.child(userID)
                 .child("Address").setValue(address)
                 .addOnSuccessListener {
-                    snackBar("Address Saved")
                     showProgress(false)
-                    finish()
+                    snackBar("Address Saved")
+
                 }
                 .addOnFailureListener {
                     snackBar(it.message.toString())
