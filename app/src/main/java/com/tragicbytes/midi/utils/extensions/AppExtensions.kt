@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -822,7 +823,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
     personalizedBannerBitmap.saveAsync(file.path
     ) {
         val ref =
-            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME))
+            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)+System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
@@ -835,11 +836,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
             if (task.isSuccessful) {
                 val downloadUri = task.result
                 getSharedPrefInstance().setValue(ADS_BANNER_URL,downloadUri)
-                dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri.toString()).addOnCompleteListener {
-                    if(task.isSuccessful){
-                        onSuccess(downloadUri.toString())
-                    }
-                }
+                onSuccess(downloadUri.toString())
             } else {
                 snackBar(task.exception!!.localizedMessage);
             }
