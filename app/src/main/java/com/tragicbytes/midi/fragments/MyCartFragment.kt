@@ -6,16 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.AdDetailsModel
+import com.tragicbytes.midi.models.ProductDataNew
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
+import kotlinx.android.synthetic.main.fragment_show_my_banners.refreshLayout
 
 class MyCartFragment : BaseFragment() {
 
     var onNetworkRetry: (() -> Unit)? = null
     private var mAdsCompleteDetailsAdapter: RecyclerViewAdapter<AdDetailsModel.AdsCompleteDetails>? = null
+    private lateinit var dbReference: DatabaseReference
 
 
     override fun onCreateView(
@@ -29,6 +35,7 @@ class MyCartFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
+        dbReference = FirebaseDatabase.getInstance().reference
 
         publishedBannersList.setVerticalLayout()
         setupAdsCompleteDetailsAdapter()
@@ -70,12 +77,34 @@ class MyCartFragment : BaseFragment() {
             "rangeVal.text.toString()",
             "https://firebasestorage.googleapis.com/v0/b/midi-trio.appspot.com/o/uploads%2FNikhil%20Nishad?alt=media&token=6a9c5b61-4c04-4aaa-9121-1fa88e38e491"
         )
-        var myBannerList=ArrayList<AdDetailsModel.AdsCompleteDetails>()
-        myBannerList.add(adv)
-        myBannerList.add(adv)
-        myBannerList.add(adv)
-        myBannerList.add(adv)
-        mAdsCompleteDetailsAdapter?.addItems(myBannerList)
+        dbReference.child(
+            getSharedPrefInstance().getStringValue(
+                Constants.SharedPref.USER_ID
+            )
+        )
+            .child("AdvDetails")
+            .addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            var myBannerList=ArrayList<AdDetailsModel.AdsCompleteDetails>()
+                            dataSnapshot.children.forEach {
+                                val bannerData =
+                                    it.getValue(AdDetailsModel.AdsCompleteDetails::class.java)!!
+                                myBannerList.add(bannerData)
+                            }
+                            mAdsCompleteDetailsAdapter?.addItems(myBannerList)
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        rlNewestProduct.hide()
+                        rcvNewestProduct.hide()
+                        toast("Error Occured!")
+                    }
+                }
+
+            )
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
