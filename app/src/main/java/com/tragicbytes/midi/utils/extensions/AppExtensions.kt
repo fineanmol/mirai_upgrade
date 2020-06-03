@@ -757,8 +757,12 @@ fun setProductItem(view: View, item: ProductDataNew) {
 }
 
 fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
-    view.snackBarError("coooooool")
-    if (item.bannerImageUrl != null) view.bannerImage.loadImageFromUrl(item.bannerImageUrl)
+    if (item.bannerImageUrl != null){
+        fetchImageAsync(item.bannerImageUrl,
+        onComplete = {
+            view.bannerImage.setImageBitmap(it)
+        })
+    }
 }
 fun Activity.fetchAndStoreAddressData() {
     callApi(getRestApis(false).getAddress(), onApiSuccess = {
@@ -813,7 +817,7 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
 }
 
 @SuppressLint("MissingPermission")
-fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (Boolean) -> Unit){
+fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit){
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(file.path
     ) {
@@ -833,14 +837,14 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
                 getSharedPrefInstance().setValue(ADS_BANNER_URL,downloadUri)
                 dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("AdvDetails/image").setValue(downloadUri.toString()).addOnCompleteListener {
                     if(task.isSuccessful){
-                        onSuccess(true)
+                        onSuccess(downloadUri.toString())
                     }
                 }
             } else {
-                snackBar(task.exception!!.localizedMessage);onSuccess(false)
+                snackBar(task.exception!!.localizedMessage);
             }
         }.addOnFailureListener {
-            snackBar(it.localizedMessage);onSuccess(false)
+            snackBar(it.localizedMessage);
         }
     }
 }

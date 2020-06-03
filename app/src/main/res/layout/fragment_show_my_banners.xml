@@ -3,43 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/refreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/scrollView"
-        android:overScrollMode="never">
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/scrollView"-->
+<!--        android:overScrollMode="never">-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_standard"
-                android:padding="@dimen/spacing_large"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Your Published Banners"
-                    android:textColor="#5E5E5E"
-                    android:textSize="24dp" />
-
-                <View
-                    android:layout_width="40dp"
-                    android:layout_height="6dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="8dp"
-                    android:background="@drawable/bg_view">
-
-                </View>
-
-            </LinearLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/publishedBannersList"
                 android:layout_width="match_parent"
@@ -47,8 +19,6 @@
                 android:layout_margin="@dimen/spacing_standard"
                 android:padding="@dimen/spacing_large"/>
 
-        </LinearLayout>
-
-    </ScrollView>
+<!--    </ScrollView>-->
 
 </com.tragicbytes.midi.utils.CustomSwipeToRefresh>

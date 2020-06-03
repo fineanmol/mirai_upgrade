@@ -45,6 +45,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
+import com.tragicbytes.midi.activity.ProductDetailActivity
 import java.text.DecimalFormat
 import kotlin.random.Random
 

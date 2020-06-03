@@ -10,8 +10,6 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.AdDetailsModel
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.fragment_home.refreshLayout
-import kotlinx.android.synthetic.main.fragment_home.scrollView
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 
 class MyCartFragment : BaseFragment() {
@@ -32,14 +30,16 @@ class MyCartFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        publishedBannersList.setVerticalLayout()
         setupAdsCompleteDetailsAdapter()
 
+        loadApis()
         refreshLayout.setOnRefreshListener {
             loadApis()
             refreshLayout.isRefreshing=false
         }
         refreshLayout.viewTreeObserver.addOnScrollChangedListener {
-            refreshLayout.isEnabled = scrollView.scrollY == 0
+            refreshLayout.isEnabled =true
         }
 
     }
@@ -68,27 +68,29 @@ class MyCartFragment : BaseFragment() {
             "startTimeVal.text.toString()",
             "endTimeVal.text.toString()",
             "rangeVal.text.toString()",
-            "https://i.pinimg.com/originals/6b/20/16/6b201623685e7093fe7df8970b1d26b5.jpg"
+            "https://firebasestorage.googleapis.com/v0/b/midi-trio.appspot.com/o/uploads%2FNikhil%20Nishad?alt=media&token=6a9c5b61-4c04-4aaa-9121-1fa88e38e491"
         )
         var myBannerList=ArrayList<AdDetailsModel.AdsCompleteDetails>()
         myBannerList.add(adv)
-        snackBar("coooooool")
+        myBannerList.add(adv)
+        myBannerList.add(adv)
+        myBannerList.add(adv)
         mAdsCompleteDetailsAdapter?.addItems(myBannerList)
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
         mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item) })
         //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
-        publishedBannersList.apply {
+        /*publishedBannersList.apply {
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
             setHasFixedSize(true)
             adapter = mAdsCompleteDetailsAdapter
             rvItemAnimation()
-        }
+        }*/
         publishedBannersList.adapter = mAdsCompleteDetailsAdapter
 
-        mAdsCompleteDetailsAdapter?.onItemClick = { pos, view, item ->
+        /*mAdsCompleteDetailsAdapter?.onItemClick = { pos, view, item ->
             activity?.showBannerDetail(item)
-        }
+        }*/
     }
 }

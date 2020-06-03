@@ -33,12 +33,8 @@ import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PASSWORD
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.dialog_reset.*
-import kotlinx.android.synthetic.main.dialog_reset.edtResetEmail
-import kotlinx.android.synthetic.main.dialog_reset.view.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.btnChangePassword
 import java.io.ByteArrayOutputStream
