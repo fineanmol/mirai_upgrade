@@ -223,10 +223,9 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         submitForPaymentBtn.onClick {
 
-            /*if (validateAllValue()) {
-                snackBar("Details filled")
-            }*/
-            updateDbValues()
+            if (validateAllValue()) {
+                updateDbValues()
+            }
 
         }
 
@@ -830,7 +829,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         snackBar("Details filled")
         showProgress(true)
 
-
+        try {
             /** BannerImageToDB*/
             this@ProductDetailActivity.requestPermissions(
                 arrayOf(
@@ -843,7 +842,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                             dbReference,
                             storageReference!!,
                             myImages[0],
-                            onSuccess = {bannerImageUrl->
+                            onSuccess = { bannerImageUrl ->
                                 showProgress(false)
                                 var startDate = startDateVal.text.toString()
 //            if (startDate == "Today") startDate = LocalDate.now().toString()
@@ -851,7 +850,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                 mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
 
                                 //region When Create Ads
-                                if (mProductModel!!.name!="Custom Banner") {
+                                if (mProductModel!!.name != "Custom Banner") {
                                     if (adDetails != null) {
                                         val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                             "123",
@@ -871,8 +870,13 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                         )
 
                                         // val counter = getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_COUNTER)
-                                        dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
-                                            .child("AdvDetails").child(advCount!!).setValue(adsDetails)
+                                        dbReference.child(
+                                            getSharedPrefInstance().getStringValue(
+                                                Constants.SharedPref.USER_ID
+                                            )
+                                        )
+                                            .child("AdvDetails").child(advCount!!)
+                                            .setValue(adsDetails)
                                             .addOnSuccessListener {
                                                 snackBar("Ads Saved")
                                                 showProgress(false)
@@ -886,7 +890,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                         snackBar("Please Create ads First")
                                     }
                                 } else {
-                                    snackBar("Please Create ads First22222")
+                                    snackBar("Something went wrong!")
 
                                 }
                             }
@@ -899,7 +903,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     }
                 })
 
-
+        }
+        catch (e:Exception){
+            snackBar(e.message.toString())
+        }
     }
 
     private fun generateString(): String? {

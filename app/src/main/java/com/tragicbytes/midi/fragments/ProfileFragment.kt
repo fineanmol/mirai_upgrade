@@ -215,6 +215,7 @@ class ProfileFragment : BaseFragment() {
             RelativeLayout.LayoutParams.MATCH_PARENT,
             RelativeLayout.LayoutParams.WRAP_CONTENT
         )
+
         changePasswordDialog.findViewById<EditText>(R.id.edtResetEmail).setText(getEmail())
         changePasswordDialog.findViewById<EditText>(R.id.edtResetEmail).isEnabled=false
 
