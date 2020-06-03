@@ -20,6 +20,7 @@ import com.tragicbytes.midi.models.CategoryData
 import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.models.Testimonials
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CONTACT
 import com.tragicbytes.midi.utils.Constants.SharedPref.COPYRIGHT_TEXT
@@ -35,7 +36,6 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.util.HashMap
 
 class HomeFragment : BaseFragment() {
 
@@ -192,10 +192,24 @@ class HomeFragment : BaseFragment() {
                                 rlNewestProduct.show()
                                 rcvNewestProduct.show()
                                 var myBannerList=ArrayList<ProductDataNew>()
-//                                var myBannerList=dataSnapshot.value as ArrayList<ProductDataNew>
+                                var recentProductUsedId= getRecentItems()[0].pro_id.toString()
                                 dataSnapshot.children.forEach {
                                     val bannerData =
                                         it.getValue(ProductDataNew::class.java)!!
+                                    if((bannerData.pro_id.toString() == recentProductUsedId)){
+                                        snackBar(mRecentProductAdapter?.itemCount.toString())
+                                        /*getRecentItems().clear()
+                                        recentProduct().clear()
+                                        mRecentProductAdapter?.clearItems()
+//                                        getRecentItems().add(bannerData)
+                                        mRecentProductAdapter?.addItems(getRecentItems())
+                                        Log.d("XXXX",bannerData.pro_id.toString() +" "+ recentProductUsedId)
+                                        getSharedPrefInstance().setValue(Constants.SharedPref.KEY_RECENTS, Gson().toJson(getRecentItems()))*/
+                                        addToRecentProduct(bannerData)
+                                        mRecentProductAdapter?.addItems(getRecentItems())
+                                    }
+                                    else{
+                                    }
                                     myBannerList.add(bannerData)
                                 }
                                 mNewArrivalProductAdapter?.addItems(myBannerList)
@@ -356,7 +370,6 @@ class HomeFragment : BaseFragment() {
 
         mRecentProductAdapter?.addItems(getRecentItems())
         mRecentProductAdapter?.setModelSize(5)
-
         if (mRecentProductAdapter != null && mRecentProductAdapter!!.itemCount <= 0) rlRecentSearch.hide() else rlRecentSearch.show()
     }
 
