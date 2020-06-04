@@ -197,14 +197,6 @@ class HomeFragment : BaseFragment() {
                                     val bannerData =
                                         it.getValue(ProductDataNew::class.java)!!
                                     if((bannerData.pro_id.toString() == recentProductUsedId)){
-                                        snackBar(mRecentProductAdapter?.itemCount.toString())
-                                        /*getRecentItems().clear()
-                                        recentProduct().clear()
-                                        mRecentProductAdapter?.clearItems()
-//                                        getRecentItems().add(bannerData)
-                                        mRecentProductAdapter?.addItems(getRecentItems())
-                                        Log.d("XXXX",bannerData.pro_id.toString() +" "+ recentProductUsedId)
-                                        getSharedPrefInstance().setValue(Constants.SharedPref.KEY_RECENTS, Gson().toJson(getRecentItems()))*/
                                         addToRecentProduct(bannerData)
                                         mRecentProductAdapter?.addItems(getRecentItems())
                                     }

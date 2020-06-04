@@ -453,10 +453,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         } else {
             val encodeByte: ByteArray =
                 Base64.decode(intent?.extras?.getString(USER_UPLOAD_BANNER), Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+            val personalizedBannerBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
 
-            val personalizedBannerBitmap =
-                drawTextToBitmap(this, bitmap, adDetails)!!
             myImages.add(personalizedBannerBitmap)
             val imageAdapter = PersonalizedProductImageAdapter(myImages)
             productViewPager.adapter = null

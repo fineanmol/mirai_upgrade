@@ -15,9 +15,9 @@ import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
-import com.tragicbytes.midi.fragments.MyCartFragment
+import com.tragicbytes.midi.fragments.MyBannersFragment
 import com.tragicbytes.midi.fragments.ProfileFragment
-import com.tragicbytes.midi.fragments.WishListFragment
+import com.tragicbytes.midi.fragments.UploadBannerFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment2
 import com.tragicbytes.midi.models.CategoryData
@@ -39,8 +39,8 @@ class DashBoardActivity : AppBaseActivity() {
     //region Variables
     private var count: String = ""
     private lateinit var mHomeFragment :Fragment
-    private val mWishListFragment = WishListFragment()
-    private val mCartFragment = MyCartFragment()
+    private val mWishListFragment = UploadBannerFragment()
+    private val mCartFragment = MyBannersFragment()
     private val mProfileFragment = ProfileFragment()
     var selectedFragment: Fragment? = null
     private lateinit var dbReference: DatabaseReference

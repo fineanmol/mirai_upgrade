@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.refreshLayout
 
-class MyCartFragment : BaseFragment() {
+class MyBannersFragment : BaseFragment() {
 
     var onNetworkRetry: (() -> Unit)? = null
     private var mAdsCompleteDetailsAdapter: RecyclerViewAdapter<AdDetailsModel.AdsCompleteDetails>? = null

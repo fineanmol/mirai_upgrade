@@ -17,16 +17,9 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
-import com.tragicbytes.midi.base.BaseRecyclerAdapter
-import com.tragicbytes.midi.databinding.ItemWishlistBinding
-import com.tragicbytes.midi.models.RequestModel
-import com.tragicbytes.midi.models.WishListData
 import com.tragicbytes.midi.utils.Constants
-import com.tragicbytes.midi.utils.Constants.KeyIntent.PRODUCT_ID
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.activity_advertisement_form.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.dots
 import kotlinx.android.synthetic.main.fragment_home.homeSlider
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
@@ -34,12 +27,10 @@ import kotlinx.android.synthetic.main.fragment_home.rl_head
 import kotlinx.android.synthetic.main.fragment_home.scrollView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_upload_my_banner.*
-import kotlinx.android.synthetic.main.fragment_wishlist.*
-import kotlinx.android.synthetic.main.layout_nodata.*
 import java.io.ByteArrayOutputStream
 import java.io.File
 
-class WishListFragment : BaseFragment() {
+class UploadBannerFragment : BaseFragment() {
     private var imgLayoutParams: LinearLayout.LayoutParams? = null
     private var encodedImage: String? = null
 
@@ -75,7 +66,7 @@ class WishListFragment : BaseFragment() {
                             .setGuidelines(CropImageView.Guidelines.OFF)
                             .setRequestedSize(300,300)
                             .setOutputCompressQuality(40)
-                            .start(context, this@WishListFragment)
+                            .start(context, this@UploadBannerFragment)
 
                     } else {
                         activity!!.showPermissionAlert(this)
@@ -175,6 +166,10 @@ class WishListFragment : BaseFragment() {
                 File(path)
             )
             CropImage.activity(uri)
+                .setMaxCropResultSize(970,250)
+                .setAspectRatio(16,9)
+                .setFixAspectRatio(true)
+                .setRequestedSize(970, 250)
                 .setOutputCompressQuality(40)
                 .start(activity!!)
         }
@@ -188,5 +183,6 @@ class WishListFragment : BaseFragment() {
         return Base64.encodeToString(b, Base64.DEFAULT)
 
     }
+
 
 }
