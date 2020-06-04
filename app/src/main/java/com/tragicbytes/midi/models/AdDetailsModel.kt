@@ -9,19 +9,14 @@ class AdDetailsModel {
         var adDesc: String,
         var adTagline: String,
         var adBrandName: String,
-        var logoUrl: String = "drawable/ic_profile.png"
+        var logoUrl: String
     ) : Serializable
 
 
 
     data class AdsCompleteDetails(
 
-        var adId:String="",
-        var adName: String="",
-        var adDesc: String="",
-        var adTagline: String="",
-        var adBrandName: String="",
-        var logoUrl: String ="drawable/ic_profile.png",
+        var adDetails: AdDetails? =null,
         var gender:String="",
         var ageGroup:String="",
         var startDate:String="",

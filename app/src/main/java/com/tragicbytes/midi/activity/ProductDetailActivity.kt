@@ -32,8 +32,6 @@ import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
-import com.tragicbytes.midi.utils.Constants.SharedPref.ADS_BANNER_URL
-import com.tragicbytes.midi.utils.Constants.SharedPref.ADS_COUNTER
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
@@ -710,7 +708,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
                 adDetails = returnString as AdDetailsModel.AdDetails
-                adDetails!!.logoUrl = getSharedPrefInstance().getStringValue(ADV_LOGO)
                 myImages.clear()
                 fetchImageAsync(mProductModel!!.full.toString()) {
                     if (it != null) {
@@ -845,18 +842,15 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                 var startDate = startDateVal.text.toString()
 //            if (startDate == "Today") startDate = LocalDate.now().toString()
 
-                                mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
+                                if(intent.getSerializableExtra(DATA)!=null){
+                                    mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
+                                }
 
                                 //region When Create Ads
                                 if (mProductModel!!.name != "Custom Banner") {
                                     if (adDetails != null) {
                                         val adsDetails = AdDetailsModel.AdsCompleteDetails(
-                                            "123",
-                                            adDetails!!.adName,
-                                            adDetails!!.adDesc,
-                                            adDetails!!.adTagline,
-                                            adDetails!!.adBrandName,
-                                            "",
+                                            adDetails,
                                             adsGender,
                                             adsAgeGroup,
                                             startDate,
@@ -866,30 +860,23 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                             "₹" + rangeVal.textToString(),
                                             bannerImageUrl
                                         )
-
-                                        // val counter = getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_COUNTER)
-                                        dbReference.child(
-                                            getSharedPrefInstance().getStringValue(
-                                                Constants.SharedPref.USER_ID
-                                            )
-                                        )
-                                            .child("AdvDetails").child(advCount!!)
-                                            .setValue(adsDetails)
-                                            .addOnSuccessListener {
-                                                snackBar("Ads Saved")
-                                                showProgress(false)
-                                            }
-                                            .addOnFailureListener {
-                                                snackBar(it.message.toString())
-                                                showProgress(false)
-
-                                            }
+                                        saveBannerDetailsToDB(adsDetails)
                                     } else {
                                         snackBar("Please Create ads First")
                                     }
                                 } else {
-                                    snackBar("Something went wrong!")
-
+                                    val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                                        adDetails,
+                                        adsGender,
+                                        adsAgeGroup,
+                                        startDate,
+                                        endDateVal.text.toString(),
+                                        startTimeVal.text.toString(),
+                                        endTimeVal.text.toString(),
+                                        "₹" + rangeVal.textToString(),
+                                        bannerImageUrl
+                                    )
+                                    saveBannerDetailsToDB(adsDetails)
                                 }
                             }
                         )
@@ -905,6 +892,26 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         catch (e:Exception){
             snackBar(e.message.toString())
         }
+    }
+
+    private fun saveBannerDetailsToDB(adsDetails: AdDetailsModel.AdsCompleteDetails) {
+        dbReference.child(
+            getSharedPrefInstance().getStringValue(
+                Constants.SharedPref.USER_ID
+            )
+        )
+            .child("AdvDetails").child(advCount!!)
+            .setValue(adsDetails)
+            .addOnSuccessListener {
+                snackBar("Ads Saved")
+                showProgress(false)
+            }
+            .addOnFailureListener {
+                snackBar(it.message.toString())
+                showProgress(false)
+
+            }
+
     }
 
     private fun generateString(): String? {

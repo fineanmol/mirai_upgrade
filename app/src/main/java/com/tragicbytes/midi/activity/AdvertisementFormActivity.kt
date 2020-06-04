@@ -57,6 +57,14 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     imageAsBytes.size
                 )
             )
+            encodedImage=getSharedPrefInstance().getStringValue(ADV_LOGO)
+        }
+        else{
+            var defaultImageBitmap=BitmapFactory.decodeResource(applicationContext.resources,
+                R.drawable.ic_profile)
+            ivAdsImage.setImageBitmap(defaultImageBitmap)
+            encodedImage=encodeImage(defaultImageBitmap)
+
         }
         if (getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()) {
             editAdsName.setText(getSharedPrefInstance().getStringValue(ADV_NAME))
@@ -124,7 +132,8 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     editAdsName.textToString(),
                     edtAdDescription.textToString(),
                     edtAdTagline.textToString(),
-                    edtAdBrandName.textToString()
+                    edtAdBrandName.textToString(),
+                    encodedImage.toString()
                 )
 
                 addAdvertisement(adDetails,

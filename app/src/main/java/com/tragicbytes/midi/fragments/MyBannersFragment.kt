@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.AdDetailsModel
-import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -61,7 +58,7 @@ class MyBannersFragment : BaseFragment() {
     }
 
     private fun loadImages(){
-        var adv=AdDetailsModel.AdsCompleteDetails(
+        /*var adv=AdDetailsModel.AdsCompleteDetails(
             "123",
             "adDetails!!.adName",
             "adDetails!!.adDesc",
@@ -76,7 +73,7 @@ class MyBannersFragment : BaseFragment() {
             "endTimeVal.text.toString()",
             "rangeVal.text.toString()",
             "https://firebasestorage.googleapis.com/v0/b/midi-trio.appspot.com/o/uploads%2FNikhil%20Nishad?alt=media&token=6a9c5b61-4c04-4aaa-9121-1fa88e38e491"
-        )
+        )*/
         dbReference.child(
             getSharedPrefInstance().getStringValue(
                 Constants.SharedPref.USER_ID
