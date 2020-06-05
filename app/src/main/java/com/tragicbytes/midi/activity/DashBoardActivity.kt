@@ -52,6 +52,8 @@ class DashBoardActivity : AppBaseActivity() {
     val user = FirebaseAuth.getInstance().currentUser!!
     //endregion
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -301,7 +303,7 @@ class DashBoardActivity : AppBaseActivity() {
         selectedFragment = aFragment
     }
 
-    fun loadHomeFragment() {
+    private fun loadHomeFragment() {
         enable(ivHome)
         if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
 //        loadFragment(mHomeFragment)
