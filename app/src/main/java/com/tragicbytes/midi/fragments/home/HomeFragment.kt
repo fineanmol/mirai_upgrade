@@ -16,10 +16,7 @@ import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.base.BaseRecyclerAdapter
 import com.tragicbytes.midi.databinding.ItemCategoryBinding
 import com.tragicbytes.midi.fragments.BaseFragment
-import com.tragicbytes.midi.models.CategoryData
-import com.tragicbytes.midi.models.ProductDataNew
-import com.tragicbytes.midi.models.RequestModel
-import com.tragicbytes.midi.models.Testimonials
+import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CONTACT
@@ -119,18 +116,26 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun getSliders() {
-        val images = getSlideImagesFromPref()
+//        val images = getSlideImagesFromPref()
+        val images=ArrayList<SliderImagesResponse>()
+        var sliderImage1=SliderImagesResponse("","",R.drawable.upload_image_banner)
+        var sliderImage2=SliderImagesResponse("","",R.drawable.upload_image_banner)
+        images.add(sliderImage1)
+        images.add(sliderImage2)
+
         val sliderImagesAdapter = HomeSliderAdapter(activity!!, images)
         homeSlider.adapter = sliderImagesAdapter
         dots.attachViewPager(homeSlider)
         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+        sliderImagesAdapter.notifyDataSetChanged()
+
         if (images.isNotEmpty()) {
             rl_head.show()
         } else {
             rl_head.hide()
         }
 
-        callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
+        /*callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
             if (activity == null) return@callApi
             getSharedPrefInstance().setValue(SLIDER_IMAGES_DATA, Gson().toJson(res))
             images.clear()
@@ -150,7 +155,7 @@ class HomeFragment : BaseFragment() {
             if (activity == null) return@callApi
             activity?.noInternetSnackBar()
             rl_head.hide()
-        })
+        })*/
     }
 
     private fun listAllProducts() {

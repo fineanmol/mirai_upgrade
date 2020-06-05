@@ -17,6 +17,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
+import com.tragicbytes.midi.models.SliderImagesResponse
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
@@ -86,38 +87,23 @@ class UploadBannerFragment : BaseFragment() {
     }
 
     private fun getSliders() {
-        val images = getSlideImagesFromPref()
+        val images=ArrayList<SliderImagesResponse>()
+        var sliderImage1= SliderImagesResponse("","",R.drawable.upload_image_banner)
+        var sliderImage2= SliderImagesResponse("","",R.drawable.upload_image_banner)
+        images.add(sliderImage1)
+        images.add(sliderImage2)
+
         val sliderImagesAdapter = HomeSliderAdapter(activity!!, images)
         homeSlider.adapter = sliderImagesAdapter
         dots.attachViewPager(homeSlider)
         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+        sliderImagesAdapter.notifyDataSetChanged()
+
         if (images.isNotEmpty()) {
             rl_head.show()
         } else {
             rl_head.hide()
         }
-
-        callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
-            if (activity == null) return@callApi
-            getSharedPrefInstance().setValue(Constants.SharedPref.SLIDER_IMAGES_DATA, Gson().toJson(res))
-            images.clear()
-            images.addAll(getSlideImagesFromPref())
-            dots.attachViewPager(homeSlider)
-            dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-            sliderImagesAdapter.notifyDataSetChanged()
-            if (images.isNotEmpty()) {
-                rl_head.show()
-            } else {
-                rl_head.hide()
-            }
-        }, onApiError = {
-            if (activity == null) return@callApi
-            rl_head.hide()
-        }, onNetworkError = {
-            if (activity == null) return@callApi
-            activity?.noInternetSnackBar()
-            rl_head.hide()
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -110,7 +110,7 @@ data class Billing(
     val state: String
 )
 
-data class SliderImagesResponse(val image: String, val url: String)
+data class SliderImagesResponse(val image: String="", val url: String="",val drawableImage:Int=0)
 
 data class CartResponse(
     val cart_id: String,

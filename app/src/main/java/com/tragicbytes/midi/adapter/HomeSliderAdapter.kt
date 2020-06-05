@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.SliderImagesResponse
+import com.tragicbytes.midi.utils.extensions.loadImageFromDrawable
 import com.tragicbytes.midi.utils.extensions.loadImageFromUrl
 import com.tragicbytes.midi.utils.extensions.onClick
 import com.tragicbytes.midi.utils.extensions.openCustomTab
@@ -18,7 +19,12 @@ class HomeSliderAdapter(var context: Context, private var mImg: ArrayList<Slider
     override fun instantiateItem(parent: ViewGroup, position: Int): Any {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_slider, parent, false)
 
-        view.imgSlider.loadImageFromUrl(mImg[position].image)
+        if(mImg[position].image!=null){
+            view.imgSlider.loadImageFromUrl(mImg[position].image)
+        }
+        if (mImg[position].drawableImage!=null){
+            view.imgSlider.loadImageFromDrawable(mImg[position].drawableImage)
+        }
         view.imgSlider.onClick { if (mImg[position].url.isNotEmpty()) context.openCustomTab(mImg[position].url) }
 
         parent.addView(view)
