@@ -61,61 +61,13 @@
                 android:orientation="horizontal"
                 android:visibility="gone">
 
-               <!-- <LinearLayout
-                    android:id="@+id/llOrders"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/spacing_medium"
-                    android:paddingBottom="@dimen/spacing_medium">
-
-                    <TextView
-                        android:id="@+id/tvOrderCount"
-                        style="@style/SidebarLabel"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        style="@style/SidebarLabel"
-                        android:layout_marginTop="@dimen/spacing_control"
-                        android:gravity="center_horizontal"
-                        android:text="@string/lbl_my_order" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/llWishlistData"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/spacing_medium"
-                    android:paddingBottom="@dimen/spacing_medium">
-
-                    <TextView
-                        android:id="@+id/tvWishListCount"
-                        style="@style/SidebarLabel"
-                        android:gravity="center_horizontal"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        style="@style/SidebarLabel"
-                        android:layout_marginTop="@dimen/spacing_control"
-                        android:gravity="center_horizontal"
-                        android:text="@string/lbl_wish_list" />
-
-                </LinearLayout>-->
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <!--<androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCategory"
                 style="@style/RecycleView"
                 android:layout_marginTop="@dimen/spacing_standard"
-                android:layout_marginBottom="@dimen/spacing_standard" />
+                android:layout_marginBottom="@dimen/spacing_standard" />-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -132,21 +84,29 @@
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
                 <TextView
-                    android:id="@+id/new_Ads"
+                    android:id="@+id/adsTextBtn"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_create"
                     android:gravity="center_vertical"
-                    android:text="Create Ads" />
+                    android:paddingStart="@dimen/_46sdp"
+                    android:text="Ads from Text" />
                 <TextView
+                    android:id="@+id/adsImagesBtn"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_settings"
                     android:gravity="center_vertical"
-                    android:text="Upload Ads" />
+                    android:paddingStart="@dimen/_46sdp"
+                    android:text="Ads from Images" />
                 <TextView
+                    android:id="@+id/paidAdsBtn"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_settings"
                     android:gravity="center_vertical"
-                    android:text="Dark Mode" />
+                    android:paddingStart="@dimen/_46sdp"
+                    android:text="Created Ads" />
+                <TextView
+                    android:id="@+id/profileBtn"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_46sdp"
+                    android:text="Profile" />
 
                 <View
                     android:layout_width="match_parent"
@@ -186,19 +146,14 @@
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
-<!--
-                <TextView
-                    android:id="@+id/tvFaq"
-                    style="@style/SidebarLabel.SidebarOption"
-                    android:paddingStart="@dimen/_46sdp"
-                    android:text="@string/lbl_faq" />-->
+
 
                 <TextView
                     android:id="@+id/tvHelp"
                     style="@style/SidebarLabel.SidebarOption"
                     android:paddingStart="@dimen/_46sdp"
                     android:text="@string/lbl_help"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvContactus"

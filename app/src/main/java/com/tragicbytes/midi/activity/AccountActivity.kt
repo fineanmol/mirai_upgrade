@@ -9,7 +9,8 @@ import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class AccountActivity : AppBaseActivity() {
+
+class AccountActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
     val user = FirebaseAuth.getInstance().currentUser!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +30,7 @@ class AccountActivity : AppBaseActivity() {
                 onPositiveClick = { dialog, i ->
                     clearLoginPref()
                     FirebaseAuth.getInstance().signOut()
-                    launchActivity<SignInUpActivity>()
+                    launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
                 },
                 onNegativeClick = { dialog, i ->
                     dialog.dismiss()
@@ -37,8 +38,8 @@ class AccountActivity : AppBaseActivity() {
             dialog.show()
         }
 
-        ivProfileImage.onClick { launchActivity<EditProfileActivity>() }
-        tvHelpCenter.onClick { launchActivity<HelpActivity>() }
+        ivProfileImage.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.EditProfileActivity>() }
+        tvHelpCenter.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.HelpActivity>() }
         btnVerify.onClick {
             /*Send verification email*/
             if (!user.isEmailVerified) {
@@ -62,9 +63,9 @@ class AccountActivity : AppBaseActivity() {
         }
         tvAddressManager.onClick {
             if (getAddressList().size == 0) {
-                launchActivity<AddAddressActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AddAddressActivity>()
             } else {
-                launchActivity<AddressManagerActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AddressManagerActivity>()
             }
         }
         /*   tvWishlist.onClick {

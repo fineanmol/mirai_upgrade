@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/background_color"
-    tools:context=".activity.SettingActivity">
+    tools:context="nightowl.tragicbytes.midi.activity.SettingActivity">
     <include layout="@layout/toolbar"/>
 
     <LinearLayout
@@ -166,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:layout_marginEnd="@dimen/spacing_standard_new"
                     android:layout_gravity="center_vertical"
                     android:track="@drawable/custom_switch"

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.spinner_language.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.system.exitProcess
 
-class SettingActivity : AppBaseActivity() {
+class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
     private lateinit var lan: String
     private var codes = arrayOf(
         "en",
@@ -60,20 +60,22 @@ class SettingActivity : AppBaseActivity() {
         setToolbar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        lan = WooBoxApp.language
+        lan = _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language
         val languages = resources.getStringArray(R.array.language)
-        switchNightMode.isChecked = WooBoxApp.appTheme == Constants.THEME.DARK
+        /** to Enable dark mode uncomment below line */
+      //  switchNightMode.isChecked = WooBoxApp.appTheme == Constants.THEME.DARK
 
 
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_launguage_selection)
-        val languageAdapter = RecyclerViewAdapter<String>(
-            R.layout.spinner_language,
-            onBind = { view: View, s: String, i: Int ->
+        val languageAdapter =
+            _root_ide_package_.nightowl.tragicbytes.midi.adapter.RecyclerViewAdapter<String>(
+                R.layout.spinner_language,
+                onBind = { view: View, s: String, i: Int ->
 
-                view.ivLogo.setImageResource(mCountryImg[i])
-                view.tvName.text = languages[i]
-            })
+                    view.ivLogo.setImageResource(mCountryImg[i])
+                    view.tvName.text = languages[i]
+                })
         languageAdapter.onItemClick = { i: Int, view: View, s: String ->
             /** for multi language change below mCountryImg[0],languages[0] to mCountryImg[i],languages[i] */
 
@@ -107,11 +109,17 @@ class SettingActivity : AppBaseActivity() {
             }
         }
         switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            WooBoxApp.getAppInstance().enableNotification(isChecked)
+            snackBar("Notifications Coming Soon",Snackbar.LENGTH_SHORT)
+
+            /** to Enable Notifications uncomment below line */
+            /*WooBoxApp.getAppInstance().enableNotification(isChecked)*/
         }
         switchNightMode.setOnCheckedChangeListener { _, isChecked ->
-            WooBoxApp.changeAppTheme(isChecked)
-            switchToDarkMode(isChecked)
+            snackBar("Dark Mode Coming Soon",Snackbar.LENGTH_SHORT)
+
+            /** to Enable dark mode uncomment below two lines */
+           /* WooBoxApp.changeAppTheme(isChecked)
+            switchToDarkMode(isChecked)*/
         }
         Handler().postDelayed({ mIsSelectedByUser = true }, 1000)
 
@@ -119,8 +127,8 @@ class SettingActivity : AppBaseActivity() {
 
     override fun onBackPressed() {
 
-        if (lan != WooBoxApp.language) {
-            launchActivityWithNewTask<DashBoardActivity>()
+        if (lan != _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language) {
+            launchActivityWithNewTask<_root_ide_package_.nightowl.tragicbytes.midi.activity.DashBoardActivity>()
             exitProcess(0)
         } else {
             super.onBackPressed()
@@ -128,7 +136,7 @@ class SettingActivity : AppBaseActivity() {
     }
 
     private fun setNewLocale(language: String) {
-        WooBoxApp.changeLanguage(language)
+        _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.changeLanguage(language)
         Log.e("lan", language)
         if (lan != language) {
             recreate()
@@ -136,5 +144,3 @@ class SettingActivity : AppBaseActivity() {
         }
     }
 }
-
-
