@@ -401,10 +401,6 @@ fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetailsMode
         tv3.textSize=30F
         tv3.gravity=Gravity.CENTER
         val tv4 = TextView(mContext)
-        tv4.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT/2,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        )
         tv4.text = adDetails.adDesc
         tv4.textSize=20F
         tv4.gravity=Gravity.CENTER
