@@ -58,6 +58,59 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260185012851:android:73424d85092a718c728806",
+        "android_client_info": {
+          "package_name": "nightowl.developers.midi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260185012851-tr7re076ji6uv4s1tf9j45rsm9hf6fb6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nightowl.developers.midi",
+            "certificate_hash": "91b7f93c3a32bbe916e8af4507a95b746c6f578f"
+          }
+        },
+        {
+          "client_id": "260185012851-1vsaisckrrigoa0k0dlfk52uuebrp78d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nightowl.developers.midi",
+            "certificate_hash": "13d839a53d34eb5c3b6b81af86d0e3fd39d48513"
+          }
+        },
+        {
+          "client_id": "260185012851-elqrnlee5bq64d0ns2lane42pgha1fgu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nightowl.developers.midi",
+            "certificate_hash": "75b4fd31c3293ed2e33964f9470b137090ea4072"
+          }
+        },
+        {
+          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

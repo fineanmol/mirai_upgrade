@@ -197,13 +197,16 @@ class HomeFragment : BaseFragment() {
                                 rlNewestProduct.show()
                                 rcvNewestProduct.show()
                                 var myBannerList=ArrayList<ProductDataNew>()
-                                var recentProductUsedId= getRecentItems()[0].pro_id.toString()
+
                                 dataSnapshot.children.forEach {
                                     val bannerData =
                                         it.getValue(ProductDataNew::class.java)!!
-                                    if((bannerData.pro_id.toString() == recentProductUsedId)){
-                                        addToRecentProduct(bannerData)
-                                        mRecentProductAdapter?.addItems(getRecentItems())
+                                    if(getRecentItems().size!=0){
+                                        var recentProductUsedId= getRecentItems()[0].pro_id.toString()
+                                        if((bannerData.pro_id.toString() == recentProductUsedId)){
+                                            addToRecentProduct(bannerData)
+                                            mRecentProductAdapter?.addItems(getRecentItems())
+                                        }
                                     }
                                     else{
                                     }
