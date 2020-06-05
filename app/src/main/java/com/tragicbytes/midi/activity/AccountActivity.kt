@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class AccountActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
+class AccountActivity : AppBaseActivity() {
     val user = FirebaseAuth.getInstance().currentUser!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,31 +26,31 @@ class AccountActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
 
         btnSignOut.onClick {
             val dialog = getAlertDialog(
-                getString(R.string.lbl_logout_confirmation),
-                onPositiveClick = { dialog, i ->
-                    clearLoginPref()
-                    FirebaseAuth.getInstance().signOut()
-                    launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
-                },
-                onNegativeClick = { dialog, i ->
-                    dialog.dismiss()
-                })
+                    getString(R.string.lbl_logout_confirmation),
+                    onPositiveClick = { dialog, i ->
+                        clearLoginPref()
+                        FirebaseAuth.getInstance().signOut()
+                        launchActivity<SignInUpActivity>()
+                    },
+                    onNegativeClick = { dialog, i ->
+                        dialog.dismiss()
+                    })
             dialog.show()
         }
 
-        ivProfileImage.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.EditProfileActivity>() }
-        tvHelpCenter.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.HelpActivity>() }
+        ivProfileImage.onClick { launchActivity<EditProfileActivity>() }
+        tvHelpCenter.onClick { launchActivity<HelpActivity>() }
         btnVerify.onClick {
             /*Send verification email*/
             if (!user.isEmailVerified) {
 
                 user.sendEmailVerification()
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) snackBar(
-                            "Verification mail sent to " + user.email.toString(),
-                            Snackbar.LENGTH_SHORT
-                        )
-                    }
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) snackBar(
+                                    "Verification mail sent to " + user.email.toString(),
+                                    Snackbar.LENGTH_SHORT
+                            )
+                        }
                 user.reload()
             }
             /*Send verification email End*/
@@ -63,9 +63,9 @@ class AccountActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
         }
         tvAddressManager.onClick {
             if (getAddressList().size == 0) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AddAddressActivity>()
+                launchActivity<AddAddressActivity>()
             } else {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AddressManagerActivity>()
+                launchActivity<AddressManagerActivity>()
             }
         }
         /*   tvWishlist.onClick {

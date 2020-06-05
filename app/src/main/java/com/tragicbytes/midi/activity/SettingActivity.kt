@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.spinner_language.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.system.exitProcess
 
-class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
+class SettingActivity :AppBaseActivity() {
     private lateinit var lan: String
     private var codes = arrayOf(
         "en",
@@ -60,7 +60,7 @@ class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
         setToolbar(toolbar)
         toolbar.setNavigationOnClickListener { onBackPressed() }
 
-        lan = _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language
+        lan =WooBoxApp.language
         val languages = resources.getStringArray(R.array.language)
         /** to Enable dark mode uncomment below line */
       //  switchNightMode.isChecked = WooBoxApp.appTheme == Constants.THEME.DARK
@@ -69,7 +69,7 @@ class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_launguage_selection)
         val languageAdapter =
-            _root_ide_package_.nightowl.tragicbytes.midi.adapter.RecyclerViewAdapter<String>(
+           RecyclerViewAdapter<String>(
                 R.layout.spinner_language,
                 onBind = { view: View, s: String, i: Int ->
 
@@ -127,8 +127,8 @@ class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
 
     override fun onBackPressed() {
 
-        if (lan != _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language) {
-            launchActivityWithNewTask<_root_ide_package_.nightowl.tragicbytes.midi.activity.DashBoardActivity>()
+        if (lan != WooBoxApp.language) {
+            launchActivityWithNewTask<DashBoardActivity>()
             exitProcess(0)
         } else {
             super.onBackPressed()
@@ -136,7 +136,7 @@ class SettingActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActi
     }
 
     private fun setNewLocale(language: String) {
-        _root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.changeLanguage(language)
+        WooBoxApp.changeLanguage(language)
         Log.e("lan", language)
         if (lan != language) {
             recreate()

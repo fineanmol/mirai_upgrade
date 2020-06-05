@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_email.*
 import kotlinx.android.synthetic.main.menu_cart.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class EmailActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
+class EmailActivity : AppBaseActivity() {
     private lateinit var mMenuCart: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +49,7 @@ class EmailActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivi
         mMenuCart.ivCart.setColorFilter(this.color(R.color.textColorPrimary))
     //    setCartCount()
         menuWishItem.actionView.onClick {
-            launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.MyCartActivity> { }
+            launchActivity<MyCartActivity> { }
         }
         return super.onCreateOptionsMenu(menu)
     }

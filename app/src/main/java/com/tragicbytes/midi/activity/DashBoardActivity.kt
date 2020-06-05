@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.menu_cart.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
+class DashBoardActivity : AppBaseActivity() {
 
     private var selectedDashboard: Int=0
     //region Variables
@@ -86,7 +86,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
             }
             /*onAction(ORDER_COUNT_CHANGE) { setOrderCount() }*/
             onAction(PROFILE_UPDATE) { setUserInfo() }
-          /*  onAction(WISHLIST_UPDATE) { setWishCount() }*/
+            /*  onAction(WISHLIST_UPDATE) { setWishCount() }*/
         }
         setUserInfo(); tvVersionCode.text = String.format("%S %S", "V", getAppVersionName())
     }
@@ -108,9 +108,9 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
     private fun setListener() {
         civProfile.onClick {
             if (isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.EditProfileActivity>()
+                launchActivity<EditProfileActivity>()
             } else {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
+                launchActivity<SignInUpActivity>()
             }
             closeDrawer()
         }
@@ -123,7 +123,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
 
         llWishList.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivWishList)
@@ -132,7 +132,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
         }
         adsImagesBtn.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             loadWishListFragment()
@@ -142,7 +142,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
 
         llCart.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivCart)
@@ -156,7 +156,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
 
         llProfile.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivProfile)
@@ -165,26 +165,26 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
         }
         tvAccount.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
+                launchActivity<SignInUpActivity>()
             } else {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AccountActivity>(Constants.RequestCode.ACCOUNT)
+                launchActivity<AccountActivity>(Constants.RequestCode.ACCOUNT)
             }
             closeDrawer()
         }
         tvSettings.onClick {
-            launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
+            launchActivity<SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
             closeDrawer()
         }
-       adsTextBtn.onClick {
-           if (!isLoggedIn()) {
-               launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
-           }
-           closeDrawer()
-           loadHomeFragment()
-       }
+        adsTextBtn.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<SignInUpActivity>(); return@onClick
+            }
+            closeDrawer()
+            loadHomeFragment()
+        }
         paidAdsBtn.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivCart)
@@ -194,7 +194,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
         }
         profileBtn.onClick {
             if (!isLoggedIn()) {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+                launchActivity<SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivProfile)
@@ -202,9 +202,9 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
             title = getString(R.string.profile)
 
         }
-        tvHelp.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.HelpActivity>(); closeDrawer() }
-        tvContactus.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.ContactUsActivity>(); closeDrawer() }
-        tvAbout.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AboutActivity>(); closeDrawer() }
+        tvHelp.onClick { launchActivity<HelpActivity>(); closeDrawer() }
+        tvContactus.onClick { launchActivity<ContactUsActivity>(); closeDrawer() }
+        tvAbout.onClick { launchActivity<AboutActivity>(); closeDrawer() }
         ivCloseDrawer.onClick { closeDrawer() }
         tvLogout.onClick {
             if (isLoggedIn()) {
@@ -213,7 +213,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
                     onPositiveClick = { _, _ ->
                         FirebaseAuth.getInstance().signOut()
                         clearLoginPref()
-                        launchActivityWithNewTask<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
+                        launchActivityWithNewTask<SignInUpActivity>()
 
                         //recreate()
                     },
@@ -223,7 +223,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
                 dialog.show()
                 closeDrawer()
             } else {
-                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
+                launchActivity<SignInUpActivity>()
             }
         }
 
@@ -246,7 +246,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
     private fun setCartCountFromPref() {
         count = getCartCount()
         tvNotificationCount.text = count
-      //  showCartCount()
+        //  showCartCount()
         if (mCartFragment.isVisible) tvNotificationCount.hide()
     }
 
@@ -266,25 +266,25 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
     }
 
     fun setDrawerCategory(it: ArrayList<CategoryData>) {
-      /*  rvCategory.create(
-            it.size,
-            R.layout.item_navigation_category,
-            it,
-            getVerticalLayout(false),
-            onBindView = { item, position ->
-                tvCategory.text = item.name.getHtmlString()
-                if (item.image != null) {
-                    ivCat.loadImageFromUrl(
-                        item.image,
-                        aPlaceHolderImage = R.drawable.cat_placeholder
-                    )
-                }
-            },
-            itemClick = { item, position ->
-                closeDrawer()
-                launchActivity<SubCategoryActivity> { putExtra(DATA, item) }
-            })
-        rvCategory.isNestedScrollingEnabled = false*/
+        /*  rvCategory.create(
+              it.size,
+              R.layout.item_navigation_category,
+              it,
+              getVerticalLayout(false),
+              onBindView = { item, position ->
+                  tvCategory.text = item.name.getHtmlString()
+                  if (item.image != null) {
+                      ivCat.loadImageFromUrl(
+                          item.image,
+                          aPlaceHolderImage = R.drawable.cat_placeholder
+                      )
+                  }
+              },
+              itemClick = { item, position ->
+                  closeDrawer()
+                  launchActivity<SubCategoryActivity> { putExtra(DATA, item) }
+              })
+          rvCategory.isNestedScrollingEnabled = false*/
     }
 
     private fun loadFragment(aFragment: Fragment) {
@@ -326,15 +326,15 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 21) {
-            if (resultCode == Activity.RESULT_OK && requestCode == Constants.RequestCode.ACCOUNT) {
-              //  loadWishListFragment()
+            if (resultCode == RESULT_OK && requestCode == Constants.RequestCode.ACCOUNT) {
+                //  loadWishListFragment()
             }
         }
     }
 
     private fun enable(aImageView: ImageView?) {
         disableAll()
-       // showCartCount()
+        // showCartCount()
         aImageView?.background = getDrawable(R.drawable.bg_circle_primary_light)
         aImageView?.applyColorFilter(color(R.color.colorPrimary))
     }
@@ -355,7 +355,7 @@ class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseAc
         val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
-                if (_root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language == "ar") {
+                if (WooBoxApp.language == "ar") {
                     main.translationX = -slideOffset * drawerView.width
                 } else {
                     main.translationX = slideOffset * drawerView.width
