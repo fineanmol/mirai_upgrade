@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_email.*
 import kotlinx.android.synthetic.main.menu_cart.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class EmailActivity : AppBaseActivity() {
+class EmailActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
     private lateinit var mMenuCart: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +34,7 @@ class EmailActivity : AppBaseActivity() {
 
         BroadcastReceiverExt(this) {
             onAction(CART_COUNT_CHANGE) {
-                setCartCount()
+             //   setCartCount()
             }
         }
     }
@@ -43,26 +43,17 @@ class EmailActivity : AppBaseActivity() {
         menuInflater.inflate(R.menu.menu_dashboard, menu)
         val menuWishItem: MenuItem = menu!!.findItem(R.id.action_cart)
         val menuSearch: MenuItem = menu.findItem(R.id.action_search)
-        menuWishItem.isVisible = true
+        menuWishItem.isVisible = false
         menuSearch.isVisible = false
         mMenuCart = menuWishItem.actionView
         mMenuCart.ivCart.setColorFilter(this.color(R.color.textColorPrimary))
-        setCartCount()
+    //    setCartCount()
         menuWishItem.actionView.onClick {
-            launchActivity<MyCartActivity> { }
+            launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.MyCartActivity> { }
         }
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun setCartCount() {
-        val count = getCartCount()
-        mMenuCart.tvNotificationCount.text = count
-        if (count.checkIsEmpty()) {
-            mMenuCart.tvNotificationCount.hide()
-        } else {
-            mMenuCart.tvNotificationCount.show()
-        }
-    }
 
     private fun validate(): Boolean {
         return when {
