@@ -317,11 +317,12 @@ class DashBoardActivity : AppBaseActivity() {
 
     //region Common
     override fun onBackPressed() {
-        when {
+        super.onBackPressed()
+        /*when {
             drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
             !mHomeFragment.isVisible -> loadHomeFragment()
             else -> super.onBackPressed()
-        }
+        }*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
