@@ -41,6 +41,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -96,9 +97,11 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }
 
         dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
-            .child("AdvDetails").addValueEventListener(object :ValueEventListener{
+            .child("AdvDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
-                    advCount=p0.childrenCount.toString()
+                    p0.children.forEach {
+                        advCount= (it.key!!.toInt()+1).toString()
+                    }
                 }
 
                 override fun onCancelled(p0: DatabaseError) {
