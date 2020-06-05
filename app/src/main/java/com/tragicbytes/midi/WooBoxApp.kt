@@ -18,6 +18,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 class WooBoxApp : MultiDexApplication() {
 
+    private var userUploadImageEncoded: String? = null
+
+    fun getUserUploadImageEncoded(): String? {
+        return userUploadImageEncoded
+    }
+
+    fun setUserUploadImageEncoded(userUploadImageEncoded: String?) {
+        this.userUploadImageEncoded = userUploadImageEncoded
+    }
     override fun onCreate() {
         super.onCreate()
         appInstance = this

@@ -8,28 +8,25 @@ import android.os.Bundle
 import android.util.Base64
 import android.view.*
 import android.widget.LinearLayout
-import androidx.core.content.FileProvider
-import com.google.gson.Gson
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.WooBoxApp
+import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.models.SliderImagesResponse
 import com.tragicbytes.midi.utils.Constants
-import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.dots
 import kotlinx.android.synthetic.main.fragment_home.homeSlider
 import kotlinx.android.synthetic.main.fragment_home.refreshLayout
 import kotlinx.android.synthetic.main.fragment_home.rl_head
 import kotlinx.android.synthetic.main.fragment_home.scrollView
-import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_upload_my_banner.*
 import java.io.ByteArrayOutputStream
-import java.io.File
+
 
 class UploadBannerFragment : BaseFragment() {
     private var imgLayoutParams: LinearLayout.LayoutParams? = null
@@ -63,9 +60,13 @@ class UploadBannerFragment : BaseFragment() {
                     if (it) {
 
                         CropImage.activity()
-                            .setAspectRatio(1,1)
-                            .setGuidelines(CropImageView.Guidelines.OFF)
-                            .setRequestedSize(300,300)
+//                            .setMaxCropResultSize(2000,1000)
+                            .setAspectRatio(2,1)
+                            .setFixAspectRatio(true)
+                            .setGuidelines(CropImageView.Guidelines.ON)
+                            .setCropShape(CropImageView.CropShape.RECTANGLE)
+                            .setMinCropWindowSize(2000,1000)
+                            .setRequestedSize(2000,1000)
                             .setOutputCompressQuality(40)
                             .start(context, this@UploadBannerFragment)
 
@@ -133,8 +134,9 @@ class UploadBannerFragment : BaseFragment() {
 
                 if (encodedImage != null) {
                     snackBar("Activity need to be Run")
+                    (activity!!.application as WooBoxApp).setUserUploadImageEncoded(encodedImage)
                     activity!!.launchActivity<ProductDetailActivity> {
-                        putExtra(Constants.KeyIntent.USER_UPLOAD_BANNER, encodedImage)
+                        putExtra(Constants.KeyIntent.USER_UPLOAD_BANNER, "TRUE")
                     }
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -144,7 +146,7 @@ class UploadBannerFragment : BaseFragment() {
                 }
             }
         }else{
-            if (data != null && data.data != null) ivProfileImage.setImageURI(data.data)
+            /*if (data != null && data.data != null) ivProfileImage.setImageURI(data.data)
             val path: String? = ImagePicker.getImagePathFromResult(activity!!, requestCode, resultCode, data) ?: return
             val uri = FileProvider.getUriForFile(
                 activity!!,
@@ -152,15 +154,8 @@ class UploadBannerFragment : BaseFragment() {
                 File(path)
             )
             CropImage.activity(uri)
-                .setMaxCropResultSize(970,250)
-                .setAspectRatio(16,9)
-                .setFixAspectRatio(true)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setCropShape(CropImageView.CropShape.RECTANGLE)
-                .setMinCropWindowSize(970,250)
-//                .setRequestedSize(970, 250)
-                .setOutputCompressQuality(40)
-                .start(activity!!)
+//                .setOutputCompressQuality(40)
+                .start(activity!!)*/
         }
     }
 

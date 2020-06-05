@@ -24,6 +24,7 @@ import com.razorpay.Checkout
 import com.razorpay.PaymentResultListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
@@ -452,17 +453,22 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 }
             }
         } else {
-            val encodeByte: ByteArray =
-                Base64.decode(intent?.extras?.getString(USER_UPLOAD_BANNER), Base64.DEFAULT)
-            val personalizedBannerBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+            if(intent?.extras?.getString(USER_UPLOAD_BANNER)=="TRUE"){
+                val encodeByte: ByteArray =
+                    Base64.decode((this.application as WooBoxApp).getUserUploadImageEncoded(), Base64.DEFAULT)
+                val personalizedBannerBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
 
-            myImages.add(personalizedBannerBitmap)
-            val imageAdapter = PersonalizedProductImageAdapter(myImages)
-            productViewPager.adapter = null
-            productViewPager.adapter = imageAdapter
-            productViewPager.adapter?.notifyDataSetChanged()
-            dots.attachViewPager(productViewPager)
-            dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                myImages.add(personalizedBannerBitmap)
+                val imageAdapter = PersonalizedProductImageAdapter(myImages)
+                productViewPager.adapter = null
+                productViewPager.adapter = imageAdapter
+                productViewPager.adapter?.notifyDataSetChanged()
+                dots.attachViewPager(productViewPager)
+                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+            }
+            else{
+                snackBar("Something went wrong!Please retry.")
+            }
             showProgress(false)
         }
 
