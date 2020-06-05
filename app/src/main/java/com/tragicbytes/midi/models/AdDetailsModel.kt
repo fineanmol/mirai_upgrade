@@ -5,11 +5,11 @@ import java.io.Serializable
 class AdDetailsModel {
 
     data class AdDetails(
-        var adName: String,
-        var adDesc: String,
-        var adTagline: String,
-        var adBrandName: String,
-        var logoUrl: String
+        var adName: String="",
+        var adDesc: String="",
+        var adTagline: String="",
+        var adBrandName: String="",
+        var logoUrl: String=""
     ) : Serializable
 
 
