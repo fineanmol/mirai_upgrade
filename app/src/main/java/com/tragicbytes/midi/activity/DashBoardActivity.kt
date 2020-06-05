@@ -33,7 +33,8 @@ import kotlinx.android.synthetic.main.layout_sidebar.*
 import kotlinx.android.synthetic.main.menu_cart.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class DashBoardActivity : AppBaseActivity() {
+
+class DashBoardActivity : _root_ide_package_.nightowl.tragicbytes.midi.AppBaseActivity() {
 
     private var selectedDashboard: Int=0
     //region Variables
@@ -42,6 +43,9 @@ class DashBoardActivity : AppBaseActivity() {
     private val mWishListFragment = UploadBannerFragment()
     private val mCartFragment = MyBannersFragment()
     private val mProfileFragment = ProfileFragment()
+
+
+
     var selectedFragment: Fragment? = null
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
@@ -96,9 +100,7 @@ class DashBoardActivity : AppBaseActivity() {
 
     private fun loadApis() {
         if (isNetworkAvailable()) {
-/*
-            getOrderData(); fetchAndStoreCartData(); fetchAndStoreWishListData(); fetchAndStoreAddressData()
-*/
+
         }
     }
 
@@ -106,9 +108,9 @@ class DashBoardActivity : AppBaseActivity() {
     private fun setListener() {
         civProfile.onClick {
             if (isLoggedIn()) {
-                launchActivity<EditProfileActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.EditProfileActivity>()
             } else {
-                launchActivity<SignInUpActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
             }
             closeDrawer()
         }
@@ -121,24 +123,26 @@ class DashBoardActivity : AppBaseActivity() {
 
         llWishList.onClick {
             if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>(); return@onClick
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivWishList)
             loadFragment(mWishListFragment)
             title = getString(R.string.lbl_wish_list)
         }
-     /*   llWishlistData.onClick {
+        adsImagesBtn.onClick {
             if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>(); return@onClick
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             loadWishListFragment()
-        }*/
+            title = getString(R.string.lbl_wish_list)
+        }
+
 
         llCart.onClick {
             if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>(); return@onClick
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivCart)
@@ -152,7 +156,7 @@ class DashBoardActivity : AppBaseActivity() {
 
         llProfile.onClick {
             if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>(); return@onClick
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
             }
             closeDrawer()
             enable(ivProfile)
@@ -161,32 +165,55 @@ class DashBoardActivity : AppBaseActivity() {
         }
         tvAccount.onClick {
             if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
             } else {
-                launchActivity<AccountActivity>(Constants.RequestCode.ACCOUNT)
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AccountActivity>(Constants.RequestCode.ACCOUNT)
             }
             closeDrawer()
         }
         tvSettings.onClick {
-            launchActivity<SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
+            launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
             closeDrawer()
         }
-        /*tvBlog.onClick {
-            launchActivity<BlogActivity>()
+       adsTextBtn.onClick {
+           if (!isLoggedIn()) {
+               launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+           }
+           closeDrawer()
+           loadHomeFragment()
+       }
+        paidAdsBtn.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+            }
             closeDrawer()
-        }*/
-        tvHelp.onClick { launchActivity<HelpActivity>(); closeDrawer() }
-        /*tvFaq.onClick { launchActivity<FAQActivity>(); closeDrawer() }*/
-        tvContactus.onClick { launchActivity<ContactUsActivity>(); closeDrawer() }
-        tvAbout.onClick { launchActivity<AboutActivity>(); closeDrawer() }
+            enable(ivCart)
+            loadFragment(mCartFragment)
+            title = getString(R.string.cart)
+
+        }
+        profileBtn.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>(); return@onClick
+            }
+            closeDrawer()
+            enable(ivProfile)
+            loadFragment(mProfileFragment)
+            title = getString(R.string.profile)
+
+        }
+        tvHelp.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.HelpActivity>(); closeDrawer() }
+        tvContactus.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.ContactUsActivity>(); closeDrawer() }
+        tvAbout.onClick { launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.AboutActivity>(); closeDrawer() }
         ivCloseDrawer.onClick { closeDrawer() }
         tvLogout.onClick {
             if (isLoggedIn()) {
                 val dialog = getAlertDialog(
                     getString(R.string.lbl_logout_confirmation),
                     onPositiveClick = { _, _ ->
+                        FirebaseAuth.getInstance().signOut()
                         clearLoginPref()
-                        launchActivityWithNewTask<SignInUpActivity>()
+                        launchActivityWithNewTask<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
 
                         //recreate()
                     },
@@ -196,46 +223,30 @@ class DashBoardActivity : AppBaseActivity() {
                 dialog.show()
                 closeDrawer()
             } else {
-                launchActivity<SignInUpActivity>()
+                launchActivity<_root_ide_package_.nightowl.tragicbytes.midi.activity.SignInUpActivity>()
             }
         }
-   /*     llOrders.onClick {
-            if (isLoggedIn()) {
-                launchActivity<OrderActivity>()
-            } else {
-                launchActivity<SignInUpActivity>()
-            }
-            closeDrawer()
-        }*/
+
         tvShareApp.onClick { closeDrawer(); shareMyApp(this@DashBoardActivity, "", "") }
-/*
-        tvLblOffer.onClick { closeDrawer(); launchActivity<OfferActivity>() }
-*/
+
     }
     //endregion
 
     //region Set Data
     private fun showCartCount() {
         if (isLoggedIn() && !count.checkIsEmpty() && !count.equals("0", false)) {
-            tvNotificationCount.show()
+            tvNotificationCount.hide()
         } else {
             tvNotificationCount.hide()
         }
     }
 
-  /*  private fun setOrderCount() {
-        tvOrderCount.text =
-            getSharedPrefInstance().getIntValue(KEY_ORDER_COUNT, 0).toDecimalFormat()
-    }*/
 
-   /* private fun getOrderData() {
-        getOrders { setOrderCount() }
-    }*/
 
     private fun setCartCountFromPref() {
         count = getCartCount()
         tvNotificationCount.text = count
-        showCartCount()
+      //  showCartCount()
         if (mCartFragment.isVisible) tvNotificationCount.hide()
     }
 
@@ -244,12 +255,7 @@ class DashBoardActivity : AppBaseActivity() {
         changeProfile()
     }
 
- /*   private fun setWishCount() {
-        tvWishListCount.text =
-            getSharedPrefInstance().getIntValue(KEY_WISHLIST_COUNT, 0).toDecimalFormat()
-        if (mWishListFragment.isAdded) mWishListFragment.wishListItemChange()
-    }
-*/
+
     //endregion
 
     //region Fragment Setups
@@ -260,7 +266,7 @@ class DashBoardActivity : AppBaseActivity() {
     }
 
     fun setDrawerCategory(it: ArrayList<CategoryData>) {
-        rvCategory.create(
+      /*  rvCategory.create(
             it.size,
             R.layout.item_navigation_category,
             it,
@@ -278,7 +284,7 @@ class DashBoardActivity : AppBaseActivity() {
                 closeDrawer()
                 launchActivity<SubCategoryActivity> { putExtra(DATA, item) }
             })
-        rvCategory.isNestedScrollingEnabled = false
+        rvCategory.isNestedScrollingEnabled = false*/
     }
 
     private fun loadFragment(aFragment: Fragment) {
@@ -302,8 +308,6 @@ class DashBoardActivity : AppBaseActivity() {
         title = getString(R.string.home)
         if (mHomeFragment is HomeFragment){
             (mHomeFragment as HomeFragment).onNetworkRetry = { loadApis() }
-        }else if (mHomeFragment is HomeFragment2){
-            (mHomeFragment as HomeFragment2).onNetworkRetry = { loadApis() }
         }
 
     }
@@ -330,7 +334,7 @@ class DashBoardActivity : AppBaseActivity() {
 
     private fun enable(aImageView: ImageView?) {
         disableAll()
-        showCartCount()
+       // showCartCount()
         aImageView?.background = getDrawable(R.drawable.bg_circle_primary_light)
         aImageView?.applyColorFilter(color(R.color.colorPrimary))
     }
@@ -351,7 +355,7 @@ class DashBoardActivity : AppBaseActivity() {
         val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
-                if (WooBoxApp.language == "ar") {
+                if (_root_ide_package_.nightowl.tragicbytes.midi.WooBoxApp.language == "ar") {
                     main.translationX = -slideOffset * drawerView.width
                 } else {
                     main.translationX = slideOffset * drawerView.width
