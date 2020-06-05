@@ -155,7 +155,10 @@ class UploadBannerFragment : BaseFragment() {
                 .setMaxCropResultSize(970,250)
                 .setAspectRatio(16,9)
                 .setFixAspectRatio(true)
-                .setRequestedSize(970, 250)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setCropShape(CropImageView.CropShape.RECTANGLE)
+                .setMinCropWindowSize(970,250)
+//                .setRequestedSize(970, 250)
                 .setOutputCompressQuality(40)
                 .start(activity!!)
         }

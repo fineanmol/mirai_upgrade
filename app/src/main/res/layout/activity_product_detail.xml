@@ -50,7 +50,7 @@
                     <RelativeLayout
                         android:id="@+id/rlViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/product_item_height"
+                        android:layout_height="@dimen/_150sdp"
                         android:background="@color/item_background_common">
 
                         <androidx.viewpager.widget.ViewPager
