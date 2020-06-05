@@ -1,66 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:background="@color/background_color">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+<include layout="@layout/toolbar" />
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never">
+
+    <LinearLayout
+        android:gravity="start"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/spacing_standard"
-        app:cardCornerRadius="@dimen/_10sdp"
-        app:cardUseCompatPadding="true"
-        app:cardPreventCornerOverlap="false">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/bannerImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <ImageView
+            android:layout_height="@dimen/_140sdp"
+            android:scaleType="centerCrop"
+             />
 
-                android:id="@+id/bannerImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/bg"/>
+        <TextView
+            android:id="@+id/startDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_standard_new"
+            android:layout_marginTop="@dimen/spacing_standard_new"
+            android:textAppearance="@style/FontBold"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/font_size_normal" />
 
-<!--
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <TextView
+android:id="@+id/endDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_standard_new"
+            android:layout_marginBottom="@dimen/spacing_standard_new"
+            android:textAppearance="@style/FontMedium"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/font_size_small" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Select Image From Storage"
-                    android:textColor="#ffff"
-                    android:textSize="18dp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.8dp"
+            android:background="@color/view_color" />
 
+        <TextView
 
-            </LinearLayout>
--->
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_margin="@dimen/spacing_standard_new"
+            android:lineSpacingExtra="@dimen/spacing_control_half"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="@dimen/font_size_medium" />
 
-            <!--<LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                >
+    </LinearLayout>
 
-
-
-
-            </LinearLayout>-->
-            <!--<TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Banner"
-                android:textColor="#ffff"
-                android:textSize="@dimen/spacing_xxlarge" />-->
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+</ScrollView>
 
 
 </LinearLayout>

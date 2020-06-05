@@ -20,6 +20,8 @@ class WooBoxApp : MultiDexApplication() {
 
     private var userUploadImageEncoded: String? = null
 
+
+
     fun getUserUploadImageEncoded(): String? {
         return userUploadImageEncoded
     }

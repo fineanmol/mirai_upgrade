@@ -484,6 +484,7 @@
 
                         <TextView
                             android:id="@+id/startTimeVal"
+                            android:textAlignment="center"
                             style="@style/MoreInfoSubheading"
                             />
                     </LinearLayout>
@@ -505,6 +506,7 @@
 
                         <TextView
                             android:id="@+id/endTimeVal"
+                            android:textAlignment="center"
                             style="@style/MoreInfoSubheading"
                            />
                     </LinearLayout>
@@ -527,8 +529,10 @@
                         <EditText
                             android:id="@+id/rangeVal"
                             style="@style/MoreInfoSubheading"
+                            android:textAlignment="center"
                             android:singleLine="true"
                             android:inputType="number"
+
                             />
                     </LinearLayout>
                 </LinearLayout>
