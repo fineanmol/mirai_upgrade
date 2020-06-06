@@ -43,7 +43,7 @@ class SignInUpActivity : FirebaseConfig() {
         setContentView(R.layout.activity_sign_in_up)
         FacebookSdk.sdkInitialize(applicationContext)
         mFirebaseRemoteConfig = getRemoteConfigValues()
-        setRemoteConfigValues()
+//        setRemoteConfigValues()
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestIdToken(getString(R.string.default_web_client_id))
 //                .requestEmail()
@@ -68,7 +68,10 @@ class SignInUpActivity : FirebaseConfig() {
         /**
          * Load Default Fragment
          */
-        loadSignInFragment()
+        if(intent?.extras?.getString(Constants.KeyIntent.LOGIN)=="TRUE")loadSignInFragment()
+        else{
+            loadSignUpFragment()
+        }
     }
 
 //    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,6 +108,7 @@ class SignInUpActivity : FirebaseConfig() {
 //    }
 
 
+/*
     //region Firebase Config Method 2
     private fun setRemoteConfigValues() {
         //region Fetching Values
@@ -184,16 +188,19 @@ class SignInUpActivity : FirebaseConfig() {
         if (remoteCodeVersion > versionCode) {
             getRemoteConfigValues()
         }
-        /*else {
+        */
+/*else {
             mAuth.currentUser?.let {
 
              //   login()
 
             }
-        }*/
+        }*//*
+
         //endregion
     }
     //endregion
+*/
 
     fun loadSignUpFragment() {
         if (mSignUpFragment.isAdded) {
@@ -214,6 +221,9 @@ class SignInUpActivity : FirebaseConfig() {
     }
 
     override fun onBackPressed() {
+        if(intent?.extras?.getString(Constants.KeyIntent.LOGIN)=="FALSE"){
+            super.onBackPressed()
+        }
         when {
             mSignUpFragment.isVisible -> removeFragment(mSignUpFragment)
             else -> super.onBackPressed()
@@ -371,7 +381,7 @@ class SignInUpActivity : FirebaseConfig() {
     }
 
 
-    fun accountDataFetch(user: FirebaseUser) {
+    private fun accountDataFetch(user: FirebaseUser) {
         showProgress(true)
         val database = FirebaseDatabase.getInstance().reference
 

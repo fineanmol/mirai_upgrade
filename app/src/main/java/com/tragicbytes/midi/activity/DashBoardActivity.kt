@@ -305,24 +305,24 @@ class DashBoardActivity : AppBaseActivity() {
 
     private fun loadHomeFragment() {
         enable(ivHome)
-        if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
-//        loadFragment(mHomeFragment)
+        //if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
+        loadFragment(mHomeFragment)
         title = getString(R.string.home)
         if (mHomeFragment is HomeFragment){
             (mHomeFragment as HomeFragment).onNetworkRetry = { loadApis() }
+        }else if (mHomeFragment is HomeFragment2){
+            (mHomeFragment as HomeFragment2).onNetworkRetry = { loadApis() }
         }
-
     }
     //endregion
 
     //region Common
     override fun onBackPressed() {
-        super.onBackPressed()
-        /*when {
+        when {
             drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
             !mHomeFragment.isVisible -> loadHomeFragment()
             else -> super.onBackPressed()
-        }*/
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

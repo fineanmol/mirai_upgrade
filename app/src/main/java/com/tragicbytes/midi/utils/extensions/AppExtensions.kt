@@ -763,6 +763,7 @@ fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
         onComplete = {
             view.ivBannerPrev.setImageBitmap(it)
         })
+        view.tvBannerId.text=item.bannerImageUrl.toString()
     }
 }
 fun Activity.fetchAndStoreAddressData() {

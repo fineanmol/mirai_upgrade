@@ -105,6 +105,7 @@ object Constants {
         const val DATA = "data"
         const val VIEWALLID = "viewallid"
         const val SHOW_PAGINATION = "show_pagination"
+        const val LOGIN = "FALSE"
     }
 
     object OrderStatus {
