@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
-
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/publishedBannersList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="@dimen/spacing_large"/>
 
-<!--    </ScrollView>-->
+
 
 </com.tragicbytes.midi.utils.CustomSwipeToRefresh>

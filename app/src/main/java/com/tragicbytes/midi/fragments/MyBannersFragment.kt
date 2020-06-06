@@ -13,6 +13,7 @@ import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.refreshLayout
+import kotlinx.android.synthetic.main.item_banner.*
 
 class MyBannersFragment : BaseFragment() {
 
@@ -106,6 +107,7 @@ class MyBannersFragment : BaseFragment() {
 
     private fun setupAdsCompleteDetailsAdapter() {
         mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item) })
+        //loader2.hide()
         //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
         /*publishedBannersList.apply {
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)

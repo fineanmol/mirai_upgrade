@@ -71,7 +71,7 @@ class ProfileFragment : BaseFragment() {
 
 
             ivProfileImage.loadImageFromUrl(
-                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
+                user!!.photoUrl.toString(),
                 aPlaceHolderImage = R.drawable.ic_profile
             )
             if (getSharedPrefInstance().getBooleanValue(IS_SOCIAL_LOGIN)) {
@@ -137,7 +137,10 @@ class ProfileFragment : BaseFragment() {
                 updateProfile()
             }
         }
-        btnChangePassword.onClick { showChangePasswordDialog() }
+        btnChangePassword.onClick {
+            snackBar(user!!.photoUrl.toString())
+           // showChangePasswordDialog()
+        }
         btnDeactivate.onClick {
 
         }

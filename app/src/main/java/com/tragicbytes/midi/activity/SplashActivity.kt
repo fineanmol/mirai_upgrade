@@ -38,8 +38,10 @@ class SplashActivity : FirebaseConfig() {
                     Log.d("KeyHash:", Base64.getEncoder().encodeToString(md.digest()))
                 }
             }
-        } catch (e: NameNotFoundException) {
-        } catch (e: NoSuchAlgorithmException) {
+        }
+        catch (e: NameNotFoundException) {
+        }
+        catch (e: NoSuchAlgorithmException) {
         }
         /*runDelayed(1000) {
             if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE)) {
