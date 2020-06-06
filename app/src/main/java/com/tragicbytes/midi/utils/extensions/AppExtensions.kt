@@ -761,7 +761,7 @@ fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
     if (item.bannerImageUrl != null){
         fetchImageAsync(item.bannerImageUrl,
         onComplete = {
-            view.bannerImage.setImageBitmap(it)
+            view.ivBannerPrev.setImageBitmap(it)
         })
     }
 }

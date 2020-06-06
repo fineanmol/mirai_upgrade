@@ -1,69 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/background_color">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<include layout="@layout/toolbar" />
+    <data>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:overScrollMode="never">
+        <variable
+            name="model"
+            type="com.tragicbytes.midi.models.Blog" />
 
-    <LinearLayout
-        android:gravity="start"
+        <variable
+            name="callback"
+            type="com.tragicbytes.midi.base.BaseRecyclerAdapter.OnClickListener" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/rlMainOrder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:onClick="@{(view) -> callback.onClick(view,model)}"
+        tools:ignore="MissingPrefix">
 
-        <ImageView
-            android:id="@+id/bannerImage"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_140sdp"
-            android:scaleType="centerCrop"
-             />
-
-        <TextView
-            android:id="@+id/startDate"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_standard_new"
-            android:layout_marginTop="@dimen/spacing_standard_new"
-            android:textAppearance="@style/FontBold"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="@dimen/font_size_normal" />
-
-        <TextView
-android:id="@+id/endDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/spacing_standard_new"
+            android:layout_marginEnd="@dimen/spacing_standard_new"
             android:layout_marginBottom="@dimen/spacing_standard_new"
-            android:textAppearance="@style/FontMedium"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_size_small" />
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="@dimen/_14sdp">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_14sdp"
+                    app:cardElevation="0dp">
+                    <ImageView
+                        android:id="@+id/ivBannerPrev"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_170sdp"
+                        android:src="@drawable/ic_product2"
+                        android:scaleType="centerCrop"/>
+                </com.google.android.material.card.MaterialCardView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/font_size_normal"
+                    android:textAppearance="@style/FontSemiBold"
+                    android:layout_marginTop="@dimen/spacing_middle"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:text="@{model.title}"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_size_small"
+                    android:textAppearance="@style/FontMedium"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_marginBottom="@dimen/spacing_middle"
+                    android:text="@{model.publish_date}"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.8dp"
-            android:background="@color/view_color" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:layout_margin="@dimen/spacing_standard_new"
-            android:lineSpacingExtra="@dimen/spacing_control_half"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_size_medium" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 
-</ScrollView>
-
-
-</LinearLayout>
+</layout>

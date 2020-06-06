@@ -19,6 +19,8 @@ class WalkThroughActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_walk_through)
 
+        getSharedPrefInstance().removeKey(SHOW_SWIPE)
+
         init()
         val adapter = WalkAdapter()
 
@@ -30,7 +32,7 @@ class WalkThroughActivity : AppBaseActivity() {
 
         btnStatShopping.onClick {
             getSharedPrefInstance().setValue(SHOW_SWIPE, true)
-            launchActivityWithNewTask<SignInUpActivity>()
+            launchActivityWithNewTask<DashBoardActivity>()
         }
         llSignIn.onClick {
             launchActivity<SignInUpActivity>{
