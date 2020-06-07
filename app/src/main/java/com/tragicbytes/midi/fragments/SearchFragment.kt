@@ -111,7 +111,7 @@ class SearchFragment : BaseFragment() {
 
     private fun loadProducts(requestModel : RequestModel) {
         pbLoader.show()
-        callApi(getRestApis(false).searchProducts(request = requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).searchProducts(request = requestModel), onApiSuccess = {
             if (activity == null) return@callApi
             pbLoader.hide(); productList.addAll(it); searchList.addAll(it); isLoading = it.size != 10
             if (activity != null) {
@@ -131,7 +131,7 @@ class SearchFragment : BaseFragment() {
             activity?.openLottieDialog {
                 loadProducts(requestModel)
             }
-        })
+        })*/
     }
 
     private fun getAdapter(): BaseRecyclerAdapter<ProductDataNew, ItemNewestProductBinding> {

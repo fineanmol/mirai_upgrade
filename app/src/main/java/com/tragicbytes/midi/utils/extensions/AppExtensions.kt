@@ -353,7 +353,7 @@ fun setExpandableListViewHeight(listView: ExpandableListView, group: Int) {
 }
 
 fun AppBaseActivity.getOrders(page: Int = 1, onApiSuccess: (ArrayList<MyOrderData>) -> Unit) {
-    callApi(getRestApis().listAllOrders(getUserId().toInt(), page), onApiSuccess = {
+    /*callApi(getRestApis().listAllOrders(getUserId().toInt(), page), onApiSuccess = {
         getSharedPrefInstance().setValue(KEY_ORDERS, Gson().toJson(it))
         sendOrderCountChangeBroadcast()
         onApiSuccess(it)
@@ -361,12 +361,12 @@ fun AppBaseActivity.getOrders(page: Int = 1, onApiSuccess: (ArrayList<MyOrderDat
         snackBarError(it)
     }, onNetworkError = {
         noInternetSnackBar()
-    })
+    })*/
 }
 
 fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (LoginData) -> Unit) {
     showProgress(true)
-    callApi(getRestApis().createCustomer(id = getUserId(), request = requestModel), onApiSuccess = {
+    /*callApi(getRestApis().createCustomer(id = getUserId(), request = requestModel), onApiSuccess = {
         showProgress(false)
         getSharedPrefInstance().setValue(USER_DISPLAY_NAME, it.first_name + " " + it.last_name)
         getSharedPrefInstance().setValue(USER_EMAIL, it.email)
@@ -385,7 +385,7 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
         openLottieDialog {
            // createCustomer(requestModel, onApiSuccess)
         }
-    })
+    })*/
 }
 
 fun AppBaseActivity.createCustomerByEmail(user: FirebaseUser, onApiSuccess: () -> Unit) {
@@ -528,7 +528,7 @@ fun AppBaseActivity.saveLoginResponse(it: FirebaseUser,isSocialLogin:Boolean, pa
 
 fun AppBaseActivity.processPayment(requestModel: RequestModel, isContainRedirectUrl: Boolean = true) {
     showProgress(true)
-    callApi(getRestApis().processPayment(requestModel), onApiSuccess = {
+    /*callApi(getRestApis().processPayment(requestModel), onApiSuccess = {
         showProgress(false)
         if (it.data != null) {
             callApi(getRestApis(false).clearCartItems(), onApiSuccess = {
@@ -545,7 +545,7 @@ fun AppBaseActivity.processPayment(requestModel: RequestModel, isContainRedirect
         openLottieDialog() {
             processPayment(requestModel)
         }
-    })
+    })*/
 }
 
 fun recentProduct(): ArrayList<ProductDataNew> {
@@ -685,7 +685,7 @@ fun isExistInWishList(product: ProductDataNew): Boolean {
 }
 
 fun Activity.fetchAndStoreCartData() {
-    callApi(getRestApis(false).getCart(), onApiSuccess = {
+    /*callApi(getRestApis(false).getCart(), onApiSuccess = {
         getSharedPrefInstance().setValue(KEY_CART_COUNT, it.size); getSharedPrefInstance().setValue(CART_DATA, Gson().toJson(it)); sendCartCountChangeBroadcast()
     }, onApiError = {
         if (it == "no product available") {
@@ -694,11 +694,11 @@ fun Activity.fetchAndStoreCartData() {
         } else {
            // snackBarError(it)
         }
-    })
+    })*/
 }
 
 fun Activity.fetchAndStoreWishListData() {
-    callApi(getRestApis(false).getWishList(), onApiSuccess = {
+    /*callApi(getRestApis(false).getWishList(), onApiSuccess = {
         getSharedPrefInstance().setValue(KEY_WISHLIST_COUNT, it.size); getSharedPrefInstance().setValue(WISHLIST_DATA, Gson().toJson(it)); sendWishListBroadcast()
     }, onApiError = {
         if (it == "no product available") {
@@ -707,27 +707,27 @@ fun Activity.fetchAndStoreWishListData() {
         } else {
            // snackBarError(it)
         }
-    })
+    })*/
 }
 
 fun Activity.addToWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
-    callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
+   /* callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
         fetchAndStoreWishListData(); onSuccess(true)
     }, onApiError = {
         snackBarError(it); fetchAndStoreWishListData(); onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar(); onSuccess(false)
-    })
+    })*/
 }
 
 fun Activity.removeFromWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
-    callApi(getRestApis(false).removeWishList(request = requestModel), onApiSuccess = {
+    /*callApi(getRestApis(false).removeWishList(request = requestModel), onApiSuccess = {
         fetchAndStoreWishListData(); onSuccess(true)
     }, onApiError = {
         snackBarError(it); fetchAndStoreWishListData(); onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar(); onSuccess(false)
-    })
+    })*/
 }
 
 fun getSlideImagesFromPref(): ArrayList<SliderImagesResponse> {
@@ -767,7 +767,7 @@ fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
     }
 }
 fun Activity.fetchAndStoreAddressData() {
-    callApi(getRestApis(false).getAddress(), onApiSuccess = {
+    /*callApi(getRestApis(false).getAddress(), onApiSuccess = {
         getSharedPrefInstance().setValue(KEY_USER_ADDRESS, Gson().toJson(it))
         sendBroadcast(ADDRESS_UPDATE)
         Log.e("response",Gson().toJson(it))
@@ -775,39 +775,39 @@ fun Activity.fetchAndStoreAddressData() {
 
     }, onNetworkError = {
         noInternetSnackBar()
-    })
+    })*/
 }
 fun Activity.addAddress(address: Address, onSuccess: (Boolean) -> Unit) {
-    callApi(getRestApis(false).addUpdateAddress(address), onApiSuccess = {
+    /*callApi(getRestApis(false).addUpdateAddress(address), onApiSuccess = {
         fetchAndStoreAddressData()
         onSuccess(true)
     }, onApiError = {
         snackBarError(it); onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar(); onSuccess(false)
-    })
+    })*/
 }
 fun Activity.removeAddress(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
-    callApi(getRestApis(false).deleteAddress(request = requestModel), onApiSuccess = {
+    /*callApi(getRestApis(false).deleteAddress(request = requestModel), onApiSuccess = {
         fetchAndStoreAddressData(); onSuccess(true)
     }, onApiError = {
         snackBarError(it); fetchAndStoreAddressData(); onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar(); onSuccess(false)
-    })
+    })*/
 }
 fun Activity.changePassword(requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
-    callApi(getRestApis().changePassword(getUserId().toInt(), requestModel), onApiSuccess = {
+    /*callApi(getRestApis().changePassword(getUserId().toInt(), requestModel), onApiSuccess = {
         snackBar(getString(R.string.msg_successpwd));onSuccess(true)
     }, onApiError = {
         snackBarError(it);onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar();onSuccess(false)
-    })
+    })*/
 }
 
 fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
-    callApi(getRestApis().saveProfileImage( requestModel), onApiSuccess = {
+    /*callApi(getRestApis().saveProfileImage( requestModel), onApiSuccess = {
         Log.e("res",it.profile_image)
         getSharedPrefInstance().setValue(USER_PROFILE, it.profile_image)
         onSuccess(true)
@@ -815,7 +815,7 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
         snackBarError(it);onSuccess(false)
     }, onNetworkError = {
         noInternetSnackBar();onSuccess(false)
-    })
+    })*/
 }
 
 @SuppressLint("MissingPermission")

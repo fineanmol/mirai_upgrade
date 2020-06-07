@@ -159,7 +159,7 @@ class OrderActivity : AppBaseActivity() {
     }
 
     private fun loadOrder(page: Int) {
-        callApi(getRestApis().listAllOrders(getUserId().toInt(), page), onApiSuccess = {
+        /*callApi(getRestApis().listAllOrders(getUserId().toInt(), page), onApiSuccess = {
             isLoading = it.size != 10; mOrderData.addAll(it); progressBar.hide()
 
             getSharedPrefInstance().setValue(Constants.SharedPref.KEY_ORDERS, Gson().toJson(it))
@@ -171,7 +171,7 @@ class OrderActivity : AppBaseActivity() {
             progressBar.hide(); snackBarError(it)
         }, onNetworkError = {
             progressBar.hide(); noInternetSnackBar()
-        })
+        })*/
     }
 
 }

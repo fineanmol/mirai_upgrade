@@ -85,7 +85,7 @@ class SubCategoryActivity : AppBaseActivity() {
         showProgress(true)
         val requestModel = RequestModel(); requestModel.cat_id = mCategoryData.cat_ID
 
-        callApi(getRestApis(false).getSubCategories(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).getSubCategories(requestModel), onApiSuccess = {
             showProgress(false)
             val subCategoryAdapter = getCategoryAdapter()
             rcvSubCategory.apply { setHorizontalLayout(); adapter = subCategoryAdapter }
@@ -96,7 +96,7 @@ class SubCategoryActivity : AppBaseActivity() {
         }, onNetworkError = {
             showProgress(false)
             noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun getFeaturedProducts() {
@@ -104,7 +104,7 @@ class SubCategoryActivity : AppBaseActivity() {
         val mSelectedCategory: ArrayList<Int> = ArrayList()
         mSelectedCategory.add(mCategoryData.cat_ID)
         val requestModel = FilterProductRequest(); requestModel.category = mSelectedCategory
-        callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
             showProgress(false)
             if (it.size == 0) {
                 rlFeature.hide()
@@ -126,7 +126,7 @@ class SubCategoryActivity : AppBaseActivity() {
         }, onNetworkError = {
             showProgress(false)
             noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun getSubCategoryProducts() {
@@ -138,7 +138,7 @@ class SubCategoryActivity : AppBaseActivity() {
 
         if (mSelectedCategory.isNotEmpty()) mFilterProductRequest.category = mSelectedCategory
 
-        callApi(getRestApis().filterProduct(request = mFilterProductRequest), onApiSuccess = {
+        /*callApi(getRestApis().filterProduct(request = mFilterProductRequest), onApiSuccess = {
             showProgress(false)
             if (it.size == 0) {
                 rlNewArrival.hide()
@@ -162,7 +162,7 @@ class SubCategoryActivity : AppBaseActivity() {
             openLottieDialog {
                 getSubCategoryProducts()
             }
-        })
+        })*/
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {

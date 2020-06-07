@@ -56,7 +56,7 @@ class TrackItemActivity : AppBaseActivity() {
 
     private fun getOrderTracking(id: Int) {
         showProgress(true)
-        callApi(getRestApis().getOrderTracking(id), onApiSuccess = {
+        /*callApi(getRestApis().getOrderTracking(id), onApiSuccess = {
             showProgress(false)
             if (it.size > 0) mTracksAdapter.addItems(it) else tvNoTracking.show()
         }, onApiError = {
@@ -67,7 +67,7 @@ class TrackItemActivity : AppBaseActivity() {
             openLottieDialog() {
                 getOrderTracking(id)
             }
-        })
+        })*/
     }
 
     private var mTracksAdapter = object : BaseRecyclerAdapter<OrderTrack, ItemTrackBinding>() {

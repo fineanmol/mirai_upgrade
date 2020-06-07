@@ -31,7 +31,7 @@ class PaymentActivity : AppBaseActivity(), PaymentResultListener {
 
         Checkout.preload(this)
 
-        callApi(getRestApis().paymentGateways(), onApiSuccess = {
+        /*callApi(getRestApis().paymentGateways(), onApiSuccess = {
             val paymentGatewaysAdapter = RecyclerViewAdapter<Payment>(R.layout.item_payment, onBind = { view, item, position ->
                 view.tvPaymentGateway.text = item.method_title
             })
@@ -45,7 +45,7 @@ class PaymentActivity : AppBaseActivity(), PaymentResultListener {
             toast(it)
         }, onNetworkError = {
             noInternetSnackBar()
-        })
+        })*/
 
         addPaymentDetails()
 
@@ -106,7 +106,7 @@ class PaymentActivity : AppBaseActivity(), PaymentResultListener {
         }
 
         showProgress(true)
-        callApi(getRestApis().processOtherPayment(requestModel), onApiSuccess = {
+        /*callApi(getRestApis().processOtherPayment(requestModel), onApiSuccess = {
             callApi(getRestApis(false).clearCartItems(), onApiSuccess = {
                 showProgress(false)
                 fetchAndStoreCartData()
@@ -118,7 +118,7 @@ class PaymentActivity : AppBaseActivity(), PaymentResultListener {
         }, onNetworkError = {
             showProgress(false)
             noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun createPaymentRequest(s: String) {

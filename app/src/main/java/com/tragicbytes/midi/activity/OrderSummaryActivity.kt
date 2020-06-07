@@ -255,7 +255,7 @@ class OrderSummaryActivity : AppBaseActivity() {
             getAlertDialog(getString(R.string.msg_want_to_order), onPositiveClick = { dialog, i ->
                 dialog.dismiss()
                 showProgress(true)
-                callApi(getRestApis().createOrder(requestModel), onApiSuccess = {
+                /*callApi(getRestApis().createOrder(requestModel), onApiSuccess = {
                     val request = RequestModel(); request.order_id = it.id
                     callApi(getRestApis(false).getCheckoutUrl(request), onApiSuccess = { res ->
                         snackBar("Successfully Processed")
@@ -279,7 +279,7 @@ class OrderSummaryActivity : AppBaseActivity() {
                 }, onNetworkError = {
                     showProgress(false)
                     noInternetSnackBar()
-                })
+                })*/
             }, onNegativeClick = { dialog, i ->
                 dialog.dismiss()
             }).show()

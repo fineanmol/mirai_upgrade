@@ -167,6 +167,7 @@ class HomeFragment : BaseFragment() {
             if (activity == null) return@callApi
             hideProgress()
 
+//            Log.d("XXXX12",it.toString())
             getSharedPrefInstance().apply {
                 removeKey(WHATSAPP)
                 removeKey(FACEBOOK)
@@ -176,17 +177,17 @@ class HomeFragment : BaseFragment() {
                 removeKey(PRIVACY_POLICY)
                 removeKey(TERM_CONDITION)
                 removeKey(COPYRIGHT_TEXT)
-                setValue(DEFAULT_CURRENCY, it.currency_symbol.currency_symbol)
-                setValue(KEY_ORDER_COUNT, it.total_order)
-                setValue(THEME_COLOR, it.theme_color)
-                setValue(WHATSAPP, it.social_link?.whatsapp)
-                setValue(FACEBOOK, it.social_link?.facebook)
-                setValue(TWITTER, it.social_link?.twitter)
-                setValue(INSTAGRAM, it.social_link?.instagram)
-                setValue(CONTACT, it.social_link?.contact)
-                setValue(PRIVACY_POLICY, it.social_link?.privacy_policy)
-                setValue(TERM_CONDITION, it.social_link?.term_condition)
-                setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
+                setValue(DEFAULT_CURRENCY, "&#36")
+//                setValue(KEY_ORDER_COUNT, it.total_order)
+//                setValue(THEME_COLOR, it.theme_color)
+//                setValue(WHATSAPP, it.social_link?.whatsapp)
+//                setValue(FACEBOOK, it.social_link?.facebook)
+//                setValue(TWITTER, it.social_link?.twitter)
+//                setValue(INSTAGRAM, it.social_link?.instagram)
+//                setValue(CONTACT, it.social_link?.contact)
+//                setValue(PRIVACY_POLICY, it.social_link?.privacy_policy)
+//                setValue(TERM_CONDITION, it.social_link?.term_condition)
+//                setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
             }
 
             dbReference.child("AppData/ListAvailableBannerData")
@@ -284,13 +285,13 @@ class HomeFragment : BaseFragment() {
                 mSuggestedProductAdapter?.addItems(it.suggested_product)*//*
             }*/
 
-            if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
-                Log.d("XXXX1",it.banner_1.image+"  "+it.banner_1.url)
+//            if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
+//                Log.d("XXXX1",it.banner_1.image+"  "+it.banner_1.url)
                 ivBanner1.show(); ivBanner1.loadImageFromUrl("http://iqonic.design/wp-themes/woobox_api/wp-content/uploads/2020/01/167-scaled.jpg ")
                 ivBanner1.onClick { activity?.openCustomTab("https://www.google.com/") }
-            } else {
-                ivBanner1.hide()
-            }
+//            } else {
+//                ivBanner1.hide()
+//            }
             /*if (it.banner_2 != null && it.banner_2.url.isNotEmpty()) {
                 ivBanner2.show(); ivBanner2.loadImageFromUrl(it.banner_2.image); ivBanner2.onClick { activity?.openCustomTab(it.banner_2.url) }
             } else {

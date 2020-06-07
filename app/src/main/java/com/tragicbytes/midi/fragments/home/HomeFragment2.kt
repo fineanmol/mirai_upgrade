@@ -148,7 +148,7 @@ class HomeFragment2 : BaseFragment() {
             rl_head.hide()
         }
 
-        callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
+        /*callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
             if (activity == null) return@callApi
             getSharedPrefInstance().setValue(SLIDER_IMAGES_DATA, Gson().toJson(res))
             images.clear()
@@ -168,7 +168,7 @@ class HomeFragment2 : BaseFragment() {
             if (activity == null) return@callApi
             activity?.noInternetSnackBar()
             rl_head.hide()
-        })
+        })*/
     }
 
     private fun listAllProducts() {
@@ -176,7 +176,7 @@ class HomeFragment2 : BaseFragment() {
         val requestModel = RequestModel()
         if (isLoggedIn()) requestModel.user_id = getUserId()
 
-        callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = {
             if (activity == null) return@callApi
             hideProgress()
 
@@ -291,13 +291,13 @@ class HomeFragment2 : BaseFragment() {
             //toast(it)
         }, onNetworkError = {
             toast(R.string.error_no_internet)
-        })
+        })*/
     }
 
     private fun listFeaturedProducts() {
         showProgress()
         val requestModel = FilterProductRequest()
-        callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
             if (activity == null) return@callApi
             hideProgress()
             if (it.isEmpty()) {
@@ -316,7 +316,7 @@ class HomeFragment2 : BaseFragment() {
             if (activity == null) return@callApi
             hideProgress()
             activity?.noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun listAllProductCategories() {
@@ -329,7 +329,7 @@ class HomeFragment2 : BaseFragment() {
             rlCategory.hide()
         }
 
-        callApi(getRestApis(false).getProductCategories(), onApiSuccess = {
+        /*callApi(getRestApis(false).getProductCategories(), onApiSuccess = {
             if (activity == null) return@callApi
             getSharedPrefInstance().setValue(CATEGORY_DATA, Gson().toJson(it))
             mCategoryAdapter?.addItems(it)
@@ -345,7 +345,7 @@ class HomeFragment2 : BaseFragment() {
         }, onNetworkError = {
             if (activity == null) return@callApi
             activity?.noInternetSnackBar()
-        })
+        })*/
     }
     //endregion
 

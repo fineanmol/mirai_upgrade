@@ -80,7 +80,7 @@ class BlogActivity : AppBaseActivity() {
 
     private fun loadOrder(page: Int) {
         progressBar.show()
-        callApi(getRestApis().getBlogs(page), onApiSuccess = {
+        /*callApi(getRestApis().getBlogs(page), onApiSuccess = {
             isLoading = it.size != 10; mOrderData.addAll(it); progressBar.hide()
 
             if (mOrderData.size == 0) rlNoData.show() else rlNoData.hide()
@@ -90,6 +90,6 @@ class BlogActivity : AppBaseActivity() {
             progressBar.hide(); snackBarError(it)
         }, onNetworkError = {
             progressBar.hide(); noInternetSnackBar()
-        })
+        })*/
     }
 }

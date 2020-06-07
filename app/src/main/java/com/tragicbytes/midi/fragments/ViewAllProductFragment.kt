@@ -192,7 +192,7 @@ class ViewAllProductFragment : BaseFragment() {
 
     private fun getProductAttributes() {
         mProductAttributeResponseMsg = getString(R.string.lbl_please_wait)
-        callApi(getRestApis(false).getProductAttributes(), onApiSuccess = {
+        /*callApi(getRestApis(false).getProductAttributes(), onApiSuccess = {
             mIsFilterDataLoaded = true
 
             it.colors.forEachIndexed { index, color ->
@@ -242,7 +242,7 @@ class ViewAllProductFragment : BaseFragment() {
             mIsFilterDataLoaded = false
             mProductAttributeResponseMsg = getString(R.string.lbl_try_later)
             activity?.noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun openFilterBottomSheet() {
@@ -499,7 +499,7 @@ class ViewAllProductFragment : BaseFragment() {
         progressBar.show(); rlNoData.hide(); progressBar.animate()
 
         if (mId == FEATURED || mId == CATEGORY_FEATURED) {
-            callApi(getRestApis(false).getFeaturedProducts(aFilterProductRequest), onApiSuccess = {
+            /*callApi(getRestApis(false).getFeaturedProducts(aFilterProductRequest), onApiSuccess = {
                 if (activity == null) return@callApi
                 setProducts(it)
             }, onApiError = {
@@ -509,9 +509,9 @@ class ViewAllProductFragment : BaseFragment() {
                 if (activity == null) return@callApi
                 progressBar.hide()
                 activity?.noInternetSnackBar()
-            })
+            })*/
         } else {
-            callApi(getRestApis().filterProduct(request = aFilterProductRequest), onApiSuccess = {
+            /*callApi(getRestApis().filterProduct(request = aFilterProductRequest), onApiSuccess = {
                 if (activity == null) return@callApi
                 setProducts(it)
             }, onApiError = {
@@ -521,7 +521,7 @@ class ViewAllProductFragment : BaseFragment() {
                 if (activity == null) return@callApi
                 progressBar.hide()
                 activity?.noInternetSnackBar()
-            })
+            })*/
         }
     }
 
@@ -834,7 +834,7 @@ class ViewAllProductFragment : BaseFragment() {
     private fun listFeaturedProducts(countLoadMore: Int = 1) {
         showProgress()
         val requestModel = FilterProductRequest(); requestModel.page = countLoadMore
-        callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
             if (activity == null) return@callApi
             hideProgress()
             if (it.isEmpty()) {
@@ -862,13 +862,13 @@ class ViewAllProductFragment : BaseFragment() {
             if (activity == null) return@callApi
             hideProgress()
             activity?.noInternetSnackBar()
-        })
+        })*/
     }
 
     private fun listAllProducts(mId: Int, countLoadMore: Int = 1) {
         progressBar.show()
         val requestModel = RequestModel(); requestModel.page = countLoadMore
-        callApi(getRestApis().listAllProducts(requestModel), onApiSuccess = {
+        /*callApi(getRestApis().listAllProducts(requestModel), onApiSuccess = {
             if (activity == null) return@callApi
             progressBar.hide()
             when (mId) {
@@ -892,7 +892,7 @@ class ViewAllProductFragment : BaseFragment() {
         }, onNetworkError = {
             if (activity == null) return@callApi
             progressBar.hide()
-        })
+        })*/
     }
 
     private fun getRecentItems(): ArrayList<ProductDataNew> {

@@ -154,7 +154,7 @@ class ReviewsActivity : AppBaseActivity() {
             if (Constants.isAllowedToCreate) {
                 showProgress(true)
 
-                callApi(getRestApis().createProductReview(requestModel), onApiSuccess = {
+               /* callApi(getRestApis().createProductReview(requestModel), onApiSuccess = {
                     showProgress(false)
                     toast("Successfully")
                     dialog.dismiss()
@@ -167,7 +167,7 @@ class ReviewsActivity : AppBaseActivity() {
                     showProgress(false)
                     dialog.dismiss()
                     noInternetSnackBar()
-                })
+                })*/
             } else {
                 toast(getString(R.string.msg_not_allowed))
             }
@@ -186,7 +186,7 @@ class ReviewsActivity : AppBaseActivity() {
             if (Constants.isAllowedToCreate) {
 
                 showProgress(true)
-                callApi(getRestApis().deleteProductReview(mProductReviewData.id, requestModel), onApiSuccess = {
+                /*callApi(getRestApis().deleteProductReview(mProductReviewData.id, requestModel), onApiSuccess = {
                     showProgress(false)
                     snackBar(getString(R.string.success))
                     listProductReviews()
@@ -199,7 +199,7 @@ class ReviewsActivity : AppBaseActivity() {
                         confirmDialog()
                     }
                     showProgress(false)
-                })
+                })*/
             } else {
                 toast(getString(R.string.msg_not_allowed))
             }
@@ -231,7 +231,7 @@ class ReviewsActivity : AppBaseActivity() {
 
             if (Constants.isAllowedToCreate) {
                 showProgress(true)
-                callApi(getRestApis().updateProductReview(mProductReviewData.id, requestModel), onApiSuccess = {
+                /*callApi(getRestApis().updateProductReview(mProductReviewData.id, requestModel), onApiSuccess = {
                     showProgress(false)
                     snackBar(getString(R.string.update))
                     dialog.dismiss()
@@ -245,7 +245,7 @@ class ReviewsActivity : AppBaseActivity() {
                     showProgress(false)
                     dialog.dismiss()
                     noInternetSnackBar()
-                })
+                })*/
             } else {
                 toast(getString(R.string.msg_not_allowed))
             }
@@ -255,7 +255,7 @@ class ReviewsActivity : AppBaseActivity() {
 
     private fun listProductReviews() {
         showProgress(true)
-        callApi(getRestApis().listProductReviews(mProductModels.pro_id!!), onApiSuccess = {
+        /*callApi(getRestApis().listProductReviews(mProductModels.pro_id!!), onApiSuccess = {
             showProgress(false)
             if (it.isEmpty()) {
                 showList(false)
@@ -274,7 +274,7 @@ class ReviewsActivity : AppBaseActivity() {
             openLottieDialog() {
                 listProductReviews()
             }
-        })
+        })*/
     }
 
     private fun showList(isVisible:Boolean) {

@@ -99,13 +99,13 @@ class OfferActivity : AppBaseActivity() {
         showProgress(true)
         val requestModel = RequestModel(); requestModel.page = page
 
-        callApi(getRestApis(false).getOfferProducts(requestModel), onApiSuccess = {
+        /*callApi(getRestApis(false).getOfferProducts(requestModel), onApiSuccess = {
             mIsLoading = it.size != 10; showProgress(false); offerAdapter?.addMoreItems(it)
         }, onApiError = {
             showProgress(false); snackBarError(it)
         }, onNetworkError = {
             showProgress(false); noInternetSnackBar()
-        })
+        })*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
