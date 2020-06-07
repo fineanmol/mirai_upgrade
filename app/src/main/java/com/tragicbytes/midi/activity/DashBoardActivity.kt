@@ -130,7 +130,7 @@ class DashBoardActivity : AppBaseActivity() {
             closeDrawer()
             enable(ivWishList)
             loadFragment(mWishListFragment)
-            title = getString(R.string.lbl_wish_list)
+            title = getString(R.string.lbl_upload_banner)
         }
         adsImagesBtn.onClick {
             if (!isLoggedIn()) {
@@ -138,7 +138,7 @@ class DashBoardActivity : AppBaseActivity() {
             }
             closeDrawer()
             loadWishListFragment()
-            title = getString(R.string.lbl_wish_list)
+            title = getString(R.string.lbl_upload_banner)
         }
 
 
@@ -153,7 +153,7 @@ class DashBoardActivity : AppBaseActivity() {
             if (mCartFragment.isAdded) {
 //                mCartFragment.invalidateCartLayout(getCartListFromPref())
             }
-            title = getString(R.string.cart)
+            title = getString(R.string.my_banners)
         }
 
 

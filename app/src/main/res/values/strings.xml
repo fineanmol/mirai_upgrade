@@ -16,6 +16,7 @@
     <string name="lbl_my_order">My Order</string>
     <string name="lbl_reward">Reward</string>
     <string name="lbl_wish_list">Wishlist</string>
+    <string name="lbl_upload_banner" translatable="false">Upload Banner</string>
     <string name="lbl_women">Women</string>
     <string name="lbl_men">Men</string>
     <string name="lbl_kids">Kids</string>
@@ -223,6 +224,7 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="cart">My Cart</string>
+    <string name="my_banners" translatable="false">My Banners</string>
     <string name="more">Read More</string>
     <string name="less">Read Less</string>
     <string name="order_summary">Order Summary</string>

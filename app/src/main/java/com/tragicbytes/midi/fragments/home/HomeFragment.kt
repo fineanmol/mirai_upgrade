@@ -118,8 +118,8 @@ class HomeFragment : BaseFragment() {
     private fun getSliders() {
 //        val images = getSlideImagesFromPref()
         val images=ArrayList<SliderImagesResponse>()
-        var sliderImage1=SliderImagesResponse("","",R.drawable.upload_image_banner)
-        var sliderImage2=SliderImagesResponse("","",R.drawable.upload_image_banner)
+        var sliderImage1=SliderImagesResponse("","",R.drawable.top_banner)
+        var sliderImage2=SliderImagesResponse("","",R.drawable.top_banner_2)
         images.add(sliderImage1)
         images.add(sliderImage2)
 
