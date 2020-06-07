@@ -156,6 +156,7 @@ class DashBoardActivity : AppBaseActivity() {
             title = getString(R.string.cart)
         }
 
+
         llProfile.onClick {
             if (!isLoggedIn()) {
                 launchActivity<SignInUpActivity>(); return@onClick
@@ -400,6 +401,4 @@ class DashBoardActivity : AppBaseActivity() {
         }
     }
 
-
-    //endregion
 }

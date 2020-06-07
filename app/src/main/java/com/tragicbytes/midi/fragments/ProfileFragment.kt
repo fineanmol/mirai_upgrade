@@ -18,11 +18,15 @@ import android.widget.EditText
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import com.google.android.gms.tasks.Continuation
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
@@ -175,37 +179,52 @@ class ProfileFragment : BaseFragment() {
         showProgress()
         val requestModel = RequestModel()
         requestModel.base64_img = encodedImage
-
-
-        val profileUpdates = UserProfileChangeRequest.Builder()
-            .setDisplayName(FirebaseAuth.getInstance().currentUser!!.displayName.toString())
-            .setPhotoUri(Uri.parse(selectedImage.toString()))
-            .build();
-
-        FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    hideProgress()
-                    Log.d(TAG, "User profile updated.")
-                    snackBar("Profile Pic Uploaded")
-
-                    getSharedPrefInstance().setValue(
-                        Constants.SharedPref.USER_PROFILE_URL,
-                        FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
-                    )
-                    (activity as DashBoardActivity).changeProfile()
-                    Toast.makeText(
-                        context,
-                        FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    hideProgress()
-                } else {
-                    snackBar("Failed Upload")
-
+        storageReference = FirebaseStorage.getInstance().reference
+        val ref =
+            storageReference!!.child("uploads/" + getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DISPLAY_NAME) + "user_image")
+        val uploadTask = ref.putFile(selectedImage)
+        uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (!task.isSuccessful) {
+                task.exception?.let {
+                    throw it
                 }
-
             }
+            return@Continuation ref.downloadUrl
+        }).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val downloadUri = task.result
+                val profileUpdates = UserProfileChangeRequest.Builder()
+                    .setPhotoUri(Uri.parse(downloadUri.toString()))
+                    .build()
+
+                FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            hideProgress()
+                            snackBar("Profile Pic Uploaded")
+
+                            getSharedPrefInstance().setValue(
+                                Constants.SharedPref.USER_PROFILE_URL,
+                                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
+                            )
+                            (activity as DashBoardActivity).changeProfile()
+                            Toast.makeText(
+                                context,
+                                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            hideProgress()
+                        } else {
+                            snackBar("Failed Upload")
+
+                        }
+
+                    }
+            }
+        }
+
+
+
     }
 
     private fun showChangePasswordDialog() {
