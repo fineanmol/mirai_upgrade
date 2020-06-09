@@ -11,6 +11,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -100,8 +101,13 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
             .child("AdvDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
-                    p0.children.forEach {
-                        advCount= (it.key!!.toInt()+1).toString()
+                    if(p0.exists()){
+                        p0.children.forEach {
+                            advCount= (it.key!!.toInt()+1).toString()
+                        }
+                    }
+                    else{
+                        advCount=0.toString()
                     }
                 }
 
@@ -714,6 +720,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         // Check that it is the SecondActivity with an OK result
         if (requestCode == 21) {
             if (resultCode == Activity.RESULT_OK) { // Get String data from Intent
+                showProgress(true)
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
                 adDetails = returnString as AdDetailsModel.AdDetails
@@ -729,6 +736,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                         productViewPager.adapter?.notifyDataSetChanged()
                         dots.attachViewPager(productViewPager)
                         dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                        showProgress(false)
                     }
                 }
             }
@@ -927,7 +935,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         val uuid: String = UUID.randomUUID().toString()
         return uuid.replace("-".toRegex(), "")
     }
-
 
     //endregion
 }

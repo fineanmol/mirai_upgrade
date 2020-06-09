@@ -12,8 +12,6 @@ import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.CountDownTimer
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
@@ -26,16 +24,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -45,16 +40,13 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
-import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
-import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_NAME
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_TAG
-import com.tragicbytes.midi.utils.Constants.AppBroadcasts.ADDRESS_UPDATE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.ORDER_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.PROFILE_UPDATE
@@ -70,10 +62,8 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_ADDRESS
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_CART_COUNT
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_DASHBOARD
-import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_ORDERS
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_RECENTS
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_USER_ADDRESS
-import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_WISHLIST_COUNT
 import com.tragicbytes.midi.utils.Constants.SharedPref.SLIDER_IMAGES_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DISPLAY_NAME
@@ -757,13 +747,18 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
-fun setBannerData(view: View, item: AdDetailsModel.AdsCompleteDetails) {
+fun setBannerData(
+    view: View,
+    item: AdDetailsModel.AdsCompleteDetails,
+    position: Int
+) {
     if (item.bannerImageUrl != null){
         fetchImageAsync(item.bannerImageUrl,
         onComplete = {
             view.ivBannerPrev.setImageBitmap(it)
         })
-        view.tvBannerId.text=item.bannerImageUrl.toString()
+        view.tvBannerId.text="Banner ${position+1}"
+        view.tvBannerEndDate.text="Expires On ${item.endDate}"
     }
 }
 fun Activity.fetchAndStoreAddressData() {

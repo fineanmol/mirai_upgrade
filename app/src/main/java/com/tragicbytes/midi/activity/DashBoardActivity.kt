@@ -304,7 +304,7 @@ class DashBoardActivity : AppBaseActivity() {
         selectedFragment = aFragment
     }
 
-    private fun loadHomeFragment() {
+    internal fun loadHomeFragment() {
         enable(ivHome)
         //if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
         loadFragment(mHomeFragment)

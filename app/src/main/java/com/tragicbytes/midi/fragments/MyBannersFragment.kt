@@ -6,14 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.database.*
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.AdDetailsModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
-import kotlinx.android.synthetic.main.fragment_show_my_banners.refreshLayout
-import kotlinx.android.synthetic.main.item_banner.*
 
 class MyBannersFragment : BaseFragment() {
 
@@ -38,14 +37,14 @@ class MyBannersFragment : BaseFragment() {
         publishedBannersList.setVerticalLayout()
         setupAdsCompleteDetailsAdapter()
 
+        btnShopNow.onClick {
+            if (activity!! is DashBoardActivity) {
+                (activity as DashBoardActivity).loadHomeFragment()
+            }
+        }
+
         loadApis()
-        refreshLayout.setOnRefreshListener {
-            loadApis()
-            refreshLayout.isRefreshing=false
-        }
-        refreshLayout.viewTreeObserver.addOnScrollChangedListener {
-            refreshLayout.isEnabled =true
-        }
+
 
     }
 
@@ -92,6 +91,8 @@ class MyBannersFragment : BaseFragment() {
                                 myBannerList.add(bannerData)
                             }
                             mAdsCompleteDetailsAdapter?.addItems(myBannerList)
+                            publishedBannersList.visibility=View.VISIBLE
+                            llNoItems.visibility=View.GONE
                         }
                     }
 
@@ -106,7 +107,7 @@ class MyBannersFragment : BaseFragment() {
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
-        mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item) })
+        mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item,position) })
         //loader2.hide()
         //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
         /*publishedBannersList.apply {

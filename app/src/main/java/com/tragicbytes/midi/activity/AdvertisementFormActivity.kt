@@ -57,13 +57,13 @@ class AdvertisementFormActivity : AppBaseActivity() {
                     imageAsBytes.size
                 )
             )
-            encodedImage=getSharedPrefInstance().getStringValue(ADV_LOGO)
+            //encodedImage=getSharedPrefInstance().getStringValue(ADV_LOGO)
         }
         else{
             var defaultImageBitmap=BitmapFactory.decodeResource(applicationContext.resources,
                 R.drawable.ic_profile)
             ivAdsImage.setImageBitmap(defaultImageBitmap)
-            encodedImage=encodeImage(defaultImageBitmap)
+            //encodedImage=encodeImage(defaultImageBitmap)
 
         }
         if (getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()) {
@@ -87,7 +87,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-                    getSharedPrefInstance().setValue(ADV_LOGO, encodedImage)
+//                    getSharedPrefInstance().setValue(ADV_LOGO, encodedImage)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -219,6 +219,11 @@ class AdvertisementFormActivity : AppBaseActivity() {
         }
 
     }
+
+    /*override fun onBackPressed() {
+        launchActivity<DashBoardActivity>{}
+        super.onResume()
+    }*/
 
 
 }

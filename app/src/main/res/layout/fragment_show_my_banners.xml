@@ -1,17 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.tragicbytes.midi.utils.CustomSwipeToRefresh xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/refreshLayout"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_color">
+    android:gravity="center"
+    android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/publishedBannersList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="@dimen/spacing_large"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/publishedBannersList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/spacing_large"
+        android:visibility="gone" />
+    <LinearLayout
+        android:id="@+id/llNoItems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imgCart"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_cart_empty" />
+
+        <TextView
+            style="@style/Heading"
+            android:text="@string/llb_no_items_in_your_cart"
+            android:textSize="@dimen/font_size_normal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnShopNow"
+            style="@style/MaterialButtonStyle.Filled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_standard_new"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            android:text="@string/lbl_shop_now"
+            android:textSize="@dimen/font_size_small" />
+    </LinearLayout>
 
 
 
-</com.tragicbytes.midi.utils.CustomSwipeToRefresh>
+</RelativeLayout>
