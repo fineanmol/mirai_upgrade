@@ -180,6 +180,7 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="hint_confirm_password">Confirm Password</string>
+
     <string name="hint_full_name">Full Name*</string>
     <string name="hint_address">Address</string>
     <string name="hint_state">State</string>

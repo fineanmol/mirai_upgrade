@@ -4,14 +4,13 @@ import android.app.Dialog
 import android.content.Context
 import androidx.multidex.MultiDex
 import androidx.multidex.MultiDexApplication
-import com.google.android.gms.ads.MobileAds
+import com.onesignal.OneSignal
 import com.tragicbytes.midi.network.RestApis
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.LANGUAGE
 import com.tragicbytes.midi.utils.LocaleManager
 import com.tragicbytes.midi.utils.SharedPrefUtils
 import com.tragicbytes.midi.utils.extensions.getSharedPrefInstance
-import com.onesignal.OneSignal
 import okhttp3.OkHttpClient
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
@@ -21,7 +20,6 @@ class WooBoxApp : MultiDexApplication() {
     private var userUploadImageEncoded: String? = null
 
 
-
     fun getUserUploadImageEncoded(): String? {
         return userUploadImageEncoded
     }
@@ -29,28 +27,30 @@ class WooBoxApp : MultiDexApplication() {
     fun setUserUploadImageEncoded(userUploadImageEncoded: String?) {
         this.userUploadImageEncoded = userUploadImageEncoded
     }
+
     override fun onCreate() {
         super.onCreate()
         appInstance = this
         getSharedPrefInstance().apply {
             appTheme = getIntValue(Constants.SharedPref.THEME, Constants.THEME.LIGHT)
-            language = getStringValue(LANGUAGE,"en")
+            language = getStringValue(LANGUAGE, "en")
         }
 
         // Set Custom Font
         CalligraphyConfig.initDefault(
-                CalligraphyConfig.Builder().setDefaultFontPath(getString(R.string.font_regular)).setFontAttrId(
-                        R.attr.fontPath
+            CalligraphyConfig.Builder().setDefaultFontPath(getString(R.string.font_regular))
+                .setFontAttrId(
+                    R.attr.fontPath
                 ).build()
         )
 
-        MobileAds.initialize(this) {}
+        /*   MobileAds.initialize(this) {}*/
 
         // OneSignal Initialization
         OneSignal.startInit(this)
-                .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-                .unsubscribeWhenNotificationsAreDisabled(true)
-                .init()
+            .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
+            .unsubscribeWhenNotificationsAreDisabled(true)
+            .init()
         OneSignal.clearOneSignalNotifications()
     }
 

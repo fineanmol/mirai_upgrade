@@ -42,7 +42,7 @@
             android:id="@+id/edtResetEmail"
             style="@style/FieldRounded"
             android:layout_marginTop="@dimen/spacing_middle"
-            android:hint="@string/hint_confirm_password"
+            android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
 
             />

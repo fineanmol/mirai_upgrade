@@ -120,8 +120,11 @@ class HomeFragment : BaseFragment() {
         val images=ArrayList<SliderImagesResponse>()
         var sliderImage1=SliderImagesResponse("","",R.drawable.top_banner)
         var sliderImage2=SliderImagesResponse("","",R.drawable.top_banner_2)
+        var sliderImage3=SliderImagesResponse("","",R.drawable.upload_banner_3)
+
         images.add(sliderImage1)
         images.add(sliderImage2)
+        images.add(sliderImage3)
 
         val sliderImagesAdapter = HomeSliderAdapter(activity!!, images)
         homeSlider.adapter = sliderImagesAdapter

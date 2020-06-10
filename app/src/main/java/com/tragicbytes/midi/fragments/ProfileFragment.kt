@@ -142,8 +142,8 @@ class ProfileFragment : BaseFragment() {
             }
         }
         btnChangePassword.onClick {
-            snackBar(user!!.photoUrl.toString())
-           // showChangePasswordDialog()
+
+           showChangePasswordDialog()
         }
         btnDeactivate.onClick {
 

@@ -1,5 +1,6 @@
 package com.tragicbytes.midi.activity
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
@@ -23,6 +24,7 @@ import java.util.*
 
 class SplashActivity : FirebaseConfig() {
 
+    @SuppressLint("PackageManagerGetSignatures")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)

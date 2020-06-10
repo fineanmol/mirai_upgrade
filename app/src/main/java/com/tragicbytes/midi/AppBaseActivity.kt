@@ -58,7 +58,7 @@ open class AppBaseActivity : AppCompatActivity() {
     }
 
     fun showBannerAds() {
-        MobileAds.initialize(this, getString(R.string.ad_mob_app_id))
+       /* MobileAds.initialize(this, getString(R.string.ad_mob_app_id))
         val adMobBanner = AdView(this)
         adMobBanner.adSize = AdSize.BANNER
         adMobBanner.adUnitId = getString(R.string.ad_mob_banner_id)
@@ -74,11 +74,11 @@ open class AppBaseActivity : AppCompatActivity() {
             }
         }
         adView.setHorizontalGravity(Gravity.CENTER_HORIZONTAL)
-        adView.addView(adMobBanner)
+        adView.addView(adMobBanner)*/
     }
 
     fun showInterstitialAd() {
-        isAdShown=true
+       /* isAdShown=true
         MobileAds.initialize(this, getString(R.string.ad_mob_app_id))
         val requestBuilder = AdRequest.Builder()
         var interstitial = InterstitialAd(this)
@@ -88,7 +88,7 @@ open class AppBaseActivity : AppCompatActivity() {
             override fun onAdLoaded() {
                 interstitial.show()
             }
-        }
+        }*/
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
