@@ -49,7 +49,7 @@ class DashBoardActivity : AppBaseActivity() {
     var selectedFragment: Fragment? = null
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
-    val user = FirebaseAuth.getInstance().currentUser!!
+
     //endregion
 
 
@@ -397,6 +397,7 @@ class DashBoardActivity : AppBaseActivity() {
 
     fun changeProfile() {
         if (isLoggedIn()) {
+            val user = FirebaseAuth.getInstance().currentUser!!
             civProfile.loadImageFromUrl(user.photoUrl.toString(), aPlaceHolderImage = R.drawable.ic_profile)
         }
     }
