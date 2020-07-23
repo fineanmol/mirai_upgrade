@@ -88,7 +88,8 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_46sdp"
-                    android:text="Ads from Text" />
+                    android:drawableStart="@drawable/ic_baseline_phone_android_24"
+                    android:text="Create Ad" />
                 <TextView
                     android:id="@+id/adsImagesBtn"
                     style="@style/SidebarLabel.SidebarOption"
@@ -107,7 +108,12 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_46sdp"
                     android:text="Profile" />
-
+                <TextView
+                    android:drawableStart="@drawable/ic_baseline_account_balance_wallet_24"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:gravity="center_vertical"
+                    android:paddingStart="@dimen/_46sdp"
+                    android:text="Wallet" />
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/stroke_width"
@@ -151,31 +157,35 @@
                 <TextView
                     android:id="@+id/tvHelp"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:paddingStart="@dimen/_46sdp"
+                    android:drawableStart="@drawable/ic_outline_help_outline_24"
                     android:text="@string/lbl_help"
                     android:visibility="visible" />
 
                 <TextView
                     android:id="@+id/tvContactus"
+                    android:drawableStart="@drawable/ic_baseline_mail_outline_24"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="@string/lbl_contact_us" />
+                <TextView
+                    android:id="@+id/tvFaq"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:text="@string/lbl_faq" />
                 <TextView
                     android:id="@+id/tvAbout"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:paddingStart="@dimen/_46sdp"
+                    android:drawableStart="@drawable/ic_about_widgets_24"
                     android:text="@string/lbl_about" />
 
 
                 <TextView
                     android:id="@+id/tvShareApp"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:paddingStart="@dimen/_46sdp"
+                    android:drawableStart="@drawable/ic_baseline_share_24"
                     android:text="@string/lbl_share_app" />
             </LinearLayout>
 
 
-            <RelativeLayout
+            <!--<RelativeLayout
                 android:layout_width="@dimen/sidebar_img_height"
                 android:layout_height="@dimen/sidebar_img_height"
                 android:layout_gravity="center_horizontal"
@@ -184,20 +194,20 @@
                 android:background="@drawable/bg_logo"
                 android:gravity="center">
 
-                <ImageView
+                &lt;!&ndash;<ImageView
                     android:id="@+id/ivAppLogo"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_app_icon" />
+                    android:src="@drawable/ic_app_icon" />&ndash;&gt;
 
                 <TextView
                     android:id="@+id/tvAppName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ivAppLogo"
+
                     android:layout_centerHorizontal="true"
-                    android:text="NDC"
+                    android:text="Mirai Vizion"
                     android:textAppearance="@style/FontBold"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/font_size_medium" />
@@ -213,7 +223,60 @@
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_nano" />
 
-            </RelativeLayout>
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="@string/powered"
+                    android:textAppearance="@style/FontBold"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/font_size_medium" />
+
+            </RelativeLayout>-->
+        <LinearLayout
+            android:layout_width="@dimen/sidebar_img_height"
+            android:layout_height="@dimen/sidebar_img_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/spacing_standard_new"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:background="@drawable/bg_logo"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="@dimen/_30sdp"
+                android:id="@+id/tvAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_centerHorizontal="true"
+                android:text="Mirai Vizion"
+                android:textAppearance="@style/FontBold"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/font_size_medium" />
+
+            <TextView
+                android:id="@+id/tvVersionCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvAppName"
+                android:layout_centerHorizontal="true"
+                android:letterSpacing="0.2"
+                android:text="v 1.0.0"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_size_nano" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:text="@string/powered"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/font_size_micro" />
+        </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

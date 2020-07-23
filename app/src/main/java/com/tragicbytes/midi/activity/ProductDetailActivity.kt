@@ -58,7 +58,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var isAddedToCart: Boolean = false
     private val mImages = ArrayList<String>()
     private val myImages = ArrayList<Bitmap>()
-
     var i: Int = 0
     private var adsGender: String = ""
     private var adsAgeGroup: String = ""

@@ -363,7 +363,8 @@
     <string name="lbl_great_deal">Great Deals</string>
     <string name="load_more">Load More</string>
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
-    <string name="choose_date">Choose Date</string>
+    <string name="choose_date" translatable="false">Choose Date</string>
+    <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
 
 
     <string-array name="qty_array">
