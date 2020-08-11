@@ -365,6 +365,7 @@
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="choose_date" translatable="false">Choose Date</string>
     <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
+    <string name="title_transaction">Transactions</string>
 
 
     <string-array name="qty_array">
