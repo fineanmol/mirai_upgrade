@@ -10,7 +10,7 @@ import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
 
 
-open class FirebaseConfig : AppBaseActivity() {
+open class FirebaseConfig : AppCompatActivity() {
 
     var firebaseLogged = false
     open lateinit var mFirebaseRemoteConfig: FirebaseRemoteConfig

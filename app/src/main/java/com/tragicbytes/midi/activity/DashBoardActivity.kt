@@ -1,6 +1,5 @@
 package com.tragicbytes.midi.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -24,11 +23,9 @@ import com.tragicbytes.midi.models.CategoryData
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.PROFILE_UPDATE
-import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.bottom_bar.*
-import kotlinx.android.synthetic.main.item_navigation_category.view.*
 import kotlinx.android.synthetic.main.layout_sidebar.*
 import kotlinx.android.synthetic.main.menu_cart.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -36,14 +33,14 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class DashBoardActivity : AppBaseActivity() {
 
-    private var selectedDashboard: Int=0
+    private var selectedDashboard: Int = 0
+
     //region Variables
     private var count: String = ""
-    private lateinit var mHomeFragment :Fragment
+    private lateinit var mHomeFragment: Fragment
     private val mWishListFragment = UploadBannerFragment()
     private val mCartFragment = MyBannersFragment()
     private val mProfileFragment = ProfileFragment()
-
 
 
     var selectedFragment: Fragment? = null
@@ -53,7 +50,6 @@ class DashBoardActivity : AppBaseActivity() {
     //endregion
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -61,11 +57,12 @@ class DashBoardActivity : AppBaseActivity() {
             supportFragmentManager.beginTransaction()
                 .remove(supportFragmentManager.findFragmentById(R.id.container)!!).commit()
         }
-        selectedDashboard= getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD,0)
-        if (selectedDashboard==0){
-            mHomeFragment=HomeFragment()
-        }else if (selectedDashboard==1){
-            mHomeFragment=HomeFragment2()
+        selectedDashboard =
+            getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD, 0)
+        if (selectedDashboard == 0) {
+            mHomeFragment = HomeFragment()
+        } else if (selectedDashboard == 1) {
+            mHomeFragment = HomeFragment2()
         }
 
 
@@ -95,7 +92,11 @@ class DashBoardActivity : AppBaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (selectedDashboard!= getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD,0)){
+        if (selectedDashboard != getSharedPrefInstance().getIntValue(
+                Constants.SharedPref.KEY_DASHBOARD,
+                0
+            )
+        ) {
             recreate()
         }
     }
@@ -245,7 +246,6 @@ class DashBoardActivity : AppBaseActivity() {
     }
 
 
-
     private fun setCartCountFromPref() {
         count = getCartCount()
         tvNotificationCount.text = count
@@ -309,9 +309,9 @@ class DashBoardActivity : AppBaseActivity() {
         //if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
         loadFragment(mHomeFragment)
         title = getString(R.string.home)
-        if (mHomeFragment is HomeFragment){
+        if (mHomeFragment is HomeFragment) {
             (mHomeFragment as HomeFragment).onNetworkRetry = { loadApis() }
-        }else if (mHomeFragment is HomeFragment2){
+        } else if (mHomeFragment is HomeFragment2) {
             (mHomeFragment as HomeFragment2).onNetworkRetry = { loadApis() }
         }
     }
@@ -356,7 +356,13 @@ class DashBoardActivity : AppBaseActivity() {
     }
 
     private fun setUpDrawerToggle() {
-        val toggle = object : ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
+        val toggle = object : ActionBarDrawerToggle(
+            this,
+            drawerLayout,
+            toolbar,
+            R.string.navigation_drawer_open,
+            R.string.navigation_drawer_close
+        ) {
             override fun onDrawerSlide(drawerView: View, slideOffset: Float) {
                 super.onDrawerSlide(drawerView, slideOffset)
                 if (WooBoxApp.language == "ar") {
@@ -398,7 +404,10 @@ class DashBoardActivity : AppBaseActivity() {
     fun changeProfile() {
         if (isLoggedIn()) {
             val user = FirebaseAuth.getInstance().currentUser!!
-            civProfile.loadImageFromUrl(user.photoUrl.toString(), aPlaceHolderImage = R.drawable.ic_profile)
+            civProfile.loadImageFromUrl(
+                user.photoUrl.toString(),
+                aPlaceHolderImage = R.drawable.ic_profile
+            )
         }
     }
 

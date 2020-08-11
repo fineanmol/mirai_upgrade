@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.tragicbytes.FirebaseConfig
+import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
@@ -22,7 +23,7 @@ import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 
 
-class SignInUpActivity : FirebaseConfig() {
+class SignInUpActivity : AppBaseActivity() {
 
     private val mSignInFragment: SignInFragment = SignInFragment()
     private val mSignUpFragment: SignUpFragment = SignUpFragment()

@@ -1,17 +1,35 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.fragments.MyBannersFragment
+import com.tragicbytes.midi.fragments.ProfileFragment
+import com.tragicbytes.midi.fragments.UploadBannerFragment
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_account.*
+import kotlinx.android.synthetic.main.activity_account.txtDisplayName
+import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.bottom_bar.*
+import kotlinx.android.synthetic.main.layout_sidebar.*
+import kotlinx.android.synthetic.main.menu_cart.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
 class AccountActivity : AppBaseActivity() {
     val user = FirebaseAuth.getInstance().currentUser!!
+
+    private val mProfileFragment = ProfileFragment()
+    var selectedFragment: Fragment? = null
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account)
@@ -68,10 +86,52 @@ class AccountActivity : AppBaseActivity() {
                 launchActivity<AddressManagerActivity>()
             }
         }
+        profileButton.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<SignInUpActivity>(); return@onClick
+            }
+
+            enable(ivProfile)
+            loadFragment(mProfileFragment)
+            title = getString(R.string.profile)
+
+        }
         /*   tvWishlist.onClick {
                setResult(Activity.RESULT_OK)
                finish()
            }*/
         showBannerAds()
     }
+
+    private fun loadFragment(aFragment: Fragment) {
+        if (selectedFragment != null) {
+            if (selectedFragment == aFragment) return
+            hideFragment(selectedFragment!!)
+        }
+        if (aFragment.isAdded) {
+            showFragment(aFragment)
+        } else {
+
+            addFragment(aFragment, R.id.container)
+        }
+        selectedFragment = aFragment
+    }
+    private fun enable(aImageView: ImageView?) {
+        disableAll()
+        // showCartCount()
+        aImageView?.background = getDrawable(R.drawable.bg_circle_primary_light)
+        aImageView?.applyColorFilter(color(R.color.colorPrimary))
+    }
+    private fun disableAll() {
+        disable(ivHome)
+        disable(ivWishList)
+        disable(ivCart)
+        disable(ivProfile)
+    }
+
+    private fun disable(aImageView: ImageView?) {
+        aImageView?.background = null
+        aImageView?.applyColorFilter(color(R.color.textColorSecondary))
+    }
+
 }

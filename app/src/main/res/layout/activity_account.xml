@@ -125,10 +125,7 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvAddressManager"
-                style="@style/AccountLabel"
-                android:text="@string/lbl_address_manager" />
+
 
             <TextView
                 android:visibility="gone"
@@ -143,6 +140,14 @@
                 android:text="@string/lbl_my_offers" />
 
             <TextView
+                android:id="@+id/profileButton"
+                style="@style/AccountLabel"
+                android:text="@string/profile" />
+            <TextView
+                android:id="@+id/tvAddressManager"
+                style="@style/AccountLabel"
+                android:text="@string/lbl_address_manager" />
+            <TextView
                 android:visibility="gone"
                 android:id="@+id/tvWishlist"
                 style="@style/AccountLabel"
@@ -152,6 +157,8 @@
                 android:id="@+id/tvHelpCenter"
                 style="@style/AccountLabel"
                 android:text="@string/lbl_help_center" />
+
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignOut"
