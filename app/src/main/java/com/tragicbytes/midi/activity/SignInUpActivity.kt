@@ -28,7 +28,7 @@ class SignInUpActivity : AppBaseActivity() {
     private var callbackManager: CallbackManager? = null
     private var mAuth: FirebaseAuth? = null
     private lateinit var dbReference: DatabaseReference
-    private lateinit var lastUserId:String
+    private var lastUserId:String ="0"
 
 //    private var mGoogleSignInClient: GoogleSignInClient? = null
 
