@@ -23,8 +23,6 @@ class AddAddressActivity : AppBaseActivity(), SimpleLocation.Listener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_address)
         setToolbar(toolbar)
-        dbReference = FirebaseDatabase.getInstance().reference
-
 
         dbReference = FirebaseDatabase.getInstance().reference
 

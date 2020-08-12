@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.facebook.CallbackManager
@@ -9,16 +10,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.tragicbytes.FirebaseConfig
+import com.google.firebase.database.*
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 
@@ -29,6 +27,9 @@ class SignInUpActivity : AppBaseActivity() {
     private val mSignUpFragment: SignUpFragment = SignUpFragment()
     private var callbackManager: CallbackManager? = null
     private var mAuth: FirebaseAuth? = null
+    private lateinit var dbReference: DatabaseReference
+    private lateinit var lastUserId:String
+
 //    private var mGoogleSignInClient: GoogleSignInClient? = null
 
 
@@ -36,6 +37,20 @@ class SignInUpActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_up)
         FacebookSdk.sdkInitialize(applicationContext)
+        dbReference = FirebaseDatabase.getInstance().reference
+
+        val lastQuery: Query = dbReference.child("UsersData").orderByKey().limitToLast(1)
+        lastQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                dataSnapshot.children.forEach {
+                    lastUserId=((it.key?.split("00")?.last().toString()).toInt()+1).toString()
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle possible errors.
+            }
+        })
 
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestIdToken(getString(R.string.default_web_client_id))
@@ -218,10 +233,10 @@ class SignInUpActivity : AppBaseActivity() {
 //        })
 //    }
 
-    fun addUser(requestModel: RequestModel) {
+    fun addUser(userPersonalDetails: UserDetailsModel.UserPersonalDetails) {
         mAuth?.createUserWithEmailAndPassword(
-            requestModel.email.toString(),
-            requestModel.password.toString()
+            userPersonalDetails.email,
+            userPersonalDetails.password
         )
             ?.addOnCompleteListener(this) { task ->
                 when {
@@ -242,22 +257,29 @@ class SignInUpActivity : AppBaseActivity() {
                         /*Send verification email End*/
 
                         val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(requestModel.first_name.toString() + " " + requestModel.last_name.toString())
+                            .setDisplayName(userPersonalDetails.firstName.toString() + " " + userPersonalDetails.lastName.toString())
                             .build()
                         user.updateProfile(profileUpdates)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
+                                    dbReference.child("UsersData")
+                                        .child("user00$lastUserId/UserPersonalDetails").setValue(userPersonalDetails)
+                                        .addOnSuccessListener {
+                                            showProgress(false)
+                                            snackBar("Account Created Successfully.")
+                                        }
+                                        .addOnFailureListener {
+                                            snackBar(it.message.toString())
+                                            showProgress(false)
+                                        }
                                     println(user.displayName.toString())
-
-
                                 } else {
-
                                     println(task.exception.toString())
                                 }
                             }
 
                         createCustomerByEmail(user) {
-                            runDelayedOnUiThread(1000) {
+                            runDelayedOnUiThread(2000) {
                                 loadSignInFragment()
                             }
                         }

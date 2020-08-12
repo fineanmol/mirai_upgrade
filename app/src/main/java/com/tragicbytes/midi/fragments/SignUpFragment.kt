@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.SignInUpActivity
 import com.tragicbytes.midi.models.RequestModel
+import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 
@@ -42,7 +43,13 @@ class SignUpFragment : BaseFragment() {
         requestModel.last_name = edtLastName.textToString()
         requestModel.password = edtPassword.textToString()
         requestModel.username=edtFirstName.textToString()
-        (activity as SignInUpActivity).addUser(requestModel)
+        /////////
+        val userPersonalDetails=UserDetailsModel.UserPersonalDetails()
+        userPersonalDetails.email = edtEmail.textToString()
+        userPersonalDetails.firstName = edtFirstName.textToString()
+        userPersonalDetails.lastName = edtLastName.textToString()
+        userPersonalDetails.password = edtPassword.textToString()
+        (activity as SignInUpActivity).addUser(userPersonalDetails)
     }
 
     private fun validate(): Boolean {
