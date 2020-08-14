@@ -193,7 +193,7 @@ class HomeFragment : BaseFragment() {
 //                setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
             }
 
-            dbReference.child("AppData/ListAvailableBannerData")
+            dbReference.child("AppData/imageTemplates")
                 .addValueEventListener(
                     object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {

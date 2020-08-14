@@ -128,16 +128,12 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     "This is custom banner upload section. Please add some more details to publish your advertisements",
                     "N/A",
                     "",
-                    listOf(),
                     true,
                     "Custom Banner",
                     "",
-                    100.toString(),
                     99999,
-                    500.toString(),
-                    200.toString(),
-                    "",
-                    ""
+                    "1000",
+                    "500"
                 )
                 mProductModel = userUploadBannerModel
                 setDetails(mProductModel!!)
