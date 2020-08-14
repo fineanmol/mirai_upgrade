@@ -183,7 +183,7 @@
         </provider> <!-- Enable only if you are want Onesignal support -->
         <meta-data
             android:name="com.onesignal.NotificationOpened.DEFAULT"
-            android:value="DISABLE" />
+            android:value="Enable" />
     </application>
 
 </manifest>
