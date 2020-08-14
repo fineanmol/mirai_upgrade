@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color">
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/adView"
+            android:layout_below="@+id/appBar"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingBottom="@dimen/spacing_standard_new">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/cat_7"
+                    android:minHeight="@dimen/_100sdp">
+
+                    <TextView
+                        android:id="@+id/Heading"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:text="Wallet balance"
+                        android:textAppearance="@style/FontMedium"
+                        android:textColor="@color/commonColorWhite"
+                        android:textSize="@dimen/font_size_small" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:text="$ 800.00"
+                        android:textAppearance="@style/FontBold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_size_xxxlarge" />
+
+                    <TextView
+android:id="@+id/viewAllTransactions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginTop="@dimen/_76sdp"
+                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+                        android:text="VIEW ALL TRANSACTIONS"
+                        android:textAppearance="@style/FontMedium"
+                        android:textColor="@color/color_selected"
+                        android:textSize="@dimen/font_size_small" />
+
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/txtDisplayName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:text="Add money to Wallet"
+                    android:textAppearance="@style/FontMedium"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_medium" />
+
+                <TextView
+                    android:id="@+id/tvVerifyHeading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    android:text="We suggest an average balance of $1000"
+                    android:textAppearance="@style/FontMedium"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_size_micro" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke_width"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+
+                    android:background="@color/view_color" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+
+                    android:layout_marginEnd="@dimen/spacing_standard_new"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvVerify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:text="Transaction ID"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_size_small" />
+
+                    <TextView
+                        android:id="@+id/txtDisplay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="022415593788"
+                        android:textAppearance="@style/FontBold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_large" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="-50dp"
+                        android:layout_marginEnd="@dimen/_38sdp"
+                        android:paddingStart="@dimen/spacing_middle"
+                        android:paddingEnd="@dimen/spacing_middle"
+                        android:text="Amount"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_size_small" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        android:text="$1,500.00"
+                        android:textAppearance="@style/FontBold"
+                        android:textColor="@color/green"
+                        android:textSize="@dimen/font_size_large" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke_width"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+
+                    android:background="@color/view_color" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_marginEnd="@dimen/spacing_standard_new"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/spacing_middle"
+                        android:text="Credited to"
+                        android:textAppearance="@style/FontMedium"
+                        android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_size_small" />
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:text="miraivizion@upi"
+                        android:textAppearance="@style/FontMedium"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_size_large" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke_width"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:background="@color/view_color" />
+
+
+                <com.google.android.material.button.MaterialButton
+
+                    style="@style/MaterialButtonStyle.Stroked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/spacing_standard_new"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:text="ADD MONEY" />
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>

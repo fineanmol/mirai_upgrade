@@ -11,6 +11,7 @@ import com.google.gson.Gson
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
+import com.tragicbytes.midi.activity.WalletActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.base.BaseRecyclerAdapter
@@ -533,8 +534,8 @@ class HomeFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_search -> {
-                activity?.launchActivity<SearchActivity>()
+            R.id.action_wallet -> {
+                activity?.launchActivity<WalletActivity>()
                 true
             }
             else -> super.onOptionsItemSelected(item)

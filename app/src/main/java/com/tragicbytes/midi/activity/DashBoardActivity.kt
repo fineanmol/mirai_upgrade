@@ -43,6 +43,7 @@ class DashBoardActivity : AppBaseActivity() {
     private val mProfileFragment = ProfileFragment()
 
 
+
     var selectedFragment: Fragment? = null
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
@@ -166,6 +167,15 @@ class DashBoardActivity : AppBaseActivity() {
             enable(ivProfile)
             loadFragment(mProfileFragment)
             title = getString(R.string.profile)
+        }
+        wallet.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<SignInUpActivity>(); return@onClick
+            }
+            closeDrawer()
+
+            launchActivity<WalletActivity>()
+            title = getString(R.string.action_wallet)
         }
         tvAccount.onClick {
             if (!isLoggedIn()) {

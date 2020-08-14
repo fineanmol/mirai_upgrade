@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isNotEmpty
 import com.google.firebase.database.*
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
@@ -97,9 +98,13 @@ class MyBannersFragment : BaseFragment() {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        rlNewestProduct.hide()
-                        rcvNewestProduct.hide()
-                        toast("Error Occured!")
+                        if( (rlNewestProduct != null) and rlNewestProduct.isNotEmpty()) {
+                            rlNewestProduct.hide()
+                            rcvNewestProduct.hide()
+                            toast("Error Occured!")
+                            }
+
+
                     }
                 }
 

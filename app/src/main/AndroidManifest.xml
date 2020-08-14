@@ -153,6 +153,9 @@
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".activity.WalletActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.CardActivity"
             android:screenOrientation="portrait" />
         <activity

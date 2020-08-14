@@ -366,6 +366,7 @@
     <string name="choose_date" translatable="false">Choose Date</string>
     <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
     <string name="title_transaction">Transactions</string>
+    <string name="action_wallet">Wallet</string>
 
 
     <string-array name="qty_array">
@@ -393,4 +394,6 @@
         <item>Arabic (Coming Soon)</item>
         <item>Vietnamese (Coming Soon)</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
