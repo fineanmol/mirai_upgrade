@@ -28,11 +28,7 @@ class FAQActivity : AppBaseActivity() {
         setToolbar(toolbar)
         setFaq()
 
-        BroadcastReceiverExt(this) {
-            onAction(CART_COUNT_CHANGE) {
-                setCartCount()
-            }
-        }
+
     }
 
     private fun setFaq() {
@@ -75,28 +71,7 @@ class FAQActivity : AppBaseActivity() {
         mFaqAdapter.addExpandableItems(mFaqList, map)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_dashboard, menu)
-        val menuWishItem: MenuItem = menu!!.findItem(R.id.action_cart)
-        val menuSearch: MenuItem = menu.findItem(R.id.action_search)
-        menuWishItem.isVisible = true
-        menuSearch.isVisible = false
-        mMenuCart = menuWishItem.actionView
-        mMenuCart.ivCart.setColorFilter(this.color(R.color.textColorPrimary))
-        setCartCount()
-        menuWishItem.actionView.onClick {
-            launchActivity<MyCartActivity> { }
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    fun setCartCount() {
-        val count = getCartCount()
-        mMenuCart.tvNotificationCount.text = count
-        if (count.checkIsEmpty()) {
-            mMenuCart.tvNotificationCount.hide()
-        } else {
-            mMenuCart.tvNotificationCount.show()
-        }
-    }
+
+
 }

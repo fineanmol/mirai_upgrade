@@ -124,7 +124,13 @@ class DashBoardActivity : AppBaseActivity() {
             loadFragment(mHomeFragment)
             title = getString(R.string.home)
         }
-
+        adsTextBtn.onClick {
+            if (!isLoggedIn()) {
+                launchActivity<SignInUpActivity>(); return@onClick
+            }
+            closeDrawer()
+            loadHomeFragment()
+        }
         llWishList.onClick {
             if (!isLoggedIn()) {
                 launchActivity<SignInUpActivity>(); return@onClick
@@ -189,13 +195,8 @@ class DashBoardActivity : AppBaseActivity() {
             launchActivity<SettingActivity>(requestCode = Constants.RequestCode.SETTINGS)
             closeDrawer()
         }
-        adsTextBtn.onClick {
-            if (!isLoggedIn()) {
-                launchActivity<SignInUpActivity>(); return@onClick
-            }
-            closeDrawer()
-            loadHomeFragment()
-        }
+
+
         paidAdsBtn.onClick {
             if (!isLoggedIn()) {
                 launchActivity<SignInUpActivity>(); return@onClick
@@ -218,6 +219,7 @@ class DashBoardActivity : AppBaseActivity() {
         }
         tvHelp.onClick { launchActivity<HelpActivity>(); closeDrawer() }
         tvContactus.onClick { launchActivity<ContactUsActivity>(); closeDrawer() }
+        tvFaq.onClick { launchActivity<FAQActivity>(); closeDrawer() }
         tvAbout.onClick { launchActivity<AboutActivity>(); closeDrawer() }
         ivCloseDrawer.onClick { closeDrawer() }
         tvLogout.onClick {

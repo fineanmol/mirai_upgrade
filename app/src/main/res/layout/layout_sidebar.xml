@@ -177,6 +177,7 @@
                 <TextView
                     android:id="@+id/tvFaq"
                     style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_faq_baseline_question_answer_24"
                     android:text="@string/lbl_faq" />
 
                 <TextView

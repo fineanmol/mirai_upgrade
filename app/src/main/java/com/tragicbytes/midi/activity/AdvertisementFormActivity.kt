@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import androidx.core.content.FileProvider
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -20,8 +21,10 @@ import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_NAME
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_TAG
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_advertisement_form.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.spinner_items.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -41,7 +44,6 @@ class AdvertisementFormActivity : AppBaseActivity() {
         ivAdsImage.setImageBitmap(bmp)*/
         showProgress(true)
         loadStoredData()
-
         setUpListener()
 
     }
@@ -125,6 +127,18 @@ class AdvertisementFormActivity : AppBaseActivity() {
     }
 
     private fun setUpListener() {
+
+        tvClearAdsData.onClick {
+            clearAdsDataPref()
+            editAdsName.text.clear()
+            edtAdDescription.text.clear()
+            edtAdTagline.text.clear()
+            edtAdBrandName.text.clear()
+           /* ivAdsImage.clearFindViewByIdCache()*/
+            snackBar("Clear Data Successful")
+            TODO("Remove Image from Above ivAdsImage variable")
+
+        }
         btnSaveAdsData.onClick {
             showProgress(true)
             if (validate()) {

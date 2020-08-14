@@ -9,6 +9,27 @@
     tools:context=".activity.AdvertisementFormActivity">
 
     <include layout="@layout/toolbar" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/spacing_middle">
+        <TextView
+            android:id="@+id/tvClearAdsData"
+            android:layout_alignParentEnd="true"
+            style="@style/Heading"
+            android:layout_marginEnd="@dimen/spacing_standard_new"
+            android:paddingStart="@dimen/spacing_middle"
+            android:paddingTop="@dimen/_6sdp"
+            android:paddingEnd="@dimen/spacing_middle"
+            android:paddingBottom="@dimen/_6sdp"
+            android:text="@string/lbl_clear_ads_details"
+            android:textStyle="bold"
+            android:visibility="visible"
+            android:background="@drawable/bg_rectangle_order"
+            android:textAppearance="@style/FontMedium"
+            android:textColor="@color/red" />
+
+    </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

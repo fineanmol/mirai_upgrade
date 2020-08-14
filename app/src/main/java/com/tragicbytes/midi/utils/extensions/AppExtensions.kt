@@ -45,6 +45,7 @@ import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
+import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_NAME
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_TAG
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
@@ -157,6 +158,14 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(KEY_DASHBOARD)
     getSharedPrefInstance().removeKey(KEY_ADDRESS)
     getSharedPrefInstance().removeKey(KEY_USER_ADDRESS)
+}
+fun clearAdsDataPref() {
+    getSharedPrefInstance().removeKey(ADV_LOGO)
+    getSharedPrefInstance().removeKey(ADV_NAME)
+    getSharedPrefInstance().removeKey(ADV_DESC)
+    getSharedPrefInstance().removeKey(ADV_TAG)
+    getSharedPrefInstance().removeKey(ADV_BRAND)
+
 }
 
 fun getSharedPrefInstance(): SharedPrefUtils {
