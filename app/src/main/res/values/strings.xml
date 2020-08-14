@@ -68,7 +68,7 @@
     <string name="lbl_price">Price</string>
     <string name="lbl_select_all">Select All</string>
     <string name="lbl_colors">Gender</string>
-    <string name="lbl_size">Age Group</string>
+    <string name="lbl_size">Age Range</string>
     <string name="lbl_discount">Discount</string>
     <string name="lbl_ratings">Ratings</string>
     <string name="lbl_reset">Reset</string>
@@ -314,7 +314,7 @@
     <string name="lbl_night_mode">Night Mode(Coming Soon)</string>
     <string name="lbl_availability">Availability :</string>
     <string name="lbl_in_stock">In Stock</string>
-    <string name="lbl_select_quantity">Select Quantity</string>
+    <string name="lbl_select_quantity">Select Location</string>
     <string name="lbl_offer_not_available">Offer not available</string>
     <string name="lbl_clear_cart">Clear Cart</string>
     <string name="lbl_testimonials">Testimonials</string>
@@ -396,4 +396,5 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="selectLocation">Select Location</string>
 </resources>

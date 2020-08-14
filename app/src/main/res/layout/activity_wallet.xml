@@ -103,27 +103,21 @@ android:id="@+id/viewAllTransactions"
                     android:layout_marginEnd="@dimen/spacing_standard_new"
                     android:gravity="center"
                     android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/tvVerify"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
+                    <EditText
+                        android:id="@+id/addAmount"
+                        style="@style/MoreInfoSubheading"
+                        android:textAlignment="center"
+                        android:singleLine="true"
                         android:layout_marginTop="@dimen/spacing_middle"
-                        android:text="Transaction ID"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_small" />
-
-                    <TextView
-                        android:id="@+id/txtDisplay"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="022415593788"
-                        android:textAppearance="@style/FontBold"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/font_size_large" />
+                        android:inputType="number"
+                        android:text="$1000"
+                        android:textSize="@dimen/font_size_xlarge"
+                        />
+
+
+
+
 
                     <TextView
                         android:layout_width="wrap_content"

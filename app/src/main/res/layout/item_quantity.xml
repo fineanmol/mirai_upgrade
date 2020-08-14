@@ -8,7 +8,7 @@
     android:paddingBottom="@dimen/spacing_middle"
     android:gravity="center_horizontal"
     android:foreground="?selectableItemBackground"
-    android:text="1"
+    android:text="Select Location"
     android:textAppearance="@style/FontMedium"
     android:textColor="@color/textColorPrimary"
     android:textSize="@dimen/font_size_normal" />

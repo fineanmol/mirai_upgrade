@@ -318,6 +318,29 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             ).show()
             mIsEndTimeExist = true
         }
+        val dialog = BottomSheetDialog(this)
+        dialog.setContentView(R.layout.dialog_quantity)
+
+       // val size = if (stockQuantity == null || stockQuantity >= 5) 5 else stockQuantity
+        val size = 5 /** Make size the number of locations available */
+        val list: ArrayList<String> = ArrayList()
+        for (i in 1..size) {
+            list.add("Location $i")
+        }
+        dialog.listQuantity.adapter =
+            ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
+        dialog.listQuantity.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                mQuntity = list[position]
+                selectedLocation.text = list[position]
+                dialog.dismiss()
+            }
+        tvSelectedQuantity.onClick {
+            dialog.show()
+        }
+        selectedLocation.onClick {
+            dialog.show()
+        }
 
 
     }
@@ -488,7 +511,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         val genderList = ArrayList<String>()
         val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups = listOf("Teen", "Adults", "Old", "Everyone")
+        val ageGroups = listOf("13-17", "18-24", "25-34", "35-44","45+")
 
         if (genders.isNotEmpty()) {
 

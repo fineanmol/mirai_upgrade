@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,10 +10,7 @@
             type="com.tragicbytes.midi.models.ProductDataNew" />
 
     </data>
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:hnc="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/htab_maincontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -268,23 +267,23 @@
                         app:cornerRadius="@dimen/spacing_control" />
 
                     <TextView
-                        android:visibility="gone"
                         android:id="@+id/tvSelectedQuantity"
-                        android:layout_weight="2.8"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="42dp"
                         android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_marginBottom="@dimen/_5sdp"
+                        android:layout_weight="2.8"
                         android:background="@drawable/bg_ractangal_stroked"
-                        android:text="@string/lbl_1"
+                        android:drawableEnd="@drawable/ic_arrow_down"
                         android:gravity="center"
+                        android:paddingEnd="@dimen/spacing_standard"
+                        android:text="@string/selectLocation"
+                        android:textAppearance="@style/FontSemiBold"
+                        android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/font_size_normal"
                         android:textStyle="bold"
-                        android:textColor="@color/textColorPrimary"
-                        android:drawableEnd="@drawable/ic_arrow_down"
-                        android:textAppearance="@style/FontSemiBold"
-                        android:paddingEnd="@dimen/spacing_standard"
-                        android:layout_marginEnd="@dimen/spacing_standard_new" />
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -303,11 +302,11 @@
                         app:hnc_defaultExpand="false"
                         app:hnc_moreLessGravity="right"
                         app:hnc_textSize="@dimen/font_size_micro"
-                        hnc:hnc_maxLine="3"
-                        hnc:hnc_moreLessShow="true"
-                        hnc:hnc_moreLessTextColor="@color/textColorSecondary"
-                        hnc:hnc_moreLessTextSize="@dimen/font_size_small"
-                        hnc:hnc_textColor="@color/textColorSecondary" />
+                        app:hnc_maxLine="3"
+                        app:hnc_moreLessShow="true"
+                        app:hnc_moreLessTextColor="@color/textColorSecondary"
+                        app:hnc_moreLessTextSize="@dimen/font_size_small"
+                        app:hnc_textColor="@color/textColorSecondary" />
 
                     <TextView
                         style="@style/Heading"
@@ -534,6 +533,36 @@
                             android:inputType="number"
 
                             />
+                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
+                        android:orientation="horizontal"
+                        android:visibility="visible">
+
+                        <TextView
+                            android:visibility="visible"
+                            android:id="@+id/selectedLocation"
+                            android:layout_weight="2.8"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:background="@drawable/bg_ractangal_stroked"
+                            android:text="@string/selectLocation"
+                            android:gravity="center"
+                            style="@style/MoreInfo_heading"
+                            android:textSize="@dimen/font_size_normal"
+                            android:textStyle="bold"
+                            android:textColor="@color/textColorPrimary"
+                            android:drawableEnd="@drawable/ic_arrow_down"
+                            android:textAppearance="@style/FontSemiBold"
+                            android:paddingEnd="@dimen/spacing_standard"
+                            android:layout_marginEnd="@dimen/spacing_small" />
+
                     </LinearLayout>
                 </LinearLayout>
 
