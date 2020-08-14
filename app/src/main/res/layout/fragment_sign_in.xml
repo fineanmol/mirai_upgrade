@@ -49,7 +49,8 @@
                 android:layout_marginEnd="@dimen/spacing_standard"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:singleLine="true" />
+                android:singleLine="true"
+                android:text="test@gmail.com" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -62,13 +63,14 @@
                 <EditText
                     android:id="@+id/edtPassword"
                     style="@style/EditTextStyle"
-                    android:layout_alignParentStart="true"
-                    android:layout_toStartOf="@id/tvForget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_toStartOf="@id/tvForget"
                     android:hint="@string/hint_password"
                     android:inputType="textPassword"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:text="zxcvbnm." />
 
                 <TextView
                     android:id="@+id/tvForget"

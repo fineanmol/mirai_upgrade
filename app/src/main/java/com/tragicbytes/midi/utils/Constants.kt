@@ -35,6 +35,8 @@ object Constants {
     }
 
     object SharedPref {
+        const val USER_PERSONAL_DETAILS="userPersonalDetails"
+        const val USER_DETAILS_OBJECT="userDetailsObject"
         const val KEY_ORDERS = "orders"
         const val KEY_ORDER_COUNT = "order_count"
         const val KEY_RECENTS = "recentProduct"

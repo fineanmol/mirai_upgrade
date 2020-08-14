@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,7 +45,7 @@ class SignUpFragment : BaseFragment() {
         requestModel.password = edtPassword.textToString()
         requestModel.username=edtFirstName.textToString()
         /////////
-        val userPersonalDetails=UserDetailsModel.UserPersonalDetails()
+        val userPersonalDetails=UserDetailsModel().userPersonalDetails
         userPersonalDetails.email = edtEmail.textToString()
         userPersonalDetails.firstName = edtFirstName.textToString()
         userPersonalDetails.lastName = edtLastName.textToString()

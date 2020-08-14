@@ -1,30 +1,27 @@
 package com.tragicbytes.midi.models
 
 class UserDetailsModel {
+    var userId: String=""
+    var userAdvertisementDetails: UserAdvertisementDetails=UserAdvertisementDetails()
+    var userPersonalDetails: UserPersonalDetails= UserPersonalDetails()
+    var userWalletDetails: UserWalletDetails=UserWalletDetails()
+}
 
+class UserPersonalDetails {
+    var firstName: String = ""
+    var lastName: String = ""
+    var gender: String = ""
+    var phone: String = ""
+    var email: String = ""
+    var password: String = ""
+    var userProfilePic: String = ""
+    var dob: String = ""
+    var company: String = ""
+    var userAccountStatus: Boolean = true
+}
 
-    data class UserPersonalDetails(
-        var firstName: String = "",
-        var lastName: String = "",
-        var gender: String = "",
-        var phone: String = "",
-        var email: String = "",
-        var password:String = "",
-        var userProfilePic:String="",
-        var dob: String = "",
-        var company: String = "",
-        var userAccountStatus:Boolean=true
-    )
-
-
-    data class UserAdvertisementDetails(
-        var singleAdvertisementDetails: List<SingleAdvertisementDetails>
-    )
-
-    data class UserWalletDetails(
-        var totalAmount:String="0",
-        var transactionsDetails:List<TransactionDetails>
-    )
+class UserAdvertisementDetails {
+    var singleAdvertisementDetails: List<SingleAdvertisementDetails> = ArrayList()
 }
 
 class SingleAdvertisementDetails{
@@ -36,6 +33,10 @@ class SingleAdvertisementDetails{
     var endOn:String=""
 }
 
+class UserWalletDetails {
+    var totalAmount: String = "0"
+    var transactionsDetails: List<TransactionDetails> = ArrayList()
+}
 class TransactionDetails{
     var transactionStatus:String=""
     var transactionAmount:String=""

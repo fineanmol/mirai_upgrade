@@ -58,7 +58,6 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.CART_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CATEGORY_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.DEFAULT_CURRENCY
 import com.tragicbytes.midi.utils.Constants.SharedPref.IS_LOGGED_IN
-import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_ADDRESS
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_CART_COUNT
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_DASHBOARD
@@ -66,6 +65,7 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_RECENTS
 import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_USER_ADDRESS
 import com.tragicbytes.midi.utils.Constants.SharedPref.SLIDER_IMAGES_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DETAILS_OBJECT
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DISPLAY_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DOB
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
@@ -75,6 +75,7 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ID
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_LAST_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_NICE_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ORG
+import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PERSONAL_DETAILS
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PHONE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE_URL
@@ -87,7 +88,7 @@ import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
-import java.io.*
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 fun isLoggedIn(): Boolean = getSharedPrefInstance().getBooleanValue(IS_LOGGED_IN)
@@ -105,17 +106,29 @@ fun Context.getUserFullName(): String {
 
 fun getUserName(): String = getSharedPrefInstance().getStringValue(USER_USERNAME)
 fun getUserfullName(): String = getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)
-fun getFirstName(): String = getSharedPrefInstance().getStringValue(USER_FIRST_NAME)
-fun getLastName(): String = getSharedPrefInstance().getStringValue(USER_LAST_NAME)
+fun getFirstName(): String = getStoredUserDetails().userPersonalDetails!!.firstName
+fun getLastName(): String = getStoredUserDetails().userPersonalDetails!!.lastName
 fun getUserProfile(): String = getSharedPrefInstance().getStringValue(USER_PROFILE)
-fun getEmail(): String = getSharedPrefInstance().getStringValue(USER_EMAIL)
-fun getDob(): String = getSharedPrefInstance().getStringValue(USER_DOB)
-fun getOrg(): String = getSharedPrefInstance().getStringValue(USER_ORG)
-fun getMobile(): String = getSharedPrefInstance().getStringValue(USER_PHONE)
+fun getEmail(): String = getStoredUserDetails().userPersonalDetails!!.email
+fun getDob(): String = getStoredUserDetails().userPersonalDetails!!.dob
+fun getOrg(): String = getStoredUserDetails().userPersonalDetails!!.company
+fun getMobile(): String = getStoredUserDetails().userPersonalDetails!!.phone
 fun getProfileUrl(): String = getSharedPrefInstance().getStringValue(USER_PROFILE_URL)
 fun getApiToken(): String = getSharedPrefInstance().getStringValue(USER_TOKEN)
 fun getCartCount(): String = getSharedPrefInstance().getIntValue(KEY_CART_COUNT, 0).toString()
 
+fun getStoredUserDetails():UserDetailsModel{
+    return Gson().
+        fromJson(
+            getSharedPrefInstance().getStringValue(USER_DETAILS_OBJECT),
+            UserDetailsModel::class.java)
+}
+fun updateStoredUserDetails(userDetailsModel:UserDetailsModel){
+    getSharedPrefInstance().setValue(
+        USER_DETAILS_OBJECT,
+        Gson().toJson(userDetailsModel)
+    )
+}
 
 /**
  * Add shared preference related to user session here
@@ -378,22 +391,18 @@ fun AppBaseActivity.createCustomer(requestModel: RequestModel, onApiSuccess: (Lo
     })*/
 }
 
-fun AppBaseActivity.createCustomerByEmail(user: FirebaseUser, onApiSuccess: () -> Unit) {
+fun AppBaseActivity.createCustomerByEmail(userDetails: UserDetailsModel, onApiSuccess: () -> Unit) {
     showProgress(true)
     showProgress(false)
 
-    getSharedPrefInstance().setValue(USER_EMAIL, user.email)
-    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName.toString())
-    var firstName = ""
-        var lastName = ""
-        if (user.displayName != null && user?.displayName?.split(" ")?.size!! >= 2) {
-            firstName = user.displayName?.split(" ")?.get(0)!!
-            lastName = user.displayName?.split(" ")?.get(1)!!
-        }
-        getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
-        getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
-        onApiSuccess()
-        sendProfileUpdateBroadcast()
+    getSharedPrefInstance().setValue(USER_DETAILS_OBJECT, Gson().toJson(userDetails))
+
+//    getSharedPrefInstance().setValue(USER_EMAIL, userDetails.userPersonalDetails?.email)
+//    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, userDetails.userPersonalDetails?.firstName+" "+userDetails.userPersonalDetails?.lastName)
+//    getSharedPrefInstance().setValue(USER_FIRST_NAME, userDetails.userPersonalDetails?.firstName)
+//    getSharedPrefInstance().setValue(USER_LAST_NAME, userDetails.userPersonalDetails?.lastName)
+    onApiSuccess()
+    sendProfileUpdateBroadcast()
 //    }
 //    catch(e:Exception){
 //        println(e.message.toString()+ " errorrrrrr")
@@ -462,58 +471,51 @@ fun AppBaseActivity.signInEmail(user:FirebaseUser, onResult: (Boolean) -> Unit, 
 //}
 
 fun AppBaseActivity.saveLoginResponse(it: FirebaseUser,isSocialLogin:Boolean, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
-    if (true) {
-        if (false) {
-            showProgress(false)
-            onError("Admin is not allowed")
-        } else {
-            if (it.uid != null) {
-                getSharedPrefInstance().setValue(USER_ID, it.uid)
-            }
-            getSharedPrefInstance().setValue(USER_DISPLAY_NAME, it.displayName)
-            getSharedPrefInstance().setValue(USER_EMAIL, it.email)
-            getSharedPrefInstance().setValue(USER_NICE_NAME, it.displayName)
-            getSharedPrefInstance().setValue(USER_TOKEN, it.providerId)
-            if (it.displayName?.isNotEmpty()!!){
-                getSharedPrefInstance().setValue(USER_PROFILE, it.displayName)
-            }
-            getSharedPrefInstance().setValue(IS_SOCIAL_LOGIN,isSocialLogin)
-            getSharedPrefInstance().setValue(Constants.SharedPref.USER_PASSWORD, password)
-
-            getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
-            var firstName = ""
-            var lastName = ""
-            if (it.displayName != null && it.displayName?.split(" ")?.size!! >= 2) {
-                firstName = it.displayName?.split(" ")?.get(0)!!
-                lastName = it.displayName?.split(" ")?.get(1)!!
-            } else {
-                var userName = it.displayName!!
-            }
-            getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
-            getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
-            //getSharedPrefInstance().setValue(USER_ROLE, response.role)
-            getSharedPrefInstance().setValue(USER_USERNAME, it.email)
-            getSharedPrefInstance().setValue(IS_LOGGED_IN, true)
-            onResult(true)
-            /*callApi(getRestApis().retrieveCustomer(), onApiSuccess = { response ->
-                showProgress(false)
-                getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
-                getSharedPrefInstance().setValue(USER_FIRST_NAME, response.first_name)
-                getSharedPrefInstance().setValue(USER_LAST_NAME, response.last_name)
-                getSharedPrefInstance().setValue(USER_ROLE, response.role)
-                getSharedPrefInstance().setValue(USER_USERNAME, response.username)
-                getSharedPrefInstance().setValue(IS_LOGGED_IN, true)
-                onResult(true)
-            }, onApiError = {
-                showProgress(false)
-                onResult(false)
-                onError(it)
-            }, onNetworkError = {
-                showProgress(false)
-                noInternetSnackBar()
-            })*/
-        }
-    }
+//    if (it.uid != null) {
+//        getSharedPrefInstance().setValue(USER_ID, it.uid)
+//    }
+//    getSharedPrefInstance().setValue(USER_DISPLAY_NAME, it.displayName)
+//    getSharedPrefInstance().setValue(USER_EMAIL, it.email)
+//    getSharedPrefInstance().setValue(USER_NICE_NAME, it.displayName)
+//    getSharedPrefInstance().setValue(USER_TOKEN, it.providerId)
+//    if (it.displayName?.isNotEmpty()!!){
+//        getSharedPrefInstance().setValue(USER_PROFILE, it.displayName)
+//    }
+//    getSharedPrefInstance().setValue(IS_SOCIAL_LOGIN,isSocialLogin)
+//    getSharedPrefInstance().setValue(Constants.SharedPref.USER_PASSWORD, password)
+//
+//    getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
+//    var firstName = ""
+//    var lastName = ""
+//    if (it.displayName != null && it.displayName?.split(" ")?.size!! >= 2) {
+//        firstName = it.displayName?.split(" ")?.get(0)!!
+//        lastName = it.displayName?.split(" ")?.get(1)!!
+//    } else {
+//        var userName = it.displayName!!
+//    }
+//    getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
+//    getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
+//    //getSharedPrefInstance().setValue(USER_ROLE, response.role)
+//    getSharedPrefInstance().setValue(USER_USERNAME, it.email)
+    getSharedPrefInstance().setValue(IS_LOGGED_IN, true)
+    onResult(true)
+    /*callApi(getRestApis().retrieveCustomer(), onApiSuccess = { response ->
+    showProgress(false)
+    getSharedPrefInstance().setValue(Constants.SharedPref.SHOW_SWIPE, true)
+    getSharedPrefInstance().setValue(USER_FIRST_NAME, response.first_name)
+    getSharedPrefInstance().setValue(USER_LAST_NAME, response.last_name)
+    getSharedPrefInstance().setValue(USER_ROLE, response.role)
+    getSharedPrefInstance().setValue(USER_USERNAME, response.username)
+    getSharedPrefInstance().setValue(IS_LOGGED_IN, true)
+    onResult(true)
+}, onApiError = {
+    showProgress(false)
+    onResult(false)
+    onError(it)
+}, onNetworkError = {
+    showProgress(false)
+    noInternetSnackBar()
+})*/
 }
 
 fun AppBaseActivity.processPayment(requestModel: RequestModel, isContainRedirectUrl: Boolean = true) {
@@ -922,19 +924,30 @@ fun Activity.addAdvertisement(adDetails: AdDetailsModel.AdDetails, onSuccess: (A
 fun AppBaseActivity.updateEmail(
     user: FirebaseUser,
     newUserEmail: String,
+    dbReference: DatabaseReference,
     onApiSuccess: (String) -> Unit
 ) {
 
-    user.updateEmail(newUserEmail).addOnCompleteListener {
-        if(it.isSuccessful){
-            showProgress(false)
-            getSharedPrefInstance().setValue(USER_EMAIL, user.email)
-            onApiSuccess("Email Updated!!!")
-            sendProfileUpdateBroadcast()
+    user.updateEmail(newUserEmail).addOnCompleteListener { xit ->
+        if(xit.isSuccessful){
+            dbReference.child("UsersData/${user.uid}/userPersonalDetails/email").setValue(user.email).addOnCompleteListener {
+                if(it.isSuccessful){
+                    showProgress(false)
+                    var localUserdata=getStoredUserDetails()
+                    localUserdata.userPersonalDetails!!.email=user.email.toString()
+                    updateStoredUserDetails(localUserdata)
+                    onApiSuccess("Email Updated!!!")
+                    sendProfileUpdateBroadcast()
+                }
+                else{
+                    showProgress(false)
+                    snackBarError(it.exception!!.localizedMessage)
+                }
+            }
         }
         else{
             showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
+            snackBarError(xit.exception!!.localizedMessage)
         }
     }
 
@@ -943,33 +956,34 @@ fun AppBaseActivity.updateEmail(
 fun AppBaseActivity.updateName(
     user: FirebaseUser,
     displayName: String,
+    dbReference: DatabaseReference,
     onApiSuccess: (String) -> Unit
 ) {
     val profileUpdates = UserProfileChangeRequest.Builder()
         .setDisplayName(displayName)
         .build()
-    user.updateProfile(profileUpdates).addOnCompleteListener {
-        if(it.isSuccessful){
-            showProgress(false)
-            getSharedPrefInstance().setValue(USER_DISPLAY_NAME, user.displayName)
-            getSharedPrefInstance().setValue(USER_NICE_NAME, user.displayName)
-            getSharedPrefInstance().setValue(USER_PROFILE, user.displayName)
-            var firstName = ""
-            var lastName = ""
-            if (user.displayName != null && user.displayName?.split(" ")?.size!! >= 2) {
-                firstName = user.displayName?.split(" ")?.get(0)!!
-                lastName = user.displayName?.split(" ")?.get(1)!!
-            } else {
-                var userName = user.displayName!!
+    user.updateProfile(profileUpdates).addOnCompleteListener { xit ->
+        if(xit.isSuccessful){
+            dbReference.child("UsersData/${user.uid}/userPersonalDetails/firstName").setValue(user.displayName?.split(" ")?.first()!!).addOnCompleteListener {
+                if(it.isSuccessful){
+                    dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName").setValue(user.displayName?.split(" ")?.last()!!)
+                    showProgress(false)
+                    var localUserData=getStoredUserDetails()
+                    localUserData.userPersonalDetails!!.firstName=user.displayName?.split(" ")?.first()!!
+                    localUserData.userPersonalDetails!!.lastName=user.displayName?.split(" ")?.last()!!
+                    updateStoredUserDetails(localUserData)
+                    onApiSuccess("Name Updated!!!")
+                    sendProfileUpdateBroadcast()
+                }
+                else{
+                    showProgress(false)
+                    snackBarError(it.exception!!.localizedMessage)
+                }
             }
-            getSharedPrefInstance().setValue(USER_FIRST_NAME, firstName)
-            getSharedPrefInstance().setValue(USER_LAST_NAME, lastName)
-            onApiSuccess("Name Updated!!!")
-            sendProfileUpdateBroadcast()
         }
         else{
             showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
+            snackBarError(xit.exception!!.localizedMessage)
         }
     }
 }
@@ -980,9 +994,11 @@ fun AppBaseActivity.updatePhone(
     phone: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child(userId).child("profileExtras/Phone").setValue(phone).addOnCompleteListener {
+    dbReference.child("UsersData/${userId}/userPersonalDetails/phone").setValue(phone).addOnCompleteListener {
         if(it.isSuccessful){
-            getSharedPrefInstance().setValue(USER_PHONE, phone)
+            var localUserData=getStoredUserDetails()
+            localUserData.userPersonalDetails.phone=phone
+            updateStoredUserDetails(localUserData)
             onApiSuccess("Phone Updated")
         }
         else{
@@ -1018,9 +1034,11 @@ fun AppBaseActivity.updateDOB(
     dob: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child(userId).child("profileExtras/DOB").setValue(dob).addOnCompleteListener {
+    dbReference.child("UsersData/${userId}/userPersonalDetails/dob").setValue(dob).addOnCompleteListener {
         if(it.isSuccessful){
-            getSharedPrefInstance().setValue(USER_DOB, dob)
+            var localUserData=getStoredUserDetails()
+            localUserData.userPersonalDetails.dob=dob
+            updateStoredUserDetails(localUserData)
             onApiSuccess("DOB Updated")
         }
         else{
@@ -1036,10 +1054,11 @@ fun AppBaseActivity.updateORG(
     org: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child(userId).child("profileExtras/ORG").setValue(org).addOnCompleteListener {
+    dbReference.child("UsersData/${userId}/userPersonalDetails/company").setValue(org).addOnCompleteListener {
         if(it.isSuccessful){
-            getSharedPrefInstance().setValue(USER_ORG,org)
-
+            var localUserData=getStoredUserDetails()
+            localUserData.userPersonalDetails.company=org
+            updateStoredUserDetails(localUserData)
             onApiSuccess("Organization Name Updated")
         }
         else{
@@ -1055,9 +1074,11 @@ fun AppBaseActivity.updateGender(
     gender: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child(userId).child("profileExtras/Gender").setValue(gender).addOnCompleteListener {
+    dbReference.child("UsersData/${userId}/userPersonalDetails/gender").setValue(gender).addOnCompleteListener {
         if(it.isSuccessful){
-            getSharedPrefInstance().setValue(USER_GENDER,gender)
+            var localUserData=getStoredUserDetails()
+            localUserData.userPersonalDetails.gender=gender
+            updateStoredUserDetails(localUserData)
             onApiSuccess("Gender Updated")
         }
         else{

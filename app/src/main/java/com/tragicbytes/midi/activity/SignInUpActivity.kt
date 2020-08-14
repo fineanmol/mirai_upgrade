@@ -11,12 +11,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
 import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.models.UserDetailsModel
+import com.tragicbytes.midi.models.UserPersonalDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 
@@ -28,7 +30,6 @@ class SignInUpActivity : AppBaseActivity() {
     private var callbackManager: CallbackManager? = null
     private var mAuth: FirebaseAuth? = null
     private lateinit var dbReference: DatabaseReference
-    private var lastUserId:String ="0"
 
 //    private var mGoogleSignInClient: GoogleSignInClient? = null
 
@@ -37,20 +38,6 @@ class SignInUpActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_up)
         FacebookSdk.sdkInitialize(applicationContext)
-        dbReference = FirebaseDatabase.getInstance().reference
-
-        val lastQuery: Query = dbReference.child("UsersData").orderByKey().limitToLast(1)
-        lastQuery.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataSnapshot.children.forEach {
-                    lastUserId=((it.key?.split("00")?.last().toString()).toInt()+1).toString()
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                // Handle possible errors.
-            }
-        })
 
 //        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //                .requestIdToken(getString(R.string.default_web_client_id))
@@ -168,26 +155,6 @@ class SignInUpActivity : AppBaseActivity() {
                     var token = ""
                     if (user != null) {
                         accountDataFetch(user)
-                        getSharedPrefInstance().setValue(
-                            Constants.SharedPref.USER_PROFILE_URL,
-                            user.photoUrl.toString()
-
-                        )
-                        getSharedPrefInstance().setValue(
-                            Constants.SharedPref.USER_ID,
-                            user.uid
-
-                        )
-                        getSharedPrefInstance().setValue(
-                            Constants.SharedPref.USER_DISPLAY_NAME,
-                            user.displayName
-
-                        )
-                        getSharedPrefInstance().setValue(
-                            Constants.SharedPref.USER_EMAIL,
-                            user.email
-
-                        )
                         signInEmail(user, onResult = {
                             showProgress(false)
                             if (it) launchActivityWithNewTask<DashBoardActivity>()
@@ -212,124 +179,37 @@ class SignInUpActivity : AppBaseActivity() {
             }
 
     }
-
-
-//    private fun doSocialLogin(user: FirebaseUser, token: String, type: String) {
-//        var firstName = ""
-//        var lastName = ""
-//        if (user.displayName != null && user.displayName?.split(" ")?.size!! >= 2) {
-//            firstName = user.displayName?.split(" ")?.get(0)!!
-//            lastName = user.displayName?.split(" ")?.get(1)!!
-//        } else {
-//            firstName = user.displayName!!
-//        }
-//        getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE,user.photoUrl.toString())
-//        socialLogin(user.email!!, token, firstName.trim(), lastName.trim(), type, user.photoUrl.toString(), onResult = {
-//            showProgress(false)
-//            if (it) launchActivityWithNewTask<DashBoardActivity>()
-//        }, onError = {
-//            showProgress(false)
-//            snackBarError(it)
-//        })
-//    }
-
-    fun addUser(userPersonalDetails: UserDetailsModel.UserPersonalDetails) {
-        mAuth?.createUserWithEmailAndPassword(
-            userPersonalDetails.email,
-            userPersonalDetails.password
-        )
-            ?.addOnCompleteListener(this) { task ->
-                when {
-                    task.isSuccessful -> {
-                        val user = mAuth!!.currentUser!!
-                        println(user.email.toString())
-                        /*Send verification email*/
-                        if (!user!!.isEmailVerified) {
-                            user.sendEmailVerification()
-                                .addOnCompleteListener { task ->
-                                    if (task.isSuccessful) snackBar(
-                                        "Verification mail sent to " + user.email.toString(),
-                                        Snackbar.LENGTH_SHORT
-                                    )
-                                }
-                        }
-
-                        /*Send verification email End*/
-
-                        val profileUpdates = UserProfileChangeRequest.Builder()
-                            .setDisplayName(userPersonalDetails.firstName.toString() + " " + userPersonalDetails.lastName.toString())
-                            .build()
-                        user.updateProfile(profileUpdates)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    dbReference.child("UsersData")
-                                        .child("user00$lastUserId/UserPersonalDetails").setValue(userPersonalDetails)
-                                        .addOnSuccessListener {
-                                            showProgress(false)
-                                            snackBar("Account Created Successfully.")
-                                        }
-                                        .addOnFailureListener {
-                                            snackBar(it.message.toString())
-                                            showProgress(false)
-                                        }
-                                    println(user.displayName.toString())
-                                } else {
-                                    println(task.exception.toString())
-                                }
-                            }
-
-                        createCustomerByEmail(user) {
-                            runDelayedOnUiThread(2000) {
-                                loadSignInFragment()
-                            }
-                        }
-
-                    }
-                    task.isCanceled -> {
-                        showProgress(false)
-                        task.exception?.message?.let {
-                            snackBar(task.exception?.message!!)
-                        }
-                    }
-                    else -> {
-                        showProgress(false)
-                        task.exception?.message?.let {
-                            snackBar(task.exception?.message!!)
-                        }
-                    }
-                }
-            }
-    }
-
-
     private fun accountDataFetch(user: FirebaseUser) {
         showProgress(true)
         val database = FirebaseDatabase.getInstance().reference
-
         try {
-            var localDatabaseRef = database.child(user.uid).child("profileExtras")
+            var localDatabaseRef = database.child("UsersData/"+user.uid)
             val dataListener = object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     // Get Post object and use the values to update the UI
                     if (dataSnapshot.exists()) {
                         val dbContent =
-                            dataSnapshot.getValue(RequestModel.AccountDetails::class.java)
+                            dataSnapshot.getValue(UserDetailsModel::class.java)
                         if (dbContent != null) {
+//                            getSharedPrefInstance().setValue(
+//                                Constants.SharedPref.USER_PHONE,
+//                                dbContent.
+//                            )
+//                            getSharedPrefInstance().setValue(
+//                                Constants.SharedPref.USER_DOB,
+//                                dbContent.DOB
+//                            )
+//                            getSharedPrefInstance().setValue(
+//                                Constants.SharedPref.USER_ORG,
+//                                dbContent.ORG
+//                            )
+//                            getSharedPrefInstance().setValue(
+//                                Constants.SharedPref.USER_GENDER,
+//                                dbContent.Gender
+//                            )
                             getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_PHONE,
-                                dbContent.Phone
-                            )
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_DOB,
-                                dbContent.DOB
-                            )
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_ORG,
-                                dbContent.ORG
-                            )
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_GENDER,
-                                dbContent.Gender
+                                Constants.SharedPref.USER_DETAILS_OBJECT,
+                                Gson().toJson(dbContent)
                             )
                         }
 
@@ -355,4 +235,106 @@ class SignInUpActivity : AppBaseActivity() {
             e.message?.let { snackBar(it) }
         }
     }
+
+
+//    private fun doSocialLogin(user: FirebaseUser, token: String, type: String) {
+//        var firstName = ""
+//        var lastName = ""
+//        if (user.displayName != null && user.displayName?.split(" ")?.size!! >= 2) {
+//            firstName = user.displayName?.split(" ")?.get(0)!!
+//            lastName = user.displayName?.split(" ")?.get(1)!!
+//        } else {
+//            firstName = user.displayName!!
+//        }
+//        getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE,user.photoUrl.toString())
+//        socialLogin(user.email!!, token, firstName.trim(), lastName.trim(), type, user.photoUrl.toString(), onResult = {
+//            showProgress(false)
+//            if (it) launchActivityWithNewTask<DashBoardActivity>()
+//        }, onError = {
+//            showProgress(false)
+//            snackBarError(it)
+//        })
+//    }
+
+
+
+    fun addUser(userPersonalDetails: UserPersonalDetails) {
+        mAuth?.createUserWithEmailAndPassword(
+            userPersonalDetails.email,
+            userPersonalDetails.password
+        )
+            ?.addOnCompleteListener(this) { task ->
+                when {
+                    task.isSuccessful -> {
+                        val user = mAuth!!.currentUser!!
+                        var userDetails=UserDetailsModel()
+                        println(user.email.toString())
+                        /*Send verification email*/
+                        if (!user!!.isEmailVerified) {
+                            user.sendEmailVerification()
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) snackBar(
+                                        "Verification mail sent to " + user.email.toString(),
+                                        Snackbar.LENGTH_SHORT
+                                    )
+                                }
+                        }
+
+                        /*Send verification email End*/
+
+                        val profileUpdates = UserProfileChangeRequest.Builder()
+                            .setDisplayName(userPersonalDetails.firstName + " " + userPersonalDetails.lastName)
+                            .build()
+                        user.updateProfile(profileUpdates)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    snackBar("Profile updated!")
+                                    try{
+                                        dbReference = FirebaseDatabase.getInstance().reference
+
+                                        userDetails.userId=user.uid
+                                        userDetails.userPersonalDetails=userPersonalDetails
+                                        dbReference.child("UsersData")
+                                            .child(user.uid).setValue(userDetails)
+                                            .addOnSuccessListener {
+                                                createCustomerByEmail(userDetails) {
+                                                    runDelayedOnUiThread(2000) {
+                                                        showProgress(false)
+                                                        loadSignInFragment()
+                                                    }
+                                                }
+                                                snackBar("Account Created Successfully.")
+                                            }
+                                            .addOnFailureListener {
+                                                snackBar(it.message.toString())
+                                                showProgress(false)
+                                            }}
+                                    catch (e:java.lang.Exception){
+                                        println(e)
+                                    }
+                                    println(user.displayName.toString())
+                                } else {
+                                    println(task.exception.toString())
+                                }
+                            }
+
+                    }
+                    task.isCanceled -> {
+                        showProgress(false)
+                        task.exception?.message?.let {
+                            snackBar(task.exception?.message!!)
+                        }
+                    }
+                    else -> {
+                        showProgress(false)
+                        task.exception?.message?.let {
+                            snackBar(task.exception?.message!!)
+                        }
+                    }
+                }
+            }
+    }
+
+
+
 }

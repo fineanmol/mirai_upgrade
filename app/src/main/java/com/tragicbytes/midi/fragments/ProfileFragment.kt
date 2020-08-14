@@ -2,7 +2,6 @@ package com.tragicbytes.midi.fragments
 
 import android.app.Activity.RESULT_OK
 import android.app.Dialog
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -10,7 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +61,7 @@ class ProfileFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dbReference = FirebaseDatabase.getInstance().reference
         if (isLoggedIn()) {
             edtEmail.setText(getEmail())
             edtFirstName.setText(getFirstName())
@@ -75,7 +74,7 @@ class ProfileFragment : BaseFragment() {
 
 
             ivProfileImage.loadImageFromUrl(
-                user!!.photoUrl.toString(),
+                getStoredUserDetails().userPersonalDetails.userProfilePic,
                 aPlaceHolderImage = R.drawable.ic_profile
             )
             if (getSharedPrefInstance().getBooleanValue(IS_SOCIAL_LOGIN)) {
@@ -93,7 +92,6 @@ class ProfileFragment : BaseFragment() {
             val result = CropImage.getActivityResult(data)
             if (resultCode == RESULT_OK) {
                 val resultUri = result.uri
-                getSharedPrefInstance().setValue(Constants.SharedPref.USER_PROFILE_URL, resultUri)
                 ivProfileImage.setImageURI(resultUri)
                 val imageStream = activity!!.contentResolver.openInputStream(resultUri)
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
@@ -181,7 +179,7 @@ class ProfileFragment : BaseFragment() {
         requestModel.base64_img = encodedImage
         storageReference = FirebaseStorage.getInstance().reference
         val ref =
-            storageReference!!.child("uploads/" + getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DISPLAY_NAME) + "user_image")
+            storageReference!!.child("uploads/" +getStoredUserDetails().userPersonalDetails.firstName +getStoredUserDetails().userId + "user_image")
         val uploadTask = ref.putFile(selectedImage)
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
@@ -200,23 +198,21 @@ class ProfileFragment : BaseFragment() {
                 FirebaseAuth.getInstance().currentUser!!.updateProfile(profileUpdates)
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            hideProgress()
-                            snackBar("Profile Pic Uploaded")
-
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_PROFILE_URL,
-                                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
-                            )
-                            (activity as DashBoardActivity).changeProfile()
-                            Toast.makeText(
-                                context,
-                                FirebaseAuth.getInstance().currentUser!!.photoUrl.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            hideProgress()
+                            dbReference.child("UsersData/${getStoredUserDetails().userId}/userPersonalDetails/userProfilePic").setValue(FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()).addOnCompleteListener {
+                                if (it.isSuccessful) {
+                                    snackBar("Profile Pic Uploaded")
+                                    var localUserData=getStoredUserDetails()
+                                    localUserData.userPersonalDetails!!.userProfilePic=FirebaseAuth.getInstance().currentUser!!.photoUrl.toString()
+                                    getSharedPrefInstance().setValue(Constants.SharedPref.USER_PERSONAL_DETAILS, localUserData)
+                                    (activity as DashBoardActivity).changeProfile()
+                                    hideProgress()
+                                } else {
+                                    hideProgress()
+                                    activity?.snackBarError(it.exception!!.localizedMessage)
+                                }
+                            }
                         } else {
                             snackBar("Failed Upload")
-
                         }
 
                     }
@@ -228,8 +224,6 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun showChangePasswordDialog() {
-        var userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
-
         val changePasswordDialog = Dialog(activity!!)
         changePasswordDialog.window?.setBackgroundDrawable(ColorDrawable(0))
         changePasswordDialog.setContentView(R.layout.dialog_reset)
@@ -243,14 +237,12 @@ class ProfileFragment : BaseFragment() {
 
         changePasswordDialog.btnChangePassword.onClick {
             try {
-                var userEmail = getSharedPrefInstance().getStringValue(USER_EMAIL)
+                var userEmail = getStoredUserDetails().userPersonalDetails.email
                 mAuth.sendPasswordResetEmail(userEmail).addOnCompleteListener { task ->
                     when {
                         task.isSuccessful -> {
-
                             changePasswordDialog.dismiss()
                             snackBar("Forget Password Mail Sent to :$userEmail")
-
                         }
                         task.isCanceled -> {
                             snackBar("Forget Password Cancelled")
@@ -268,29 +260,25 @@ class ProfileFragment : BaseFragment() {
         val user = FirebaseAuth.getInstance().currentUser!!
         dbReference = FirebaseDatabase.getInstance().reference
 
-        if (edtEmail.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)) {
-            (activity as AppBaseActivity).updateEmail(user, edtEmail.textToString()) {
+        if (edtEmail.textToString() != getStoredUserDetails().userPersonalDetails!!.email) {
+            (activity as AppBaseActivity).updateEmail(user, edtEmail.textToString(),dbReference) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if (edtFirstName.textToString() + " " + edtLastName.textToString() != getSharedPrefInstance().getStringValue(
-                Constants.SharedPref.USER_DISPLAY_NAME
-            )
-        ) {
+        if (edtFirstName.textToString() + " " + edtLastName.textToString() != getStoredUserDetails().userPersonalDetails!!.firstName+" "+ getStoredUserDetails().userPersonalDetails!!.lastName) {
             (activity as AppBaseActivity).updateName(
                 user,
-                edtFirstName.textToString() + " " + edtLastName.textToString()
+                edtFirstName.textToString() + " " + edtLastName.textToString(),
+                dbReference
             ) {
                 snackBar(it)
                 hideProgress()
             }
         }
-        if (edtMobileNo.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)) {
+        if (edtMobileNo.textToString() != getStoredUserDetails().userPersonalDetails!!.phone) {
             (activity as AppBaseActivity).updatePhone(
-                getSharedPrefInstance().getStringValue(
-                    Constants.SharedPref.USER_ID
-                ), dbReference, edtMobileNo.textToString()
+                getStoredUserDetails().userId, dbReference, edtMobileNo.textToString()
             ) {
                 snackBar(it)
                 hideProgress()
@@ -298,7 +286,7 @@ class ProfileFragment : BaseFragment() {
         }
         if (edtDOB.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DOB)) {
             (activity as AppBaseActivity).updateDOB(
-                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
+                getStoredUserDetails().userId,
                 dbReference,
                 edtDOB.textToString()
             ) {
@@ -308,7 +296,7 @@ class ProfileFragment : BaseFragment() {
         }
         if (edtOrg.textToString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ORG)) {
             (activity as AppBaseActivity).updateORG(
-                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID),
+                getStoredUserDetails().userId,
                 dbReference,
                 edtOrg.textToString()
             ) {
@@ -319,20 +307,13 @@ class ProfileFragment : BaseFragment() {
         if (spnGender.selectedItem.toString() != getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_GENDER)) {
 
             (activity as AppBaseActivity).updateGender(
-                getSharedPrefInstance().getStringValue(
-                    Constants.SharedPref.USER_ID
-                ), dbReference, spnGender.selectedItem.toString()
+                getStoredUserDetails().userId, dbReference, spnGender.selectedItem.toString()
             ) {
                 snackBar(it)
                 hideProgress()
             }
         }
         val requestModel = RequestModel()
-        requestModel.email = edtEmail.textToString()
-        requestModel.first_name = edtFirstName.textToString()
-        requestModel.last_name = edtLastName.textToString()
-        requestModel.user_org = edtOrg.textToString()
-        requestModel.mobile_no = edtMobileNo.textToString()
         (activity as AppBaseActivity).createCustomer(requestModel) {
             snackBar(getString(R.string.lbl_profile_saved))
             hideProgress()
@@ -363,6 +344,10 @@ class ProfileFragment : BaseFragment() {
             }
             edtDOB.checkIsEmpty() -> {
                 edtDOB.showError(getString(R.string.error_field_required))
+                false
+            }
+            edtOrg.checkIsEmpty() -> {
+                edtOrg.showError(getString(R.string.error_field_required))
                 false
             }
             else -> true
