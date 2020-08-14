@@ -24,6 +24,8 @@ import java.util.*
 
 class SplashActivity : FirebaseConfig() {
 
+
+
     @SuppressLint("PackageManagerGetSignatures")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,7 +138,7 @@ class SplashActivity : FirebaseConfig() {
             getRemoteConfigValues()
         } else {
             runDelayed(1000) {
-                if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE)) {
+                if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE) or getSharedPrefInstance().getBooleanValue(Constants.KeyIntent.LOGIN)) {
                     launchActivity<DashBoardActivity>()
                 } else {
                     launchActivity<WalkThroughActivity>()

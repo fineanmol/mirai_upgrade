@@ -58,7 +58,7 @@ object Constants {
         const val USER_PROFILE = "user_profile"
         const val USER_PROFILE_URL = "user_profile_url"
         const val SWIPE = "swipe"
-        const val SHOW_SWIPE = "showswipe"
+        const val SHOW_SWIPE = "False"
         const val KEY_USER_ADDRESS = "user_address"
         const val CART_DATA = "cart_data"
         const val WISHLIST_DATA = "wishlist_data"

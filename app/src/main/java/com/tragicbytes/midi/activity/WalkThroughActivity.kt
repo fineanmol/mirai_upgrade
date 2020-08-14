@@ -29,12 +29,13 @@ class WalkThroughActivity : AppBaseActivity() {
         mCount = adapter.count
 
         btnStatShopping.onClick {
-//            getSharedPrefInstance().setValue(SHOW_SWIPE, true)
+            getSharedPrefInstance().setValue(SHOW_SWIPE, true)
             launchActivity<SignInUpActivity>{
                 putExtra(Constants.KeyIntent.LOGIN, "FALSE")
             }
         }
         llSignIn.onClick {
+            getSharedPrefInstance().setValue(SHOW_SWIPE, true)
             launchActivity<SignInUpActivity>{
                 putExtra(Constants.KeyIntent.LOGIN, "TRUE")
             }

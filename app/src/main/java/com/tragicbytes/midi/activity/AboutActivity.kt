@@ -28,12 +28,12 @@ class AboutActivity : AppBaseActivity() {
         getSharedPrefInstance().apply {
             whatsUp = getStringValue(WHATSAPP)
             instagram = "https://www.instagram.com/nightowldevelopers"
-            twitter = getStringValue(TWITTER)
+            twitter = "https://twitter.com/dexterousdevs"
             facebook = "https://www.facebook.com/nightowldevelopers/"
             contact = "7827327606"
             copyRight = "© ND 2020 | All rights reserved"
-            privacy = "https://nightowldevelopers.com/privacy-policy.html"
-            toc = "https://nightowldevelopers.com/terms-and-conditions.html"
+            privacy = "https://nightowldevelopers.com/privacy-policy.php"
+            toc = "https://nightowldevelopers.com/terms-and-conditions.php"
         }
         if (copyRight.isEmpty()) {
             tvCopyRight.hide()

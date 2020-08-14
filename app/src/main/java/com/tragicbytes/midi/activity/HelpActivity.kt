@@ -33,37 +33,11 @@ class HelpActivity : AppBaseActivity() {
                 }
             }
         }
-        BroadcastReceiverExt(this) {
-            onAction(CART_COUNT_CHANGE) {
-                setCartCount()
-            }
-        }
+
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_dashboard, menu)
-        val menuWishItem: MenuItem = menu!!.findItem(R.id.action_cart)
-        val menuSearch: MenuItem = menu.findItem(R.id.action_search)
-        menuWishItem.isVisible = false
-        menuSearch.isVisible = false
-        mMenuCart = menuWishItem.actionView
-        mMenuCart.ivCart.setColorFilter(this.color(R.color.textColorPrimary))
-        setCartCount()
-        menuWishItem.actionView.onClick {
-            launchActivity<MyCartActivity> { }
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
 
-    fun setCartCount() {
-        val count = getCartCount()
-        mMenuCart.tvNotificationCount.text = count
-        if (count.checkIsEmpty()) {
-            mMenuCart.tvNotificationCount.hide()
-        } else {
-            mMenuCart.tvNotificationCount.show()
-        }
-    }
+
 
     private fun validate(): Boolean {
         return when {

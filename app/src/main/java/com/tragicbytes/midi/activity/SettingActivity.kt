@@ -109,10 +109,10 @@ class SettingActivity :AppBaseActivity() {
             }
         }
         switchNotification.setOnCheckedChangeListener { _, isChecked ->
-            snackBar("Notifications Coming Soon",Snackbar.LENGTH_SHORT)
+            if(isChecked) snackBar("Notifications Enabled",Snackbar.LENGTH_SHORT) else snackBar("Notifications Disabled",Snackbar.LENGTH_SHORT)
 
             /** to Enable Notifications uncomment below line */
-            /*WooBoxApp.getAppInstance().enableNotification(isChecked)*/
+            WooBoxApp.getAppInstance().enableNotification(isChecked)
         }
         switchNightMode.setOnCheckedChangeListener { _, isChecked ->
             snackBar("Dark Mode Coming Soon",Snackbar.LENGTH_SHORT)
