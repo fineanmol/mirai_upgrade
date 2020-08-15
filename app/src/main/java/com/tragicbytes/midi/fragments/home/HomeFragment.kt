@@ -127,27 +127,6 @@ class HomeFragment : BaseFragment() {
             rl_head.hide()
         }
 
-        /*callApi(getRestApis(false).getSliderImages(), onApiSuccess = { res ->
-            if (activity == null) return@callApi
-            getSharedPrefInstance().setValue(SLIDER_IMAGES_DATA, Gson().toJson(res))
-            images.clear()
-            images.addAll(getSlideImagesFromPref())
-            dots.attachViewPager(homeSlider)
-            dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-            sliderImagesAdapter.notifyDataSetChanged()
-            if (images.isNotEmpty()) {
-                rl_head.show()
-            } else {
-                rl_head.hide()
-            }
-        }, onApiError = {
-            if (activity == null) return@callApi
-            rl_head.hide()
-        }, onNetworkError = {
-            if (activity == null) return@callApi
-            activity?.noInternetSnackBar()
-            rl_head.hide()
-        })*/
     }
 
     private fun listAllProducts() {
@@ -219,81 +198,10 @@ class HomeFragment : BaseFragment() {
                 )
 
 
-            /*if (myItems.isEmpty()) {
-                rlNewestProduct.hide()
-                rcvNewestProduct.hide()
-            } else {
-                rlNewestProduct.show()
-                rcvNewestProduct.show()
-                mNewArrivalProductAdapter?.addItems(myItems)
-            }*/
-/*            if (it.featured.isEmpty()) {
-                rlFeatured.hide()
-                rcvFeaturedProducts.hide()
-            } else {
-                *//*rlFeatured.show()
-                rcvFeaturedProducts.show()
-                mFeaturedProductAdapter?.addItems(it.featured)*//*
-            }
-            if (it.testimonials.isEmpty()) {
-                rlTestimonials.hide()
-                rcvTestimonials.hide()
-            } else {
-                *//*rlTestimonials.show()
-                rcvTestimonials.show()
-                mTestimonialsAdapter?.addItems(it.testimonials)*//*
-            }
 
-            if (it.deal_product.isEmpty()) {
-                rlDeal.hide()
-                rcvDealProducts.hide()
-            } else {
-                *//*rlDeal.show()
-                rcvDealProducts.show()
-                mDealProductAdapter?.addItems(it.deal_product)*//*
-            }
-            if (it.you_may_like.isEmpty()) {
-                rlYouMayLike.hide()
-                rcvYouMayLikeProducts.hide()
-            } else {
-                *//*rlYouMayLike.show()
-                rcvYouMayLikeProducts.show()
-                mYouMayLikeProductAdapter?.addItems(it.newest)*//*
-            }
-            if (it.offer.isEmpty()) {
-                rlOffer.hide()
-                rcvOfferProducts.hide()
-            } else {
-                *//*rlOffer.show()
-                rcvOfferProducts.show()
-                mOfferProductAdapter?.addItems(it.offer)*//*
-            }
-            if (it.suggested_product.isEmpty()) {
-                rlSuggested.hide()
-                rcvSuggestedProducts.hide()
-            } else {
-                *//*rlSuggested.show()
-                rcvSuggestedProducts.show()
-                mSuggestedProductAdapter?.addItems(it.suggested_product)*//*
-            }*/
-
-//            if (it.banner_1 != null && it.banner_1.url.isNotEmpty()) {
-//                Log.d("XXXX1",it.banner_1.image+"  "+it.banner_1.url)
                 ivBanner1.show(); ivBanner1.loadImageFromUrl("http://iqonic.design/wp-themes/woobox_api/wp-content/uploads/2020/01/167-scaled.jpg ")
-                ivBanner1.onClick { activity?.openCustomTab("https://www.google.com/") }
-//            } else {
-//                ivBanner1.hide()
-//            }
-            /*if (it.banner_2 != null && it.banner_2.url.isNotEmpty()) {
-                ivBanner2.show(); ivBanner2.loadImageFromUrl(it.banner_2.image); ivBanner2.onClick { activity?.openCustomTab(it.banner_2.url) }
-            } else {
-                ivBanner2.hide()
-            }
-            if (it.banner_3 != null && it.banner_3.url.isNotEmpty()) {
-                ivBanner3.show(); ivBanner3.loadImageFromUrl(it.banner_3.image); ivBanner3.onClick { activity?.openCustomTab(it.banner_3.url) }
-            } else {
-                ivBanner3.hide()
-            }*/
+                ivBanner1.onClick { /*activity?.openCustomTab("https://www.google.com/")*/ }
+//
         }, onApiError = {
             //toast(it)
         }, onNetworkError = {
