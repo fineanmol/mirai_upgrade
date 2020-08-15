@@ -274,6 +274,10 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
+    <style name="BottomButton.Success">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/green</item>
+    </style>
 
     <style name="TextInputLayoutStyle">
         <item name="android:layout_width">wrap_content</item>
