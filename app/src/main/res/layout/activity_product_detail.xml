@@ -598,7 +598,7 @@
                         android:padding="@dimen/spacing_control">
 
                         <com.google.android.material.button.MaterialButton
-                            android:id="@+id/llCancel"
+                            android:id="@+id/selectLocation"
                             android:textColor="@color/white"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
