@@ -66,21 +66,9 @@ class HomeFragment : BaseFragment() {
         dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
-        /*
-        rcvNewestProduct.setHorizontalLayout();
-        rcvFeaturedProducts.setVerticalLayout();
-        rcvDealProducts.setHorizontalLayout();
-        rcvYouMayLikeProducts.setHorizontalLayout();
-        rcvOfferProducts.setHorizontalLayout();
-        rcvSuggestedProducts.setHorizontalLayout()
-        rcvTestimonials.setHorizontalLayout()
-        rcvCategory.setHorizontalLayout()
 
-*/
         rcvNewestProduct.setVerticalLayout()
         rcvRecentSearch.setHorizontalLayout()
-        /*mCategoryAdapter = activity!!.getCategoryAdapter();
-        rcvCategory.adapter = mCategoryAdapter*/
 
         setClickEventListener()
 
@@ -380,7 +368,7 @@ class HomeFragment : BaseFragment() {
 
     private fun setupNewArrivalProductAdapter() {
         mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
+
         rcvNewestProduct.apply {
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
             setHasFixedSize(true)
@@ -396,76 +384,6 @@ class HomeFragment : BaseFragment() {
         }
     }
 
-/*    private fun setupFeaturedProductAdapter() {
-
-        mFeaturedProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvFeaturedProducts.layoutManager = GridLayoutManager(activity,2)
-        rcvFeaturedProducts.adapter = mFeaturedProductAdapter
-
-        mFeaturedProductAdapter?.onItemClick = { pos, view, item ->
-            activity?.showProductDetail(item)
-            mRecentProductAdapter?.addItems(getRecentItems())
-            rlRecentSearch.show()
-        }
-    }
-
-    private fun setupOfferProductAdapter() {
-        mOfferProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvOfferProducts.adapter = mOfferProductAdapter
-
-        mOfferProductAdapter?.onItemClick = { pos, view, item ->
-            activity?.showProductDetail(item)
-            mRecentProductAdapter?.addItems(getRecentItems())
-            rlRecentSearch.show()
-        }
-    }
-
-    private fun setupSuggestedProductAdapter() {
-        mSuggestedProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvSuggestedProducts.adapter = mSuggestedProductAdapter
-
-        mSuggestedProductAdapter?.onItemClick = { pos, view, item ->
-            activity?.showProductDetail(item)
-            mRecentProductAdapter?.addItems(getRecentItems())
-            rlRecentSearch.show()
-        }
-    }
-
-    private fun setupYouMayLikeProductAdapter() {
-        mYouMayLikeProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvYouMayLikeProducts.adapter = mYouMayLikeProductAdapter
-
-        mYouMayLikeProductAdapter?.onItemClick = { pos, view, item ->
-            activity?.showProductDetail(item)
-            mRecentProductAdapter?.addItems(getRecentItems())
-            rlRecentSearch.show()
-        }
-    }
-
-    private fun setupDealProductAdapter() {
-        mDealProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
-        rcvDealProducts.adapter = mDealProductAdapter
-
-        mDealProductAdapter?.onItemClick = { pos, view, item ->
-            activity?.showProductDetail(item)
-            mRecentProductAdapter?.addItems(getRecentItems())
-            rlRecentSearch.show()
-        }
-    }
-
-    private fun setTestimonialAdapter() {
-        mTestimonialsAdapter = RecyclerViewAdapter(R.layout.item_testimonial, onBind = { view, item, position ->
-            view.ivAuthor.loadImageFromUrl(item.image!!)
-            view.tvName.text = item.name
-            view.tvDesignation.text = ""
-            view.tvDesignation.text = item.designation
-            if (item.company != null && item.company.isNotEmpty()) {
-                view.tvDesignation.append(", " + item.company)
-            }
-            view.tvDescription.text = "\"" + item.message + "\""
-        })
-        rcvTestimonials.adapter = mTestimonialsAdapter
-    }*/
 
     //endregion
 
@@ -475,56 +393,7 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setClickEventListener() {
-        /*viewRecentSearch.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_recent_search))
-                putExtra(VIEWALLID, RECENTSEARCH)
-            }
-        }*/
 
-/*
-        viewFeatured.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_Featured))
-                putExtra(VIEWALLID, FEATURED)
-            }
-        }
-*/
-
-        /*viewNewest.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_newest_product))
-                putExtra(VIEWALLID, NEWEST)
-            }
-        }*/
-
-/*        viewOffer.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_offers))
-                putExtra(VIEWALLID, NEWEST)
-            }
-        }
-
-        viewDeal.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_deal))
-                putExtra(VIEWALLID, NEWEST)
-            }
-        }
-
-        viewYouMayLike.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_you_may_like))
-                putExtra(VIEWALLID, NEWEST)
-            }
-        }
-
-        viewSuggested.onClick {
-            activity?.launchActivity<ViewAllProductActivity> {
-                putExtra(TITLE, getString(R.string.lbl_suggested))
-                putExtra(VIEWALLID, NEWEST)
-            }
-        }*/
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

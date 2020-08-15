@@ -10,6 +10,7 @@ class TransactionDetailsActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transaction_details)
+
         setToolbar(toolbar)
         title = getString(R.string.title_transaction)
     }

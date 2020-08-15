@@ -545,6 +545,15 @@ data class ProductDataNew(
 //    val thumbnail: String? = null
 ) : Serializable
 
+data class WalletTransactionDetails(
+    val payment_id: String? = null,
+    val transaction_id: String,
+    val date: String? = null,
+    val email_id: String? = null,
+    val phone_id: Boolean? = null,
+    val price: String? = null
+) : Serializable
+
 data class AdsMoreDetails(
     val age_group: String? = null,
     val gender: String? = null,
@@ -554,6 +563,8 @@ data class AdsMoreDetails(
     val end_time: String? = null,
     val range: String? = null
 ) : Serializable
+
+
 
 data class Testimonials(
     val name: String? = null,

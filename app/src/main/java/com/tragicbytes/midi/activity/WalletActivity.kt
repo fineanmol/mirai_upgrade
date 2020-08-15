@@ -35,7 +35,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     private fun loadActivity() {
 
         viewAllTransactions.onClick {
-            launchActivity<TransactionDetailsActivity> { }
+         //   launchActivity<TransactionDetailsActivity> { }
+            launchActivity<WalletTransactionsActivity> { }
         }
 
         addMoney.onClick {
@@ -84,14 +85,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
             val userNumber = getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
             val prefill = JSONObject()
-            prefill.put(
-                "email",
-                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)
-            )
-            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put(
-                "contact",
-                "9876543210"
-            )
+            prefill.put("email", getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL))
+            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put("contact", "9876543210")
 
 
             options.put("prefill", prefill)
