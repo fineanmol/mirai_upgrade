@@ -201,36 +201,16 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         if (mProductModel.name.toString() == "Custom Banner") btnAddCard.hide() else btnAddCard.show()
 
         intHeaderView()
-        //checkWishListAndCart()
-        /*  if (mProductModel.stock_status == "instock") {
-              if (mProductModel.manage_stock!!) {
-                  if (mProductModel.stock_quantity == null || mProductModel.stock_quantity < 1) {
-                      tvAvailability.text = getString(R.string.lbl_out_stock)
-                      btnOutOfStock.show()
-                      btnAddCard.hide()
-                  } else {
-                      setStock(mProductModel, mProductModel.stock_quantity)
-                  }
-
-              } else {
-                  setStock(mProductModel, null)
-              }
-          } else {
-              tvAvailability.text = getString(R.string.lbl_out_stock)
-              btnOutOfStock.show()
-              btnAddCard.hide()
-          }*/
 
 
-        //  ivFavourite.onClick { onFavouriteClick() }
 
-        submitForPaymentBtn.onClick {
+        /*submitForPaymentBtn.onClick {
 
             if (validateAllValue()) {
                 updateDbValues()
             }
 
-        }
+        }*/
 
         mIsRangeExist = true
 
@@ -318,6 +298,42 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             ).show()
             mIsEndTimeExist = true
         }
+
+        bannerUpload.onClick {
+            showProgress(true)
+            myImages[0]
+            this@ProductDetailActivity.requestPermissions(
+                arrayOf(
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ), onResult = {
+                    if (it) {
+                        showProgress(true)
+                        this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
+                            dbReference,
+                            storageReference!!,
+                            myImages[0],
+                            onSuccess = {
+                                showProgress(false)
+                                bannerUpload.text= "Continue"
+                            }
+                        )
+                    } else {
+                        showProgress(false)
+                        snackBarError("Upload Failed")
+                        bannerUpload.text= "Upload"
+                        //    this@ProductDetailActivity.showPermissionAlert(this)
+                    }
+                })
+
+
+            if (validateAllValue()) {
+                updateDbValues()
+            }
+
+
+        }
+
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
 
