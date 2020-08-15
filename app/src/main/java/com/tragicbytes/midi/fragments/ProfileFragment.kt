@@ -14,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
@@ -34,7 +33,6 @@ import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.SharedPref.IS_SOCIAL_LOGIN
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
 import com.tragicbytes.midi.utils.ImagePicker
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_profile.*

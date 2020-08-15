@@ -86,6 +86,17 @@ object Constants {
         const val USER_GENDER="GENDER"
 
     }
+    object WalletTransactionDetails{
+        const val WalletAmountUpdated = "100"
+        const val transactionStatus: String = "trans status"
+        const val transactionAmount: String= "trans amount"
+        const val transactionDate: String= "trans date"
+        const val transactionId: String= "trans id"
+        const val orderId: String= "order id"
+        const val signature: String= "signature"
+        const val transactionMode: String= "trans mode"
+
+    }
 
     object AdvDetails{
         const val ADV_LOGO: String = "image_url"

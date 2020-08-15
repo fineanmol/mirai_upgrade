@@ -11,7 +11,6 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -31,7 +30,6 @@ import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
-import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
@@ -43,7 +41,6 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 import kotlin.math.pow
 import kotlin.math.roundToInt
 

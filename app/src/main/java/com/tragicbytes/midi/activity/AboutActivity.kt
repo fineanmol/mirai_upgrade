@@ -3,7 +3,6 @@ package com.tragicbytes.midi.activity
 import android.os.Bundle
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_about.*

@@ -1,230 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color">
-        <include layout="@layout/toolbar" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
 
-        <ScrollView
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/adView"
+        android:layout_below="@+id/appBar"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/spacing_standard_new">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/adView"
-            android:layout_below="@+id/appBar"
-            android:clipToPadding="false"
-            android:overScrollMode="never"
-            android:paddingBottom="@dimen/spacing_standard_new">
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/cat_7"
-                    android:minHeight="@dimen/_100sdp">
-
-                    <TextView
-                        android:id="@+id/Heading"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/spacing_middle"
-                        android:text="Wallet balance"
-                        android:textAppearance="@style/FontMedium"
-                        android:textColor="@color/commonColorWhite"
-                        android:textSize="@dimen/font_size_small" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_35sdp"
-                        android:text="$ 800.00"
-                        android:textAppearance="@style/FontBold"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/font_size_xxxlarge" />
-
-                    <TextView
-android:id="@+id/viewAllTransactions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_standard_new"
-                        android:layout_marginTop="@dimen/_76sdp"
-                        android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
-                        android:text="VIEW ALL TRANSACTIONS"
-                        android:textAppearance="@style/FontMedium"
-                        android:textColor="@color/color_selected"
-                        android:textSize="@dimen/font_size_small" />
-
-
-                </RelativeLayout>
-
+                android:background="@color/cat_7"
+                android:minHeight="@dimen/_100sdp">
 
                 <TextView
-                    android:id="@+id/txtDisplayName"
+                    android:id="@+id/Heading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:text="Wallet balance"
+                    android:textAppearance="@style/FontMedium"
+                    android:textColor="@color/commonColorWhite"
+                    android:textSize="@dimen/font_size_small" />
+
+                <TextView
+                    android:id="@+id/walletAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_45sdp"
+                    android:text="\u20B9 Loading"
+
+                    android:textAppearance="@style/FontBold"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/font_size_xxlarge" />
+
+                <TextView
+                    android:id="@+id/viewAllTransactions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:text="Add money to Wallet"
+                    android:layout_marginTop="@dimen/_80sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
+                    android:text="VIEW ALL TRANSACTIONS"
                     android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_medium" />
-
-                <TextView
-                    android:id="@+id/tvVerifyHeading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginTop="@dimen/spacing_small"
-                    android:text="We suggest an average balance of $1000"
-                    android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/textColorSecondary"
+                    android:textColor="@color/color_selected"
                     android:textSize="@dimen/font_size_micro" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/stroke_width"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
 
-                    android:background="@color/view_color" />
+            </RelativeLayout>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/txtDisplayName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:text="Add money to Wallet"
+                android:textAppearance="@style/FontMedium"
+                android:textColor="@color/black"
+                android:textSize="@dimen/font_size_medium" />
+
+            <TextView
+                android:id="@+id/tvVerifyHeading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:text="We suggest an average balance of \u20B9 1000"
+                android:textAppearance="@style/FontMedium"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_size_micro" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/stroke_width"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@color/view_color"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:background="@drawable/customborder"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:layout_gravity="left|center"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:paddingLeft="@dimen/_5sdp"
+                    android:text="\u20B9"
+                    android:textColor="#222"
+                    android:textSize="18sp" />
 
-                    android:layout_marginEnd="@dimen/spacing_standard_new"
-                    android:gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_5sdp"
-                        android:text="\u20B9"
-                        android:layout_gravity="left"
-                        android:textColor="#222"
-                        android:textSize="18sp" />
-                    <EditText
-                        android:id="@+id/addAmount"
-                        style="@style/TextInputEditTextStyle"
-                        android:textAlignment="viewStart"
-                        android:singleLine="true"
-                        android:layout_marginStart="@dimen/_10sdp"
-                        android:paddingLeft="@dimen/_10sdp"
-                        android:layout_marginTop="-40dp"
-                        android:textColor="@color/black"
-                        android:inputType="number"
-                        android:text="0"
-                        android:textSize="@dimen/font_size_xlarge"
-                        />
+                <EditText
+
+                    android:id="@+id/addAmount"
+                    style="@style/TextInputEditTextStyleWithoutBorder"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="-40dp"
+                    android:inputType="number"
+                    android:maxLength="9"
+                    android:paddingLeft="@dimen/_10sdp"
+                    android:singleLine="true"
+                    android:hint="0"
+                    android:textColorHint="@color/black"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_xlarge" />
 
 
-
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="-50dp"
-                        android:layout_marginEnd="@dimen/_38sdp"
-                        android:paddingStart="@dimen/spacing_middle"
-                        android:paddingEnd="@dimen/spacing_middle"
-                        android:text="Amount"
-                        android:visibility="gone"
-                        android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_small" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_marginTop="5dp"
-                        android:visibility="gone"
-                        android:layout_marginEnd="@dimen/_18sdp"
-                        android:text="$1,500.00"
-                        android:textAppearance="@style/FontBold"
-                        android:textColor="@color/green"
-                        android:textSize="@dimen/font_size_large" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/stroke_width"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_1sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-
-                    android:background="@color/view_color" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="visible"
-                    android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginEnd="@dimen/spacing_standard_new"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_gravity="right"
+                    android:layout_marginTop="-50dp"
+                    android:layout_marginEnd="@dimen/_38sdp"
+                    android:paddingStart="@dimen/spacing_middle"
+                    android:paddingEnd="@dimen/spacing_middle"
+                    android:text="Amount"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="@dimen/font_size_small"
+                    android:visibility="gone" />
 
-                    <TextView
+                <TextView
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:layout_marginTop="@dimen/spacing_middle"
-                        android:text="Click here if wallet not updated"
-                        android:textAllCaps="true"
-                        android:drawableEnd="@drawable/ic_baseline_refresh_24"
-                        android:textAppearance="@style/FontBold"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="@dimen/font_size_small" />
-
-                    <TextView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left"
-                        android:visibility="gone"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="miraivizion@upi"
-                        android:textAppearance="@style/FontMedium"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/font_size_large" />
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/stroke_width"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_15sdp"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:background="@color/view_color" />
-
-
-                <com.google.android.material.button.MaterialButton
-
-                    style="@style/MaterialButtonStyle.Stroked"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginTop="@dimen/_14sdp"
-                    android:layout_marginEnd="@dimen/spacing_standard_new"
-                    android:layout_marginBottom="@dimen/spacing_large"
-                    android:text="ADD MONEY" />
-            </LinearLayout>
-        </ScrollView>
+                    android:layout_gravity="right"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/_18sdp"
+                    android:text="$1,500.00"
+                    android:textAppearance="@style/FontBold"
+                    android:textColor="@color/green"
+                    android:textSize="@dimen/font_size_large"
+                    android:visibility="gone" />
 
-    </RelativeLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/stroke_width"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@color/view_color"
+                android:visibility="gone" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/refreshWalletAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/spacing_middle"
+                    android:drawableEnd="@drawable/ic_baseline_refresh_24"
+                    android:text="Click here if wallet not updated"
+                    android:textAllCaps="true"
+                    android:textAppearance="@style/FontBold"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/font_size_small" />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="miraivizion@upi"
+                    android:textAppearance="@style/FontMedium"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font_size_large"
+                    android:visibility="gone" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/stroke_width"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:background="@color/view_color" />
+
+
+            <com.google.android.material.button.MaterialButton
+android:id="@+id/addMoney"
+                style="@style/MaterialButtonStyle.Stroked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginBottom="@dimen/spacing_large"
+                android:text="ADD MONEY" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

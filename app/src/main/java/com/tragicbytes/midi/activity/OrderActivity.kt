@@ -21,7 +21,6 @@ import com.tragicbytes.midi.utils.Constants.OrderStatus.PROCESSING
 import com.tragicbytes.midi.utils.Constants.OrderStatus.REFUNDED
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_order.*
-import kotlinx.android.synthetic.main.layout_nodata.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.roundToInt
 
