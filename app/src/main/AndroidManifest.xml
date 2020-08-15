@@ -21,9 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".activity.TransactionDetailsActivity">
-        </activity>
+        <activity android:name=".activity.LocationBasedScreensActivity"></activity>
+        <activity android:name=".activity.TransactionDetailsActivity"></activity>
         <activity android:name=".activity.AdvertisementFormActivity" />
         <activity
             android:name=".activity.BlogDetailActivity"
@@ -64,9 +63,7 @@
             android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".activity.SplashActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".activity.SubCategoryActivity"
             android:screenOrientation="portrait" />

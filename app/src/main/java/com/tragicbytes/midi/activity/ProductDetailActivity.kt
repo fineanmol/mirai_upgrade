@@ -334,6 +334,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
         }
 
+        selectLocation.onClick { launchActivity<LocationBasedScreensActivity>() }
+
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
 
