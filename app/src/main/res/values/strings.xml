@@ -365,8 +365,9 @@
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="choose_date" translatable="false">Choose Date</string>
     <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
-    <string name="title_transaction">Transactions</string>
-    <string name="action_wallet">Wallet</string>
+    <string name="title_transaction" translatable="false">Transactions</string>
+    <string name="action_wallet" translatable="false">Wallet</string>
+    <string name="title_location" translatable="false">Screens</string>
 
 
     <string-array name="qty_array">

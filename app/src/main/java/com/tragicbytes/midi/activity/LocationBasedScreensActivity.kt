@@ -11,6 +11,7 @@ import com.tragicbytes.midi.utils.extensions.onClick
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.selectedLocation
 import kotlinx.android.synthetic.main.dialog_quantity.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 class LocationBasedScreensActivity : AppBaseActivity() {
     private var mQuntity: String = "1"
@@ -18,6 +19,9 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_based_screens)
+        setToolbar(toolbar)
+        title=getString(R.string.title_location)
+
 
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
