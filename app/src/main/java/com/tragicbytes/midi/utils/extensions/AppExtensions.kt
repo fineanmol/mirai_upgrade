@@ -843,13 +843,13 @@ fun setProductItem(view: View, item: ProductDataNew) {
 }
 
 fun setWalletItem(view: View, item: WalletTransactionDetails) {
-    view.tPaymentId.text = item.transaction_id
+    /*view.tPaymentId.text = item.transaction_id
     if (item.price!!.isNotEmpty()) {
         view.tAmount.text = item.price.currencyFormat()
     } else {
         view.tAmount.text = item.price?.currencyFormat()
     }
-    view.tDate.text = item.date
+    view.tDate.text = item.date*/
 
 }
 

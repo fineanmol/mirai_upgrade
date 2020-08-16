@@ -10,7 +10,6 @@ import com.tragicbytes.midi.utils.extensions.rvItemAnimation
 import com.tragicbytes.midi.utils.extensions.setScreenItem
 import com.tragicbytes.midi.utils.extensions.setVerticalLayout
 import com.tragicbytes.midi.utils.extensions.setWalletItem
-import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.activity_wallet_transactions.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -41,11 +40,11 @@ class WalletTransactionsActivity : AppBaseActivity() {
     private fun setupTransactionListAdapter() {
         mTransactionDetailsAdapter = RecyclerViewAdapter(R.layout.layout_transaction_card, onBind = { view, item, position -> setWalletItem(view, item) })
 
-        rcvScreens.apply {
+        tTransactionList.apply {
             adapter = mTransactionDetailsAdapter
             rvItemAnimation()
         }
-        rcvScreens.adapter = mTransactionDetailsAdapter
+        tTransactionList.adapter = mTransactionDetailsAdapter
 
         /* mLocationScreensAdapter?.onItemClick = { pos, view, item ->
              this.showProductDetail(item)

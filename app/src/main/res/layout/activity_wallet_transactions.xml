@@ -4,19 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.tragicbytes.midi.activity.WalletTransactionsActivity">
+    tools:context="com.tragicbytes.midi.activity.WalletTransactionsActivity"
+    android:orientation="vertical">
     <include layout="@layout/toolbar" />
-<!--    <ListView
-        android:id="@+id/tTransactionList"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/appBar"
-        android:paddingBottom="@dimen/spacing_standard_new" />-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tTransactionList"
         style="@style/RecycleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/appBar"
+        android:layout_marginTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/spacing_standard_new" />
 </LinearLayout>

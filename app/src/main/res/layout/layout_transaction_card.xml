@@ -14,13 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/customborder"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/tIcon"
-            android:layout_marginTop="@dimen/spacing_middle"
-            android:layout_width="@dimen/_23sdp"
-            android:layout_height="@dimen/_44sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:background="@color/item_background"
             android:contentDescription="@string/text_todo"
             android:padding="@dimen/_1sdp"
@@ -30,8 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="start"
-            android:layout_marginTop="-62dp"
-            android:layout_marginStart="@dimen/_45sdp"
+            android:layout_marginStart="@dimen/_15sdp"
             android:paddingTop="@dimen/spacing_control"
             android:paddingBottom="@dimen/spacing_standard">
 
