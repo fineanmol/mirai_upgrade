@@ -18,9 +18,9 @@
 
         <ImageView
             android:id="@+id/tIcon"
-            android:layout_width="@dimen/_15sdp"
-            android:layout_height="@dimen/_15sdp"
-            android:background="@color/item_background"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:background="@drawable/ic_checkbox_circle_fill"
             android:contentDescription="@string/text_todo"
             android:padding="@dimen/_1sdp"
             android:layout_marginTop="@dimen/spacing_medium"
@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_middle"
                 android:layout_marginStart="@dimen/_165sdp"
-                android:text="+ \u20B9 437"
+                android:text="+ \u20B9437"
                 android:textAppearance="@style/FontSemiBold"
                 android:textColor="@color/green"
                 android:textSize="@dimen/font_size_small" />

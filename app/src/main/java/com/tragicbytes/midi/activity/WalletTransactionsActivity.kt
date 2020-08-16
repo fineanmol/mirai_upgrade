@@ -23,6 +23,7 @@ class WalletTransactionsActivity : AppBaseActivity() {
         setContentView(R.layout.activity_wallet_transactions)
         setToolbar(toolbar)
         title = getString(R.string.title_transaction)
+        supportActionBar?.setIcon(R.drawable.ic_baseline_bubble_chart_24)
 
         tTransactionList.setVerticalLayout()
         setupTransactionListAdapter()

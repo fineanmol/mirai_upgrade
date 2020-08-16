@@ -307,6 +307,7 @@
     <string name="lbl_blog">Blog</string>
     <string name="lbl_no_data_found">No Products found</string>
     <string name="llb_no_items_in_your_cart">No Ads in your Account</string>
+    <string name="llb_no_location_in_your_profile">Choose the Location first!</string>
     <string name="lbl_shop_now">Create Now</string>
     <string name="lbl_product_reviews">Product Reviews</string>
     <string name="lbl_review">Reviews</string>

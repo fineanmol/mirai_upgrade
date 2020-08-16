@@ -15,4 +15,26 @@
         android:layout_below="@+id/appBar"
         android:layout_marginTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/spacing_standard_new" />
+    <LinearLayout
+        android:id="@+id/NoTransactions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <ImageView
+
+            android:layout_width="@dimen/_160sdp"
+            android:layout_height="@dimen/_160sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_undraw_empty_xct9" />
+
+        <TextView
+            style="@style/Heading"
+            android:text="No Transaction Found"
+            android:textSize="@dimen/font_size_normal" />
+
+
+    </LinearLayout>
 </LinearLayout>
