@@ -88,6 +88,7 @@
         android:layout_below="@+id/locationLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/customborder"
         android:layout_marginStart="@dimen/spacing_standard_new"
         android:layout_marginTop="@dimen/spacing_standard"
         android:layout_marginEnd="@dimen/spacing_standard_new"
@@ -114,33 +115,71 @@
 
                     <RadioButton
                         android:id="@+id/radioButton2"
+                        android:layout_marginStart="-5dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="-7dp"
+                        android:layout_height="@dimen/_62sdp"
                         android:gravity="top" />
 
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_80sdp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_height="@dimen/_62sdp"
+                        android:layout_marginStart="5dp"
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/categoryTitle"
+                            android:id="@+id/screenTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Screen 01"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="@dimen/font_size_large"
+                            />
+                        <TextView
+                            android:id="@+id/statusText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/screenTitle"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_micro"
+                            android:text="Screen Status"
+                            />
+                        <TextView
+                            android:id="@+id/screenStatus"
+                            android:layout_width="wrap_content"
+
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/screenTitle"
+                            android:layout_marginStart="@dimen/_65sdp"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/green"
+                            android:textSize="@dimen/font_size_micro"
+                            android:text="• Running"
                             />
 
                         <TextView
-                            android:id="@+id/categoryDescription"
+                            android:id="@+id/locationTitle"
+                            android:layout_marginTop="@dimen/spacing_small"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/categoryTitle"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:text="$ • Location, Location"
+                            android:layout_below="@id/screenStatus"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_micro"
+                            android:text="Ansal Plaza, SM Complex"
+                            />
+                        <TextView
+                            android:id="@+id/addressTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/locationTitle"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_micro"
+                            android:text="Greater Noida, 201310"
                             />
 
                         <TextView
@@ -149,7 +188,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentRight="true"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/textColorPrimary"
+                            android:textSize="@dimen/font_size_large"
                             android:text="$ 100"
                             />
 
@@ -183,7 +224,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -220,10 +261,10 @@
 
                             <com.github.mikephil.charting.charts.PieChart
                                 android:id="@+id/pieChart"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="@dimen/_100sdp"
-                                android:layout_marginLeft="16dp"
-                                android:layout_marginRight="16dp" />
+                                android:layout_width="@dimen/_120sdp"
+                                android:layout_height="@dimen/_120sdp"
+                                android:layout_marginLeft="20dp"
+                                android:layout_marginRight="20dp" />
 
 
                         </LinearLayout>
@@ -233,6 +274,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
+                        android:visibility="gone"
                         android:layout_marginTop="10dp"
                         android:background="#88888888" />
 

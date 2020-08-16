@@ -59,7 +59,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         selectedLocation.onClick {
             dialog.show()
         }
-
+        /** Close the expand menu at first time*/
+        expandableLayout.visibility = View.GONE
         expandBtn.setOnClickListener {
             if (expandableLayout.visibility == View.GONE) {
                 TransitionManager.beginDelayedTransition(cardView, AutoTransition())
@@ -68,7 +69,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             } else {
                 TransitionManager.beginDelayedTransition(cardView, AutoTransition())
                 expandableLayout.visibility = View.GONE
-                expandBtn.rotation= 180F
+                expandBtn.rotation= 360F
+
             }
             pieChart.animateY(1500, Easing.EaseInBounce)
         }
