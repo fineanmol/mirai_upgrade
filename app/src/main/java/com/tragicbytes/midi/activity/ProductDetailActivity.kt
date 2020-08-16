@@ -14,6 +14,7 @@ import android.util.Base64
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
@@ -39,6 +40,8 @@ import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -79,6 +82,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private var mDay: Int = 0
     private var advCount:String?=null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
@@ -89,7 +93,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         storageReference=FirebaseStorage.getInstance().reference
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
         setToolbarWithoutBackButton(mMainBinding.toolbar)
-        toolbar_layout.title = ""
+        toolbar_layout.title = "Advertisement"
         ivBack.onClick {
             onBackPressed()
         }
@@ -149,6 +153,16 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             } else {
                 launchActivity<SignInUpActivity>()
             }
+        }
+
+
+        try {
+            val current = LocalDate.now()
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
+            val formatted = current.format(formatter)
+            startDateVal.text =formatted.toString()
+        } catch (e: Exception) {
+            e.message?.let { snackBarError(it) }
         }
 
     }
@@ -214,6 +228,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
 
         startDateVal.onClick {
+            getSharedPrefInstance().removeKey(Constants.AdvTimeDetails.Start_Date)
             val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Calendar.getInstance()
             } else {
@@ -226,14 +241,15 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    startDateVal.text =
-                        dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                    startDateVal.text = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
+
+            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Date,startDateVal.text.toString())
             mIsStartDateExist = !startDateVal.text.isNullOrEmpty()
         }
 
@@ -250,7 +266,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    endDateVal.text = dayOfMonth.toString() + "/" + (monthOfYear + 1) + "/" + year
+                    endDateVal.text = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
@@ -258,6 +274,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             datePickerDialog.show()
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
+            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Date,endDateVal.text.toString())
             mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
         }
 
@@ -276,6 +293,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
+            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Time,startTimeVal.text.toString())
+
             mIsStartTimeExist = true
         }
 
@@ -293,11 +312,12 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
+            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Time,endTimeVal.text.toString())
             mIsEndTimeExist = true
         }
 
         bannerUpload.onClick {
-            showProgress(true)
+   /*         showProgress(true)
             myImages[0]
             this@ProductDetailActivity.requestPermissions(
                 arrayOf(
@@ -313,6 +333,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                             onSuccess = {
                                 showProgress(false)
                                 bannerUpload.text= "Continue"
+                                bannerUpload.setCompoundDrawables(null,null,null,null)
                             }
                         )
                     } else {
@@ -326,36 +347,14 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
             if (validateAllValue()) {
                 updateDbValues()
-            }
-
+            }*/
+            val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
+            snackBar(value)
 
         }
 
         selectLocation.onClick { launchActivity<LocationBasedScreensActivity>() }
 
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(R.layout.dialog_quantity)
-
-       // val size = if (stockQuantity == null || stockQuantity >= 5) 5 else stockQuantity
-        val size = 5 /** Make size the number of locations available */
-        val list: ArrayList<String> = ArrayList()
-        for (i in 1..size) {
-            list.add("Location $i")
-        }
-        dialog.listQuantity.adapter =
-            ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
-        dialog.listQuantity.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                mQuntity = list[position]
-                selectedLocation.text = list[position]
-                dialog.dismiss()
-            }
-        tvSelectedQuantity.onClick {
-            dialog.show()
-        }
-        selectedLocation.onClick {
-            dialog.show()
-        }
 
 
     }
@@ -379,10 +378,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } else if (rangeVal.textToString().isEmpty()) {
+        } /*else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
-        } else {
+        }*/ else {
             mIsAllDetailsFilled = true
             return true
         }
@@ -907,7 +906,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                             endDateVal.text.toString(),
                                             startTimeVal.text.toString(),
                                             endTimeVal.text.toString(),
-                                            "₹" + rangeVal.textToString(),
+                                            /*"₹" + rangeVal.textToString(),*/
                                             bannerImageUrl
                                         )
                                         saveBannerDetailsToDB(adsDetails)
@@ -923,7 +922,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                         endDateVal.text.toString(),
                                         startTimeVal.text.toString(),
                                         endTimeVal.text.toString(),
-                                        "₹" + rangeVal.textToString(),
+                                     /*   "₹" + rangeVal.textToString(),*/
                                         bannerImageUrl
                                     )
                                     saveBannerDetailsToDB(adsDetails)

@@ -519,7 +519,7 @@
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/MoreInfo_heading"
@@ -537,90 +537,35 @@
 
                             />
                         </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/spacing_standard_new"
-                        android:layout_marginTop="@dimen/spacing_standard"
-                        android:layout_marginEnd="@dimen/spacing_standard_new"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
 
-                        <TextView
-                            android:visibility="visible"
-                            android:id="@+id/selectedLocation"
-                            android:layout_weight="2.8"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_marginBottom="@dimen/_5sdp"
-                            android:background="@drawable/bg_ractangal_stroked"
-                            android:text="@string/selectLocation"
-                            android:gravity="center"
-                            style="@style/MoreInfo_heading"
-                            android:textSize="@dimen/font_size_normal"
-                            android:textStyle="bold"
-                            android:textColor="@color/textColorPrimary"
-                            android:drawableEnd="@drawable/ic_arrow_down"
-                            android:textAppearance="@style/FontSemiBold"
-                            android:paddingEnd="@dimen/spacing_standard"
-                            android:layout_marginEnd="@dimen/spacing_small" />
-
-                    </LinearLayout>
                 </LinearLayout>
 
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/submitForPaymentBtn"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
+                    android:id="@+id/selectLocation"
+                    android:layout_width="@dimen/_130sdp"
+                    android:visibility="visible"
+                    android:layout_marginTop="@dimen/spacing_xxlarge"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_middle"
                     android:layout_marginEnd="@dimen/spacing_middle"
                     app:cornerRadius="@dimen/spacing_control"
                     style="@style/MaterialButtonStyle.Filled"
-                    android:text="Submit Ads"
+                    android:text="@string/lbl_cancel"
                     />
-                <LinearLayout
-                    android:id="@+id/lay_button"
-                    android:layout_width="match_parent"
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/bannerUpload"
+                    android:layout_width="@dimen/_130sdp"
+                    android:visibility="visible"
+                    android:layout_marginStart="@dimen/_150sdp"
+                    android:layout_marginTop="-54dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/bg_top_shadow"
-                    android:visibility="visible">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_control">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/selectLocation"
-                            android:padding="@dimen/spacing_control"
-                            android:textColor="@color/white"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:cornerRadius="@dimen/spacing_control"
-                            style="@style/MaterialButtonStyle.Filled"
-                            android:text="Cancel"
-                            />
-
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/bannerUpload"
-                        style="@style/BottomButton.Success"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="0dp"
-                        app:cornerRadius="@dimen/spacing_control"
-                        android:drawableEnd="@drawable/ic_baseline_add_circle_24"
-                        android:text="@string/lbl_upload_banner" />
-                </LinearLayout>
+                    android:drawableEnd="@drawable/ic_baseline_add_circle_24"
+                    android:layout_marginEnd="@dimen/spacing_middle"
+                    app:cornerRadius="@dimen/spacing_control"
+                    style="@style/MaterialButtonStyle.Success"
+                    android:text="@string/lbl_upload_banner"
+                    />
 
 
             </LinearLayout>

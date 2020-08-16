@@ -42,7 +42,6 @@ import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.models.*
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
@@ -71,12 +70,10 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DISPLAY_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DOB
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_FIRST_NAME
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_GENDER
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ID
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_LAST_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_NICE_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ORG
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PERSONAL_DETAILS
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PHONE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE_URL
