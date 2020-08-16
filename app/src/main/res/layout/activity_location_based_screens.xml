@@ -191,7 +191,7 @@
                             android:textAppearance="@style/FontMedium"
                             android:textColor="@color/textColorPrimary"
                             android:textSize="@dimen/font_size_large"
-                            android:text="$ 100"
+                            android:text="\u20B9 100"
                             />
 
 
