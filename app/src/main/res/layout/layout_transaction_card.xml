@@ -18,11 +18,12 @@
 
         <ImageView
             android:id="@+id/tIcon"
-            android:layout_width="@dimen/_50sdp"
-            android:layout_height="@dimen/_50sdp"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
             android:background="@color/item_background"
             android:contentDescription="@string/text_todo"
             android:padding="@dimen/_1sdp"
+            android:layout_marginTop="@dimen/spacing_medium"
             android:scaleType="fitXY" />
 
         <RelativeLayout
@@ -47,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="end"
+                android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_middle"
                 android:layout_marginStart="@dimen/_165sdp"
                 android:text="+ \u20B9 437"
@@ -76,19 +78,21 @@
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_size_small"
                 tools:text="Payment Id pay_wyueyuwyue" />
+            <TextView
+                android:id="@+id/tDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tPaymentId"
+                android:singleLine="true"
+                android:layout_marginTop="@dimen/spacing_medium"
+                android:text="Tuesday, Mar 17,2020"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/textColorSecondary"
+                android:textSize="@dimen/font_size_micro" />
 
 
         </RelativeLayout>
-        <TextView
-            android:layout_marginStart="@dimen/_45sdp"
-            android:id="@+id/tDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:text="Tuesday, Mar 17,2020"
-            android:textAppearance="@style/FontSemiBold"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="@dimen/font_size_micro" />
+
 
     </LinearLayout>
 

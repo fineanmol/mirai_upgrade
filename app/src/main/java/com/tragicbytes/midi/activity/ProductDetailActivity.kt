@@ -156,14 +156,14 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }
 
 
-        try {
+        /*try {
             val current = LocalDate.now()
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy")
             val formatted = current.format(formatter)
             startDateVal.text =formatted.toString()
         } catch (e: Exception) {
             e.message?.let { snackBarError(it) }
-        }
+        }*/
 
     }
 
