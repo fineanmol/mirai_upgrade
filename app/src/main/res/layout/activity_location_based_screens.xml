@@ -38,250 +38,60 @@
 
     </LinearLayout>
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/locationLayout"-->
-<!--        android:clipToPadding="false"-->
-<!--        android:overScrollMode="never"-->
-<!--        android:paddingBottom="@dimen/spacing_standard_new">-->
-
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="vertical">-->
-
-<!--            <com.facebook.shimmer.ShimmerFrameLayout-->
-<!--                android:id="@+id/shimmerFrameLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:orientation="vertical">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-<!--                    <include layout="@layout/shimmer_screens_layout" />-->
-
-
-<!--                </LinearLayout>-->
-<!--            </com.facebook.shimmer.ShimmerFrameLayout>-->
-
-
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
-    <LinearLayout
-        android:layout_below="@+id/locationLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/customborder"
-        android:layout_marginStart="@dimen/spacing_standard_new"
-        android:layout_marginTop="@dimen/spacing_standard"
-        android:layout_marginEnd="@dimen/spacing_standard_new"
-        android:orientation="vertical">
+        android:layout_below="@+id/locationLayout"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/spacing_standard_new">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/CardView.Light">
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerFrameLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <LinearLayout
-                    android:id="@+id/linearLayoutHolder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="20dp"
-                    >
-
-
-                    <RadioButton
-                        android:id="@+id/radioButton2"
-                        android:layout_marginStart="-5dp"
-                        android:layout_width="wrap_content"
-                        android:layout_marginTop="-7dp"
-                        android:layout_height="@dimen/_62sdp"
-                        android:gravity="top" />
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_62sdp"
-                        android:layout_marginStart="5dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/screenTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Screen 01"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="@dimen/font_size_large"
-                            />
-                        <TextView
-                            android:id="@+id/statusText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/screenTitle"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="@dimen/font_size_micro"
-                            android:text="Screen Status"
-                            />
-                        <TextView
-                            android:id="@+id/screenStatus"
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/screenTitle"
-                            android:layout_marginStart="@dimen/_65sdp"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/green"
-                            android:textSize="@dimen/font_size_micro"
-                            android:text="• Running"
-                            />
-
-                        <TextView
-                            android:id="@+id/locationTitle"
-                            android:layout_marginTop="@dimen/spacing_small"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/screenStatus"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="@dimen/font_size_micro"
-                            android:text="Ansal Plaza, SM Complex"
-                            />
-                        <TextView
-                            android:id="@+id/addressTitle"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/locationTitle"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/textColorSecondary"
-                            android:textSize="@dimen/font_size_micro"
-                            android:text="Greater Noida, 201310"
-                            />
-
-                        <TextView
-                            android:id="@+id/screen_price"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:textAppearance="@style/FontMedium"
-                            android:textColor="@color/textColorPrimary"
-                            android:textSize="@dimen/font_size_large"
-                            android:text="\u20B9 100"
-                            />
-
-
-                        <ImageButton
-                            android:id="@+id/expandBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:background="#FFF"
-                            android:src="@drawable/ic_arrow_down" />
-
-                    </RelativeLayout>
-
-
-                </LinearLayout>
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_below="@+id/linearLayoutHolder"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="@dimen/_10sdp"
-                    >
-                    <LinearLayout
-                        android:id="@+id/expandableLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="visible">
+                    android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Description is mandatory. Please ass it."
-                            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginEnd="18dp"
-                            android:textColor="@color/colorPrimary"/>
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="0.5dp"
-                            android:background="#88888888"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginEnd="18dp"
-                            android:layout_marginTop="18dp"/>
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Screen Related Data"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                            android:layout_marginStart="18dp"
-                            android:layout_marginEnd="18dp"
-                            android:layout_marginTop="18dp"
-                            android:textColor="@color/cardview_dark_background"/>
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginTop="12dp">
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                            <com.github.mikephil.charting.charts.PieChart
-                                android:id="@+id/pieChart"
-                                android:layout_width="@dimen/_120sdp"
-                                android:layout_height="@dimen/_120sdp"
-                                android:layout_marginLeft="20dp"
-                                android:layout_marginRight="20dp" />
+                    <include layout="@layout/shimmer_screens_layout" />
 
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                        </LinearLayout>
+                    <include layout="@layout/shimmer_screens_layout" />
 
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:visibility="gone"
-                        android:layout_marginTop="10dp"
-                        android:background="#88888888" />
 
                 </LinearLayout>
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvScreens"
+                style="@style/RecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard"
+                android:layout_marginEnd="@dimen/spacing_standard_new" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

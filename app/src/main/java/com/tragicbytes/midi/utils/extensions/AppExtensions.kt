@@ -24,8 +24,17 @@ import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.AutoTransition
+import androidx.transition.TransitionManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.formatter.PercentFormatter
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
@@ -40,9 +49,9 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
+import com.tragicbytes.midi.activity.LocationBasedScreensActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.models.*
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
@@ -71,12 +80,10 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DISPLAY_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_DOB
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_EMAIL
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_FIRST_NAME
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_GENDER
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ID
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_LAST_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_NICE_NAME
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_ORG
-import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PERSONAL_DETAILS
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PHONE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE
 import com.tragicbytes.midi.utils.Constants.SharedPref.USER_PROFILE_URL
@@ -89,6 +96,7 @@ import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
+import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
@@ -747,6 +755,80 @@ fun getCategoryDataFromPref(): ArrayList<CategoryData> {
     return Gson().fromJson<ArrayList<CategoryData>>(getSharedPrefInstance().getStringValue(CATEGORY_DATA), object : TypeToken<ArrayList<CategoryData>>() {}.type)
 }
 
+fun setScreenItem(
+    view: View,
+    item: ProductDataNew,
+    locationBasedScreensActivity: LocationBasedScreensActivity
+){
+    /** Close the expand menu at first time*/
+
+    view.expandableLayout.visibility = View.GONE
+    view.expandBtn.setOnClickListener {
+        if (view.expandableLayout.visibility == View.GONE) {
+            TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
+            view.expandableLayout.visibility = View.VISIBLE
+            view.expandBtn.rotation=180F
+        } else {
+            TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
+            view.expandableLayout.visibility = View.GONE
+            view.expandBtn.rotation= 360F
+
+        }
+        view.pieChart.animateY(1500, Easing.EaseInBounce)
+    }
+
+    view.pieChart.setUsePercentValues(true)
+    val xvalues = ArrayList<PieEntry>()
+    xvalues.add(PieEntry(60.0f, "Male"))
+    xvalues.add(PieEntry(40.0f, "Female"))
+    val dataSet = PieDataSet(xvalues, "")
+    val data = PieData(dataSet)
+
+    // In Percentage
+    data.setValueFormatter(PercentFormatter())
+
+    view.pieChart.data = data
+    dataSet.setColors(
+        intArrayOf(R.color.pie1, R.color.pie2),
+        locationBasedScreensActivity
+    )
+    dataSet.sliceSpace = 5f
+    view.pieChart.description.text = "Gender Ratio"
+    view.pieChart.description.textSize=12f
+    view.pieChart.isDrawHoleEnabled = false
+    data.setValueTextSize(13f)
+
+
+    chartDetails(view.pieChart, Typeface.SANS_SERIF)
+}
+fun chartDetails(mChart: PieChart, tf: Typeface) {
+    mChart.description.isEnabled = true
+    mChart.centerText = ""
+    mChart.setCenterTextSize(10F)
+    mChart.setCenterTextTypeface(tf)
+    val l = mChart.legend
+    mChart.legend.isWordWrapEnabled = true
+    mChart.legend.isEnabled = true
+    l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
+    l.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+    l.formSize = 20F
+    l.formToTextSpace = 5f
+    l.form = Legend.LegendForm.DEFAULT
+    l.textSize = 12f
+    l.orientation = Legend.LegendOrientation.HORIZONTAL
+    l.isWordWrapEnabled = true
+    l.setDrawInside(true)
+    mChart.setTouchEnabled(true)
+    mChart.setDrawEntryLabels(true)
+    mChart.legend.isWordWrapEnabled = true
+    mChart.setExtraOffsets(0f, 0f, 20f, 0f)
+    mChart.setUsePercentValues(true)
+    // mChart.rotationAngle = 0f
+    mChart.setUsePercentValues(true)
+    mChart.setDrawCenterText(true)
+    mChart.description.isEnabled = true
+    mChart.isRotationEnabled = true
+}
 fun setProductItem(view: View, item: ProductDataNew) {
     view.tvProductName.text = item.name
     if (item.sale_price!!.isNotEmpty()) {
