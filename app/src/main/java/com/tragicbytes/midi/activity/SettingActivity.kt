@@ -12,7 +12,6 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.fragments.DashboardListFragment
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.dialog_launguage_selection.*

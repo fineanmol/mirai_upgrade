@@ -104,6 +104,13 @@ object Constants {
         const val ADV_DESC: String= "adv desc"
         const val ADV_TAG: String= "adv tag"
         const val ADV_BRAND: String= "adv brand"
+    }
+
+    object AdvTimeDetails{
+        const val Start_Date: String = "start_date"
+        const val End_Date: String = "end_date"
+        const val Start_Time: String = "start_time"
+        const val End_Time: String = "end_time"
 
 
     }

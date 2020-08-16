@@ -560,8 +560,8 @@ data class AdsMoreDetails(
     val start_date: String? = null,
     val end_date: String? = null,
     val start_time: String? = null,
-    val end_time: String? = null,
-    val range: String? = null
+    val end_time: String? = null
+   /* val range: String? = null*/
 ) : Serializable
 
 

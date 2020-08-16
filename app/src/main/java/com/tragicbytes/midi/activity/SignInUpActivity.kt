@@ -1,7 +1,6 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.Toast
 import com.facebook.CallbackManager
@@ -16,7 +15,6 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.SignInFragment
 import com.tragicbytes.midi.fragments.SignUpFragment
-import com.tragicbytes.midi.models.RequestModel
 import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.models.UserPersonalDetails
 import com.tragicbytes.midi.utils.Constants

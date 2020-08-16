@@ -23,7 +23,7 @@ class AdDetailsModel {
         var endDate:String="",
         var startTime:String="",
         var endTime:String="",
-        var range: String="",
+        /*var range: String="",*/
         var bannerImageUrl:String=""
 
     ) : Serializable

@@ -5,19 +5,13 @@ import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.fragments.MyBannersFragment
 import com.tragicbytes.midi.fragments.ProfileFragment
-import com.tragicbytes.midi.fragments.UploadBannerFragment
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.activity_account.txtDisplayName
-import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.bottom_bar.*
-import kotlinx.android.synthetic.main.layout_sidebar.*
 import kotlinx.android.synthetic.main.menu_cart.*
 import kotlinx.android.synthetic.main.toolbar.*
 
