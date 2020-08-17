@@ -98,7 +98,6 @@ import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
 import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
-import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -757,7 +756,7 @@ fun getCategoryDataFromPref(): ArrayList<CategoryData> {
 
 fun setScreenItem(
     view: View,
-    item: ProductDataNew,
+    item: ScreenDataModel,
     locationBasedScreensActivity: LocationBasedScreensActivity
 ){
     /** Close the expand menu at first time*/
@@ -777,10 +776,32 @@ fun setScreenItem(
         view.pieChart.animateY(1500, Easing.EaseInBounce)
     }
 
+    setScreenData(view,item)
+
+    setChartData(view,item,locationBasedScreensActivity)
+
+
+}
+
+fun setScreenData(view: View, item: ScreenDataModel) {
+    view.screenTitle.text=item.screenId
+    view.screenStatus.text="• ${item.screenStatus}"
+    if (item.screenStatus=="Stopped") view.screenStatus.setTextColor(R.color.colorPrimary)
+    view.locationTitle.text=item.screenLocation
+    view.addressTitle.text=item.screenCity+","+item.screenPincode
+    view.screen_price.text="$${item.screenPrice}"
+}
+
+fun setChartData(
+    view: View,
+    item: ScreenDataModel,
+    locationBasedScreensActivity: LocationBasedScreensActivity
+) {
+    var maleValue=item.screenGenderRatio.toFloat()
     view.pieChart.setUsePercentValues(true)
     val xvalues = ArrayList<PieEntry>()
-    xvalues.add(PieEntry(60.0f, "Male"))
-    xvalues.add(PieEntry(40.0f, "Female"))
+    xvalues.add(PieEntry(maleValue, "Male"))
+    xvalues.add(PieEntry(100-maleValue, "Female"))
     val dataSet = PieDataSet(xvalues, "")
     val data = PieData(dataSet)
 
@@ -801,6 +822,7 @@ fun setScreenItem(
 
     chartDetails(view.pieChart, Typeface.SANS_SERIF)
 }
+
 fun chartDetails(mChart: PieChart, tf: Typeface) {
     mChart.description.isEnabled = true
     mChart.centerText = ""
