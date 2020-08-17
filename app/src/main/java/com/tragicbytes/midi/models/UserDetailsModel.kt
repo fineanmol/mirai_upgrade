@@ -35,15 +35,14 @@ class SingleAdvertisementDetails{
 
 class UserWalletDetails {
     var totalAmount: String = "0"
-    var transactionsDetails: List<TransactionsDetails> = ArrayList()
+    var transactionsDetails: ArrayList<TransactionsDetails> = arrayListOf()
 }
 class TransactionsDetails{
     var transactionStatus:String=""
     var transactionAmount:String=""
-    var transactionDate:String=""
+    var transactionDate:Long= Long.MIN_VALUE
     var transactionId:String=""
     var transactionMode:String=""
-    val payment_id: String=""
-    val email_id: String=""
-    val phone_id: Boolean = false
+    var email: String=""
+    var phone: String = ""
 }

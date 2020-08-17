@@ -2,20 +2,28 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.View
+import com.google.firebase.database.*
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.app
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.models.TransactionsDetails
+import com.tragicbytes.midi.models.UserWalletDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet.*
+import kotlinx.android.synthetic.main.activity_wallet_transactions.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
 import java.util.*
 
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
+    private lateinit var dbReference: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +31,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         setContentView(R.layout.activity_wallet)
         setToolbar(toolbar)
         title = getString(R.string.action_wallet)
+        dbReference = FirebaseDatabase.getInstance().reference
+
 
         walletAmount.text =
             "$"+getStoredUserDetails().userWalletDetails.totalAmount
@@ -40,10 +50,11 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         addMoney.onClick {
             val amountToAdd = addAmount.textToString()
-            snackBar(amountToAdd)
             if (amountToAdd.isNullOrEmpty() or amountToAdd.isBlank()) {
                 snackBarError("Enter Amount")
             } else {
+                addAmount.isEnabled=false
+                addAmount.isClickable=false
                 startPayment(amountToAdd)
             }
 
@@ -52,8 +63,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         refreshWalletAmount.onClick {
             showProgress(true)
-            snackBar("Wallet Refresh Successfully")
-            showProgress(false)
+            updateWalletAmount()
         }
 
 
@@ -82,9 +92,9 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             options.put("currency", "INR")
             options.put("amount", PaymentAmount)
 
-            val userNumber = getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
+            val userNumber = getStoredUserDetails().userPersonalDetails.phone
             val prefill = JSONObject()
-            prefill.put("email", getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL))
+            prefill.put("email", getStoredUserDetails().userPersonalDetails.email)
             if (userNumber != null) prefill.put("contact", userNumber) else prefill.put("contact", "9876543210")
 
 
@@ -101,54 +111,78 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         errorDescription: String?,
         paymentData: PaymentData?
     ) {
+        if (paymentData != null) {
+            updateTransactionDetails(paymentData,0)
+        }
+        addAmount.isEnabled=true
+        addAmount.isClickable=true
         snackBar("Error $errorCode : $errorDescription")
         showProgress(false)
     }
 
     override fun onPaymentSuccess(rzpPaymentId: String?, paymentData: PaymentData?) {
         snackBar("Payment Successful: $rzpPaymentId \n" + " data: ${paymentData?.orderId}")
-        showProgress(true)
-        val razorpayPaymentId = generateString()
-            var orderid = paymentData?.orderId
-            var payid = paymentData?.paymentId
-            var signid = paymentData?.signature
-            var userid = paymentData?.userContact
-            var emailid = paymentData?.userEmail
+        showProgress(false)
 
         if(paymentData != null) {
-            getSharedPrefInstance().setValue(Constants.WalletTransactionDetails.orderId, paymentData.orderId)
-            getSharedPrefInstance().setValue(Constants.WalletTransactionDetails.transactionId, rzpPaymentId)
-            getSharedPrefInstance().setValue(Constants.WalletTransactionDetails.signature, paymentData.signature)
-            getSharedPrefInstance().setValue(Constants.WalletTransactionDetails.transactionId, paymentData.userEmail)
-            getSharedPrefInstance().setValue(Constants.WalletTransactionDetails.transactionId, paymentData.userContact)
-
+            updateTransactionDetails(paymentData,1)
             updateWalletAmount()
         }
+        addAmount.isEnabled=true
+        addAmount.isClickable=true
         showProgress(false)
 
     }
 
+    private fun updateTransactionDetails(paymentData: PaymentData,status:Int) {
+        var newTransactionsDetails=TransactionsDetails()
+        newTransactionsDetails.transactionStatus="1"
+        newTransactionsDetails.email=paymentData.userEmail
+        newTransactionsDetails.transactionId=paymentData.paymentId
+        newTransactionsDetails.transactionAmount=addAmount.textToString()
+        newTransactionsDetails.phone=paymentData.userContact
+
+        var localStoredUserDetails=getStoredUserDetails()
+        var transactionsList=localStoredUserDetails.userWalletDetails.transactionsDetails
+        transactionsList.add(newTransactionsDetails)
+        localStoredUserDetails.userWalletDetails.transactionsDetails=transactionsList
+        updateStoredUserDetails(localStoredUserDetails)
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails").setValue(transactionsList)
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size-1}/transactionDate").setValue(ServerValue.TIMESTAMP)
+    }
+
     private fun updateWalletAmount() {
         try {
-            val updatedWallet =
-                getSharedPrefInstance().getStringValue(Constants.WalletTransactionDetails.WalletAmountUpdated)
-                    .toInt() + 100
-            getSharedPrefInstance().setValue(
-                Constants.WalletTransactionDetails.WalletAmountUpdated,
-                updatedWallet.toString()
-            )
-                .toString()
+            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
+                .addValueEventListener(
+                    object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                var sum=0
+                                dataSnapshot.children.forEach {
+                                    var transactionsDetails=it.getValue(TransactionsDetails::class.java)!!
+                                    sum += transactionsDetails.transactionAmount.toInt()
+                                }
+                                dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
+                                    .setValue(sum.toString()).addOnCompleteListener{
+                                        var localUserDetails= getStoredUserDetails()
+                                        localUserDetails.userWalletDetails.totalAmount=sum.toString()
+                                        updateStoredUserDetails(localUserDetails)
+                                        walletAmount.text="$"+sum.toString()
+                                        snackBar("Wallet Refresh Successfully")
+                                    }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            snackBar("Error Occured")
+                        }
+                    }
+
+                )
         } catch (e: Exception) {
             snackBarError("Error: " + e.message)
         }
         showProgress(false)
     }
-
-
-    private fun generateString(): String? {
-        val uuid: String = UUID.randomUUID().toString()
-        return uuid.replace("-".toRegex(), "")
-    }
-
-
 }

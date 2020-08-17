@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -100,7 +101,9 @@ import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 fun isLoggedIn(): Boolean = getSharedPrefInstance().getBooleanValue(IS_LOGGED_IN)
 fun getUserId(): String = getSharedPrefInstance().getStringValue(USER_ID)
@@ -872,10 +875,18 @@ fun setWalletItem(view: View, item: TransactionsDetails) {
     } else {
         view.tAmount.text = item.transactionAmount.currencyFormat()
     }
-    view.tDate.text = item.transactionDate
+    view.tDate.text = getShortDate(item.transactionDate)
 
 }
-
+fun getShortDate(ts:Long?):String{
+    if(ts == null) return ""
+    //Get instance of calendar
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    //get current date from ts
+    calendar.timeInMillis = ts
+    //return formatted date
+    return android.text.format.DateFormat.format("E, dd MMM yyyy", calendar).toString()
+}
 
 
 
