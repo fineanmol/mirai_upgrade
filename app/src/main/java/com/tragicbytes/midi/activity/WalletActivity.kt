@@ -160,7 +160,9 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                                 var sum=0
                                 dataSnapshot.children.forEach {
                                     var transactionsDetails=it.getValue(TransactionsDetails::class.java)!!
-                                    sum += transactionsDetails.transactionAmount.toInt()
+                                    if(transactionsDetails.transactionStatus=="1"){
+                                        sum += transactionsDetails.transactionAmount.toInt()
+                                    }
                                 }
                                 dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
                                     .setValue(sum.toString()).addOnCompleteListener{
