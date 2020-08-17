@@ -98,6 +98,7 @@ import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
 import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
+import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -864,14 +865,14 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
-fun setWalletItem(view: View, item: WalletTransactionDetails) {
-    /*view.tPaymentId.text = item.transaction_id
-    if (item.price!!.isNotEmpty()) {
-        view.tAmount.text = item.price.currencyFormat()
+fun setWalletItem(view: View, item: TransactionsDetails) {
+    view.tPaymentId.text = item.transactionId
+    if (item.transactionAmount.isNotEmpty()) {
+        view.tAmount.text = item.transactionAmount.currencyFormat()
     } else {
-        view.tAmount.text = item.price?.currencyFormat()
+        view.tAmount.text = item.transactionAmount.currencyFormat()
     }
-    view.tDate.text = item.date*/
+    view.tDate.text = item.transactionDate
 
 }
 

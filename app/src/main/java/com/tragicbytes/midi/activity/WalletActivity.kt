@@ -24,9 +24,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         setToolbar(toolbar)
         title = getString(R.string.action_wallet)
 
-       /* walletAmount.text =
-            getSharedPrefInstance().getStringValue(Constants.WalletTransactionDetails.WalletAmountUpdated)
-*/
+        walletAmount.text =
+            "$"+getStoredUserDetails().userWalletDetails.totalAmount
 
         loadActivity()
 
