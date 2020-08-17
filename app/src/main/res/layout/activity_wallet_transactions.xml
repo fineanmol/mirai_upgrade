@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:paddingBottom="@dimen/spacing_standard_new" />
     <LinearLayout
-        android:id="@+id/NoTransactions"
+        android:id="@+id/noTransactions"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
