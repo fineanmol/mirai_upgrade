@@ -297,7 +297,7 @@
     <!--font File-->
     <string name="msg_sold_out">Sold Out</string>
     <string name="lbl_about">About Us</string>
-    <string name="lbl_terms_conditions">Terms &amp; Conditions</string>
+    <string name="lbl_terms_conditions"><u>Terms &amp; Conditions</u></string>
     <string name="llb_privacy_policy">Privacy Policy</string>
     <string name="llb_follow_us">Follow Us</string>
     <string name="lbl_introduction">Introduction</string>
@@ -366,7 +366,8 @@
     <string name="load_more">Load More</string>
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="choose_date" translatable="false">Choose Date</string>
-    <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
+    <string name="powered" translatable="false">
+        <font fgcolor="#757575">  Powered By</font>\n<font fgcolor="#000000">NightOwl</font><font fgcolor="#13c7ac">D</font><font fgcolor="#000000">evelopers</font></string>
     <string name="title_transaction" translatable="false">Transactions</string>
     <string name="action_wallet" translatable="false">Wallet</string>
     <string name="title_location" translatable="false">Screens</string>
@@ -401,4 +402,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="selectLocation">Select Location</string>
     <string name="lbl_clear_ads_details">Clear Data</string>
+    <string name="for_advertisement_payment">For Screen Advertisement</string>
+    <string name="miraivizion_com">miraivizion.com</string>
 </resources>

@@ -34,8 +34,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         dbReference = FirebaseDatabase.getInstance().reference
 
 
-        walletAmount.text =
-            "$"+getStoredUserDetails().userWalletDetails.totalAmount
+        walletAmount.text = getString(R.string.rs) + getStoredUserDetails().userWalletDetails.totalAmount
 
         loadActivity()
 

@@ -58,6 +58,9 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         selectedLocation.onClick {
             dialog.show()
         }
+        sContinue.onClick {
+            launchActivity<ConfirmationActivity> {  }
+        }
 
     }
 

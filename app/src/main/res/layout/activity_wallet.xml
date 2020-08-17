@@ -25,7 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/cat_7"
+                android:background="@android:color/holo_red_light"
                 android:minHeight="@dimen/_100sdp">
 
                 <TextView
@@ -35,20 +35,19 @@
                     android:layout_marginStart="@dimen/_20sdp"
                     android:layout_marginTop="@dimen/spacing_large"
                     android:text="Wallet balance"
-                    android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/commonColorWhite"
-                    android:textSize="@dimen/font_size_small" />
+                    android:textAppearance="@style/FontBold"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/font_size_medium" />
 
                 <TextView
                     android:id="@+id/walletAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_25sdp"
                     android:layout_marginTop="@dimen/_45sdp"
-                    android:text="\u20B9 Loading"
-
-                    android:textAppearance="@style/FontBold"
-                    android:textColor="@color/white"
+                    android:text="\u20B9 Loading..."
+                    android:textAppearance="@style/FontSemiBold"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_xxlarge" />
 
                 <TextView
@@ -56,12 +55,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginTop="@dimen/_80sdp"
+                    android:layout_marginTop="@dimen/_82sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                     android:text="VIEW ALL TRANSACTIONS"
                     android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/color_selected"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_micro" />
 
 
@@ -130,7 +129,7 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:singleLine="true"
                     android:hint="0"
-                    android:textColorHint="@color/black"
+                    android:textColorHint="@color/transparent_view_color"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_xlarge" />

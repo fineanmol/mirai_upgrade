@@ -107,6 +107,27 @@
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:text="zxcvbnm." />
+            <TextView
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard"
+                android:layout_marginTop="@dimen/spacing_smlarge"
+                android:layout_marginEnd="@dimen/spacing_standard"
+                android:hint="@string/hint_confirm_password"
+                android:singleLine="true"
+                android:text="By continuing you are agreeing to our" />
+            <TextView
+                android:id="@+id/terms_and_Condition_Btn"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard"
+                android:textColor="@color/faceBooK_blue"
+                android:layout_marginEnd="@dimen/spacing_standard"
+                android:hint="@string/hint_confirm_password"
+                android:singleLine="true"
+                android:text="@string/lbl_terms_conditions" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignUp"
