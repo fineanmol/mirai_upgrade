@@ -297,7 +297,7 @@
     <!--font File-->
     <string name="msg_sold_out">Sold Out</string>
     <string name="lbl_about">About Us</string>
-    <string name="lbl_terms_conditions">Terms &amp; Conditions</string>
+    <string name="lbl_terms_conditions"><u>Terms &amp; Conditions</u></string>
     <string name="llb_privacy_policy">Privacy Policy</string>
     <string name="llb_follow_us">Follow Us</string>
     <string name="lbl_introduction">Introduction</string>

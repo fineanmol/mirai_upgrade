@@ -34,6 +34,7 @@ class SignUpFragment : BaseFragment() {
 
         btnSignUp.onClick { if (validate()) createCustomer() }
         btnSignIn.onClick { (activity as SignInUpActivity).loadSignInFragment() }
+        terms_and_Condition_Btn.onClick { activity?.openCustomTab("https://www.nightowldevelopers.com/terms-and-conditions.php") }
     }
 
     private fun createCustomer() {

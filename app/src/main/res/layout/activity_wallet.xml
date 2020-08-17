@@ -129,7 +129,7 @@
                     android:paddingLeft="@dimen/_10sdp"
                     android:singleLine="true"
                     android:hint="0"
-                    android:textColorHint="@color/light_grey"
+                    android:textColorHint="@color/transparent_view_color"
                     android:textAlignment="viewStart"
                     android:textColor="@color/black"
                     android:textSize="@dimen/font_size_xlarge" />
