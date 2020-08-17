@@ -58,6 +58,8 @@
     <color name="bottom_bar_color">#f3f3f3</color>
     <color name="item_background_common">#EFF3F6</color>
     <color name="gray_80">#80ECECEC</color>
+    <color name="lightgray">#33707070</color>
+    <color name="blacklight">#2f2f39</color>
     <color name="colorGrey">#dddddd</color>
     <color name="color_selected">#79303F9F</color>
     <color name="pie1">#08F7FE</color>
