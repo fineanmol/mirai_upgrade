@@ -366,7 +366,8 @@
     <string name="load_more">Load More</string>
     <string name="nightowl_developers" translatable="false">Nightowl Developers</string>
     <string name="choose_date" translatable="false">Choose Date</string>
-    <string name="powered" translatable="false">Powered By \n NightOwl Developers</string>
+    <string name="powered" translatable="false">
+        <font fgcolor="#757575">  Powered By</font>\n<font fgcolor="#000000">NightOwl</font><font fgcolor="#13c7ac">D</font><font fgcolor="#000000">evelopers</font></string>
     <string name="title_transaction" translatable="false">Transactions</string>
     <string name="action_wallet" translatable="false">Wallet</string>
     <string name="title_location" translatable="false">Screens</string>

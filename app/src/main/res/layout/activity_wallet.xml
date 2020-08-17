@@ -25,7 +25,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/cat_7"
+                android:background="@color/gray_80"
                 android:minHeight="@dimen/_100sdp">
 
                 <TextView
@@ -36,7 +36,7 @@
                     android:layout_marginTop="@dimen/spacing_large"
                     android:text="Wallet balance"
                     android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/commonColorWhite"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
@@ -48,7 +48,7 @@
                     android:text="\u20B9 Loading"
 
                     android:textAppearance="@style/FontBold"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_xxlarge" />
 
                 <TextView
@@ -56,12 +56,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_standard_new"
-                    android:layout_marginTop="@dimen/_80sdp"
+                    android:layout_marginTop="@dimen/_82sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_right_24"
                     android:text="VIEW ALL TRANSACTIONS"
                     android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/color_selected"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_micro" />
 
 

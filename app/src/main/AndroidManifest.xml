@@ -21,20 +21,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.WalletTransactionsActivity">
+        <activity
+            android:name=".activity.WalletTransactionsActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".activity.LocationBasedScreensActivity">
-            <intent-filter>
+        <activity
+            android:name=".activity.LocationBasedScreensActivity"
+            android:screenOrientation="portrait">
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
+-->
         </activity>
-        <activity android:name=".activity.TransactionDetailsActivity" />
-        <activity android:name=".activity.AdvertisementFormActivity" />
+        <activity
+            android:name=".activity.TransactionDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AdvertisementFormActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BlogDetailActivity"
             android:screenOrientation="portrait" />
@@ -55,6 +63,7 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
@@ -97,7 +106,7 @@
         <activity
             android:name=".activity.DashBoardActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -113,8 +122,7 @@
         <activity
             android:name=".activity.ProductDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/CollapsingTheme" >
-        </activity>
+            android:theme="@style/CollapsingTheme" />
         <activity
             android:name=".activity.BlogActivity"
             android:screenOrientation="portrait" />
@@ -167,7 +175,14 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WalletActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" >
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity
             android:name=".activity.CardActivity"
             android:screenOrientation="portrait" />
