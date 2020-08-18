@@ -16,6 +16,7 @@ import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.getSharedPrefInstance
+import com.tragicbytes.midi.utils.extensions.getStoredUserDetails
 import com.tragicbytes.midi.utils.extensions.launchActivity
 import com.tragicbytes.midi.utils.extensions.runDelayed
 import java.security.MessageDigest
@@ -138,7 +139,7 @@ class SplashActivity : FirebaseConfig() {
             getRemoteConfigValues()
         } else {
             runDelayed(1000) {
-                if (getSharedPrefInstance().getBooleanValue(Constants.SharedPref.SHOW_SWIPE) or getSharedPrefInstance().getBooleanValue(Constants.KeyIntent.LOGIN)) {
+                if (getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_DETAILS_OBJECT).isNotEmpty()) {
                     launchActivity<DashBoardActivity>()
                 } else {
                     launchActivity<WalkThroughActivity>()
