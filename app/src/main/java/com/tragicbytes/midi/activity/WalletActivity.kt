@@ -2,24 +2,17 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.View
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.models.TransactionsDetails
-import com.tragicbytes.midi.models.UserWalletDetails
-import com.tragicbytes.midi.utils.Constants
+import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet.*
-import kotlinx.android.synthetic.main.activity_wallet_transactions.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
-import java.util.*
 
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
@@ -134,7 +127,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     }
 
     private fun updateTransactionDetails(paymentData: PaymentData,status:Int) {
-        var newTransactionsDetails=TransactionsDetails()
+        var newTransactionsDetails=TransactionDetails()
         newTransactionsDetails.transactionStatus="1"
         newTransactionsDetails.email=paymentData.userEmail
         newTransactionsDetails.transactionId=paymentData.paymentId
@@ -159,7 +152,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                             if (dataSnapshot.exists()) {
                                 var sum=0
                                 dataSnapshot.children.forEach {
-                                    var transactionsDetails=it.getValue(TransactionsDetails::class.java)!!
+                                    var transactionsDetails=it.getValue(TransactionDetails::class.java)!!
                                     if(transactionsDetails.transactionStatus=="1"){
                                         sum += transactionsDetails.transactionAmount.toInt()
                                     }

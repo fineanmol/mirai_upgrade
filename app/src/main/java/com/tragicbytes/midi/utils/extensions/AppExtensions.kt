@@ -40,7 +40,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -52,6 +51,7 @@ import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.LocationBasedScreensActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
+import com.tragicbytes.midi.activity.TransactionDetailsActivity
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
@@ -313,6 +313,12 @@ fun Activity.showProductDetail(model: ProductDataNew) {
         putExtra(DATA, model)
     }
     addToRecentProduct(model)
+}
+
+fun Activity.showTransactionDetail(model: TransactionDetails) {
+    launchActivity<TransactionDetailsActivity> {
+        putExtra(DATA, model)
+    }
 }
 
 fun Activity.showBannerDetail(model: AdDetailsModel.AdsCompleteDetails) {
@@ -868,7 +874,7 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
-fun setWalletItem(view: View, item: TransactionsDetails) {
+fun setWalletItem(view: View, item: TransactionDetails) {
     view.tPaymentId.text = item.transactionId
     if (item.transactionAmount.isNotEmpty()) {
         view.tAmount.text = item.transactionAmount.currencyFormat()
@@ -886,6 +892,16 @@ fun getShortDate(ts:Long?):String{
     calendar.timeInMillis = ts
     //return formatted date
     return android.text.format.DateFormat.format("E, dd MMM yyyy", calendar).toString()
+}
+
+fun getShortTime(ts:Long?):String{
+    if(ts == null) return ""
+    //Get instance of calendar
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    //get current date from ts
+    calendar.timeInMillis = ts
+    //return formatted date
+    return android.text.format.DateFormat.format("hh:mm a", calendar).toString()
 }
 
 
