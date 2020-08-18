@@ -73,6 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_marginTop="@dimen/spacing_standard"
+                        android:text="Order Processing"
                         android:layout_toEndOf="@id/ivCircle"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
@@ -83,6 +84,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvTrack1"
+                        android:text="18 Aug 2020"
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_toEndOf="@id/ivCircle"
                         android:textAppearance="@style/FontMedium"
@@ -97,6 +99,7 @@
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_marginTop="-6dp"
                         android:layout_toEndOf="@id/ivCircle1"
+                        android:text="Order Processing"
                         android:drawablePadding="@dimen/spacing_middle"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
@@ -107,12 +110,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvTrack2"
+                        android:text="19 Aug 2020"
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_toEndOf="@id/ivCircle"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_nano"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                     <TextView
                         android:id="@+id/tvDelivered"
@@ -125,7 +129,7 @@
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_nano"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
 
                 </RelativeLayout>
             </LinearLayout>

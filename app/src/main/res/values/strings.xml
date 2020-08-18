@@ -88,7 +88,7 @@
     <string name="lbl_order_date">Order Date -</string>
     <string name="lbl_give_ratings">Give Rating</string>
     <string name="lbl_rate_5">/5</string>
-    <string name="lbl_delivery_status">Your Ordered Item has been Delivered</string>
+    <string name="lbl_delivery_status">Your Advertisement has been Published</string>
     <string name="lbl_return_replace"><![CDATA[Return & Replace]]></string>
     <string name="lbl_cancel_order">Cancel Order</string>
     <string name="lbl_see_return_policy">See Return Policy</string>

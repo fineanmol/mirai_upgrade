@@ -59,22 +59,7 @@ class MyBannersFragment : BaseFragment() {
     }
 
     private fun loadImages(){
-        /*var adv=AdDetailsModel.AdsCompleteDetails(
-            "123",
-            "adDetails!!.adName",
-            "adDetails!!.adDesc",
-            "adDetails!!.adTagline",
-            "adDetails!!.adBrandName",
-            "",
-            "gender",
-            "ageGroup",
-            "startDateVal.text.toString()",
-            "endDateVal.text.toString()",
-            "startTimeVal.text.toString()",
-            "endTimeVal.text.toString()",
-            "rangeVal.text.toString()",
-            "https://firebasestorage.googleapis.com/v0/b/midi-trio.appspot.com/o/uploads%2FNikhil%20Nishad?alt=media&token=6a9c5b61-4c04-4aaa-9121-1fa88e38e491"
-        )*/
+
         dbReference.child(
             getSharedPrefInstance().getStringValue(
                 Constants.SharedPref.USER_ID
@@ -113,18 +98,9 @@ class MyBannersFragment : BaseFragment() {
 
     private fun setupAdsCompleteDetailsAdapter() {
         mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item,position) })
-        //loader2.hide()
-        //rcvNewestProduct.layoutManager = GridLayoutManager(activity,2,GridLayoutManager.HORIZONTAL, false)
-        /*publishedBannersList.apply {
-            layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
-            setHasFixedSize(true)
-            adapter = mAdsCompleteDetailsAdapter
-            rvItemAnimation()
-        }*/
+
         publishedBannersList.adapter = mAdsCompleteDetailsAdapter
 
-        /*mAdsCompleteDetailsAdapter?.onItemClick = { pos, view, item ->
-            activity?.showBannerDetail(item)
-        }*/
+
     }
 }

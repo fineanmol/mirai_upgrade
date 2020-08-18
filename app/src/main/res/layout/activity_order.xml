@@ -13,6 +13,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvOrder"
         style="@style/RecycleView"
+
         android:layout_below="@+id/appBar"
         android:nestedScrollingEnabled="false"
         android:paddingTop="@dimen/spacing_standard_new"

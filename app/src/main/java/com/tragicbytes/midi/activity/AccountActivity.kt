@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.fragments.ProfileFragment
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_account.*
 import kotlinx.android.synthetic.main.activity_account.txtDisplayName
@@ -41,6 +42,7 @@ class AccountActivity : AppBaseActivity() {
                     getString(R.string.lbl_logout_confirmation),
                     onPositiveClick = { dialog, i ->
                         clearLoginPref()
+                        getSharedPrefInstance().removeKey(Constants.SharedPref.USER_DETAILS_OBJECT)
                         FirebaseAuth.getInstance().signOut()
                         launchActivity<SignInUpActivity>()
                     },

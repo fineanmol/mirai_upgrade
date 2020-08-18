@@ -553,22 +553,22 @@
                     style="@style/MaterialButtonStyle.Filled"
                     android:text="@string/lbl_cancel"
                     />
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bannerUpload"
+                    style="@style/MaterialButtonStyle.Success"
                     android:layout_width="@dimen/_130sdp"
-                    android:visibility="visible"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_150sdp"
                     android:layout_marginTop="-54dp"
-                    android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_baseline_add_circle_24"
                     android:layout_marginEnd="@dimen/spacing_middle"
-                    app:cornerRadius="@dimen/spacing_control"
-                    android:drawablePadding="@dimen/spacing_medium"
+                    android:drawableEnd="@drawable/ic_baseline_add_circle_24"
+                    android:drawablePadding="@dimen/_40sdp"
                     android:paddingLeft="30dip"
                     android:paddingRight="26dip"
-                    style="@style/MaterialButtonStyle.Success"
                     android:text="@string/lbl_upload_banner"
-                    />
+                    android:visibility="visible"
+                    app:cornerRadius="@dimen/spacing_control" />
 
 
             </LinearLayout>
