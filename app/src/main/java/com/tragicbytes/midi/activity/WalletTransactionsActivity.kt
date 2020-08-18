@@ -1,13 +1,12 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.google.firebase.database.*
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.models.TransactionsDetails
+import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.models.UserWalletDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet_transactions.*
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class WalletTransactionsActivity : AppBaseActivity() {
 
-    private var mTransactionsDetailsAdapter: RecyclerViewAdapter<TransactionsDetails>? = null
+    private var mTransactionDetailsAdapter: RecyclerViewAdapter<TransactionDetails>? = null
     private lateinit var dbReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,7 @@ class WalletTransactionsActivity : AppBaseActivity() {
                             var storedUserDetails=getStoredUserDetails()
                             storedUserDetails.userWalletDetails=userWalletDetails
                             updateStoredUserDetails(storedUserDetails)
-                            mTransactionsDetailsAdapter?.addItems(ArrayList(userWalletDetails.transactionsDetails))
+                            mTransactionDetailsAdapter?.addItems(ArrayList(userWalletDetails.transactionsDetails))
                         }
                     }
 
@@ -59,17 +58,17 @@ class WalletTransactionsActivity : AppBaseActivity() {
     }
 
     private fun setupTransactionListAdapter() {
-        mTransactionsDetailsAdapter = RecyclerViewAdapter(R.layout.layout_transaction_card, onBind = { view, item, position -> setWalletItem(view, item) })
+        mTransactionDetailsAdapter = RecyclerViewAdapter(R.layout.layout_transaction_card, onBind = { view, item, position -> setWalletItem(view, item) })
 
         tTransactionList.apply {
-            adapter = mTransactionsDetailsAdapter
+            adapter = mTransactionDetailsAdapter
             rvItemAnimation()
         }
-        tTransactionList.adapter = mTransactionsDetailsAdapter
+        tTransactionList.adapter = mTransactionDetailsAdapter
 
-        /* mLocationScreensAdapter?.onItemClick = { pos, view, item ->
-             this.showProductDetail(item)
-         }*/
+        mTransactionDetailsAdapter?.onItemClick = { pos, view, item ->
+             this.showTransactionDetail(item)
+         }
     }
 
 }

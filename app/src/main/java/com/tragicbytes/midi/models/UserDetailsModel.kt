@@ -1,5 +1,7 @@
 package com.tragicbytes.midi.models
 
+import java.io.Serializable
+
 class UserDetailsModel {
     var userId: String=""
     var userAdvertisementDetails: UserAdvertisementDetails=UserAdvertisementDetails()
@@ -35,9 +37,9 @@ class SingleAdvertisementDetails{
 
 class UserWalletDetails {
     var totalAmount: String = "0"
-    var transactionsDetails: ArrayList<TransactionsDetails> = arrayListOf()
+    var transactionsDetails: ArrayList<TransactionDetails> = arrayListOf()
 }
-class TransactionsDetails{
+class TransactionDetails: Serializable {
     var transactionStatus:String=""
     var transactionAmount:String=""
     var transactionDate:Long= Long.MIN_VALUE

@@ -8,9 +8,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.CountDownTimer
@@ -25,7 +23,6 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -43,7 +40,6 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ServerValue
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -55,6 +51,7 @@ import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.LocationBasedScreensActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
+import com.tragicbytes.midi.activity.TransactionDetailsActivity
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
@@ -316,6 +313,12 @@ fun Activity.showProductDetail(model: ProductDataNew) {
         putExtra(DATA, model)
     }
     addToRecentProduct(model)
+}
+
+fun Activity.showTransactionDetail(model: TransactionDetails) {
+    launchActivity<TransactionDetailsActivity> {
+        putExtra(DATA, model)
+    }
 }
 
 fun Activity.showBannerDetail(model: AdDetailsModel.AdsCompleteDetails) {
@@ -701,8 +704,31 @@ fun isExistInWishList(product: ProductDataNew): Boolean {
     return false
 }
 
+fun Activity.fetchAndStoreCartData() {
+    /*callApi(getRestApis(false).getCart(), onApiSuccess = {
+        getSharedPrefInstance().setValue(KEY_CART_COUNT, it.size); getSharedPrefInstance().setValue(CART_DATA, Gson().toJson(it)); sendCartCountChangeBroadcast()
+    }, onApiError = {
+        if (it == "no product available") {
+            getSharedPrefInstance().setValue(KEY_CART_COUNT, 0); getSharedPrefInstance().setValue(CART_DATA, Gson().toJson(ArrayList<CartResponse>()))
+            sendCartCountChangeBroadcast()
+        } else {
+           // snackBarError(it)
+        }
+    })*/
+}
 
-
+fun Activity.fetchAndStoreWishListData() {
+    /*callApi(getRestApis(false).getWishList(), onApiSuccess = {
+        getSharedPrefInstance().setValue(KEY_WISHLIST_COUNT, it.size); getSharedPrefInstance().setValue(WISHLIST_DATA, Gson().toJson(it)); sendWishListBroadcast()
+    }, onApiError = {
+        if (it == "no product available") {
+            getSharedPrefInstance().setValue(KEY_WISHLIST_COUNT, 0); getSharedPrefInstance().setValue(WISHLIST_DATA, Gson().toJson(ArrayList<WishListData>()))
+            sendWishListBroadcast()
+        } else {
+           // snackBarError(it)
+        }
+    })*/
+}
 
 fun Activity.addToWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
    /* callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
@@ -848,8 +874,7 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
-@SuppressLint("ResourceAsColor")
-fun setWalletItem(view: View, item: TransactionsDetails) {
+fun setWalletItem(view: View, item: TransactionDetails) {
     view.tPaymentId.text = item.transactionId
     if(item.transactionStatus=="1") {
         if (item.transactionAmount.isNotEmpty()) {
@@ -885,6 +910,16 @@ fun getShortDate(ts:Long?):String{
     calendar.timeInMillis = ts
     //return formatted date
     return android.text.format.DateFormat.format("E, dd MMM yyyy", calendar).toString()
+}
+
+fun getShortTime(ts:Long?):String{
+    if(ts == null) return ""
+    //Get instance of calendar
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    //get current date from ts
+    calendar.timeInMillis = ts
+    //return formatted date
+    return android.text.format.DateFormat.format("hh:mm a", calendar).toString()
 }
 
 

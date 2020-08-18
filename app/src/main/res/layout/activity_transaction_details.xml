@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,62 +10,69 @@
     <include layout="@layout/toolbar" />
 
     <ScrollView
-        android:layout_below="@+id/appBar"
-        android:layout_above="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/adView"
+        android:layout_below="@+id/appBar"
         android:clipToPadding="false"
         android:overScrollMode="never"
         android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <RelativeLayout
-                android:background="@drawable/rzp_green_button"
+                android:id="@+id/topRelativeLayout"
                 android:layout_width="match_parent"
-                android:minHeight="@dimen/_100sdp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/rzp_green_button"
+                android:minHeight="@dimen/_100sdp">
+
                 <TextView
                     android:id="@+id/Heading"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/spacing_middle"
+                    android:layout_marginTop="@dimen/spacing_standard_new"
                     android:text="Money Sent to"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/commonColorWhite"
-                    android:textSize="@dimen/font_size_small"/>
+                    android:textSize="@dimen/font_size_small" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_18sdp"
-                    android:layout_marginTop="@dimen/_35sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
                     android:text="Mirai Vizion"
                     android:textAppearance="@style/FontBold"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size_xxxlarge" />
 
                 <com.tragicbytes.midi.utils.CircleImageView
-                    android:layout_marginTop="@dimen/spacing_large"
+                    android:id="@+id/transactionIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:layout_marginStart="@dimen/_240sdp"
-                    android:src="@drawable/ic_baseline_arrow_upward_24"/>
-
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:background="@color/white"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_checkbox_circle_fill" />
 
 
             </RelativeLayout>
+
             <com.tragicbytes.midi.utils.CircleImageView
                 android:layout_width="@dimen/_50sdp"
                 android:layout_height="@dimen/_50sdp"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="@dimen/_30sdp"
                 android:layout_gravity="right"
-                android:src="@drawable/gr"
-                android:layout_marginTop="-30dp"/>
+                android:layout_marginTop="-30dp"
+                android:layout_marginRight="@dimen/_30sdp"
+                android:src="@drawable/gr" />
             <!--<com.airbnb.lottie.LottieAnimationView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
@@ -80,14 +86,15 @@
 
             <TextView
                 android:id="@+id/tvVerifyHeading"
-                android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/spacing_middle"
                 android:text="From UPI ID"
                 android:textAppearance="@style/FontMedium"
                 android:textColor="@color/textColorSecondary"
-                android:textSize="@dimen/font_size_small"/>
+                android:textSize="@dimen/font_size_small" />
+
             <TextView
                 android:id="@+id/txtDisplayName"
                 android:layout_width="wrap_content"
@@ -96,16 +103,18 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text="7827327604@paytm"
                 android:textAppearance="@style/FontMedium"
-                android:textColor="@color/black"
-                android:textSize="@dimen/font_size_large" />
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/font_size_medium" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/stroke_width"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
 
                 android:background="@color/view_color" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,52 +128,55 @@
                     android:id="@+id/tvVerify"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:layout_marginTop="@dimen/spacing_middle"
                     android:text="Transaction ID"
-                    android:layout_gravity="left"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
+
                 <TextView
-                    android:id="@+id/txtDisplay"
+                    android:id="@+id/transactionId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="022415593788"
-                    android:textAppearance="@style/FontBold"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_large" />
+                    android:text="@string/lbl_loading"
+                    android:textAppearance="@style/FontMedium"
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/font_size_medium" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-50dp"
-                    android:text="Amount"
-                    android:layout_marginEnd="@dimen/_38sdp"
                     android:layout_gravity="right"
+                    android:layout_marginTop="-40dp"
+                    android:layout_marginEnd="@dimen/_30sdp"
                     android:paddingStart="@dimen/spacing_middle"
                     android:paddingEnd="@dimen/spacing_middle"
+                    android:text="Amount"
                     android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_size_small"
-                    />
-                <TextView
+                    android:textSize="@dimen/font_size_small" />
 
+                <TextView
+                    android:id="@+id/transactionAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginEnd="@dimen/_18sdp"
                     android:layout_marginTop="5dp"
-                    android:text="$1,500.00"
+                    android:layout_marginEnd="@dimen/_40sdp"
+                    android:text="\u20B9 loading.."
                     android:textAppearance="@style/FontBold"
                     android:textColor="@color/green"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/stroke_width"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/spacing_standard"
                 android:background="@color/view_color" />
 
@@ -180,45 +192,49 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:layout_marginTop="@dimen/spacing_middle"
                     android:text="Date"
-                    android:layout_gravity="left"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
+
                 <TextView
 
+                    android:id="@+id/transactionDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
                     android:layout_marginTop="@dimen/_5sdp"
-                    android:text="11th Aug 2020"
+                    android:text="@string/lbl_loading"
                     android:textAppearance="@style/FontMedium"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="@dimen/font_size_medium" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-50dp"
-                    android:text="Time"
-                    android:layout_marginEnd="@dimen/_48sdp"
                     android:layout_gravity="right"
+                    android:layout_marginTop="-50dp"
+                    android:layout_marginEnd="@dimen/_48sdp"
                     android:paddingStart="@dimen/spacing_middle"
                     android:paddingEnd="@dimen/spacing_middle"
+                    android:text="Time"
                     android:textColor="@color/textColorSecondary"
-                    android:textSize="@dimen/font_size_small"
-                    />
+                    android:textSize="@dimen/font_size_small" />
+
                 <TextView
 
+                    android:id="@+id/transactionTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginEnd="@dimen/_18sdp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginEnd="@dimen/_30sdp"
                     android:text="03:42 PM"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -226,10 +242,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/stroke_width"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_1sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
 
                 android:background="@color/view_color" />
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -242,12 +259,13 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:layout_marginTop="@dimen/spacing_middle"
                     android:text="Credited to"
-                    android:layout_gravity="left"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
+
                 <TextView
 
                     android:layout_width="wrap_content"
@@ -257,16 +275,17 @@
                     android:text="miraivizion@upi"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/stroke_width"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginBottom="@dimen/spacing_standard"
                 android:background="@color/view_color" />
 
@@ -282,14 +301,15 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="left"
                     android:layout_marginTop="@dimen/spacing_middle"
                     android:text="Remarks"
-                    android:layout_gravity="left"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
-                <TextView
 
+                <TextView
+                    android:id="@+id/transactionRemark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -297,22 +317,23 @@
                     android:text="Payment to Advertisement"
                     android:textAppearance="@style/FontMedium"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/font_size_large" />
+                    android:textSize="@dimen/font_size_medium" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/stroke_width"
                 android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
                 android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
 
                 android:background="@color/view_color" />
 
 
             <com.google.android.material.button.MaterialButton
-
+android:id="@+id/tansactionSupportBtn"
                 style="@style/MaterialButtonStyle.Stroked"
                 android:layout_width="match_parent"
 
@@ -324,7 +345,6 @@
                 android:text="Support" />
         </LinearLayout>
     </ScrollView>
-
 
 
 </RelativeLayout>

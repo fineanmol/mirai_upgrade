@@ -56,6 +56,20 @@
                 android:textColor="@color/green"
                 android:textSize="@dimen/font_size_small" />
             <TextView
+                android:id="@+id/tRefund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:visibility="gone"
+                android:background="@drawable/bg_primary_light"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:layout_marginStart="@dimen/_170sdp"
+                android:text="Refund"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/green"
+                android:textSize="@dimen/font_size_nano" />
+            <TextView
                 android:id="@+id/tRightArrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
