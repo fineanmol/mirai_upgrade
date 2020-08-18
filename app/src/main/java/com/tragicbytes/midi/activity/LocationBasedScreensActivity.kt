@@ -41,7 +41,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
 
         val dialog = BottomSheetDialog(this)
         dialog.setContentView(R.layout.dialog_quantity)
-
+        showProgress(true)
         val list: ArrayList<String> = ArrayList()
         getAvailableLocationList(list)
         dialog.listQuantity.adapter =
@@ -73,11 +73,15 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                             dataSnapshot.children.forEach {
                                 list.add(it.key.toString())
                             }
+                            selectedLocation.text = list[0]
+                            fetchLocationBasedScreens(list[0])
+                            showProgress(false)
                         }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
                         toast("Unable to fetch locations")
+                        showProgress(false)
                     }
                 }
 
@@ -101,6 +105,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                             }
                             shimmerFrameLayout.stopShimmer()
                             shimmerFrameLayout.visibility=View.GONE
+                            results.text="RESULTS (${screensList.size})"
                             mLocationScreensAdapter?.addItems(screensList)
 
                         }
