@@ -563,6 +563,9 @@
                     android:drawableEnd="@drawable/ic_baseline_add_circle_24"
                     android:layout_marginEnd="@dimen/spacing_middle"
                     app:cornerRadius="@dimen/spacing_control"
+                    android:drawablePadding="@dimen/spacing_medium"
+                    android:paddingLeft="30dip"
+                    android:paddingRight="26dip"
                     style="@style/MaterialButtonStyle.Success"
                     android:text="@string/lbl_upload_banner"
                     />

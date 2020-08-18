@@ -66,14 +66,14 @@ fun String.equalsZero(): Boolean {
 }
 
 fun String.currencyFormat(code: String = "INR"): String {
-    return if (this.checkIsEmpty()) "" else {
+    /*return if (this.checkIsEmpty()) "" else {
         "${getDefaultCurrency().getHtmlString()}$this"
-    }
-    /*return when (code) {
+    }*/
+    return when (code) {
         "USD" -> "$$this"
         "INR" -> "₹$this"
         else -> "₹$this"
-    }*/
+    }
 }
 
 /**

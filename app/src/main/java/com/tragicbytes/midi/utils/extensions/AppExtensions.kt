@@ -8,7 +8,9 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.CountDownTimer
@@ -23,6 +25,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -698,31 +701,8 @@ fun isExistInWishList(product: ProductDataNew): Boolean {
     return false
 }
 
-fun Activity.fetchAndStoreCartData() {
-    /*callApi(getRestApis(false).getCart(), onApiSuccess = {
-        getSharedPrefInstance().setValue(KEY_CART_COUNT, it.size); getSharedPrefInstance().setValue(CART_DATA, Gson().toJson(it)); sendCartCountChangeBroadcast()
-    }, onApiError = {
-        if (it == "no product available") {
-            getSharedPrefInstance().setValue(KEY_CART_COUNT, 0); getSharedPrefInstance().setValue(CART_DATA, Gson().toJson(ArrayList<CartResponse>()))
-            sendCartCountChangeBroadcast()
-        } else {
-           // snackBarError(it)
-        }
-    })*/
-}
 
-fun Activity.fetchAndStoreWishListData() {
-    /*callApi(getRestApis(false).getWishList(), onApiSuccess = {
-        getSharedPrefInstance().setValue(KEY_WISHLIST_COUNT, it.size); getSharedPrefInstance().setValue(WISHLIST_DATA, Gson().toJson(it)); sendWishListBroadcast()
-    }, onApiError = {
-        if (it == "no product available") {
-            getSharedPrefInstance().setValue(KEY_WISHLIST_COUNT, 0); getSharedPrefInstance().setValue(WISHLIST_DATA, Gson().toJson(ArrayList<WishListData>()))
-            sendWishListBroadcast()
-        } else {
-           // snackBarError(it)
-        }
-    })*/
-}
+
 
 fun Activity.addToWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
    /* callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
@@ -868,12 +848,31 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
+@SuppressLint("ResourceAsColor")
 fun setWalletItem(view: View, item: TransactionsDetails) {
     view.tPaymentId.text = item.transactionId
-    if (item.transactionAmount.isNotEmpty()) {
-        view.tAmount.text = item.transactionAmount.currencyFormat()
-    } else {
-        view.tAmount.text = item.transactionAmount.currencyFormat()
+    if(item.transactionStatus=="1") {
+        if (item.transactionAmount.isNotEmpty()) {
+            view.tAmount.text = "+ " + item.transactionAmount.currencyFormat()
+            view.tTransactionText.text= "Money Added"
+
+        } else {
+            view.tAmount.text = item.transactionAmount.currencyFormat()
+
+        }
+    }
+    else if(item.transactionStatus=="0"){
+        if (item.transactionAmount.isNotEmpty()) {
+            view.tAmount.setTextColor(R.color.red)
+            view.tAmount.text = "  "+ item.transactionAmount.currencyFormat()
+            view.tIcon.setBackgroundResource(R.drawable.ic_round_cancel_24px)
+            view.tTransactionText.text= "Add Money Failed"
+
+        } else {
+            view.tAmount.text = item.transactionAmount.currencyFormat()
+
+
+        }
     }
     view.tDate.text = getShortDate(item.transactionDate)
 

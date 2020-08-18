@@ -34,7 +34,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         dbReference = FirebaseDatabase.getInstance().reference
 
 
-        walletAmount.text = getString(R.string.rs) + getStoredUserDetails().userWalletDetails.totalAmount
+        walletAmount.text = getString(R.string.rs) +" "+ getStoredUserDetails().userWalletDetails.totalAmount
 
         loadActivity()
 
@@ -135,7 +135,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
     private fun updateTransactionDetails(paymentData: PaymentData,status:Int) {
         var newTransactionsDetails=TransactionsDetails()
-        newTransactionsDetails.transactionStatus="1"
+        newTransactionsDetails.transactionStatus= status.toString()
         newTransactionsDetails.email=paymentData.userEmail
         newTransactionsDetails.transactionId=paymentData.paymentId
         newTransactionsDetails.transactionAmount=addAmount.textToString()
@@ -148,10 +148,13 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         updateStoredUserDetails(localStoredUserDetails)
         dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails").setValue(transactionsList)
         dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size-1}/transactionDate").setValue(ServerValue.TIMESTAMP)
+
     }
+    
 
     private fun updateWalletAmount() {
         try {
+            showProgress(true)
             dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
                 .addValueEventListener(
                     object : ValueEventListener {
@@ -169,7 +172,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                                         var localUserDetails= getStoredUserDetails()
                                         localUserDetails.userWalletDetails.totalAmount=sum.toString()
                                         updateStoredUserDetails(localUserDetails)
-                                        walletAmount.text="$"+sum.toString()
+                                        walletAmount.text=getString(R.string.rs)+" "+sum.toString()
+                                        showProgress(false)
                                         snackBar("Wallet Refresh Successfully")
                                     }
                             }
@@ -177,12 +181,14 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
                         override fun onCancelled(databaseError: DatabaseError) {
                             snackBar("Error Occured")
+                            showProgress(false)
                         }
                     }
 
                 )
         } catch (e: Exception) {
             snackBarError("Error: " + e.message)
+            showProgress(false)
         }
         showProgress(false)
     }

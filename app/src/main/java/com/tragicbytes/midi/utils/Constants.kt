@@ -67,7 +67,7 @@ object Constants {
         const val SLIDER_IMAGES_DATA = "slider_images_data"
         const val CATEGORY_DATA = "category_data"
         const val THEME_COLOR = "theme_color"
-        const val DEFAULT_CURRENCY = "default_currency"
+        const val DEFAULT_CURRENCY = "₹"
         const val WHATSAPP = "919876543210"
         const val FACEBOOK = "https://www.facebook.com/nightowldevelopers"
         const val TWITTER = "twitter"

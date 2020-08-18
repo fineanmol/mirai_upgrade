@@ -104,7 +104,7 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/_46sdp"
-                    android:text="Created Ads" />
+                    android:text="My Ads" />
 
                 <TextView
                     android:id="@+id/profileBtn"
@@ -145,11 +145,12 @@
                     android:text="@string/lbl_settings" />
 
                 <TextView
-                    android:id="@+id/tvLogout"
+                    android:id="@+id/tvContactus"
                     style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_logout"
-                    android:gravity="center_vertical"
-                    android:text="@string/lbl_logout" />
+                    android:drawableStart="@drawable/ic_baseline_mail_outline_24"
+                    android:text="@string/lbl_contact_us" />
+
+
 
                 <View
                     android:layout_width="match_parent"
@@ -160,6 +161,12 @@
                     android:layout_marginBottom="@dimen/spacing_standard"
                     android:background="@color/view_color" />
 
+                <TextView
+                    android:id="@+id/tvFaq"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_faq_baseline_question_answer_24"
+                    android:text="@string/lbl_faq" />
+
 
                 <TextView
                     android:id="@+id/tvHelp"
@@ -168,17 +175,8 @@
                     android:text="@string/lbl_help"
                     android:visibility="visible" />
 
-                <TextView
-                    android:id="@+id/tvContactus"
-                    style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_baseline_mail_outline_24"
-                    android:text="@string/lbl_contact_us" />
 
-                <TextView
-                    android:id="@+id/tvFaq"
-                    style="@style/SidebarLabel.SidebarOption"
-                    android:drawableStart="@drawable/ic_faq_baseline_question_answer_24"
-                    android:text="@string/lbl_faq" />
+
 
                 <TextView
                     android:id="@+id/tvAbout"
@@ -192,6 +190,13 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_baseline_share_24"
                     android:text="@string/lbl_share_app" />
+
+                <TextView
+                    android:id="@+id/tvLogout"
+                    style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_logout"
+                    android:gravity="center_vertical"
+                    android:text="@string/lbl_logout" />
             </LinearLayout>
 
 

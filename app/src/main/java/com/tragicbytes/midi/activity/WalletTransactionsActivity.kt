@@ -51,7 +51,7 @@ class WalletTransactionsActivity : AppBaseActivity() {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        toast("Unable to fetch locations")
+                        toast("Unable to fetch transactions")
                     }
                 }
 

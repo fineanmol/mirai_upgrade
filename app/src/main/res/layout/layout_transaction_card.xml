@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/spacing_small"
                 android:layout_marginEnd="@dimen/spacing_middle"
                 android:layout_marginStart="@dimen/_165sdp"
-                android:text="+ \u20B9437"
+                android:text="+ \u20B9 loading.."
                 android:textAppearance="@style/FontSemiBold"
                 android:textColor="@color/green"
                 android:textSize="@dimen/font_size_small" />

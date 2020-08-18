@@ -88,6 +88,7 @@
         android:layout_below="@+id/resultLayout"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:layout_marginTop="@dimen/spacing_medium"
         android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
