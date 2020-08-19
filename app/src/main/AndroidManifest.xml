@@ -24,13 +24,11 @@
 
         <activity android:name=".activity.ScreenOrderDetails" />
         <activity android:name=".activity.ConfirmationActivity">
-<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
--->
         </activity>
         <activity
             android:name=".activity.WalletTransactionsActivity"
@@ -39,12 +37,12 @@
             android:name=".activity.LocationBasedScreensActivity"
             android:screenOrientation="portrait">
 
-            <intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.TransactionDetailsActivity"
@@ -118,7 +116,7 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
-            <!--<intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
