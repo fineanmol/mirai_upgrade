@@ -8,234 +8,359 @@
     android:orientation="vertical"
     tools:context=".activity.ConfirmationActivity">
 
-    <LinearLayout
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_above="@+id/adView"
+        android:layout_below="@+id/appBar"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20.2dp"
-            android:layout_marginRight="20.2dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
+                        android:layout_marginTop="19.5dp"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:id="@+id/mytrip"
+                            android:layout_width="18dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/logo_midi" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:textAppearance="@dimen/font_size_small"
+                            android:text="@string/miraivizion_com"
+                            android:textColor="@color/twitter_blue"
+                            android:textSize="12.5sp" />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
+                        android:layout_marginTop="13.8dp"
+                        android:background="@color/lightgray" />
+                    <TextView
+                        android:textAppearance="@dimen/font_size_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginTop="13.8dp"
+                        android:text="Screen Count: 2"
+                        android:textColor="@color/blacklight"
+                        android:textSize="14sp" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
+                        android:layout_marginTop="13.8dp"
+                        android:background="@color/lightgray" />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12.5dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_standard_new"
+                            android:layout_weight="1"
+                            android:textAppearance="@dimen/font_size_normal"
+                            android:text="Adv. Start Date : Today"
+                            android:textColor="@color/blacklight"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginEnd="@dimen/spacing_standard_new"
+                        android:layout_marginTop="13.8dp"
+                        android:background="@color/lightgray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard_new"
+                        android:layout_marginTop="13.8dp"
+                        android:textAppearance="@dimen/font_size_medium"
+                        android:text="Adv. End Date: 8/10/2020 "
+                        android:textColor="@color/blacklight"
+                        android:textSize="13sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7.8dp"
+                        android:orientation="horizontal">
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginStart="@dimen/spacing_standard_new"
+                            android:layout_marginEnd="@dimen/spacing_standard_new"
+                            android:layout_marginTop="13.8dp"
+                            android:background="@color/lightgray" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:layout_marginTop="25.2dp"
+                android:background="@color/gray_80" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25.3dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_offers" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="14.5dp"
+                    android:layout_weight="1"
+                    android:textAppearance="@dimen/font_size_normal"
+                    android:text="Your Screens"
+                    android:textColor="@color/blacklight"
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:src="@drawable/back" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="13dp"
-                    android:textAppearance="@style/FontBold"
-                    android:text="@string/title_Confirmation"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-
-
+                    android:src="@drawable/ic_keyboard_arrow_right_black" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:textAppearance="@dimen/font_size_medium"
-                android:text="@string/for_advertisement_payment"
-                android:textColor="@color/black"
-                android:textSize="12.5sp" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginEnd="@dimen/spacing_standard_new"
+                android:layout_marginBottom="@dimen/spacing_standard_new"
+                android:background="@color/itemText_background"
+                android:onClick="@{(view) -> callback.onClick(view,model)}">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="19.5dp"
-                    android:layout_marginLeft="28dp"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.7"
+                    android:background="@color/item_background">
 
                     <ImageView
-                        android:id="@+id/mytrip"
-                        android:layout_width="18dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/logo_midi" />
+                        android:id="@+id/ivProduct"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/text_todo"
+                        android:src="@color/item_background" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="8dp"
-                        android:textAppearance="@dimen/font_size_small"
-                        android:text="@string/miraivizion_com"
-                        android:textColor="@color/twitter_blue"
-                        android:textSize="12.5sp" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15.2dp"
-                    android:background="@color/lightgray" />
-
-                <TextView
-                    android:textAppearance="@dimen/font_size_normal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="13.8dp"
-                    android:text="Screen Count: 2"
-                    android:textColor="@color/blacklight"
-                    android:textSize="14sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginRight="15.8dp"
-                    android:layout_marginTop="13.8dp"
-                    android:background="@color/lightgray" />
+                </RelativeLayout>
 
                 <LinearLayout
+                    android:id="@+id/rl_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12.5dp"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/tvProductName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="38dp"
-                        android:layout_weight="1"
-                        android:textAppearance="@dimen/font_size_normal"
-                        android:text="Adv. Start Date : Today"
-                        android:textColor="@color/blacklight"
-                        android:textSize="14sp" />
-
-                   <!-- <TextView
+                        android:layout_marginTop="@dimen/spacing_control"
+                        android:paddingStart="@dimen/spacing_standard_new"
+                        android:paddingEnd="@dimen/spacing_control"
+                        android:text="Screen001"
+                        android:textAppearance="@style/FontSemiBold"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="@dimen/font_size_normal"
+                        tools:ignore="MissingPrefix" />
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="15.8dp"
-                        android:fontFamily="@font/sfuitext_semibold"
-                        android:text="@string/edit"
-                        android:textColor="@color/graydark"
-                        android:textSize="11sp" />-->
-                </LinearLayout>
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:paddingStart="@dimen/spacing_standard_new"
+                        android:paddingEnd="@dimen/spacing_control">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginRight="15.8dp"
-                    android:layout_marginTop="13.8dp"
-                    android:background="@color/lightgray" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:text="Age Group:"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_small" />
+                        <TextView
+                            android:id="@+id/bAgeGroup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:text="18-25"
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="13.8dp"
-                    android:textAppearance="@dimen/font_size_medium"
-                    android:text="Adv. End Date: 8/10/2020 "
-                    android:textColor="@color/blacklight"
-                    android:textSize="13sp" />
+                            android:textColor="@color/blacklight"
+                            android:textSize="@dimen/font_size_small" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="7.8dp"
-                    android:orientation="horizontal">
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:paddingStart="@dimen/spacing_standard_new"
+                        android:paddingEnd="@dimen/spacing_control">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:text="Age Group:"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_small" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:text="18-25"
+
+                            android:textColor="@color/blacklight"
+                            android:textSize="@dimen/font_size_small" />
+
+                    </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:layout_marginBottom="@dimen/spacing_control"
+                        android:paddingStart="@dimen/spacing_standard_new"
+                        android:paddingEnd="@dimen/spacing_control">
+
+
+                        <TextView
+                            android:id="@+id/tvPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/FontMedium"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/font_size_normal"
+                            tools:ignore="MissingPrefix" />
+
+                        <TextView
+                            android:id="@+id/tvOriginalPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_small" />
+
+                    </LinearLayout>
 
                     <View
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="38dp"
-                        android:background="@color/lightgray" />
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/divider_width"
+                        android:layout_marginTop="@dimen/spacing_control"
+                        android:background="@color/view_color" />
 
-                    <!--<TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/llButton"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="26dp"
-                        android:layout_marginRight="15.8dp"
-                        android:fontFamily="@font/sfuitext_semibold"
-                        android:text="@string/edit"
-                        android:textColor="@color/graydark"
-                        android:textSize="11sp" />-->
+                        android:orientation="horizontal"
+                        android:visibility="visible">
 
+                        <LinearLayout
+                            android:id="@+id/llMoveTocart"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:onClick="@{(view) -> callback.onClick(view,model)}"
+                            android:paddingTop="@dimen/spacing_standard"
+                            android:paddingBottom="@dimen/spacing_standard"
+                            android:visibility="visible">
+
+                            <TextView
+                                style="@style/CartButton"
+                                android:drawableLeft="@drawable/ic_delete"
+                                android:text="@string/lbl_move_to_cart" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="@dimen/_1sdp"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="@dimen/spacing_control_half"
+                            android:layout_marginTop="@dimen/spacing_control_half"
+                            android:layout_marginBottom="@dimen/spacing_control_half"
+                            android:background="@color/view_color"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/llRemove"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.3"
+                            android:gravity="center"
+                            android:onClick="@{(view) -> callback.onClick(view,model)}"
+                            android:paddingTop="@dimen/spacing_standard"
+                            android:paddingBottom="@dimen/spacing_standard">
+
+                            <TextView
+                                style="@style/CartButton"
+                                android:drawableLeft="@drawable/ic_delete"
+                                android:text="@string/lbl_remove" />
+
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginTop="13.8dp"
-                    android:textAppearance="@dimen/font_size_normal"
-                    android:text="Age Group: 18-24 "
-                    android:textColor="@color/blacklight"
-                    android:textSize="13sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="38dp"
-                    android:layout_marginRight="15.8dp"
-                    android:layout_marginTop="13.8dp"
-                    android:background="@color/lightgray" />
             </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcvScreens"
+                style="@style/RecycleView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_standard_new"
+                android:layout_marginTop="@dimen/spacing_standard"
+                android:layout_marginEnd="@dimen/spacing_standard_new" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/gray_80" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:layout_marginTop="25.2dp"
-            android:background="@color/gray_80" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="20dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="35dp"
-                android:src="@drawable/ic_offers" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="14.5dp"
-                android:layout_weight="1"
-                android:textAppearance="@dimen/font_size_normal"
-                android:text="APPLY COUPON "
-                android:textColor="@color/blacklight"
-                android:textSize="14sp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_keyboard_arrow_right_black" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="15dp"
-            android:background="@color/gray_80" />
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

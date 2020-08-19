@@ -371,6 +371,7 @@
     <string name="title_transaction" translatable="false">Transaction Details</string>
     <string name="action_wallet" translatable="false">Wallet</string>
     <string name="title_location" translatable="false">Screens</string>
+    <string name="title_advertisement_confirmation" translatable="false">Advertisement Confirmation</string>
 
 
     <string-array name="qty_array">
