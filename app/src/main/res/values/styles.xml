@@ -357,6 +357,9 @@
     <style name="FontBold">
         <item name="fontPath">@string/font_bold</item>
     </style>
+    <style name="FontAlice">
+        <item name="fontPath">@string/font_alice</item>
+    </style>
 
     <style name="TitleText">
         <item name="fontPath">@string/font_bold</item>

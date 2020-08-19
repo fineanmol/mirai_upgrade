@@ -807,9 +807,12 @@ fun setScreenItem(
     setScreenData(view,item,context)
 
     setChartData(view,item,context)
+    setAgeDistributionChartData(view,item,context)
 
 
 }
+
+
 
 fun setScreenData(
     view: View,
@@ -888,6 +891,13 @@ fun chartDetails(mChart: PieChart, tf: Typeface) {
     mChart.description.isEnabled = true
     mChart.isRotationEnabled = true
 }
+
+
+fun setAgeDistributionChartData(view: View, item: ScreenDataModel, context: LocationBasedScreensActivity) {
+
+}
+
+
 fun setProductItem(view: View, item: ProductDataNew) {
     view.tvProductName.text = item.name
     if (item.sale_price!!.isNotEmpty()) {

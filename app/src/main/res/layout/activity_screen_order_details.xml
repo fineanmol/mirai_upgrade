@@ -33,7 +33,7 @@
                     android:layout_marginLeft="14.5dp"
                     android:layout_weight="1"
                     android:text="Screen Details 1"
-                    android:layout_marginTop="-20dp"
+                    android:layout_marginTop="20dp"
                     android:textAppearance="@dimen/font_size_normal"
                     android:textColor="@color/blacklight"
                     android:textSize="14sp" />

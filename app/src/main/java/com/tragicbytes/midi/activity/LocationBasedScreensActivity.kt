@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.*
 import com.tragicbytes.midi.AppBaseActivity
@@ -13,7 +15,6 @@ import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.ScreensLocationModel
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
-import kotlinx.android.synthetic.main.activity_location_based_screens.selectedLocation
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -24,13 +25,13 @@ class LocationBasedScreensActivity : AppBaseActivity() {
 
     private lateinit var dbReference: DatabaseReference
 
-    private var totalAmount=0
+    private var totalAmount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_location_based_screens)
         setToolbar(toolbar)
-        title=getString(R.string.title_location)
+        title = getString(R.string.title_location)
 
         dbReference = FirebaseDatabase.getInstance().reference
 
@@ -47,7 +48,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
         dialog.listQuantity.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                shimmerFrameLayout.visibility=View.VISIBLE
+                shimmerFrameLayout.visibility = View.VISIBLE
                 shimmerFrameLayout.startShimmer()
                 mQuntity = list[position]
                 selectedLocation.text = list[position]
@@ -58,8 +59,11 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             dialog.show()
         }
         sContinue.onClick {
-            launchActivity<ConfirmationActivity> {  }
+            launchActivity<ConfirmationActivity> { }
         }
+
+
+        setBarChart()
 
     }
 
@@ -88,16 +92,16 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     }
 
     private fun fetchLocationBasedScreens(location: String) {
-        totalAmount=0
-        sTotalScreenAmount.text= "$$totalAmount"
-        var screensLocationModel=ScreensLocationModel()
-        var yzx=screensLocationModel.screenData
+        totalAmount = 0
+        sTotalScreenAmount.text = "$$totalAmount"
+        var screensLocationModel = ScreensLocationModel()
+        var yzx = screensLocationModel.screenData
         dbReference.child("AvailableLocations/${location}/screenData")
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            var screensList=ArrayList<ScreenDataModel>()
+                            var screensList = ArrayList<ScreenDataModel>()
 
                             dataSnapshot.children.forEach {
                                 val screenData =
@@ -105,8 +109,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                                 screensList.add(screenData)
                             }
                             shimmerFrameLayout.stopShimmer()
-                            shimmerFrameLayout.visibility=View.GONE
-                            results.text="RESULTS (${screensList.size})"
+                            shimmerFrameLayout.visibility = View.GONE
+                            results.text = "RESULTS (${screensList.size})"
                             mLocationScreensAdapter?.addItems(screensList)
 
                         }
@@ -121,7 +125,9 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     }
 
     private fun setupLocationScreensAdapter() {
-        mLocationScreensAdapter = RecyclerViewAdapter(R.layout.item_screen, onBind = { view, item, position -> setScreenItem(view, item,this) })
+        mLocationScreensAdapter = RecyclerViewAdapter(
+            R.layout.item_screen,
+            onBind = { view, item, position -> setScreenItem(view, item, this) })
 
         rcvScreens.apply {
             adapter = mLocationScreensAdapter
@@ -130,14 +136,48 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         rcvScreens.adapter = mLocationScreensAdapter
 
         mLocationScreensAdapter?.onItemClick = { pos, view, item ->
-            this.selectScreen(view,item,onSelect = {
-                totalAmount+= it
+            this.selectScreen(view, item, onSelect = {
+                totalAmount += it
             },
-            onUnSelect = {
-                totalAmount-=it
-            })
-            sTotalScreenAmount.text= "$$totalAmount"
+                onUnSelect = {
+                    totalAmount -= it
+                })
+            sTotalScreenAmount.text = "$$totalAmount"
         }
+    }
+
+
+    private fun setBarChart() {
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(8f, 0f))
+        entries.add(BarEntry(2f, 1f))
+        entries.add(BarEntry(5f, 2f))
+        entries.add(BarEntry(20f, 3f))
+        entries.add(BarEntry(15f, 4f))
+        entries.add(BarEntry(19f, 5f))
+
+        val barDataSet = BarDataSet(entries, "Cells")
+
+        val labels = ArrayList<String>()
+        labels.add("18-Jan")
+        labels.add("19-Jan")
+        labels.add("20-Jan")
+        labels.add("21-Jan")
+        labels.add("22-Jan")
+        labels.add("23-Jan")
+
+
+        /* val data = BarData(labels, barDataSet)
+
+
+
+         ageBarChart.data = data // set the data and list of lables into chart
+        // ageBarChart.description.text="Set Bar Chart Description"
+
+         //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
+         barDataSet.color = resources.getColor(R.color.colorAccent)
+
+       ageBarChart.animateY(5000)*/
     }
 
     override fun onResume() {
@@ -150,3 +190,5 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         super.onPause()
     }
 }
+
+

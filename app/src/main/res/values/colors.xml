@@ -65,6 +65,8 @@
     <color name="color_selected">#79303F9F</color>
     <color name="pie1">#08F7FE</color>
     <color name="pie2">#FE53BB</color>
+    <color name="aliceBackground">#0b2a43</color>
+
 
     <array name="rainbow">
         <item>@color/red</item>

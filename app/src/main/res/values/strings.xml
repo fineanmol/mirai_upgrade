@@ -336,6 +336,7 @@
     <string name="font_medium" translatable="false">fonts/Montserrat-Medium.ttf</string>
     <string name="font_semibold" translatable="false">fonts/Montserrat-SemiBold.ttf</string>
     <string name="font_bold" translatable="false">fonts/Montserrat-Bold.ttf</string>
+    <string name="font_alice" translatable="false">fonts/Alice-Regular.ttf</string>
     <string name="font_regular" translatable="false">fonts/Montserrat-Regular.ttf</string>
     <string name="facebook_app_id" translatable="false"> 519323575384019</string>
     <string name="fb_login_protocol_scheme" translatable="false">fb519323575384019</string>
