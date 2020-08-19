@@ -58,7 +58,7 @@ class WalletTransactionsActivity : AppBaseActivity() {
     }
 
     private fun setupTransactionListAdapter() {
-        mTransactionDetailsAdapter = RecyclerViewAdapter(R.layout.layout_transaction_card, onBind = { view, item, position -> setWalletItem(view, item) })
+        mTransactionDetailsAdapter = RecyclerViewAdapter(R.layout.layout_transaction_card, onBind = { view, item, position -> setWalletItem(view, item,this) })
 
         tTransactionList.apply {
             adapter = mTransactionDetailsAdapter

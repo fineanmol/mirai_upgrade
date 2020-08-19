@@ -1,7 +1,6 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -10,7 +9,6 @@ import com.google.firebase.database.*
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.models.ProductDataNew
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.ScreensLocationModel
 import com.tragicbytes.midi.utils.extensions.*
@@ -18,7 +16,6 @@ import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.selectedLocation
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.math.log
 
 class LocationBasedScreensActivity : AppBaseActivity() {
     private var mQuntity: String = "1"
@@ -26,6 +23,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     private var mLocationScreensAdapter: RecyclerViewAdapter<ScreenDataModel>? = null
 
     private lateinit var dbReference: DatabaseReference
+
+    private var totalAmount=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +88,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     }
 
     private fun fetchLocationBasedScreens(location: String) {
+        totalAmount=0
+        sTotalScreenAmount.text= "$$totalAmount"
         var screensLocationModel=ScreensLocationModel()
         var yzx=screensLocationModel.screenData
         dbReference.child("AvailableLocations/${location}/screenData")
@@ -128,9 +129,15 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         }
         rcvScreens.adapter = mLocationScreensAdapter
 
-       /* mLocationScreensAdapter?.onItemClick = { pos, view, item ->
-            this.showProductDetail(item)
-        }*/
+        mLocationScreensAdapter?.onItemClick = { pos, view, item ->
+            this.selectScreen(view,item,onSelect = {
+                totalAmount+= it
+            },
+            onUnSelect = {
+                totalAmount-=it
+            })
+            sTotalScreenAmount.text= "$$totalAmount"
+        }
     }
 
     override fun onResume() {

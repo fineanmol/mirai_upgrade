@@ -23,6 +23,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -52,6 +53,7 @@ import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.LocationBasedScreensActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.TransactionDetailsActivity
+import com.tragicbytes.midi.activity.WalletTransactionsActivity
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
@@ -313,6 +315,22 @@ fun Activity.showProductDetail(model: ProductDataNew) {
         putExtra(DATA, model)
     }
     addToRecentProduct(model)
+}
+
+
+fun Activity.selectScreen(view: View,model: ScreenDataModel,onSelect: (Int) -> Unit,onUnSelect: (Int) -> Unit) {
+    if(model.screenStatus=="1"){
+        if(view.screenSelectButton.isChecked){
+            onUnSelect(model.screenPrice.toInt())
+        }
+        else{
+            onSelect(model.screenPrice.toInt())
+        }
+        view.screenSelectButton.isChecked = !view.screenSelectButton.isChecked
+    }
+    else{
+        snackBar("This screen is currently out of service.")
+    }
 }
 
 fun Activity.showTransactionDetail(model: TransactionDetails) {
@@ -767,10 +785,10 @@ fun getCategoryDataFromPref(): ArrayList<CategoryData> {
 fun setScreenItem(
     view: View,
     item: ScreenDataModel,
-    locationBasedScreensActivity: LocationBasedScreensActivity
+    context: LocationBasedScreensActivity
 ){
     /** Close the expand menu at first time*/
-
+    view.screenSelectButton.isChecked=false
     view.expandableLayout.visibility = View.GONE
     view.expandBtn.setOnClickListener {
         if (view.expandableLayout.visibility == View.GONE) {
@@ -786,17 +804,28 @@ fun setScreenItem(
         view.pieChart.animateY(1500, Easing.EaseInBounce)
     }
 
-    setScreenData(view,item)
+    setScreenData(view,item,context)
 
-    setChartData(view,item,locationBasedScreensActivity)
+    setChartData(view,item,context)
 
 
 }
 
-fun setScreenData(view: View, item: ScreenDataModel) {
+fun setScreenData(
+    view: View,
+    item: ScreenDataModel,
+    context: LocationBasedScreensActivity
+) {
     view.screenTitle.text=item.screenId
     view.screenStatus.text="• ${item.screenStatus}"
-    if (item.screenStatus=="Stopped") view.screenStatus.setTextColor(R.color.colorPrimary)
+    if (item.screenStatus=="0"){
+        view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.track_red))
+        view.screenStatus.text="• Stopped"
+    }
+    else{
+        view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
+        view.screenStatus.text="• Running"
+    }
     view.locationTitle.text=item.screenLocation
     view.addressTitle.text=item.screenCity+","+item.screenPincode
     view.screen_price.text="$${item.screenPrice}"
@@ -828,8 +857,6 @@ fun setChartData(
     view.pieChart.description.textSize=12f
     view.pieChart.isDrawHoleEnabled = false
     data.setValueTextSize(13f)
-
-
     chartDetails(view.pieChart, Typeface.SANS_SERIF)
 }
 
@@ -874,7 +901,11 @@ fun setProductItem(view: View, item: ProductDataNew) {
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
-fun setWalletItem(view: View, item: TransactionDetails) {
+fun setWalletItem(
+    view: View,
+    item: TransactionDetails,
+    context: WalletTransactionsActivity
+) {
     view.tPaymentId.text = item.transactionId
     if(item.transactionStatus=="1") {
         if (item.transactionAmount.isNotEmpty()) {
@@ -888,7 +919,7 @@ fun setWalletItem(view: View, item: TransactionDetails) {
     }
     else if(item.transactionStatus=="0"){
         if (item.transactionAmount.isNotEmpty()) {
-            view.tAmount.setTextColor(R.color.red)
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.track_red))
             view.tAmount.text = "  "+ item.transactionAmount.currencyFormat()
             view.tIcon.setBackgroundResource(R.drawable.ic_round_cancel_24px)
             view.tTransactionText.text= "Add Money Failed"
