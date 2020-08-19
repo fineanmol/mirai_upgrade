@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_below="@+id/locationLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/locationLayout"
     android:layout_marginBottom="@dimen/_10sdp"
     android:background="@drawable/customborder"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        style="@style/CardView.Light"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        style="@style/CardView.Light">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -22,18 +23,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="20dp">
-
+                android:padding="10dp"
+                >
 
                 <RadioButton
                     android:id="@+id/screenSelectButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_62sdp"
                     android:layout_marginStart="-5dp"
+                    android:layout_width="wrap_content"
                     android:layout_marginTop="-7dp"
-                    android:checked="false"
+                    android:layout_height="@dimen/_62sdp"
+                    android:gravity="top"
                     android:clickable="false"
-                    android:gravity="top" />
+                    android:checked="false"/>
 
 
                 <RelativeLayout
@@ -49,18 +50,18 @@
                         android:text="Screen 01"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="@dimen/font_size_large" />
-
+                        android:textSize="@dimen/font_size_large"
+                        />
                     <TextView
                         android:id="@+id/statusText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/screenTitle"
-                        android:text="Screen Status"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_micro" />
-
+                        android:textSize="@dimen/font_size_micro"
+                        android:text="Screen Status"
+                        />
                     <TextView
                         android:id="@+id/screenStatus"
                         android:layout_width="wrap_content"
@@ -68,31 +69,33 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/screenTitle"
                         android:layout_marginStart="@dimen/_65sdp"
-                        android:text="• Running"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/font_size_micro" />
+                        android:textSize="@dimen/font_size_micro"
+                        android:text="• Running"
+                        />
 
                     <TextView
                         android:id="@+id/locationTitle"
+                        android:layout_marginTop="@dimen/spacing_small"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/screenStatus"
-                        android:layout_marginTop="@dimen/spacing_small"
-                        android:text="Ansal Plaza, SM Complex"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_micro" />
-
+                        android:textSize="@dimen/font_size_micro"
+                        android:text="Ansal Plaza, SM Complex"
+                        />
                     <TextView
                         android:id="@+id/addressTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/locationTitle"
-                        android:text="Greater Noida, 201310"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_micro" />
+                        android:textSize="@dimen/font_size_micro"
+                        android:text="Greater Noida, 201310"
+                        />
 
                     <TextView
                         android:id="@+id/screen_price"
@@ -100,24 +103,52 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:text="\u20B9 100"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="@dimen/font_size_large" />
+                        android:textSize="@dimen/font_size_large"
+                        android:text="\u20B9 100"
+                        />
 
 
-                    <TextView
+
+                    <LinearLayout
                         android:id="@+id/expandBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_alignParentEnd="true"
-                        android:text="Show more"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:textSize="@dimen/font_size_nano"
-                        android:layout_marginTop="@dimen/_10sdp"
-                        android:background="#FFF"
-                        android:drawableRight="@drawable/ic_arrow_down" />
+                        android:layout_marginTop="@dimen/_35sdp"
+                        android:visibility="visible">
+
+                        <LinearLayout
+                            android:id="@+id/llRemove"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="right"
+                            android:paddingTop="@dimen/spacing_standard"
+                            android:paddingBottom="@dimen/spacing_standard">
+
+                            <TextView
+                                android:id="@+id/show"
+                                style="@style/CartButton"
+                                android:drawableLeft="@drawable/ic_arrow_down"
+                                android:text="Show More" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+                    <!--           <ImageButton
+                                   android:id="@+id/expandBtn"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:layout_alignParentEnd="true"
+                                   android:layout_alignParentRight="true"
+                                   android:layout_alignParentBottom="true"
+                                   android:layout_marginTop="@dimen/_10sdp"
+                                   android:background="#FFF"
+                                   android:src="@drawable/ic_arrow_down" />-->
 
                 </RelativeLayout>
 
@@ -127,11 +158,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_below="@+id/linearLayoutHolder"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="@dimen/_10sdp"
-                android:orientation="vertical">
-
+                >
                 <LinearLayout
                     android:id="@+id/expandableLayout"
                     android:layout_width="match_parent"
@@ -142,35 +171,35 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginEnd="18dp"
                         android:text="Description is mandatory. Please ass it."
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                        android:textColor="@color/colorPrimary" />
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:textColor="@color/colorPrimary"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
+                        android:background="#88888888"
                         android:layout_marginStart="18dp"
-                        android:layout_marginTop="18dp"
                         android:layout_marginEnd="18dp"
-                        android:background="#88888888" />
+                        android:layout_marginTop="18dp"/>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="18dp"
-                        android:layout_marginTop="18dp"
-                        android:layout_marginEnd="18dp"
                         android:text="Screen Related Data"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:textColor="@color/cardview_dark_background" />
+                        android:layout_marginStart="18dp"
+                        android:layout_marginEnd="18dp"
+                        android:layout_marginTop="18dp"
+                        android:textColor="@color/cardview_dark_background"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:layout_marginTop="12dp">
 
                         <HorizontalScrollView
                             android:layout_width="match_parent"
@@ -205,6 +234,7 @@
                         </HorizontalScrollView>
 
 
+
                     </LinearLayout>
 
                 </LinearLayout>
@@ -212,9 +242,9 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
+                    android:visibility="gone"
                     android:layout_marginTop="10dp"
-                    android:background="#88888888"
-                    android:visibility="gone" />
+                    android:background="#88888888" />
 
             </LinearLayout>
         </RelativeLayout>

@@ -27,7 +27,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -349,7 +349,30 @@
                             android:textSize="@dimen/font_size_small" />
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-5dp"
+                        android:layout_marginBottom="@dimen/spacing_small"
+                        android:paddingStart="@dimen/spacing_standard_new"
+                        android:paddingEnd="@dimen/spacing_control">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:text="Screen Size"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_small" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="@dimen/spacing_small"
+                            android:text="46*65"
+                            android:textColor="@color/blacklight"
+                            android:textSize="@dimen/font_size_small" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -366,6 +389,13 @@
                             android:text="No of days *"
                             android:textColor="@color/textColorSecondary"
                             android:textSize="@dimen/font_size_small" />
+                        <TextView
+                            android:id="@+id/tvOriginalPr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:text=" SPD :"
+                            android:textColor="@color/textColorSecondary"
+                            android:textSize="@dimen/font_size_small" />
 
                         <TextView
                             android:id="@+id/tvPrice"
@@ -373,13 +403,11 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="@style/FontMedium"
                             android:textColor="@color/colorPrimary"
+                            android:layout_marginTop="@dimen/_1sdp"
                             android:textSize="@dimen/font_size_normal"
-                            android:text="PPD"
+                            android:text="₹ 50"
                             android:layout_marginStart="@dimen/spacing_control"
                             tools:ignore="MissingPrefix" />
-
-
-
                     </LinearLayout>
 
                     <View
@@ -407,7 +435,8 @@
 
                             <TextView
                                 style="@style/CartButton"
-                                android:text="*PPD: Price Per Day" />
+                                android:text="*SPD: Screen Price Per Day"
+                                android:textSize="@dimen/font_size_micro"/>
 
                         </LinearLayout>
 
