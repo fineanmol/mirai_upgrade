@@ -9,7 +9,10 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.graphics.Typeface
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.CountDownTimer
 import android.view.View
@@ -24,6 +27,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -98,7 +102,6 @@ import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
-import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
 import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
@@ -794,11 +797,15 @@ fun setScreenItem(
         if (view.expandableLayout.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.VISIBLE
-            view.expandBtn.rotation=180F
+            val result = rotate(180F,context)!!
+            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null);
+            view.show.text="Show Less"
         } else {
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.GONE
-            view.expandBtn.rotation= 360F
+            val result = rotate(0F,context)!!
+            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null);
+            view.show.text="Show More"
 
         }
         view.pieChart.animateY(1500, Easing.EaseInBounce)
@@ -810,6 +817,24 @@ fun setScreenItem(
     setAgeDistributionChartData(view,item,context)
 
 
+}
+fun rotate(
+    degree: Float,
+    context: LocationBasedScreensActivity
+): Drawable? {
+    val iconBitmap: Bitmap = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_arrow_down, null)!!.toBitmap()!!
+    val matrix = Matrix()
+    matrix.postRotate(degree)
+    val targetBitmap = Bitmap.createBitmap(
+        iconBitmap,
+        0,
+        0,
+        iconBitmap.width,
+        iconBitmap.height,
+        matrix,
+        true
+    )
+    return BitmapDrawable(context.resources, targetBitmap)
 }
 
 
