@@ -80,6 +80,20 @@ fun String.currencyFormat(code: String = "INR"): String {
 }
 
 
+fun String.currencyFormatNegative(code: String = "INR"): String {
+    /*return if (this.checkIsEmpty()) "" else {
+        "${getDefaultCurrency().getHtmlString()}$this"
+    }*/
+
+
+    return when (code) {
+        "USD" -> "$$this"
+        "INR" -> "-"+NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
+        else -> "₹$this"
+    }
+}
+
+
 /**
  * returns the md5 of the String
  */

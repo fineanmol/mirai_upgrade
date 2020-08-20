@@ -16,12 +16,13 @@ import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
 
-class ConfirmationActivity : AppBaseActivity(),PaymentResultWithDataListener {
+class ConfirmationActivity : AppBaseActivity() {
 
     private var selectedScreens:ArrayList<ScreenDataModel> = ArrayList()
 
     private var mScreensAdapter:RecyclerViewAdapter<ScreenDataModel>? = null
-    private var totalAmount=0
+    private var totalScreenPrice=0
+    private var finalAmountPrice=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,9 +35,18 @@ class ConfirmationActivity : AppBaseActivity(),PaymentResultWithDataListener {
         screenCount.text="Selected Screens (${selectedScreens.size})"
         selectedScreens.forEach { screenDataModel: ScreenDataModel ->
 
-           totalAmount +=(screenDataModel.screenPrice).toInt()
+           totalScreenPrice +=(screenDataModel.screenPrice).toInt()
         }
-        finalAmount.text=getString(R.string.RS) +" "+ totalAmount.toString()
+
+        val userWalletAmount = getStoredUserDetails().userWalletDetails.totalAmount
+
+        finalScreenAmount.text= totalScreenPrice.toString().currencyFormat("INR")
+        walletBalance.text = userWalletAmount.currencyFormatNegative("INR")
+
+        finalAmountPrice = if(totalScreenPrice > userWalletAmount.toInt())
+            totalScreenPrice - userWalletAmount.toInt()
+        else 0
+        finalAmount.text = finalAmountPrice.toString().currencyFormat("INR")
 
         rcvScreens.setVerticalLayout()
 
@@ -44,7 +54,17 @@ class ConfirmationActivity : AppBaseActivity(),PaymentResultWithDataListener {
 
         mScreensAdapter?.addItems(selectedScreens)
 
-        tPayBtn.onClick { startPayment(totalAmount) }
+        if(finalAmountPrice.toInt()>0)
+            tPayBtn.text = """Add ${"$finalAmountPrice".currencyFormat()} to Place Order"""
+        else
+            tPayBtn.text ="Quick Pay"
+
+        tPayBtn.onClick {
+
+            launchActivity<WalletActivity> {
+            if(finalAmountPrice>0)
+            putExtra("amountNeedForAdv",finalAmountPrice.toString()) }
+        }
 
     }
 
@@ -59,78 +79,9 @@ class ConfirmationActivity : AppBaseActivity(),PaymentResultWithDataListener {
         }
         rcvScreens.adapter = mScreensAdapter
 
-        /*mScreensAdapter?.onItemClick = { pos, view, item ->
-            this.selectScreen(view, item, onSelect = {
-                selectedScreens.add(screensList[pos])
-            },
-                onUnSelect = {
-                    totalAmount -= it
-                    selectedScreens.remove(screensList[pos])
-                })
-        }*/
-    }
-
-    //region Payment Methods
-
-    private fun startPayment(amountToPay: Int) {
-        /*
-        *  You need to pass current activity in order to let Razorpay create CheckoutActivity
-        * */
-        val activity: Activity = this
-        val co = Checkout()
-
-
-        try {
-            val paymentAmount = "$amountToPay" + "00.00" //Rs 1
-            //    paymentValue.text = PaymentAmount
-
-            val options = JSONObject()
-            options.put("name", "Nightowl Developers")
-            options.put("description", "Dominal Charges")
-            //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://nightowldevelopers.com/img/logo.webp")
-            options.put("currency", "INR")
-            options.put("amount", paymentAmount)
-
-            val userNumber = getStoredUserDetails().userPersonalDetails.phone
-            val prefill = JSONObject()
-            prefill.put("email", getStoredUserDetails().userPersonalDetails.email)
-            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put("contact", "9876543210")
-
-
-            options.put("prefill", prefill)
-            co.open(activity, options)
-        } catch (e: Exception) {
-            snackBarError("Error in payment: " + e.message)
-            e.printStackTrace()
-        }
-    }
-
-    override fun onPaymentError(
-        errorCode: Int,
-        errorDescription: String?,
-        paymentData: PaymentData?
-    ) {
-        /*if (paymentData != null) {
-            updateTransactionDetails(paymentData,0)
-        }*/
-       /* addAmount.isEnabled=true
-        addAmount.isClickable=true*/
-        snackBar("Error $errorCode : $errorDescription")
-        showProgress(false)
-    }
-
-    override fun onPaymentSuccess(rzpPaymentId: String?, paymentData: PaymentData?) {
-        snackBar("Payment Successful: $rzpPaymentId \n" + " data: ${paymentData?.orderId}")
-        showProgress(false)
-
-      /*  if(paymentData != null) {
-            updateTransactionDetails(paymentData,1)
-            updateWalletAmount()
-        }*/
-       /* addAmount.isEnabled=true
-        addAmount.isClickable=true*/
-        showProgress(false)
 
     }
+
+
+
 }

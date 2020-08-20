@@ -24,7 +24,7 @@
 
         <activity android:name=".activity.ScreenOrderDetails" />
         <activity android:name=".activity.ConfirmationActivity">
-            <!--<intent-filter>
+          <!--  <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />

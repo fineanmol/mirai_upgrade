@@ -16,7 +16,7 @@
         android:layout_below="@+id/appBar"
         android:clipToPadding="false"
         android:overScrollMode="never"
-        android:layout_marginBottom="@dimen/_100sdp"
+        android:layout_marginBottom="@dimen/_55sdp"
         android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
@@ -248,17 +248,20 @@
         </LinearLayout>
 
     </ScrollView>
-
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tPayBtn"
+        android:orientation="vertical"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/tPayBtn"
+        android:visibility="gone"
         android:background="@drawable/dotted_line_rect"
-        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
         android:padding="10dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
         <TextView
@@ -266,13 +269,13 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:paddingLeft="10dp"
-            android:text="@string/lbl_total_amount"
+            android:text="Advertisement Amount:"
             android:textAppearance="@dimen/font_size_normal"
             android:textColor="@color/blacklight"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/finalAmount"
+            android:id="@+id/finalScreenAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -280,6 +283,59 @@
             android:textAppearance="@style/FontBold"
             android:textColor="@color/blacklight"
             android:textSize="12.5sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:paddingLeft="10dp"
+            android:text="Wallet Balance :"
+            android:textAppearance="@dimen/font_size_normal"
+            android:textColor="@color/blacklight"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/walletBalance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="₹ 100"
+            android:textAppearance="@style/FontBold"
+            android:textColor="@color/blacklight"
+            android:textSize="12.5sp" />
+
+
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="Net Payable :"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textAppearance="@dimen/font_size_normal"
+                android:textColor="@color/blacklight"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/finalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text="₹ 100"
+                android:textAppearance="@style/FontBold"
+                android:textColor="@color/blacklight"
+                android:textSize="12.5sp"  />
+        </LinearLayout>
     </LinearLayout>
 
     <TextView

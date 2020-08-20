@@ -115,7 +115,7 @@
                     android:id="@+id/tAgeDistributtion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="-60dp"
+                    android:layout_marginStart="10dp"
                     android:text="\nBelow 18 = 24%\n18-24 = 30%\n25-34 = 40%\n.."
                     android:textColor="@color/blacklight"
                     android:textSize="@dimen/font_size_small" />
@@ -230,6 +230,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.3"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:paddingTop="@dimen/spacing_standard"
                     android:paddingBottom="@dimen/spacing_standard">
 
