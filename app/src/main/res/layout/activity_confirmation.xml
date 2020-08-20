@@ -86,6 +86,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/adv_start_date_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_xxlarge"
@@ -96,6 +97,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/adv_end_date_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_xxlarge"
@@ -131,6 +133,7 @@
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/adv_gender_pref"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_xxlarge"
@@ -141,6 +144,7 @@
                             android:textSize="13sp" />
 
                         <TextView
+                            android:id="@+id/adv_age_group_pref"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/spacing_xxlarge"
@@ -235,7 +239,6 @@
                 android:id="@+id/rcvScreens"
                 style="@style/RecycleView"
                 android:layout_width="match_parent"
-                android:overScrollMode="never"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/spacing_standard"

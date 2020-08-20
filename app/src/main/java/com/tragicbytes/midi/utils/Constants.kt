@@ -84,6 +84,7 @@ object Constants {
         const val USER_PHONE="phone_number"
         const val USER_DOB="DOB"
         const val USER_GENDER="GENDER"
+        const val CURRENT_ADV_ID="advId"
 
     }
     object WalletTransactionDetails{

@@ -14,6 +14,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.ScreensLocationModel
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
@@ -65,8 +66,10 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             dialog.show()
         }
         sContinue.onClick {
+            var ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
+            ongoingAdv.screens=selectedScreens
             launchActivity<ConfirmationActivity> {
-                putExtra("selectedScreens",selectedScreens)
+                putExtra("ongoing_adv",ongoingAdv)
             }
         }
 

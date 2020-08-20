@@ -11,7 +11,6 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +25,7 @@ import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.*
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -42,14 +41,14 @@ import kotlin.math.roundToInt
 
 class ProductDetailActivity : AppBaseActivity(){
 
+    private var advGenderPref: String="Female"
+    private var advAgeGroupPref: String=""
     private lateinit var mMainBinding: ActivityProductDetailBinding
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
     private var mProductModel: ProductDataNew? = null
     private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
-    private var adsGender: String = ""
-    private var adsAgeGroup: String = ""
     private var mColorFlag: Int = -1
     private var mSizeFlag: Int = -1
     private var mIsGenderExist: Boolean = false
@@ -476,8 +475,8 @@ class ProductDetailActivity : AppBaseActivity(){
                 })
             colorAdapter?.onItemClick = { pos, view, item ->
                 mColorFlag = pos
-                adsGender = genderList[pos]
-                mIsGenderExist = true && adsGender.isNotEmpty()
+                advGenderPref= genderList[pos]
+                mIsGenderExist = true && advGenderPref.isNotEmpty()
                 colorAdapter?.notifyDataSetChanged()
                 getSelectedColors()
             }
@@ -507,7 +506,6 @@ class ProductDetailActivity : AppBaseActivity(){
                                 mSizeFlag -> {
                                     setTextColor(color(R.color.commonColorWhite))
                                     setStrokedBackground(color(R.color.colorPrimary))
-                                    //          adsGender= genderList[position]
                                 }
                                 else -> {
                                     setTextColor(color(R.color.textColorPrimary))
@@ -525,8 +523,8 @@ class ProductDetailActivity : AppBaseActivity(){
                 })
             ageGroupAdapter?.onItemClick = { pos, view, item ->
                 mSizeFlag = pos
-                adsAgeGroup = ageGroupList[pos]
-                mIsAgeGroupExist = true && adsAgeGroup.isNotEmpty()
+                advAgeGroupPref = ageGroupList[pos]
+                mIsAgeGroupExist = true && advAgeGroupPref.isNotEmpty()
                 ageGroupAdapter?.notifyDataSetChanged()
                 getSelectedSize()
             }
@@ -641,7 +639,10 @@ class ProductDetailActivity : AppBaseActivity(){
                                     saveBannerDetailsToDB(adsDetails)*/
                                 } else {
                                     val adsDetails=SingleAdvertisementDetails()
-                                    adsDetails.advAgePref= ArrayList()
+                                    adsDetails.advId=generateString()
+                                    getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
+                                    adsDetails.advAgePref.add(advAgeGroupPref)
+                                    adsDetails.advGenderPref=advGenderPref
                                     adsDetails.advBannerUrl=bannerImageUrl
                                     adsDetails.advBrandName= advDetails.advBrandName
                                     adsDetails.advDescription=advDetails.advDescription
@@ -652,7 +653,7 @@ class ProductDetailActivity : AppBaseActivity(){
                                     var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                                     advDetails.add(adsDetails)
                                     localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
-                                    saveBannerDetailsToDB(localUserDetails)
+                                    saveBannerDetailsToDB(localUserDetails,adsDetails)
                                 }
                             }
                         )
@@ -676,7 +677,10 @@ class ProductDetailActivity : AppBaseActivity(){
         return date.time.toString()
     }
 
-    private fun saveBannerDetailsToDB(localUserDetails: UserDetailsModel) {
+    private fun saveBannerDetailsToDB(
+        localUserDetails: UserDetailsModel,
+        adsDetails: SingleAdvertisementDetails
+    ) {
         dbReference.child(
             "UsersData/"+getStoredUserDetails().userId
         )
@@ -684,12 +688,20 @@ class ProductDetailActivity : AppBaseActivity(){
             .addOnSuccessListener {
                 snackBar("Ads Saved")
                 showProgress(false)
+                launchActivity<LocationBasedScreensActivity>{
+                    putExtra("ongoing_adv",adsDetails)
+                }
             }
             .addOnFailureListener {
                 snackBar(it.message.toString())
                 showProgress(false)
 
             }
+    }
+
+    private fun generateString(): String? {
+        val uuid: String = UUID.randomUUID().toString()
+        return uuid.replace("-".toRegex(), "")
     }
     //endregion
 }
