@@ -2,23 +2,18 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.View
 import com.google.firebase.database.*
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.TransactionDetails
-import com.tragicbytes.midi.models.UserWalletDetails
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet.*
-import kotlinx.android.synthetic.main.activity_wallet_transactions.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -33,8 +28,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         title = getString(R.string.action_wallet)
         dbReference = FirebaseDatabase.getInstance().reference
 
-
-        walletAmount.text = getString(R.string.rs) +" "+ getStoredUserDetails().userWalletDetails.totalAmount
+        val amountFormatted: String = NumberFormat.getCurrencyInstance(Locale("en", "IN")).format(getStoredUserDetails().userWalletDetails.totalAmount.toDoubleOrNull())
+        walletAmount.text = amountFormatted
 
         loadActivity()
 
@@ -94,7 +89,10 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             val userNumber = getStoredUserDetails().userPersonalDetails.phone
             val prefill = JSONObject()
             prefill.put("email", getStoredUserDetails().userPersonalDetails.email)
-            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put("contact", "9876543210")
+            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put(
+                "contact",
+                "9876543210"
+            )
 
 
             options.put("prefill", prefill)
@@ -111,7 +109,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         paymentData: PaymentData?
     ) {
         if (paymentData != null) {
-            updateTransactionDetails(paymentData,0)
+            updateTransactionDetails(paymentData, 0)
         }
         addAmount.isEnabled=true
         addAmount.isClickable=true
@@ -124,7 +122,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         showProgress(false)
 
         if(paymentData != null) {
-            updateTransactionDetails(paymentData,1)
+            updateTransactionDetails(paymentData, 1)
             updateWalletAmount()
         }
         addAmount.isEnabled=true
@@ -133,7 +131,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
     }
 
-    private fun updateTransactionDetails(paymentData: PaymentData,status:Int) {
+    private fun updateTransactionDetails(paymentData: PaymentData, status: Int) {
         var newTransactionsDetails=TransactionDetails()
         newTransactionsDetails.transactionStatus= status.toString()
         newTransactionsDetails.email=paymentData.userEmail
@@ -146,8 +144,12 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         transactionsList.add(newTransactionsDetails)
         localStoredUserDetails.userWalletDetails.transactionsDetails=transactionsList
         updateStoredUserDetails(localStoredUserDetails)
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails").setValue(transactionsList)
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size-1}/transactionDate").setValue(ServerValue.TIMESTAMP)
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails").setValue(
+            transactionsList
+        )
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate").setValue(
+            ServerValue.TIMESTAMP
+        )
 
     }
     
@@ -160,19 +162,22 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                     object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             if (dataSnapshot.exists()) {
-                                var sum=0
+                                var sum = 0
                                 dataSnapshot.children.forEach {
-                                    var transactionsDetails=it.getValue(TransactionDetails::class.java)!!
-                                    if(transactionsDetails.transactionStatus=="1"){
+                                    var transactionsDetails =
+                                        it.getValue(TransactionDetails::class.java)!!
+                                    if (transactionsDetails.transactionStatus == "1") {
                                         sum += transactionsDetails.transactionAmount.toInt()
                                     }
                                 }
                                 dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
-                                    .setValue(sum.toString()).addOnCompleteListener{
-                                        var localUserDetails= getStoredUserDetails()
-                                        localUserDetails.userWalletDetails.totalAmount=sum.toString()
+                                    .setValue(sum.toString()).addOnCompleteListener {
+                                        var localUserDetails = getStoredUserDetails()
+                                        localUserDetails.userWalletDetails.totalAmount =
+                                            sum.toString()
                                         updateStoredUserDetails(localUserDetails)
-                                        walletAmount.text=getString(R.string.rs)+" "+sum.toString()
+                                        walletAmount.text =
+                                            getString(R.string.rs) + " " + sum.toString()
                                         showProgress(false)
                                         snackBar("Wallet Refresh Successfully")
                                     }

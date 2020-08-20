@@ -81,7 +81,10 @@ class HomeFragment : BaseFragment() {
             refreshLayout.isRefreshing=false
         }
         refreshLayout.viewTreeObserver.addOnScrollChangedListener {
-            refreshLayout.isEnabled = scrollView.scrollY == 0
+            if(refreshLayout != null) {
+                    refreshLayout.isEnabled = scrollView.scrollY == 0
+                }
+
         }
 
     }

@@ -252,7 +252,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/text_play"
+        android:layout_above="@+id/tPayBtn"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:layout_marginBottom="20dp"
@@ -283,7 +283,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/text_play"
+        android:id="@+id/tPayBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
