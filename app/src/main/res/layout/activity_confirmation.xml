@@ -12,7 +12,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/finalAmount"
         android:layout_below="@+id/appBar"
         android:clipToPadding="false"
         android:overScrollMode="never"
