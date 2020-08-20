@@ -302,7 +302,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 })*/
 
 
-            if (true) {
+            if (validateAllValue()) {
                 updateDbValues()
             }
             /*val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
