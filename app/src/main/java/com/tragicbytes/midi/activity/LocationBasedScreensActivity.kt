@@ -102,7 +102,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     private fun fetchLocationBasedScreens(location: String) {
         selectedScreens.clear()
         totalAmount = 0
-        sTotalScreenAmount.text = "$$totalAmount"
+        sTotalScreenAmount.text = getString(R.string.RS)+" "+"$totalAmount"
         dbReference.child("AvailableLocations/${location}/screenData")
             .addValueEventListener(
                 object : ValueEventListener {

@@ -12,10 +12,11 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/adView"
+        android:layout_above="@+id/finalAmount"
         android:layout_below="@+id/appBar"
         android:clipToPadding="false"
         android:overScrollMode="never"
+        android:layout_marginBottom="@dimen/_100sdp"
         android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
@@ -234,6 +235,7 @@
                 android:id="@+id/rcvScreens"
                 style="@style/RecycleView"
                 android:layout_width="match_parent"
+                android:overScrollMode="never"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/spacing_standard"
@@ -253,7 +255,7 @@
         android:layout_above="@+id/text_play"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/dotted_line_rect"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -270,11 +272,12 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/finalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:text="₹ 6,783"
-            android:textAppearance="@dimen/font_size_normal"
+            android:text="₹ 100"
+            android:textAppearance="@style/FontBold"
             android:textColor="@color/blacklight"
             android:textSize="12.5sp" />
     </LinearLayout>
