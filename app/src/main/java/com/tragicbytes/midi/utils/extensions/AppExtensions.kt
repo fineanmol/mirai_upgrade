@@ -54,10 +54,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
-import com.tragicbytes.midi.activity.LocationBasedScreensActivity
-import com.tragicbytes.midi.activity.ProductDetailActivity
-import com.tragicbytes.midi.activity.TransactionDetailsActivity
-import com.tragicbytes.midi.activity.WalletTransactionsActivity
+import com.tragicbytes.midi.activity.*
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
@@ -101,8 +98,12 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.WISHLIST_DATA
 import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
+import kotlinx.android.synthetic.main.item_confirm_screen_card.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
+import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
+import kotlinx.android.synthetic.main.item_product_new.view.tvOriginalPrice
 import kotlinx.android.synthetic.main.item_screen.view.*
+import kotlinx.android.synthetic.main.item_screen.view.screenTitle
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
@@ -989,8 +990,18 @@ fun getShortTime(ts:Long?):String{
 }
 fun setSelectedScreenItem(
     view: View,
-    item: ScreenDataModel
-){}
+    item: ScreenDataModel,
+    context: ConfirmationActivity
+){
+    view.tScreenName.text=item.screenId
+    view.tTimeDistribution.text=item.screenActiveTime
+    view.tGenderRatio.text=item.screenGenderRatio
+    view.tAgeDistributtion.text =item.screenAgeGroups
+    view.tScreenPrice.text = "₹"+" "+ item.screenPrice
+
+
+
+}
 
 
 fun setBannerData(

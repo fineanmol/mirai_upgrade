@@ -14,16 +14,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1.7"
+            android:layout_weight="11.8"
             android:background="@color/item_background">
 
             <ImageView
                 android:id="@+id/ivProduct"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:contentDescription="@string/text_todo"
-                android:foregroundGravity="center"
-                android:src="@color/item_background" />
+                android:src="@drawable/rzp_green_button" />
 
         </RelativeLayout>
 
@@ -36,7 +34,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvProductName"
+                android:id="@+id/tScreenName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_control"
@@ -58,18 +56,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:text="Age Group:"
+                    android:text="Time Distribution:"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
-                    android:id="@+id/bAgeGroup"
+                    android:id="@+id/tTimeDistribution"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginStart="@dimen/spacing_small"
-                    android:text="18-25"
-
-                    android:textColor="@color/blacklight"
+                    android:text="9AM - 5PM"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/font_size_small" />
 
             </LinearLayout>
@@ -90,6 +87,7 @@
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
+                    android:id="@+id/tGenderRatio"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginStart="@dimen/spacing_small"
@@ -114,6 +112,7 @@
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
+                    android:id="@+id/tAgeDistributtion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="-60dp"
@@ -133,11 +132,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:text="Screen Size"
+                    android:text="Screen Size :"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
+                    android:id="@+id/tScreenSize"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_marginStart="@dimen/spacing_small"
@@ -171,7 +171,7 @@
                     android:textSize="@dimen/font_size_small" />
 
                 <TextView
-                    android:id="@+id/tvPrice"
+                    android:id="@+id/tScreenPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="@style/FontMedium"
@@ -208,6 +208,7 @@
 
                     <TextView
                         style="@style/CartButton"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:text="*SPD: Screen Price Per Day"
                         android:textSize="@dimen/font_size_micro"/>
 
@@ -229,7 +230,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.3"
                     android:gravity="center"
-
                     android:paddingTop="@dimen/spacing_standard"
                     android:paddingBottom="@dimen/spacing_standard">
 

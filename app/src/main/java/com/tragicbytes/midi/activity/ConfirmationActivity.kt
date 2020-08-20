@@ -15,17 +15,22 @@ class ConfirmationActivity : AppBaseActivity() {
     private var selectedScreens:ArrayList<ScreenDataModel> = ArrayList()
 
     private var mScreensAdapter:RecyclerViewAdapter<ScreenDataModel>? = null
+    private var totalAmount=0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
-
         setToolbar(toolbar)
         title =getString(R.string.title_advertisement_confirmation)
 
         selectedScreens=intent?.getSerializableExtra("selectedScreens") as ArrayList<ScreenDataModel>
 
         screenCount.text="Selected Screens (${selectedScreens.size})"
+        selectedScreens.forEach { screenDataModel: ScreenDataModel ->
+
+           totalAmount +=(screenDataModel.screenPrice).toInt()
+        }
+        finalAmount.text=getString(R.string.RS) +" "+ totalAmount.toString()
 
         rcvScreens.setVerticalLayout()
 
@@ -38,7 +43,7 @@ class ConfirmationActivity : AppBaseActivity() {
     private fun setupScreensAdapter() {
         mScreensAdapter = RecyclerViewAdapter(
             R.layout.item_confirm_screen_card,
-            onBind = { view, item, position -> setSelectedScreenItem(view, item) })
+            onBind = { view, item, position -> setSelectedScreenItem(view, item,this) })
 
         rcvScreens.apply {
             adapter = mScreensAdapter
