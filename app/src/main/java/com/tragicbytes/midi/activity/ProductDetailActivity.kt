@@ -734,6 +734,10 @@ class ProductDetailActivity : AppBaseActivity(){
                 showProgress(false)
 
             }
+            .addOnCompleteListener {
+                snackBar("Ads Saved Complete")
+                showProgress(false)
+            }
 
     }
 
