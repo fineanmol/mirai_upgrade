@@ -1,7 +1,6 @@
 package com.tragicbytes.midi.fragments.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,7 +9,6 @@ import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.ProductDetailActivity
-import com.tragicbytes.midi.activity.SearchActivity
 import com.tragicbytes.midi.activity.WalletActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
@@ -25,11 +23,8 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.COPYRIGHT_TEXT
 import com.tragicbytes.midi.utils.Constants.SharedPref.DEFAULT_CURRENCY
 import com.tragicbytes.midi.utils.Constants.SharedPref.FACEBOOK
 import com.tragicbytes.midi.utils.Constants.SharedPref.INSTAGRAM
-import com.tragicbytes.midi.utils.Constants.SharedPref.KEY_ORDER_COUNT
 import com.tragicbytes.midi.utils.Constants.SharedPref.PRIVACY_POLICY
-import com.tragicbytes.midi.utils.Constants.SharedPref.SLIDER_IMAGES_DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.TERM_CONDITION
-import com.tragicbytes.midi.utils.Constants.SharedPref.THEME_COLOR
 import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
 import com.tragicbytes.midi.utils.extensions.*
@@ -66,6 +61,7 @@ class HomeFragment : BaseFragment() {
         dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
+        fetchUserData(dbReference)
 
         rcvNewestProduct.setVerticalLayout()
         rcvRecentSearch.setHorizontalLayout()
@@ -91,6 +87,38 @@ class HomeFragment : BaseFragment() {
 
         }
 
+    }
+
+    private fun fetchUserData(dbReference: DatabaseReference) {
+        dbReference.child("UsersData/"+ getStoredUserDetails().userId)
+            .addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    // Get Post object and use the values to update the UI
+                    if (dataSnapshot.exists()) {
+                        val dbContent =
+                            dataSnapshot.getValue(UserDetailsModel::class.java)
+                        if (dbContent != null) {
+                            getSharedPrefInstance().setValue(
+                                Constants.SharedPref.USER_DETAILS_OBJECT,
+                                Gson().toJson(dbContent)
+                            )
+                            snackBar("userDataUpdated!")
+                        }
+
+                        hideProgress()
+
+                    } else {
+                        hideProgress()
+                        snackBar("Erorr occurred while fetching details!")
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    hideProgress()
+                    snackBar("Cancelled while fetching details!")
+
+                }
+            })
     }
 
 
@@ -212,55 +240,7 @@ class HomeFragment : BaseFragment() {
         })
     }
 
-/*
-    private fun listFeaturedProducts() {
-        showProgress()
-        val requestModel = FilterProductRequest()
-        callApi(getRestApis(false).getFeaturedProducts(requestModel), onApiSuccess = {
-            if (activity == null) return@callApi
-            hideProgress()
-            if (it.isEmpty()) {
-                rlFeatured.hide()
-                rcvFeaturedProducts.hide()
-            } else {
-                rlFeatured.show()
-                rcvFeaturedProducts.show()
-                mFeaturedProductAdapter?.addItems(it)
-                mFeaturedProductAdapter?.setModelSize(5)
-            }
-        }, onApiError = {
-            if (activity == null) return@callApi
-            hideProgress()
-        }, onNetworkError = {
-            if (activity == null) return@callApi
-            hideProgress()
-            activity?.noInternetSnackBar()
-        })
-    }
-*/
 
-/*
-    private fun listAllProductCategories() {
-        val categories = getCategoryDataFromPref()
-        if (categories.isNotEmpty()) {
-            mCategoryAdapter?.addItems(categories)
-            if (activity != null) (activity as DashBoardActivity).setDrawerCategory(categories)
-        }
-
-        callApi(getRestApis(false).getProductCategories(), onApiSuccess = {
-            if (activity == null) return@callApi
-            getSharedPrefInstance().setValue(CATEGORY_DATA, Gson().toJson(it))
-            mCategoryAdapter?.addItems(it)
-
-            if (activity != null) (activity as DashBoardActivity).setDrawerCategory(it)
-        }, onApiError = {
-            if (activity == null) return@callApi
-        }, onNetworkError = {
-            if (activity == null) return@callApi
-            activity?.noInternetSnackBar()
-        })
-    }
-*/
     //endregion
 
     //region RecyclerViews and Adapters
