@@ -389,7 +389,7 @@
                             android:id="@+id/startDateVal"
                             style="@style/MoreInfoSubheading"
                             android:textAlignment="center"
-                            android:text="Today"
+                            android:text="Choose Date"
                              />
                     </LinearLayout>
 

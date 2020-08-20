@@ -3,7 +3,7 @@ package com.tragicbytes.midi.models
 import java.io.Serializable
 
 class ScreensLocationModel() {
-    var screenData: List<ScreenDataModel> = listOf()
+    var screenData: ArrayList<ScreenDataModel> = ArrayList()
 }
 class ScreenDataModel:Serializable {
     var screenId:String=""

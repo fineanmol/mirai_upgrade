@@ -27,6 +27,7 @@ class UserAdvertisementDetails {
 }
 
 class SingleAdvertisementDetails:Serializable{
+    var advId:String?=null
     var advName:String=""
     var advDescription:String=""
     var advTagline:String=""
@@ -38,7 +39,7 @@ class SingleAdvertisementDetails:Serializable{
     var advRange:String=""
     var startFrom:String=""
     var endOn:String=""
-    var screens: ArrayList<String> =ArrayList()
+    var screens =ScreensLocationModel().screenData
     var rejectionCount:String="0"
     var advCost:String=""
 }
