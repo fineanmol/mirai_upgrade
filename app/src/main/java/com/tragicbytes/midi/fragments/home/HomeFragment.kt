@@ -102,7 +102,7 @@ class HomeFragment : BaseFragment() {
                                 Constants.SharedPref.USER_DETAILS_OBJECT,
                                 Gson().toJson(dbContent)
                             )
-                            snackBar("userDataUpdated!")
+                           /* snackBar("userDataUpdated!")*/
                         }
 
                         hideProgress()

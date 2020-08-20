@@ -1000,9 +1000,7 @@ fun setSelectedScreenItem(
     view.tTimeDistribution.text=item.screenActiveTime
     view.tGenderRatio.text=item.screenGenderRatio
     view.tAgeDistributtion.text =item.screenAgeGroups
-    view.tScreenPrice.text = "₹"+" "+ item.screenPrice
-
-
+    view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")
 
 }
 

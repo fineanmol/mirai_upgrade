@@ -175,8 +175,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                                         localUserDetails.userWalletDetails.totalAmount =
                                             sum.toString()
                                         updateStoredUserDetails(localUserDetails)
-                                        walletAmount.text =
-                                            getString(R.string.rs) + " " + sum.toString()
+                                        walletAmount.text = sum.toString().currencyFormat("INR")
                                         showProgress(false)
                                         snackBar("Wallet Refresh Successfully")
                                     }

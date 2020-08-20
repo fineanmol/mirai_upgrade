@@ -54,12 +54,12 @@ class TransactionDetailsActivity : AppBaseActivity() {
         transactionTime.text=getShortTime(mTransactionDetails.transactionDate)
         if(mTransactionDetails.transactionStatus=="1") {
             transactionRemark.text="Money Added to Wallet"
-            transactionAmount.text="+ "+getString(R.string.RS)+mTransactionDetails.transactionAmount
+            transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
             transactionIcon.isVisible()
 
         }
         else if(mTransactionDetails.transactionStatus=="0") {
-            transactionAmount.text=" "+getString(R.string.RS)+mTransactionDetails.transactionAmount
+            transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
             transactionRemark.text="Add Money Failed"
             transactionAmount.setTextColor(resources.getColor(R.color.red))
             transactionRemark.setTextColor(resources.getColor(R.color.red))
