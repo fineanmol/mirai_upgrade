@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -26,6 +27,11 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     private lateinit var dbReference: DatabaseReference
 
     private var totalAmount = 0
+
+    private var selectedScreens:ArrayList<ScreenDataModel> = ArrayList()
+
+    private var screensList = ArrayList<ScreenDataModel>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +65,9 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             dialog.show()
         }
         sContinue.onClick {
-            launchActivity<ConfirmationActivity> { }
+            launchActivity<ConfirmationActivity> {
+                putExtra("selectedScreens",selectedScreens)
+            }
         }
 
 
@@ -92,16 +100,15 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     }
 
     private fun fetchLocationBasedScreens(location: String) {
+        selectedScreens.clear()
         totalAmount = 0
         sTotalScreenAmount.text = "$$totalAmount"
-        var screensLocationModel = ScreensLocationModel()
-        var yzx = screensLocationModel.screenData
         dbReference.child("AvailableLocations/${location}/screenData")
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            var screensList = ArrayList<ScreenDataModel>()
+                            screensList = ArrayList()
 
                             dataSnapshot.children.forEach {
                                 val screenData =
@@ -138,9 +145,11 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         mLocationScreensAdapter?.onItemClick = { pos, view, item ->
             this.selectScreen(view, item, onSelect = {
                 totalAmount += it
+                selectedScreens.add(screensList[pos])
             },
                 onUnSelect = {
                     totalAmount -= it
+                    selectedScreens.remove(screensList[pos])
                 })
             sTotalScreenAmount.text = "$$totalAmount"
         }

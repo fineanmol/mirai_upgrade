@@ -775,14 +775,14 @@ fun getSlideImagesFromPref(): ArrayList<SliderImagesResponse> {
     if (getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson<ArrayList<SliderImagesResponse>>(getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA), object : TypeToken<ArrayList<SliderImagesResponse>>() {}.type)
+    return Gson().fromJson(getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA), object : TypeToken<ArrayList<SliderImagesResponse>>() {}.type)
 }
 
 fun getCategoryDataFromPref(): ArrayList<CategoryData> {
     if (getSharedPrefInstance().getStringValue(CATEGORY_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson<ArrayList<CategoryData>>(getSharedPrefInstance().getStringValue(CATEGORY_DATA), object : TypeToken<ArrayList<CategoryData>>() {}.type)
+    return Gson().fromJson(getSharedPrefInstance().getStringValue(CATEGORY_DATA), object : TypeToken<ArrayList<CategoryData>>() {}.type)
 }
 
 fun setScreenItem(
@@ -987,7 +987,10 @@ fun getShortTime(ts:Long?):String{
     //return formatted date
     return android.text.format.DateFormat.format("hh:mm a", calendar).toString()
 }
-
+fun setSelectedScreenItem(
+    view: View,
+    item: ScreenDataModel
+){}
 
 
 fun setBannerData(
@@ -1062,7 +1065,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseRefe
     personalizedBannerBitmap.saveAsync(file.path
     ) {
         val ref =
-            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)+System.currentTimeMillis())
+            storageReference.child("uploads/" + getStoredUserDetails().userId+System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {

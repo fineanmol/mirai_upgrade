@@ -11,18 +11,13 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
-import com.razorpay.PaymentResultListener
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
@@ -30,24 +25,20 @@ import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.*
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
-import org.json.JSONObject
+import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
+class ProductDetailActivity : AppBaseActivity(){
 
     private lateinit var mMainBinding: ActivityProductDetailBinding
     private lateinit var dbReference: DatabaseReference
@@ -98,8 +89,8 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             onBackPressed()
         }
 
-        dbReference.child(getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_ID))
-            .child("AdvDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
+        dbReference.child(getStoredUserDetails().userId)
+            .child("UserAdvertisementDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
                     if(p0.exists()){
                         p0.children.forEach {
@@ -175,8 +166,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
-        listProductReviews()
-
         when {
             mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
                 mProductModel.sale_price.currencyFormat()
@@ -228,7 +217,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
 
         startDateVal.onClick {
-            getSharedPrefInstance().removeKey(Constants.AdvTimeDetails.Start_Date)
+//            getSharedPrefInstance().removeKey(Constants.AdvTimeDetails.Start_Date)
             val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Calendar.getInstance()
             } else {
@@ -249,7 +238,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
 
-            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Date,startDateVal.text.toString())
+//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Date,startDateVal.text.toString())
             mIsStartDateExist = !startDateVal.text.isNullOrEmpty()
         }
 
@@ -274,7 +263,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
             datePickerDialog.show()
             val coMonth = c[Calendar.MONTH]
             val coDay = c[Calendar.DAY_OF_MONTH]
-            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Date,endDateVal.text.toString())
+//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Date,endDateVal.text.toString())
             mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
         }
 
@@ -284,7 +273,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 cal.set(Calendar.HOUR_OF_DAY, hour)
                 cal.set(Calendar.MINUTE, minute)
                 startTimeVal.text = SimpleDateFormat("HH:mm").format(cal.time)
-
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
@@ -293,7 +281,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
-            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Time,startTimeVal.text.toString())
+//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Time,startTimeVal.text.toString())
 
             mIsStartTimeExist = true
         }
@@ -312,12 +300,12 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
-            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Time,endTimeVal.text.toString())
+//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Time,endTimeVal.text.toString())
             mIsEndTimeExist = true
         }
 
         bannerUpload.onClick {
-   /*         showProgress(true)
+            showProgress(true)
             myImages[0]
             this@ProductDetailActivity.requestPermissions(
                 arrayOf(
@@ -347,9 +335,9 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
             if (validateAllValue()) {
                 updateDbValues()
-            }*/
-            val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
-            snackBar(value)
+            }
+            /*val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
+            snackBar(value)*/
 
         }
 
@@ -388,80 +376,12 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
 
     }
 
-    private fun setStock(
-        mProductModel: ProductDataNew,
-        stockQuantity: Int?
-    ) {
-        tvAvailability.text = getString(R.string.lbl_in_stock)
-
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(R.layout.dialog_quantity)
-
-        val size = if (stockQuantity == null || stockQuantity >= 5) 5 else stockQuantity
-        val list: ArrayList<String> = ArrayList()
-        for (i in 1..size) {
-            list.add(i.toString())
-        }
-        dialog.listQuantity.adapter =
-            ArrayAdapter<String>(this, R.layout.item_quantity, R.id.tvQuantity, list)
-        dialog.listQuantity.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                mQuntity = list[position]
-                tvSelectedQuantity.text = list[position]
-                dialog.dismiss()
-            }
-        tvSelectedQuantity.onClick {
-            dialog.show()
-        }
-    }
-
     fun round(value: Double, places: Int): Double {
         var double = value
         val factor = 10.0.pow(places.toDouble()).toLong()
         double *= factor
         val tmp = double.roundToInt()
         return tmp.toDouble() / factor
-    }
-
-    private fun onFavouriteClick() {
-        if (isExistInWishList(mProductModel!!)) {
-            changeFavIcon(R.drawable.ic_heart, R.color.gray_80); ivFavourite.isClickable = false
-
-            val requestModel = RequestModel(); requestModel.pro_id =
-                mProductModel?.pro_id.toString()
-            removeFromWishList(requestModel) {
-                ivFavourite.isClickable = true
-                if (it) changeFavIcon(
-                    R.drawable.ic_heart,
-                    R.color.gray_80
-                ) else changeFavIcon(
-                    R.drawable.ic_heart_fill,
-                    R.color.favourite_background,
-                    R.color.colorPrimary
-                )
-            }
-        } else {
-            if (isLoggedIn()) {
-                changeFavIcon(
-                    R.drawable.ic_heart_fill,
-                    R.color.favourite_background,
-                    R.color.colorPrimary
-                ); ivFavourite.isClickable = false
-
-                val requestModel = RequestModel(); requestModel.pro_id =
-                    mProductModel?.pro_id.toString()
-                addToWishList(requestModel) {
-                    ivFavourite.isClickable = true
-                    if (it) changeFavIcon(
-                        R.drawable.ic_heart_fill,
-                        R.color.favourite_background,
-                        R.color.colorPrimary
-                    ) else changeFavIcon(R.drawable.ic_heart, R.color.gray_80)
-                }
-            } else {
-                launchActivity<SignInUpActivity>()
-            }
-        }
     }
 
     private fun intHeaderView() {
@@ -678,71 +598,10 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         ivFavourite.changeBackgroundTint(color(backgroundColor))
     }
 
-    private fun listProductReviews() {
-        /*callApi(getRestApis().listProductReviews(mProductModel?.pro_id!!), onApiSuccess = {
-            val mReview: ArrayList<String> = ArrayList()
-            it.forEach { review ->
-                if (!mReview.contains(review.email)) {
-                    mReview.add(review.email)
-                }
-            }
-            setRating(it)
-        }, onApiError = {
-            snackBarError(it)
-        }, onNetworkError = {
-            openLottieDialog {
-                listProductReviews()
-            }
-        })*/
-    }
-
-    private fun setRating(data: List<ProductReviewData>) {
-        if (data.isEmpty()) {
-            return
-        }
-        var fiveStar = 0
-        var fourStar = 0
-        var threeStar = 0
-        var twoStar = 0
-        var oneStar = 0
-        for (reviewModel in data) {
-            when (reviewModel.rating) {
-                5 -> fiveStar++
-                4 -> fourStar++
-                3 -> threeStar++
-                2 -> twoStar++
-                1 -> oneStar++
-            }
-        }
-        if (fiveStar == 0 && fourStar == 0 && threeStar == 0 && twoStar == 0 && oneStar == 0) {
-            return
-        }
-        val mAvgRating =
-            (5 * fiveStar + 4 * fourStar + 3 * threeStar + 2 * twoStar + 1 * oneStar) / (fiveStar + fourStar + threeStar + twoStar + oneStar)
-
-    }
-
     override fun onResume() {
-        checkWishListAndCart()
         super.onResume()
         if (!isAdShown) {
             showInterstitialAd()
-        }
-    }
-
-    private fun checkWishListAndCart() {
-        if (mProductModel != null) {
-            isAddedToCart = isExistInCart(mProductModel!!)
-            mIsInWishList = isExistInWishList(mProductModel!!)
-
-            if (isAddedToCart) btnAddCard.text =
-                getString(R.string.lbl_remove_cart) else btnAddCard.text =
-                getString(R.string.lbl_add_to_cart)
-            if (mIsInWishList) changeFavIcon(
-                R.drawable.ic_heart_fill,
-                R.color.favourite_background,
-                R.color.colorPrimary
-            ) else changeFavIcon(R.drawable.ic_heart, R.color.gray_80)
         }
     }
 
@@ -772,100 +631,6 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                     }
                 }
             }
-        }
-    }
-    //region Payment Methods
-
-    private fun startPayment() {
-        /*
-        *  You need to pass current activity in order to let Razorpay create CheckoutActivity
-        * */
-        val activity: Activity = this
-        val co = Checkout()
-
-
-        try {
-            val PaymentAmount = "100" + ".00" //Rs 1
-            //    paymentValue.text = PaymentAmount
-
-            val options = JSONObject()
-            options.put("name", "Nightowl Developers")
-            options.put("description", "Dominal Charges")
-            //You can omit the image option to fetch the image from dashboard
-            options.put("image", "https://nightowldevelopers.com/img/logo.webp")
-            options.put("currency", "INR")
-            options.put("amount", PaymentAmount)
-
-            val userNumber = getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_PHONE)
-            val prefill = JSONObject()
-            prefill.put(
-                "email",
-                getSharedPrefInstance().getStringValue(Constants.SharedPref.USER_EMAIL)
-            )
-            if (userNumber != null) prefill.put("contact", userNumber) else prefill.put(
-                "contact",
-                "9876543210"
-            )
-
-
-            options.put("prefill", prefill)
-            co.open(activity, options)
-        } catch (e: Exception) {
-            Toast.makeText(activity, "Error in payment: " + e.message, Toast.LENGTH_LONG).show()
-            e.printStackTrace()
-        }
-    }
-
-    override fun onPaymentError(errorCode: Int, response: String?) {
-        try {
-            Toast.makeText(this, "Payment failed $errorCode \n $response", Toast.LENGTH_LONG).show()
-        } catch (e: Exception) {
-            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    override fun onPaymentSuccess(razorpayPaymentId: String?) {
-        try {
-            showProgress(true)
-            val razorpayPaymentId = generateString()
-
-            if (true) {
-                snackBar("Details filled")
-                myImages[0]
-                this@ProductDetailActivity.requestPermissions(
-                    arrayOf(
-                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    ), onResult = {
-                        if (it) {
-                            showProgress(true)
-                            this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                                dbReference,
-                                storageReference!!,
-                                myImages[0],
-                                onSuccess = {
-                                    showProgress(false)
-                                }
-                            )
-                        } else {
-                            showProgress(false)
-                            //    this@ProductDetailActivity.showPermissionAlert(this)
-                        }
-                    })
-
-            }
-
-
-            updateDbValues()
-
-
-
-
-
-            Toast.makeText(this, "Payment Successful", Toast.LENGTH_LONG).show()
-            showProgress(false)
-        } catch (e: Exception) {
-            Toast.makeText(applicationContext, e.message, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -898,7 +663,7 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                 //region When Create Ads
                                 if (mProductModel!!.name != "Custom Banner") {
                                     if (adDetails != null) {
-                                        val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                                        /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                             adDetails,
                                             adsGender,
                                             adsAgeGroup,
@@ -906,15 +671,15 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                             endDateVal.text.toString(),
                                             startTimeVal.text.toString(),
                                             endTimeVal.text.toString(),
-                                            /*"₹" + rangeVal.textToString(),*/
+                                            *//*"₹" + rangeVal.textToString(),*//*
                                             bannerImageUrl
                                         )
-                                        saveBannerDetailsToDB(adsDetails)
+                                        saveBannerDetailsToDB(adsDetails)*/
                                     } else {
                                         snackBar("Please Create ads First")
                                     }
                                 } else {
-                                    val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                                    /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                         adDetails,
                                         adsGender,
                                         adsAgeGroup,
@@ -922,10 +687,22 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
                                         endDateVal.text.toString(),
                                         startTimeVal.text.toString(),
                                         endTimeVal.text.toString(),
-                                     /*   "₹" + rangeVal.textToString(),*/
+                                     *//*   "₹" + rangeVal.textToString(),*//*
                                         bannerImageUrl
-                                    )
-                                    saveBannerDetailsToDB(adsDetails)
+                                    )*/
+                                    val adsDetails=SingleAdvertisementDetails()
+                                    adsDetails.advAgePref= ArrayList()
+                                    adsDetails.advBannerUrl=bannerImageUrl
+                                    adsDetails.advBrandName= adDetails!!.adBrandName
+                                    adsDetails.advDescription=adDetails!!.adDesc
+                                    adsDetails.advTagline=adDetails!!.adTagline
+                                    adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
+                                    adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
+                                    var localUserDetails=getStoredUserDetails()
+                                    var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
+                                    advDetails.add(adsDetails)
+                                    localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
+                                    saveBannerDetailsToDB(localUserDetails)
                                 }
                             }
                         )
@@ -943,14 +720,17 @@ class ProductDetailActivity : AppBaseActivity(), PaymentResultListener {
         }
     }
 
-    private fun saveBannerDetailsToDB(adsDetails: AdDetailsModel.AdsCompleteDetails) {
+    private fun getTimeStamp(startDate: String, startTime: String): String {
+        val formatter: DateFormat = SimpleDateFormat("dd-MM-yyyy hh:mm")
+        val date = formatter.parse("$startDate $startTime") as Date
+        return date.time.toString()
+    }
+
+    private fun saveBannerDetailsToDB(localUserDetails: UserDetailsModel) {
         dbReference.child(
-            getSharedPrefInstance().getStringValue(
-                Constants.SharedPref.USER_ID
-            )
+            getStoredUserDetails().userId
         )
-            .child("AdvDetails").child(advCount!!)
-            .setValue(adsDetails)
+            .setValue(localUserDetails)
             .addOnSuccessListener {
                 snackBar("Ads Saved")
                 showProgress(false)

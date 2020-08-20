@@ -1,9 +1,11 @@
 package com.tragicbytes.midi.models
 
+import java.io.Serializable
+
 class ScreensLocationModel() {
     var screenData: List<ScreenDataModel> = listOf()
 }
-class ScreenDataModel {
+class ScreenDataModel:Serializable {
     var screenId:String=""
     var screenCity:String=""
     var screenLocation:String=""

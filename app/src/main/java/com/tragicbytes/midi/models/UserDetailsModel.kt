@@ -23,16 +23,24 @@ class UserPersonalDetails {
 }
 
 class UserAdvertisementDetails {
-    var singleAdvertisementDetails: List<SingleAdvertisementDetails> = ArrayList()
+    var singleAdvertisementDetails: ArrayList<SingleAdvertisementDetails> = ArrayList()
 }
 
-class SingleAdvertisementDetails{
-    var bannerUrl:String=""
-    var screens: List<String>? =null
-    var rejectionCount:String="0"
-    var advCost:String=""
+class SingleAdvertisementDetails:Serializable{
+    var advName:String=""
+    var advDescription:String=""
+    var advTagline:String=""
+    var advBrandName:String=""
+    var advUserBannerLogo:String=""
+    var advBannerUrl:String=""
+    var advGenderPref:String=""
+    var advAgePref:ArrayList<String> =ArrayList()
+    var advRange:String=""
     var startFrom:String=""
     var endOn:String=""
+    var screens: ArrayList<String> =ArrayList()
+    var rejectionCount:String="0"
+    var advCost:String=""
 }
 
 class UserWalletDetails {
