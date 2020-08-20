@@ -209,6 +209,7 @@ class SignInUpActivity : AppBaseActivity() {
                                 Constants.SharedPref.USER_DETAILS_OBJECT,
                                 Gson().toJson(dbContent)
                             )
+                            snackBar("userDataUpdated!")
                         }
 
                         showProgress(false)

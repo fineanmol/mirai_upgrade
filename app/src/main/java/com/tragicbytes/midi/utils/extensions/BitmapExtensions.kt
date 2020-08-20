@@ -51,7 +51,7 @@ fun Bitmap.save(to: String, format: Bitmap.CompressFormat = Bitmap.CompressForma
  * Make Sure you have the permission to write the file to.
  */
 @RequiresPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-fun Bitmap.saveAsync(to: String, format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG, quality: Int = 100, recycle: Boolean = true, onComplete: (isSaved: String) -> Unit) = asyncAwait({
+fun Bitmap.saveAsync(to: String, format: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG, quality: Int = 100, recycle: Boolean = false, onComplete: (isSaved: String) -> Unit) = asyncAwait({
     this.save(to, format, quality, recycle)
 }, {
     onComplete(to)

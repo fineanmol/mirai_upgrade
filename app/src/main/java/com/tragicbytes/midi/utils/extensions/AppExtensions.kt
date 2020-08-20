@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -149,6 +150,8 @@ fun updateStoredUserDetails(userDetailsModel:UserDetailsModel){
         Gson().toJson(userDetailsModel)
     )
 }
+
+
 
 /**
  * Add shared preference related to user session here

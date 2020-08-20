@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.pow
@@ -45,17 +46,12 @@ class ProductDetailActivity : AppBaseActivity(){
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
     private var mProductModel: ProductDataNew? = null
-    private var mAdsModel: AdsMoreDetails? = null
-    private var mProductId = 0
-    private var isAddedToCart: Boolean = false
     private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
     private var adsGender: String = ""
     private var adsAgeGroup: String = ""
-    private var mIsInWishList = false
     private var mColorFlag: Int = -1
     private var mSizeFlag: Int = -1
-    private var mQuntity: String = "1"
     private var mIsGenderExist: Boolean = false
     private var mIsAgeGroupExist: Boolean = false
     private var mIsStartDateExist: Boolean = false
@@ -65,13 +61,11 @@ class ProductDetailActivity : AppBaseActivity(){
     private var mIsEndTimeExist: Boolean = false
     private var advDetails: SingleAdvertisementDetails=SingleAdvertisementDetails()
     private var mIsAllDetailsFilled: Boolean = false
-    private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
     private var ageGroupAdapter: RecyclerViewAdapter<String>? = null
     private var mMonth = 0
     private var mYear: Int = 0
     private var mDay: Int = 0
-    private var advCount:String?=null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,25 +82,6 @@ class ProductDetailActivity : AppBaseActivity(){
         ivBack.onClick {
             onBackPressed()
         }
-
-/*        dbReference.child(getStoredUserDetails().userId)
-            .child("UserAdvertisementDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
-                override fun onDataChange(p0: DataSnapshot) {
-                    if(p0.exists()){
-                        p0.children.forEach {
-                            advCount= (it.key!!.toInt()+1).toString()
-                        }
-                    }
-                    else{
-                        advCount=0.toString()
-                    }
-                }
-
-                override fun onCancelled(p0: DatabaseError) {
-                    snackBar(p0.message)
-                }
-            })*/
-
 
         when {
             intent?.extras?.getSerializable(DATA) != null -> {
@@ -135,8 +110,6 @@ class ProductDetailActivity : AppBaseActivity(){
                 finish()
             }
         }
-        setCartCountFromPref()
-
 
         btnAddCard.onClick {
             if (isLoggedIn()) {
@@ -159,9 +132,6 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
 
-    private fun setCartCountFromPref() {
-
-    }
 
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
@@ -384,14 +354,11 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
     private fun intHeaderView() {
-        var adDetails =
-            AdDetailsModel.AdDetails(
-                "Test Name",
-                "Test adv description",
-                "#ourTagLine",
-                "Test Brand",
-                ""
-            )
+        var advDetails = SingleAdvertisementDetails()
+        advDetails.advName="Test Name"
+        advDetails.advDescription="Test adv description"
+        advDetails.advTagline="#ourTagLine"
+        advDetails.advBrandName="Test Brand"
         showProgress(true)
 
         if (mProductModel!!.full.toString().isNotEmpty()) {
@@ -652,14 +619,14 @@ class ProductDetailActivity : AppBaseActivity(){
                             onSuccess = { bannerImageUrl ->
                                 showProgress(false)
                                 var startDate = startDateVal.text.toString()
-//            if (startDate == "Today") startDate = LocalDate.now().toString()
+//                                if (startDate == "Today") startDate = LocalDate.now().toString()
 
                                 if(intent.getSerializableExtra(DATA)!=null){
                                     mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
                                 }
 
                                 //region When Create Ads
-                                if (mProductModel!!.name != "Custom Banner") {
+                                if (mProductModel!!.name == "Custom Banner") {
                                     /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                         adDetails,
                                         adsGender,
@@ -673,17 +640,6 @@ class ProductDetailActivity : AppBaseActivity(){
                                     )
                                     saveBannerDetailsToDB(adsDetails)*/
                                 } else {
-                                    /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
-                                        adDetails,
-                                        adsGender,
-                                        adsAgeGroup,
-                                        startDate,
-                                        endDateVal.text.toString(),
-                                        startTimeVal.text.toString(),
-                                        endTimeVal.text.toString(),
-                                     *//*   "₹" + rangeVal.textToString(),*//*
-                                        bannerImageUrl
-                                    )*/
                                     val adsDetails=SingleAdvertisementDetails()
                                     adsDetails.advAgePref= ArrayList()
                                     adsDetails.advBannerUrl=bannerImageUrl
@@ -734,13 +690,6 @@ class ProductDetailActivity : AppBaseActivity(){
                 showProgress(false)
 
             }
-
     }
-
-    private fun generateString(): String? {
-        val uuid: String = UUID.randomUUID().toString()
-        return uuid.replace("-".toRegex(), "")
-    }
-
     //endregion
 }
