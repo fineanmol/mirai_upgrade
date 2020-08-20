@@ -28,8 +28,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         title = getString(R.string.action_wallet)
         dbReference = FirebaseDatabase.getInstance().reference
 
-        val amountFormatted: String = NumberFormat.getCurrencyInstance(Locale("en", "IN")).format(getStoredUserDetails().userWalletDetails.totalAmount.toDoubleOrNull())
-        walletAmount.text = amountFormatted
+        walletAmount.text = getStoredUserDetails().userWalletDetails.totalAmount.currencyFormat("INR")
 
         loadActivity()
 

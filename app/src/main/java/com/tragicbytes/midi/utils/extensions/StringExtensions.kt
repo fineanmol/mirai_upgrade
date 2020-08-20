@@ -12,6 +12,7 @@ import org.json.JSONObject
 import java.net.URLDecoder
 import java.net.URLEncoder
 import java.security.MessageDigest
+import java.text.NumberFormat
 import java.util.*
 import java.util.regex.Pattern
 import javax.crypto.Cipher
@@ -69,12 +70,15 @@ fun String.currencyFormat(code: String = "INR"): String {
     /*return if (this.checkIsEmpty()) "" else {
         "${getDefaultCurrency().getHtmlString()}$this"
     }*/
+
+
     return when (code) {
         "USD" -> "$$this"
-        "INR" -> "₹$this"
+        "INR" -> NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
         else -> "₹$this"
     }
 }
+
 
 /**
  * returns the md5 of the String

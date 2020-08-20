@@ -945,7 +945,7 @@ fun setWalletItem(
     view.tPaymentId.text = item.transactionId
     if(item.transactionStatus=="1") {
         if (item.transactionAmount.isNotEmpty()) {
-            view.tAmount.text = "+ " + item.transactionAmount.currencyFormat()
+            view.tAmount.text = "+ ₹"  + item.transactionAmount
             view.tTransactionText.text= "Money Added"
 
         } else {
@@ -956,7 +956,7 @@ fun setWalletItem(
     else if(item.transactionStatus=="0"){
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.track_red))
-            view.tAmount.text = "  "+ item.transactionAmount.currencyFormat()
+            view.tAmount.text = "  ₹"+ item.transactionAmount
             view.tIcon.setBackgroundResource(R.drawable.ic_round_cancel_24px)
             view.tTransactionText.text= "Add Money Failed"
 
