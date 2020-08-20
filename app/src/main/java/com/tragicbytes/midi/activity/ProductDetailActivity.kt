@@ -11,6 +11,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -47,7 +48,6 @@ class ProductDetailActivity : AppBaseActivity(){
     private var mAdsModel: AdsMoreDetails? = null
     private var mProductId = 0
     private var isAddedToCart: Boolean = false
-    private val mImages = ArrayList<String>()
     private val myImages = ArrayList<Bitmap>()
     var i: Int = 0
     private var adsGender: String = ""
@@ -63,7 +63,7 @@ class ProductDetailActivity : AppBaseActivity(){
     private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
-    private var adDetails: AdDetailsModel.AdDetails? = null
+    private var advDetails: SingleAdvertisementDetails=SingleAdvertisementDetails()
     private var mIsAllDetailsFilled: Boolean = false
     private var mIsFirstTimeSize = true
     private var colorAdapter: RecyclerViewAdapter<String>? = null
@@ -89,7 +89,7 @@ class ProductDetailActivity : AppBaseActivity(){
             onBackPressed()
         }
 
-        dbReference.child(getStoredUserDetails().userId)
+/*        dbReference.child(getStoredUserDetails().userId)
             .child("UserAdvertisementDetails").orderByKey().limitToLast(1).addValueEventListener(object :ValueEventListener{
                 override fun onDataChange(p0: DataSnapshot) {
                     if(p0.exists()){
@@ -105,7 +105,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 override fun onCancelled(p0: DatabaseError) {
                     snackBar(p0.message)
                 }
-            })
+            })*/
 
 
         when {
@@ -306,7 +306,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
         bannerUpload.onClick {
             showProgress(true)
-            myImages[0]
+           /* myImages[0]
             this@ProductDetailActivity.requestPermissions(
                 arrayOf(
                     android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -315,7 +315,6 @@ class ProductDetailActivity : AppBaseActivity(){
                     if (it) {
                         showProgress(true)
                         this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                            dbReference,
                             storageReference!!,
                             myImages[0],
                             onSuccess = {
@@ -330,10 +329,10 @@ class ProductDetailActivity : AppBaseActivity(){
                         bannerUpload.text= "Upload"
                         //    this@ProductDetailActivity.showPermissionAlert(this)
                     }
-                })
+                })*/
 
 
-            if (validateAllValue()) {
+            if (true) {
                 updateDbValues()
             }
             /*val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
@@ -399,7 +398,7 @@ class ProductDetailActivity : AppBaseActivity(){
             fetchImageAsync(mProductModel!!.full.toString()) {
                 if (it != null) {
                     val personalizedBannerBitmap =
-                        drawTextToBitmap(this, it, adDetails)!!
+                        drawTextToBitmap(this, it, advDetails)!!
                     myImages.add(personalizedBannerBitmap)
                     val imageAdapter = PersonalizedProductImageAdapter(myImages)
                     productViewPager.adapter = null
@@ -614,12 +613,12 @@ class ProductDetailActivity : AppBaseActivity(){
                 showProgress(true)
                 val returnString = data?.getSerializableExtra("AdvFormData")
                 // Set text view with string
-                adDetails = returnString as AdDetailsModel.AdDetails
+                advDetails = returnString as SingleAdvertisementDetails
                 myImages.clear()
                 fetchImageAsync(mProductModel!!.full.toString()) {
                     if (it != null) {
                         val personalizedBannerBitmap =
-                            drawTextToBitmap(this, it, adDetails!!)!!
+                            drawTextToBitmap(this, it, advDetails)!!
                         myImages.add(personalizedBannerBitmap)
                         val imageAdapter = PersonalizedProductImageAdapter(myImages)
                         productViewPager.adapter = null
@@ -648,7 +647,6 @@ class ProductDetailActivity : AppBaseActivity(){
                     if (it) {
                         showProgress(true)
                         this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                            dbReference,
                             storageReference!!,
                             myImages[0],
                             onSuccess = { bannerImageUrl ->
@@ -662,22 +660,18 @@ class ProductDetailActivity : AppBaseActivity(){
 
                                 //region When Create Ads
                                 if (mProductModel!!.name != "Custom Banner") {
-                                    if (adDetails != null) {
-                                        /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
-                                            adDetails,
-                                            adsGender,
-                                            adsAgeGroup,
-                                            startDate,
-                                            endDateVal.text.toString(),
-                                            startTimeVal.text.toString(),
-                                            endTimeVal.text.toString(),
-                                            *//*"₹" + rangeVal.textToString(),*//*
-                                            bannerImageUrl
-                                        )
-                                        saveBannerDetailsToDB(adsDetails)*/
-                                    } else {
-                                        snackBar("Please Create ads First")
-                                    }
+                                    /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                                        adDetails,
+                                        adsGender,
+                                        adsAgeGroup,
+                                        startDate,
+                                        endDateVal.text.toString(),
+                                        startTimeVal.text.toString(),
+                                        endTimeVal.text.toString(),
+                                        *//*"₹" + rangeVal.textToString(),*//*
+                                        bannerImageUrl
+                                    )
+                                    saveBannerDetailsToDB(adsDetails)*/
                                 } else {
                                     /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                         adDetails,
@@ -693,9 +687,9 @@ class ProductDetailActivity : AppBaseActivity(){
                                     val adsDetails=SingleAdvertisementDetails()
                                     adsDetails.advAgePref= ArrayList()
                                     adsDetails.advBannerUrl=bannerImageUrl
-                                    adsDetails.advBrandName= adDetails!!.adBrandName
-                                    adsDetails.advDescription=adDetails!!.adDesc
-                                    adsDetails.advTagline=adDetails!!.adTagline
+                                    adsDetails.advBrandName= advDetails.advBrandName
+                                    adsDetails.advDescription=advDetails.advDescription
+                                    adsDetails.advTagline=advDetails.advTagline
                                     adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
                                     adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
                                     var localUserDetails=getStoredUserDetails()
@@ -716,7 +710,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
         }
         catch (e:Exception){
-            snackBar(e.message.toString())
+            e.printStackTrace()
         }
     }
 
@@ -728,7 +722,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
     private fun saveBannerDetailsToDB(localUserDetails: UserDetailsModel) {
         dbReference.child(
-            getStoredUserDetails().userId
+            "UsersData/"+getStoredUserDetails().userId
         )
             .setValue(localUserDetails)
             .addOnSuccessListener {

@@ -18,7 +18,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.annotation.RequiresPermission
-import com.tragicbytes.midi.models.AdDetailsModel
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileNotFoundException
@@ -321,7 +321,7 @@ fun Uri.toBitmap(context: Context): Bitmap {
  * Draw text over bitmap
  * **/
 
-fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetailsModel.AdDetails): Bitmap? {
+fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, advDetails: SingleAdvertisementDetails): Bitmap? {
     return try {
         val resources: Resources = mContext.resources
         val scale: Float = resources.displayMetrics.density
@@ -372,7 +372,7 @@ fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetailsMode
         //children of parent linearlayout
         val iv = ImageView(mContext)
         val imageAsBytes=
-            Base64.decode(adDetails.logoUrl, Base64.DEFAULT)
+            Base64.decode(advDetails.advUserBannerLogo, Base64.DEFAULT)
         iv.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.size))
 
 
@@ -389,19 +389,19 @@ fun drawTextToBitmap(mContext: Context, bitmap: Bitmap, adDetails: AdDetailsMode
 
         //children of layout2 LinearLayout
         val tv1 = TextView(mContext)
-        tv1.text = adDetails.adName
+        tv1.text = advDetails.advName
         tv1.textSize=50F
         tv1.gravity=Gravity.CENTER
         val tv2 = TextView(mContext)
-        tv2.text = adDetails.adBrandName
+        tv2.text = advDetails.advBrandName
         tv2.textSize=40F
         tv2.gravity=Gravity.CENTER
         val tv3 = TextView(mContext)
-        tv3.text = adDetails.adTagline
+        tv3.text = advDetails.advTagline
         tv3.textSize=30F
         tv3.gravity=Gravity.CENTER
         val tv4 = TextView(mContext)
-        tv4.text = adDetails.adDesc
+        tv4.text = advDetails.advDescription
         tv4.textSize=20F
         tv4.gravity=Gravity.CENTER
 

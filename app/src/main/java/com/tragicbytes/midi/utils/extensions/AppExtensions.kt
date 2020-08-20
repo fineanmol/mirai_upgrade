@@ -1060,7 +1060,7 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
 }
 
 @SuppressLint("MissingPermission")
-fun Activity.saveLogoImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit){
+fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit){
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(file.path
     ) {
@@ -1134,22 +1134,15 @@ fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: Da
     }
 }
 
-fun Activity.addAdvertisement(adDetails: AdDetailsModel.AdDetails, onSuccess: (AdDetailsModel.AdDetails) -> Unit) {
-//    callApi(getRestApis(false).addUpdateAddress(adDetails), onApiSuccess = {
-//        fetchAndStoreAddressData()
-//        onSuccess(true)
-//    }, onApiError = {
-//        snackBarError(it); onSuccess(false)
-//    }, onNetworkError = {
-//        noInternetSnackBar(); onSuccess(false)
-//    })
+fun Activity.addAdvertisement(advDetails: SingleAdvertisementDetails, onSuccess: (SingleAdvertisementDetails) -> Unit) {
+
 
     try {
-        getSharedPrefInstance().setValue(ADV_DESC,adDetails.adDesc)
-        getSharedPrefInstance().setValue(ADV_BRAND,adDetails.adBrandName)
-        getSharedPrefInstance().setValue(ADV_NAME,adDetails.adName)
-        getSharedPrefInstance().setValue(ADV_TAG,adDetails.adTagline)
-        onSuccess(adDetails)
+        getSharedPrefInstance().setValue(ADV_DESC,advDetails.advDescription)
+        getSharedPrefInstance().setValue(ADV_BRAND,advDetails.advBrandName)
+        getSharedPrefInstance().setValue(ADV_NAME,advDetails.advName)
+        getSharedPrefInstance().setValue(ADV_TAG,advDetails.advTagline)
+        onSuccess(advDetails)
     }
     catch (e:java.lang.Exception){
         snackBar(e.localizedMessage)

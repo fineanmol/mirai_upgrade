@@ -12,7 +12,7 @@ import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.BuildConfig
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.models.AdDetailsModel
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
@@ -62,7 +62,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
             var defaultImageBitmap=BitmapFactory.decodeResource(applicationContext.resources,
                 R.drawable.ic_profile)
             ivAdsImage.setImageBitmap(defaultImageBitmap)
-            //encodedImage=encodeImage(defaultImageBitmap)
+            encodedImage=""
 
         }
         if (getSharedPrefInstance().getStringValue(ADV_NAME).isNotEmpty()) {
@@ -86,7 +86,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
                 val selectedImage = BitmapFactory.decodeStream(imageStream)
                 encodedImage = encodeImage(selectedImage)
                 if (encodedImage != null) {
-//                    getSharedPrefInstance().setValue(ADV_LOGO, encodedImage)
+                    getSharedPrefInstance().setValue(ADV_LOGO, encodedImage)
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
@@ -131,23 +131,30 @@ class AdvertisementFormActivity : AppBaseActivity() {
             edtAdDescription.text.clear()
             edtAdTagline.text.clear()
             edtAdBrandName.text.clear()
-           /* ivAdsImage.clearFindViewByIdCache()*/
+            var defaultImageBitmap=BitmapFactory.decodeResource(applicationContext.resources,
+                R.drawable.ic_profile)
+            ivAdsImage.setImageBitmap(defaultImageBitmap)
             snackBar("Clear Data Successful")
-            TODO("Remove Image from Above ivAdsImage variable")
 
         }
         btnSaveAdsData.onClick {
             showProgress(true)
             if (validate()) {
-                var adDetails = AdDetailsModel.AdDetails(
+                /*var adDetails = AdDetailsModel.AdDetails(
                     editAdsName.textToString(),
                     edtAdDescription.textToString(),
                     edtAdTagline.textToString(),
                     edtAdBrandName.textToString(),
                     encodedImage.toString()
-                )
+                )*/
+                var advDetails=SingleAdvertisementDetails()
+                advDetails.advBrandName=edtAdBrandName.textToString()
+                advDetails.advTagline=edtAdTagline.textToString()
+                advDetails.advDescription=edtAdDescription.textToString()
+                advDetails.advName=editAdsName.textToString()
+                advDetails.advUserBannerLogo=encodedImage.toString()
 
-                addAdvertisement(adDetails,
+                addAdvertisement(advDetails,
                     onSuccess = {
                         showProgress(false)
                         if (it != null) {
