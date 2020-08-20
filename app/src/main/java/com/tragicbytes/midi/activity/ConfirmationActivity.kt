@@ -50,6 +50,7 @@ class ConfirmationActivity : AppBaseActivity() {
 
         finalScreenAmount.text= totalScreenPrice.toString().currencyFormat("INR")
         walletBalance.text = userWalletAmount.currencyFormatNegative("INR")
+        finalpayAmount.text =totalScreenPrice.toString().currencyFormat("INR")
 
         finalAmountPrice = if(totalScreenPrice > userWalletAmount.toInt())
             totalScreenPrice - userWalletAmount.toInt()
