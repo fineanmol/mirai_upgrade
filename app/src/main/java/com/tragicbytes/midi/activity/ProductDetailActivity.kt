@@ -14,7 +14,8 @@ import android.util.Base64
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.razorpay.Checkout
@@ -24,7 +25,9 @@ import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.adapter.PersonalizedProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
-import com.tragicbytes.midi.models.*
+import com.tragicbytes.midi.models.ProductDataNew
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
+import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
@@ -681,7 +684,7 @@ class ProductDetailActivity : AppBaseActivity(){
         localUserDetails: UserDetailsModel,
         adsDetails: SingleAdvertisementDetails
     ) {
-        dbReference.child(
+        /*dbReference.child(
             "UsersData/"+getStoredUserDetails().userId
         )
             .setValue(localUserDetails)
@@ -696,7 +699,12 @@ class ProductDetailActivity : AppBaseActivity(){
                 snackBar(it.message.toString())
                 showProgress(false)
 
-            }
+            }*/
+        snackBar("Ads Saved")
+        showProgress(false)
+        launchActivity<LocationBasedScreensActivity> {
+            putExtra("ongoing_adv", adsDetails)
+        }
     }
 
     private fun generateString(): String? {

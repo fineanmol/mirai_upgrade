@@ -1,8 +1,10 @@
 package com.tragicbytes.midi.activity
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
@@ -13,8 +15,6 @@ import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
-import java.text.NumberFormat
-import java.util.*
 
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
@@ -28,10 +28,12 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         title = getString(R.string.action_wallet)
         dbReference = FirebaseDatabase.getInstance().reference
 
-        walletAmount.text = getStoredUserDetails().userWalletDetails.totalAmount.currencyFormat("INR")
-
+        if (intent?.extras?.get("pending_amount") != null) {
+            addAmount.setText(intent?.extras?.get("pending_amount").toString())
+        }
+        walletAmount.text =
+            getStoredUserDetails().userWalletDetails.totalAmount.currencyFormat("INR")
         loadActivity()
-
     }
 
     private fun loadActivity() {
@@ -56,10 +58,16 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         refreshWalletAmount.onClick {
             showProgress(true)
-            updateWalletAmount()
+            updateWalletAmount(dbReference, onSuccess = {
+                walletAmount.text =
+                    getString(R.string.rs) + " " + it
+                showProgress(false)
+                snackBar("Wallet Refresh Successfully")
+            }, onFailed = {
+                snackBar("Error Occured")
+                showProgress(false)
+            })
         }
-
-
     }
 
 
@@ -108,7 +116,25 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         paymentData: PaymentData?
     ) {
         if (paymentData != null) {
-            updateTransactionDetails(paymentData, 0)
+            var newTransactionsDetails = TransactionDetails()
+            newTransactionsDetails.transactionStatus = 0.toString()
+            newTransactionsDetails.email = paymentData.userEmail
+            newTransactionsDetails.transactionId = paymentData.paymentId
+            newTransactionsDetails.transactionAmount = addAmount.textToString()
+            newTransactionsDetails.phone = paymentData.userContact
+            updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
+                updateWalletAmount(dbReference, onSuccess = {
+                    walletAmount.text =
+                        getString(R.string.rs) + " " + it
+                    showProgress(false)
+                    snackBar("Wallet Refresh Successfully")
+                }, onFailed = {
+                    snackBar("Error Occured")
+                    showProgress(false)
+                })
+            }, onFailed = {
+                snackBar("Unable to process Transaction")
+            })
         }
         addAmount.isEnabled=true
         addAmount.isClickable=true
@@ -121,78 +147,36 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         showProgress(false)
 
         if(paymentData != null) {
-            updateTransactionDetails(paymentData, 1)
-            updateWalletAmount()
+
+            var newTransactionsDetails = TransactionDetails()
+            newTransactionsDetails.transactionStatus = 1.toString()
+            newTransactionsDetails.email = paymentData.userEmail
+            newTransactionsDetails.transactionId = paymentData.paymentId
+            newTransactionsDetails.transactionAmount = addAmount.textToString()
+            newTransactionsDetails.phone = paymentData.userContact
+
+            updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
+                updateWalletAmount(dbReference, onSuccess = {
+                    walletAmount.text =
+                        getString(R.string.rs) + " " + it
+                    showProgress(false)
+                    snackBar("Wallet Refresh Successfully")
+                    if (intent?.extras?.get("pending_amount") != null) {
+                        val intent = Intent()
+                        setResult(Activity.RESULT_OK, intent)
+                        finish()
+                    }
+                }, onFailed = {
+                    snackBar("Error Occured")
+                    showProgress(false)
+                })
+            }, onFailed = {
+                snackBar("Unable to process Transaction")
+            })
+
         }
         addAmount.isEnabled=true
         addAmount.isClickable=true
-        showProgress(false)
-
-    }
-
-    private fun updateTransactionDetails(paymentData: PaymentData, status: Int) {
-        var newTransactionsDetails=TransactionDetails()
-        newTransactionsDetails.transactionStatus= status.toString()
-        newTransactionsDetails.email=paymentData.userEmail
-        newTransactionsDetails.transactionId=paymentData.paymentId
-        newTransactionsDetails.transactionAmount=addAmount.textToString()
-        newTransactionsDetails.phone=paymentData.userContact
-
-        var localStoredUserDetails=getStoredUserDetails()
-        var transactionsList=localStoredUserDetails.userWalletDetails.transactionsDetails
-        transactionsList.add(newTransactionsDetails)
-        localStoredUserDetails.userWalletDetails.transactionsDetails=transactionsList
-        updateStoredUserDetails(localStoredUserDetails)
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails").setValue(
-            transactionsList
-        )
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate").setValue(
-            ServerValue.TIMESTAMP
-        )
-
-    }
-    
-
-    private fun updateWalletAmount() {
-        try {
-            showProgress(true)
-            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-                .addValueEventListener(
-                    object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                var sum = 0
-                                dataSnapshot.children.forEach {
-                                    var transactionsDetails =
-                                        it.getValue(TransactionDetails::class.java)!!
-                                    if (transactionsDetails.transactionStatus == "1") {
-                                        sum += transactionsDetails.transactionAmount.toInt()
-                                    }
-                                }
-                                dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
-                                    .setValue(sum.toString()).addOnCompleteListener {
-                                        var localUserDetails = getStoredUserDetails()
-                                        localUserDetails.userWalletDetails.totalAmount =
-                                            sum.toString()
-                                        updateStoredUserDetails(localUserDetails)
-                                        walletAmount.text = sum.toString().currencyFormat("INR")
-                                        showProgress(false)
-                                        snackBar("Wallet Refresh Successfully")
-                                    }
-                            }
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            snackBar("Error Occured")
-                            showProgress(false)
-                        }
-                    }
-
-                )
-        } catch (e: Exception) {
-            snackBarError("Error: " + e.message)
-            showProgress(false)
-        }
         showProgress(false)
     }
 }

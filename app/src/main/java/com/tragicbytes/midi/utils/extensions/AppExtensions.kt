@@ -44,8 +44,7 @@ import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.google.gson.Gson
@@ -57,6 +56,7 @@ import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.*
 import com.tragicbytes.midi.models.*
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_DESC
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_LOGO
@@ -104,7 +104,6 @@ import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
 import kotlinx.android.synthetic.main.item_product_new.view.tvOriginalPrice
 import kotlinx.android.synthetic.main.item_screen.view.*
-import kotlinx.android.synthetic.main.item_screen.view.screenTitle
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
 import java.io.File
@@ -119,7 +118,7 @@ fun getThemeColor(): String = getSharedPrefInstance().getStringValue(THEME_COLOR
 fun Context.getUserFullName(): String {
     return when {
         isLoggedIn() -> (getSharedPrefInstance().getStringValue(USER_FIRST_NAME) + " " + getSharedPrefInstance().getStringValue(
-                USER_LAST_NAME
+            USER_LAST_NAME
         )).toCamelCase()
         else -> getString(R.string.text_guest_user)
     }
@@ -127,31 +126,141 @@ fun Context.getUserFullName(): String {
 
 fun getUserName(): String = getSharedPrefInstance().getStringValue(USER_USERNAME)
 fun getUserfullName(): String = getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)
-fun getFirstName(): String = getStoredUserDetails().userPersonalDetails!!.firstName
-fun getLastName(): String = getStoredUserDetails().userPersonalDetails!!.lastName
+fun getFirstName(): String = getStoredUserDetails().userPersonalDetails.firstName
+fun getLastName(): String = getStoredUserDetails().userPersonalDetails.lastName
 fun getUserProfile(): String = getSharedPrefInstance().getStringValue(USER_PROFILE)
-fun getEmail(): String = getStoredUserDetails().userPersonalDetails!!.email
-fun getDob(): String = getStoredUserDetails().userPersonalDetails!!.dob
-fun getOrg(): String = getStoredUserDetails().userPersonalDetails!!.company
-fun getMobile(): String = getStoredUserDetails().userPersonalDetails!!.phone
+fun getEmail(): String = getStoredUserDetails().userPersonalDetails.email
+fun getDob(): String = getStoredUserDetails().userPersonalDetails.dob
+fun getOrg(): String = getStoredUserDetails().userPersonalDetails.company
+fun getMobile(): String = getStoredUserDetails().userPersonalDetails.phone
 fun getProfileUrl(): String = getSharedPrefInstance().getStringValue(USER_PROFILE_URL)
 fun getApiToken(): String = getSharedPrefInstance().getStringValue(USER_TOKEN)
 fun getCartCount(): String = getSharedPrefInstance().getIntValue(KEY_CART_COUNT, 0).toString()
 
-fun getStoredUserDetails():UserDetailsModel{
-    return Gson().
-        fromJson(
-            getSharedPrefInstance().getStringValue(USER_DETAILS_OBJECT),
-            UserDetailsModel::class.java)
+fun fetchUserData(
+    dbReference: DatabaseReference,
+    onSuccess: (String) -> Unit,
+    onFailed: (String) -> Unit
+) {
+    dbReference.child("UsersData/" + getStoredUserDetails().userId)
+        .addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // Get Post object and use the values to update the UI
+                if (dataSnapshot.exists()) {
+                    val dbContent =
+                        dataSnapshot.getValue(UserDetailsModel::class.java)
+                    if (dbContent != null) {
+                        getSharedPrefInstance().setValue(
+                            Constants.SharedPref.USER_DETAILS_OBJECT,
+                            Gson().toJson(dbContent)
+                        )
+                        onSuccess("UserDetails Updated")
+                    }
+
+
+                } else {
+                    onFailed("Erorr occurred while fetching details!")
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                onFailed("Cancelled while fetching details!")
+            }
+        })
 }
-fun updateStoredUserDetails(userDetailsModel:UserDetailsModel){
+
+fun getStoredUserDetails(): UserDetailsModel {
+    return Gson().fromJson(
+        getSharedPrefInstance().getStringValue(USER_DETAILS_OBJECT),
+        UserDetailsModel::class.java
+    )
+}
+
+fun updateStoredUserDetails(userDetailsModel: UserDetailsModel) {
     getSharedPrefInstance().setValue(
         USER_DETAILS_OBJECT,
         Gson().toJson(userDetailsModel)
     )
 }
 
+fun updateTransactionDetails(
+    newTransactionsDetails: TransactionDetails,
+    dbReference: DatabaseReference,
+    onSuccess: () -> Unit,
+    onFailed: () -> Unit
+) {
 
+    var localStoredUserDetails = getStoredUserDetails()
+    var transactionsList = localStoredUserDetails.userWalletDetails.transactionsDetails
+    transactionsList.add(newTransactionsDetails)
+    localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
+    updateStoredUserDetails(localStoredUserDetails)
+    dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
+        .setValue(
+            transactionsList
+        ).addOnSuccessListener {
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
+            .setValue(
+                ServerValue.TIMESTAMP
+            ).addOnSuccessListener {
+            /*fetchUserData(dbReference,onSuccess = {
+                onSuccess()
+            },
+            onFailed = {
+                onFailed()
+            })*/
+            onSuccess()
+        }.addOnFailureListener {
+            onFailed()
+        }
+    }.addOnFailureListener {
+        onFailed()
+    }
+
+
+}
+
+
+fun updateWalletAmount(
+    dbReference: DatabaseReference,
+    onSuccess: (String) -> Unit,
+    onFailed: (String) -> Unit
+) {
+    try {
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
+            .addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            var sum = 0
+                            dataSnapshot.children.forEach {
+                                var transactionsDetails =
+                                    it.getValue(TransactionDetails::class.java)!!
+                                if (transactionsDetails.transactionStatus == "1") {
+                                    sum += transactionsDetails.transactionAmount.toInt()
+                                }
+                            }
+                            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
+                                .setValue(sum.toString()).addOnCompleteListener {
+                                    var localUserDetails = getStoredUserDetails()
+                                    localUserDetails.userWalletDetails.totalAmount =
+                                        sum.toString()
+                                    updateStoredUserDetails(localUserDetails)
+                                    onSuccess(sum.toString())
+                                }
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        onFailed("")
+                    }
+                }
+
+            )
+    } catch (e: Exception) {
+        onFailed("Error: " + e.message)
+    }
+}
 
 /**
  * Add shared preference related to user session here
@@ -802,13 +911,13 @@ fun setScreenItem(
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.VISIBLE
             val result = rotate(180F,context)!!
-            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null);
+            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null)
             view.show.text="Show Less"
         } else {
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.GONE
             val result = rotate(0F,context)!!
-            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null);
+            view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null)
             view.show.text="Show More"
 
         }
@@ -1092,10 +1201,10 @@ fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: Storage
                 getSharedPrefInstance().setValue(ADS_BANNER_URL,downloadUri)
                 onSuccess(downloadUri.toString())
             } else {
-                snackBar(task.exception!!.localizedMessage);
+                snackBar(task.exception!!.localizedMessage)
             }
         }.addOnFailureListener {
-            snackBar(it.localizedMessage);
+            snackBar(it.localizedMessage)
         }
     }
 }
@@ -1132,15 +1241,17 @@ fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: Da
         })?.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("profileExtras/User_Profile").setValue(downloadUri.toString()).addOnCompleteListener {
-                    if(task.isSuccessful){
-                        onSuccess(true)
+                dbReference.child(getSharedPrefInstance().getStringValue(USER_ID))
+                    .child("profileExtras/User_Profile").setValue(downloadUri.toString())
+                    .addOnCompleteListener {
+                        if (task.isSuccessful) {
+                            onSuccess(true)
+                        }
                     }
-                }
             } else {
                 snackBar(task.exception!!.localizedMessage);onSuccess(false)
             }
-        }?.addOnFailureListener {
+        }.addOnFailureListener {
             snackBar(it.localizedMessage);onSuccess(false)
         }
     }
@@ -1183,7 +1294,7 @@ fun AppBaseActivity.updateEmail(
                 if(it.isSuccessful){
                     showProgress(false)
                     var localUserdata=getStoredUserDetails()
-                    localUserdata.userPersonalDetails!!.email=user.email.toString()
+                    localUserdata.userPersonalDetails.email = user.email.toString()
                     updateStoredUserDetails(localUserdata)
                     onApiSuccess("Email Updated!!!")
                     sendProfileUpdateBroadcast()
@@ -1214,12 +1325,15 @@ fun AppBaseActivity.updateName(
     user.updateProfile(profileUpdates).addOnCompleteListener { xit ->
         if(xit.isSuccessful){
             dbReference.child("UsersData/${user.uid}/userPersonalDetails/firstName").setValue(user.displayName?.split(" ")?.first()!!).addOnCompleteListener {
-                if(it.isSuccessful){
-                    dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName").setValue(user.displayName?.split(" ")?.last()!!)
+                if(it.isSuccessful) {
+                    dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName")
+                        .setValue(user.displayName?.split(" ")?.last()!!)
                     showProgress(false)
-                    var localUserData=getStoredUserDetails()
-                    localUserData.userPersonalDetails!!.firstName=user.displayName?.split(" ")?.first()!!
-                    localUserData.userPersonalDetails!!.lastName=user.displayName?.split(" ")?.last()!!
+                    var localUserData = getStoredUserDetails()
+                    localUserData.userPersonalDetails.firstName =
+                        user.displayName?.split(" ")?.first()!!
+                    localUserData.userPersonalDetails.lastName =
+                        user.displayName?.split(" ")?.last()!!
                     updateStoredUserDetails(localUserData)
                     onApiSuccess("Name Updated!!!")
                     sendProfileUpdateBroadcast()
