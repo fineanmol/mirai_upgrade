@@ -6,7 +6,6 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
-import com.google.gson.Gson
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.WalletActivity
@@ -16,7 +15,6 @@ import com.tragicbytes.midi.base.BaseRecyclerAdapter
 import com.tragicbytes.midi.databinding.ItemCategoryBinding
 import com.tragicbytes.midi.fragments.BaseFragment
 import com.tragicbytes.midi.models.*
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.SharedPref.CONTACT
 import com.tragicbytes.midi.utils.Constants.SharedPref.COPYRIGHT_TEXT
@@ -61,7 +59,14 @@ class HomeFragment : BaseFragment() {
         dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
-        fetchUserData(dbReference)
+        fetchUserData(dbReference, onSuccess = {
+            snackBar("it")
+            hideProgress()
+        },
+            onFailed = {
+                snackBar(it)
+                hideProgress()
+            })
 
         rcvNewestProduct.setVerticalLayout()
         rcvRecentSearch.setHorizontalLayout()
@@ -89,45 +94,13 @@ class HomeFragment : BaseFragment() {
 
     }
 
-    private fun fetchUserData(dbReference: DatabaseReference) {
-        dbReference.child("UsersData/"+ getStoredUserDetails().userId)
-            .addValueEventListener(object :ValueEventListener{
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    // Get Post object and use the values to update the UI
-                    if (dataSnapshot.exists()) {
-                        val dbContent =
-                            dataSnapshot.getValue(UserDetailsModel::class.java)
-                        if (dbContent != null) {
-                            getSharedPrefInstance().setValue(
-                                Constants.SharedPref.USER_DETAILS_OBJECT,
-                                Gson().toJson(dbContent)
-                            )
-                            snackBar("userDataUpdated!")
-                        }
-
-                        hideProgress()
-
-                    } else {
-                        hideProgress()
-                        snackBar("Erorr occurred while fetching details!")
-                    }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                    hideProgress()
-                    snackBar("Cancelled while fetching details!")
-
-                }
-            })
-    }
-
 
     //region APIs
     private fun loadApis() {
         if (isNetworkAvailable()) {
-            listAllProducts();
+            listAllProducts()
 //            listAllProductCategories();
-            getSliders();
+            getSliders()
 //            listFeaturedProducts()
         } else {
             getSliders()
