@@ -279,7 +279,7 @@ class ProductDetailActivity : AppBaseActivity(){
         }
 
         bannerUpload.onClick {
-            showProgress(true)
+
             if (validateAllValue()) {
                 updateDbValues()
             }
