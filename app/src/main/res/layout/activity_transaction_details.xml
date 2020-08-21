@@ -66,13 +66,13 @@
             </RelativeLayout>
 
             <com.tragicbytes.midi.utils.CircleImageView
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"
+                android:layout_width="@dimen/_46sdp"
+                android:layout_height="@dimen/_46sdp"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="right"
-                android:layout_marginTop="-30dp"
+                android:layout_marginTop="-35dp"
                 android:layout_marginRight="@dimen/_30sdp"
-                android:src="@drawable/gr" />
+                android:src="@drawable/rs_theme_symbol" />
             <!--<com.airbnb.lottie.LottieAnimationView
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:text="7827327604@paytm"
+                android:text="test@gmail.com"
                 android:textAppearance="@style/FontMedium"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_size_medium" />
