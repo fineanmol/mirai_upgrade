@@ -93,7 +93,7 @@ class ConfirmationActivity : AppBaseActivity() {
         dbReference: DatabaseReference
     ) {
         var newTransactionsDetails = TransactionDetails()
-        newTransactionsDetails.transactionStatus = 1.toString()
+        newTransactionsDetails.transactionStatus = 2.toString()
         newTransactionsDetails.email = getStoredUserDetails().userPersonalDetails.email
         newTransactionsDetails.transactionId = "ORDER001"
         newTransactionsDetails.transactionAmount = (-totalScreenPrice).toString()
@@ -105,10 +105,10 @@ class ConfirmationActivity : AppBaseActivity() {
                 var advList = localUserData.userAdvertisementDetails.singleAdvertisementDetails
                 advList.add(onGoingAdv)
                 localUserData.userAdvertisementDetails.singleAdvertisementDetails = advList
-                snackBar("Payment Processed.Processing Advertisment")
+                snackBar("Payment Processed. Processing Advertisement")
                 dbReference.child("UsersData/${getStoredUserDetails().userId}")
                     .setValue(localUserData).addOnSuccessListener {
-                        snackBar("Congrats!Your Advertisment Submitted for Approval.")
+                        snackBar("Congrats! Your Advertisement Submitted for Approval.")
                     }
             }, onFailed = {
                 snackBar("Error Occured")

@@ -90,13 +90,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/spacing_middle"
-                android:text="From UPI ID"
+                android:text="From"
                 android:textAppearance="@style/FontMedium"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_size_small" />
 
             <TextView
-                android:id="@+id/txtDisplayName"
+                android:id="@+id/transactionEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="5dp"
-                    android:layout_marginEnd="@dimen/_40sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
                     android:text="\u20B9 loading.."
                     android:textAppearance="@style/FontBold"
                     android:textColor="@color/green"

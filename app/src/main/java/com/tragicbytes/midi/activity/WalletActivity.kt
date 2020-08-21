@@ -60,7 +60,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             showProgress(true)
             updateWalletAmount(dbReference, onSuccess = {
                 walletAmount.text =
-                    getString(R.string.rs) + " " + it
+                    it.currencyFormat("INR")
                 showProgress(false)
                 snackBar("Wallet Refresh Successfully")
             }, onFailed = {
@@ -116,7 +116,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         paymentData: PaymentData?
     ) {
         if (paymentData != null) {
-            var newTransactionsDetails = TransactionDetails()
+            val newTransactionsDetails = TransactionDetails()
             newTransactionsDetails.transactionStatus = 0.toString()
             newTransactionsDetails.email = paymentData.userEmail
             newTransactionsDetails.transactionId = paymentData.paymentId
@@ -125,7 +125,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {
                     walletAmount.text =
-                        getString(R.string.rs) + " " + it
+                         it.currencyFormat("INR")
                     showProgress(false)
                     snackBar("Wallet Refresh Successfully")
                 }, onFailed = {
@@ -148,7 +148,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         if(paymentData != null) {
 
-            var newTransactionsDetails = TransactionDetails()
+            val newTransactionsDetails = TransactionDetails()
             newTransactionsDetails.transactionStatus = 1.toString()
             newTransactionsDetails.email = paymentData.userEmail
             newTransactionsDetails.transactionId = paymentData.paymentId
@@ -158,7 +158,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {
                     walletAmount.text =
-                        getString(R.string.rs) + " " + it
+                      it.currencyFormat("INR")
                     showProgress(false)
                     snackBar("Wallet Refresh Successfully")
                     if (intent?.extras?.get("pending_amount") != null) {

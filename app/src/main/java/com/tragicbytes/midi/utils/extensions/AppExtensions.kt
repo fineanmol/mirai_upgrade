@@ -119,9 +119,8 @@ fun getDefaultCurrency(): String = getSharedPrefInstance().getStringValue(DEFAUL
 fun getThemeColor(): String = getSharedPrefInstance().getStringValue(THEME_COLOR)
 fun Context.getUserFullName(): String {
     return when {
-        isLoggedIn() -> (getSharedPrefInstance().getStringValue(USER_FIRST_NAME) + " " + getSharedPrefInstance().getStringValue(
-            USER_LAST_NAME
-        )).toCamelCase()
+        isLoggedIn() -> getStoredUserDetails().userPersonalDetails.firstName + " " + getStoredUserDetails().userPersonalDetails.lastName
+
         else -> getString(R.string.text_guest_user)
     }
 }
@@ -238,13 +237,13 @@ fun updateWalletAmount(
                             dataSnapshot.children.forEach {
                                 var transactionsDetails =
                                     it.getValue(TransactionDetails::class.java)!!
-                                if (transactionsDetails.transactionStatus == "1") {
+                                if (transactionsDetails.transactionStatus == "1" || transactionsDetails.transactionStatus == "2") {
                                     sum += transactionsDetails.transactionAmount.toInt()
                                 }
                             }
                             dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/totalAmount")
                                 .setValue(sum.toString()).addOnCompleteListener {
-                                    var localUserDetails = getStoredUserDetails()
+                                    val localUserDetails = getStoredUserDetails()
                                     localUserDetails.userWalletDetails.totalAmount =
                                         sum.toString()
                                     updateStoredUserDetails(localUserDetails)
@@ -1093,6 +1092,18 @@ fun setWalletItem(
 
         }
     }
+    else if(item.transactionStatus=="2"){
+        if (item.transactionAmount.isNotEmpty()) {
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.red))
+            view.tAmount.text ="- ₹"+ item.transactionAmount.split("-").last().toString()
+            view.tIcon.setBackgroundResource(R.drawable.ic_star_black)
+            view.tTransactionText.text= "Paid to Advertisement"
+
+        } else {
+            view.tAmount.text ="+ ₹"+ item.transactionAmount
+
+        }
+    }
     view.tDate.text = getShortDate(item.transactionDate)
 
 }
@@ -1124,9 +1135,7 @@ fun setSelectedScreenItem(
     view.tTimeDistribution.text=item.screenActiveTime
     view.tGenderRatio.text=item.screenGenderRatio
     view.tAgeDistributtion.text =item.screenAgeGroups
-    view.tScreenPrice.text = "₹"+" "+ item.screenPrice
-
-
+    view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")
 
 }
 
