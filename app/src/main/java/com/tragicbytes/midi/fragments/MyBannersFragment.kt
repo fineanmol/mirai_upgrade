@@ -10,6 +10,8 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.AdDetailsModel
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
+import com.tragicbytes.midi.models.UserAdvertisementDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -17,8 +19,9 @@ import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 
 class MyBannersFragment : BaseFragment() {
 
+
     var onNetworkRetry: (() -> Unit)? = null
-    private var mAdsCompleteDetailsAdapter: RecyclerViewAdapter<AdDetailsModel.AdsCompleteDetails>? = null
+    private var mAdsCompleteDetailsAdapter: RecyclerViewAdapter<SingleAdvertisementDetails>? = null
     private lateinit var dbReference: DatabaseReference
 
 
@@ -43,10 +46,7 @@ class MyBannersFragment : BaseFragment() {
                 (activity as DashBoardActivity).loadHomeFragment()
             }
         }
-
         loadApis()
-
-
     }
 
     //region APIs
@@ -59,24 +59,13 @@ class MyBannersFragment : BaseFragment() {
     }
 
     private fun loadImages(){
-
-        dbReference.child(
-            getSharedPrefInstance().getStringValue(
-                Constants.SharedPref.USER_ID
-            )
-        )
-            .child("AdvDetails")
+        dbReference.child("UsersData/${getStoredUserDetails().userId}/userAdvertisementDetails")
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
-                            var myBannerList=ArrayList<AdDetailsModel.AdsCompleteDetails>()
-                            dataSnapshot.children.forEach {
-                                val bannerData =
-                                    it.getValue(AdDetailsModel.AdsCompleteDetails::class.java)!!
-                                myBannerList.add(bannerData)
-                            }
-                            mAdsCompleteDetailsAdapter?.addItems(myBannerList)
+                            var myBannerList=dataSnapshot.getValue(UserAdvertisementDetails()::class.java)!!
+                            mAdsCompleteDetailsAdapter?.addItems(myBannerList.singleAdvertisementDetails)
                             publishedBannersList.visibility=View.VISIBLE
                             llNoItems.visibility=View.GONE
                         }
@@ -99,8 +88,14 @@ class MyBannersFragment : BaseFragment() {
     private fun setupAdsCompleteDetailsAdapter() {
         mAdsCompleteDetailsAdapter = RecyclerViewAdapter(R.layout.item_banner, onBind = { view, item, position -> setBannerData(view, item,position) })
 
+        publishedBannersList.apply {
+            adapter = mAdsCompleteDetailsAdapter
+            rvItemAnimation()
+        }
         publishedBannersList.adapter = mAdsCompleteDetailsAdapter
 
-
+        mAdsCompleteDetailsAdapter?.onItemClick = { pos, view, item ->
+            activity?.showMyBannerDetails(item)
+        }
     }
 }

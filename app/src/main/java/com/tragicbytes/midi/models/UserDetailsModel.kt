@@ -22,7 +22,7 @@ class UserPersonalDetails {
     var userAccountStatus: Boolean = true
 }
 
-class UserAdvertisementDetails {
+class UserAdvertisementDetails:Serializable {
     var singleAdvertisementDetails: ArrayList<SingleAdvertisementDetails> = ArrayList()
 }
 

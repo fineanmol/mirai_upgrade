@@ -6,16 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.models.SingleAdvertisementDetails
+import com.tragicbytes.midi.utils.Constants
 
 
+class MyBannerDetails : BaseFragment() {
 
-class MyBannerDetails : Fragment() {
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var singleAdvertisementDetails=SingleAdvertisementDetails()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,5 +22,14 @@ class MyBannerDetails : Fragment() {
         return inflater.inflate(R.layout.fragment_my_banner_details, container, false)
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
+
+
+
+    }
 
 }

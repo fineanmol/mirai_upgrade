@@ -57,6 +57,7 @@ import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.*
+import com.tragicbytes.midi.fragments.MyBannerDetails
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
@@ -460,6 +461,12 @@ fun Activity.showTransactionDetail(model: TransactionDetails) {
         putExtra(DATA, model)
     }
 }
+fun Activity.showMyBannerDetails(model: SingleAdvertisementDetails) {
+    launchActivity<MyBannerDetailsActivity> {
+        putExtra(DATA, model)
+    }
+}
+
 
 fun Activity.showBannerDetail(model: AdDetailsModel.AdsCompleteDetails) {
     launchActivity<ProductDetailActivity> {
@@ -1042,6 +1049,11 @@ fun setAgeDistributionChartData(view: View, item: ScreenDataModel, context: Loca
 }
 
 
+fun setOrderedScreenData(view: View, item: ScreenDataModel) {
+
+}
+
+
 fun setProductItem(view: View, item: ProductDataNew) {
     view.tvProductName.text = item.name
     if (item.sale_price!!.isNotEmpty()) {
@@ -1134,16 +1146,16 @@ fun setSelectedScreenItem(
 
 fun setBannerData(
     view: View,
-    item: AdDetailsModel.AdsCompleteDetails,
+    item: SingleAdvertisementDetails,
     position: Int
 ) {
-    if (item.bannerImageUrl != null){
-        fetchImageAsync(item.bannerImageUrl,
+    if (item.advBannerUrl != null){
+        fetchImageAsync(item.advBannerUrl,
         onComplete = {
             view.ivBannerPrev.setImageBitmap(it)
         })
         view.tvBannerId.text="Banner ${position+1}"
-        view.tvBannerEndDate.text="Expires On ${item.endDate}"
+        view.tvBannerEndDate.text="Expires On ${getShortDate(item.endOn.toLong())}"
     }
 }
 fun Activity.fetchAndStoreAddressData() {

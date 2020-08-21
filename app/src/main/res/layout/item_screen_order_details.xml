@@ -5,16 +5,14 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/background_color"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/adView"
+        android:layout_below="@+id/appBar"
         android:clipToPadding="false"
-        android:fillViewport="true"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/_40sdp">
+        android:paddingBottom="@dimen/spacing_standard_new">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -24,7 +22,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xxlarge"
                 android:orientation="vertical">
                 <TextView
                     android:layout_width="wrap_content"
