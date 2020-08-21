@@ -11,6 +11,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
@@ -33,6 +34,8 @@ import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_product_detail.*
+import kotlinx.android.synthetic.main.activity_product_detail.dots
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import java.text.DateFormat
@@ -130,7 +133,6 @@ class ProductDetailActivity : AppBaseActivity(){
         } catch (e: Exception) {
             e.message?.let { snackBarError(it) }
         }*/
-
     }
 
 
@@ -658,6 +660,15 @@ class ProductDetailActivity : AppBaseActivity(){
                                     localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
                                     saveBannerDetailsToDB(localUserDetails,adsDetails)
                                 }
+                            },onUploading = {
+                                if(it>5F){
+                                    determinate.resetIcon()
+                                    determinate.visibility=View.VISIBLE
+                                    determinate.setProgress(5F)
+                                }
+                                determinate.showShadow(true)
+                                determinate.showProgress(true)
+                                determinate.setProgress(it)
                             }
                         )
                     } else {
