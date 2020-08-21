@@ -494,4 +494,29 @@
         <item name="android:textSize">@dimen/font_size_medium</item>
     </style>
 
+    <!-- Alert Dialog -->
+    <style name="AlertDialog_Background" parent="@style/ThemeOverlay.MaterialComponents.MaterialAlertDialog">
+        <!-- Background Color-->
+        <item name="android:background">@color/white</item>
+        <!-- Text Color for title and message -->
+        <item name="colorOnSurface">@color/red</item>
+        <!-- Style for positive button -->
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <!-- Style for negative button -->
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="@style/Widget.MaterialComponents.Button">
+        <!-- text color for the button -->
+        <item name="android:textColor">@color/black</item>
+        <!-- Background tint for the button -->
+        <item name="backgroundTint">@color/red</item>
+    </style>
+    <style name="NegativeButtonStyle" parent="@style/Widget.MaterialComponents.Button">
+        <!-- text color for the button -->
+        <item name="android:textColor">@color/blacklight</item>
+        <!-- Background tint for the button -->
+        <item name="backgroundTint">@color/track_yellow</item>
+    </style>
+
 </resources>

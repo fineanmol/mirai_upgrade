@@ -15,6 +15,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -279,10 +280,20 @@ class ProductDetailActivity : AppBaseActivity(){
         }
 
         bannerUpload.onClick {
+            val dialog = getAlertDialog(
+                "While your Banner is processing, Please continue with next details","Information",
+                onPositiveClick = { dialog, i ->
 
-            if (validateAllValue()) {
-                updateDbValues()
-            }
+                    if (validateAllValue()) {
+                        updateDbValues()
+                    }
+                },
+                onNegativeClick = { dialog, i ->
+                    dialog.dismiss()
+                })
+            dialog.show()
+
+
 
         }
 

@@ -3,6 +3,8 @@ package com.tragicbytes.midi.utils.extensions
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog.THEME_DEVICE_DEFAULT_LIGHT
+import android.app.AlertDialog.THEME_HOLO_LIGHT
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -400,12 +402,14 @@ fun Activity.getAlertDialog(aMsgText: String, aTitleText: String = getString(R.s
     val builder = AlertDialog.Builder(this)
     builder.setTitle(aTitleText)
     builder.setMessage(aMsgText)
+
     builder.setPositiveButton(aPositiveText) { dialog, which ->
         onPositiveClick(dialog, which)
     }
     builder.setNegativeButton(aNegativeText) { dialog, which ->
         onNegativeClick(dialog, which)
     }
+    AlertDialog.Builder(this, R.style.AlertDialog_Background)
     return builder.create()
 }
 
