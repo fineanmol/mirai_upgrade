@@ -49,24 +49,35 @@ class TransactionDetailsActivity : AppBaseActivity() {
 
     private fun setDetails(mTransactionDetails: TransactionDetails) {
         transactionId.text=mTransactionDetails.transactionId
-
         transactionDate.text= getShortDate(mTransactionDetails.transactionDate)
         transactionTime.text=getShortTime(mTransactionDetails.transactionDate)
-        if(mTransactionDetails.transactionStatus=="1") {
-            transactionRemark.text="Money Added to Wallet"
-            transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
-            transactionIcon.isVisible()
+        transactionEmail.text = mTransactionDetails.email
 
+        when (mTransactionDetails.transactionStatus) {
+            "1" -> {
+                transactionRemark.text="Money Added to Wallet"
+                transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
+                transactionIcon.isVisible()
+
+            }
+            "0" -> {
+                transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
+                transactionRemark.text="Add Money Failed"
+                transactionAmount.setTextColor(resources.getColor(R.color.red))
+                transactionRemark.setTextColor(resources.getColor(R.color.red))
+                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.red))
+                transactionIcon.isGone()
+            }
+            "2" -> {
+                transactionAmount.text= mTransactionDetails.transactionAmount.currencyFormat("INR")
+                transactionRemark.text="Money Paid to Advertisement"
+                transactionAmount.setTextColor(resources.getColor(R.color.green))
+                transactionRemark.setTextColor(resources.getColor(R.color.green))
+                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green))
+                transactionIcon.isGone()
+            }
+            else -> transactionRemark.text=""
         }
-        else if(mTransactionDetails.transactionStatus=="0") {
-            transactionAmount.text=mTransactionDetails.transactionAmount.currencyFormat("INR")
-            transactionRemark.text="Add Money Failed"
-            transactionAmount.setTextColor(resources.getColor(R.color.red))
-            transactionRemark.setTextColor(resources.getColor(R.color.red))
-            topRelativeLayout.setBackgroundColor(resources.getColor(R.color.red))
-            transactionIcon.isGone()
-        }
-        else transactionRemark.text=""
 
     }
 

@@ -278,43 +278,13 @@ class ProductDetailActivity : AppBaseActivity(){
 
         bannerUpload.onClick {
             showProgress(true)
-           /* myImages[0]
-            this@ProductDetailActivity.requestPermissions(
-                arrayOf(
-                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                ), onResult = {
-                    if (it) {
-                        showProgress(true)
-                        this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
-                            storageReference!!,
-                            myImages[0],
-                            onSuccess = {
-                                showProgress(false)
-                                bannerUpload.text= "Continue"
-                                bannerUpload.setCompoundDrawables(null,null,null,null)
-                            }
-                        )
-                    } else {
-                        showProgress(false)
-                        snackBarError("Upload Failed")
-                        bannerUpload.text= "Upload"
-                        //    this@ProductDetailActivity.showPermissionAlert(this)
-                    }
-                })*/
-
-
             if (validateAllValue()) {
                 updateDbValues()
             }
-            /*val value = getSharedPrefInstance().getStringValue(Constants.AdvTimeDetails.Start_Date)
-            snackBar(value)*/
 
         }
 
-        selectLocation.onClick { launchActivity<LocationBasedScreensActivity>() }
-
-
+        selectLocation.onClick { onBackPressed() }
 
     }
 
@@ -337,10 +307,10 @@ class ProductDetailActivity : AppBaseActivity(){
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } /*else if (rangeVal.textToString().isEmpty()) {
+        } else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
-        }*/ else {
+        } else {
             mIsAllDetailsFilled = true
             return true
         }
@@ -652,6 +622,7 @@ class ProductDetailActivity : AppBaseActivity(){
                                     adsDetails.advTagline=advDetails.advTagline
                                     adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
                                     adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
+                                    adsDetails.advRange = rangeVal.toString()
                                     var localUserDetails=getStoredUserDetails()
                                     var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                                     advDetails.add(adsDetails)
