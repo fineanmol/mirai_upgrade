@@ -280,20 +280,22 @@ class ProductDetailActivity : AppBaseActivity(){
         }
 
         bannerUpload.onClick {
-            val dialog = getAlertDialog(
-                "While your Banner is processing, Please continue with next details","Information",
-                onPositiveClick = { dialog, i ->
-
-                    if (validateAllValue()) {
-                        updateDbValues()
-                    }
-                },
-                onNegativeClick = { dialog, i ->
-                    dialog.dismiss()
-                })
-            dialog.show()
+            if (validateAllValue()) {
+                val dialog = getAlertDialog(
+                    "While your Banner is processing, Please continue with next details",
+                    "Information",
+                    onPositiveClick = { dialog, i ->
 
 
+                            updateDbValues()
+
+                    },
+                    onNegativeClick = { dialog, i ->
+                        dialog.dismiss()
+                    })
+                dialog.show()
+
+            }
 
         }
 
