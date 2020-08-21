@@ -573,6 +573,24 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+        <mbanje.kurt.fabbutton.FabButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:id="@+id/determinate"
+            android:layout_gravity="start|bottom"
+            android:color="#f5d300"
+            android:src="@drawable/bg_circle_primary"
+            android:visibility="invisible"
+            android:layout_centerInParent="true"
+            android:indeterminate="false"
+            android:max="100"
+            app:fbb_autoStart="true"
+            app:fbb_progressColor="#8a2be2"
+            app:fbb_progressWidthRatio="0.1"
+            app:fbb_endBitmap="@drawable/ic_fab_complete"
+            app:fbb_showEndBitmap="true">
+
+        </mbanje.kurt.fabbutton.FabButton>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,6 +1,8 @@
 package com.tragicbytes.midi.fragments.home
 
+import android.app.Activity
 import android.os.Bundle
+import android.os.Handler
 import android.view.*
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,6 +46,8 @@ class HomeFragment : BaseFragment() {
 
     private lateinit var dbReference: DatabaseReference
 
+    var currentProgress = 0
+    private val handle = Handler()
 
 
     var onNetworkRetry: (() -> Unit)? = null
@@ -92,8 +96,9 @@ class HomeFragment : BaseFragment() {
 
         }
 
-    }
 
+
+    }
 
     //region APIs
     private fun loadApis() {

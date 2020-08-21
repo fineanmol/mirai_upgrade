@@ -106,6 +106,7 @@ import kotlinx.android.synthetic.main.item_product_new.view.tvOriginalPrice
 import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
+import mbanje.kurt.fabbutton.FabButton
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -310,6 +311,8 @@ fun getSharedPrefInstance(): SharedPrefUtils {
 fun RecyclerView.rvItemAnimation() {
     layoutAnimation = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_fall_down)
 }
+
+
 
 fun Context.openCustomTab(url: String) = CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(url))
 
@@ -1192,7 +1195,7 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
 }
 
 @SuppressLint("MissingPermission")
-fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit){
+fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit,onUploading:(Float)->Unit){
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(file.path
     ) {
@@ -1200,6 +1203,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: Storage
             storageReference.child("uploads/" + getStoredUserDetails().userId+System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            onUploading((task.result.bytesTransferred/task.result.totalByteCount)*100F)
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
