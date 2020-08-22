@@ -64,11 +64,11 @@ class HomeFragment : BaseFragment() {
         imgLayoutParams = activity?.productLayoutParams()
 
         fetchUserData(dbReference, onSuccess = {
-            snackBar("it")
+      //      snackBar("it")
             hideProgress()
         },
             onFailed = {
-                snackBar(it)
+            //    snackBar(it)
                 hideProgress()
             })
 

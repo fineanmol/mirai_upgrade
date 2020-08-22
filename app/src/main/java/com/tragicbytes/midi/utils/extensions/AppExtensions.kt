@@ -163,7 +163,11 @@ fun fetchUserData(
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                onFailed("Cancelled while fetching details!")
+                try {
+                    onFailed("Cancelled while fetching details!")
+                } catch (e: Exception) {
+
+                }
             }
         })
 }
@@ -289,6 +293,7 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(KEY_ADDRESS)
     getSharedPrefInstance().removeKey(KEY_USER_ADDRESS)
 }
+
 fun clearAdsDataPref() {
     getSharedPrefInstance().removeKey(ADV_LOGO)
     getSharedPrefInstance().removeKey(ADV_NAME)

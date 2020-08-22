@@ -71,9 +71,9 @@ class TransactionDetailsActivity : AppBaseActivity() {
             "2" -> {
                 transactionAmount.text= mTransactionDetails.transactionAmount.currencyFormat("INR")
                 transactionRemark.text="Money Paid to Advertisement"
-                transactionAmount.setTextColor(resources.getColor(R.color.green))
-                transactionRemark.setTextColor(resources.getColor(R.color.green))
-                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green))
+                transactionAmount.setTextColor(resources.getColor(R.color.green_dark))
+                transactionRemark.setTextColor(resources.getColor(R.color.green_dark))
+                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green_dark))
                 transactionIcon.isGone()
             }
             else -> transactionRemark.text=""
