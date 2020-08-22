@@ -59,7 +59,7 @@ class MyBannersFragment : BaseFragment() {
     }
 
     private fun loadImages(){
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userAdvertisementDetails")
+        /*dbReference.child("UsersData/${getStoredUserDetails().userId}/userAdvertisementDetails")
             .addValueEventListener(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -82,7 +82,9 @@ class MyBannersFragment : BaseFragment() {
                     }
                 }
 
-            )
+            )*/
+        mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails)
+        llNoItems.visibility=View.GONE
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
