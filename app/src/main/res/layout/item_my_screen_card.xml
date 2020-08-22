@@ -3,21 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/background_color"
     android:orientation="vertical"
-    tools:context=".activity.OrderDescriptionActivity"
-    tools:ignore="MissingPrefix">
+    >
 
-    <include
-        android:id="@+id/toolbars"
-        layout="@layout/toolbar" />
-
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/toolbars"
-        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,7 +17,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_standard_new"
+                android:layout_marginBottom="@dimen/spacing_small"
                 android:background="@drawable/bg_rectangle_order"
                 android:orientation="vertical">
 
@@ -211,6 +201,4 @@
 
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
 </RelativeLayout>

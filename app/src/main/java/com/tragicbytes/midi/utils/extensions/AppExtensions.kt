@@ -3,8 +3,6 @@ package com.tragicbytes.midi.utils.extensions
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog.THEME_DEVICE_DEFAULT_LIGHT
-import android.app.AlertDialog.THEME_HOLO_LIGHT
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -57,7 +55,6 @@ import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.*
-import com.tragicbytes.midi.fragments.MyBannerDetails
 import com.tragicbytes.midi.models.*
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AdvDetails.ADV_BRAND
@@ -109,7 +106,6 @@ import kotlinx.android.synthetic.main.item_product_new.view.tvOriginalPrice
 import kotlinx.android.synthetic.main.item_screen.view.*
 import kotlinx.android.synthetic.main.layout_paymentdetail.*
 import kotlinx.android.synthetic.main.layout_transaction_card.view.*
-import mbanje.kurt.fabbutton.FabButton
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -463,6 +459,11 @@ fun Activity.showTransactionDetail(model: TransactionDetails) {
 }
 fun Activity.showMyBannerDetails(model: SingleAdvertisementDetails) {
     launchActivity<MyBannerDetailsActivity> {
+        putExtra(DATA, model)
+    }
+}
+fun Activity.showMyBannerScreenDetails(model: ScreenDataModel) {
+    launchActivity<MyBannerScreenDetailsActivity> {
         putExtra(DATA, model)
     }
 }
