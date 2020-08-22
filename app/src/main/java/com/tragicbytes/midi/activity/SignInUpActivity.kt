@@ -152,13 +152,16 @@ class SignInUpActivity : AppBaseActivity() {
                     var type = "Email"
                     var token = ""
                     if (user != null) {
-                        accountDataFetch(user)
-                        signInEmail(user, onResult = {
-                            showProgress(false)
-                            if (it) launchActivityWithNewTask<DashBoardActivity>()
-                        }, onError = {
-                            showProgress(false)
-                            snackBarError(it)
+                        accountDataFetch(user,onSuccess = {
+                            signInEmail(user, onResult = {
+                                showProgress(false)
+                                if (it) launchActivityWithNewTask<DashBoardActivity>()
+                            }, onError = {
+                                showProgress(false)
+                                snackBarError(it)
+                            })
+                        },onFailed = {
+                            snackBar("Failed to fetch details.Try Again")
                         })
                     }
 
@@ -177,7 +180,7 @@ class SignInUpActivity : AppBaseActivity() {
             }
 
     }
-    private fun accountDataFetch(user: FirebaseUser) {
+    private fun accountDataFetch(user: FirebaseUser,onSuccess:()->Unit,onFailed:()->Unit) {
         showProgress(true)
         val database = FirebaseDatabase.getInstance().reference
         try {
@@ -189,41 +192,24 @@ class SignInUpActivity : AppBaseActivity() {
                         val dbContent =
                             dataSnapshot.getValue(UserDetailsModel::class.java)
                         if (dbContent != null) {
-//                            getSharedPrefInstance().setValue(
-//                                Constants.SharedPref.USER_PHONE,
-//                                dbContent.
-//                            )
-//                            getSharedPrefInstance().setValue(
-//                                Constants.SharedPref.USER_DOB,
-//                                dbContent.DOB
-//                            )
-//                            getSharedPrefInstance().setValue(
-//                                Constants.SharedPref.USER_ORG,
-//                                dbContent.ORG
-//                            )
-//                            getSharedPrefInstance().setValue(
-//                                Constants.SharedPref.USER_GENDER,
-//                                dbContent.Gender
-//                            )
                             getSharedPrefInstance().setValue(
                                 Constants.SharedPref.USER_DETAILS_OBJECT,
                                 Gson().toJson(dbContent)
                             )
+                            onSuccess()
                             snackBar("userDataUpdated!")
                         }
-
-                        showProgress(false)
-
+                        else{
+                            onFailed()
+                        }
                     } else {
-                        showProgress(false)
+                        onFailed()
                         snackBar("Erorr occurred while fetching details!")
                     }
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Getting Post failed, log a message
-                    //Log.w(TAG, "loadPost:onCancelled", databaseError.toException())
-                    // ...
+                    onFailed()
                     showProgress(false)
                     snackBar("Cancelled while fetching details!")
 
