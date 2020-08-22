@@ -519,7 +519,7 @@
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/MoreInfo_heading"

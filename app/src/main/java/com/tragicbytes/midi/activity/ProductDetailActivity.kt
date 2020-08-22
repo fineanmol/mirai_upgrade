@@ -322,10 +322,10 @@ class ProductDetailActivity : AppBaseActivity(){
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } else if (rangeVal.textToString().isEmpty()) {
+        } /*else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
-        } else {
+        }*/ else {
             mIsAllDetailsFilled = true
             return true
         }
@@ -637,7 +637,7 @@ class ProductDetailActivity : AppBaseActivity(){
                                     adsDetails.advTagline=advDetails.advTagline
                                     adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
                                     adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
-                                    adsDetails.advRange = rangeVal.text.toString()
+                                    /*adsDetails.advRange = rangeVal.text.toString()*/
                                     var localUserDetails=getStoredUserDetails()
                                     var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                                     advDetails.add(adsDetails)

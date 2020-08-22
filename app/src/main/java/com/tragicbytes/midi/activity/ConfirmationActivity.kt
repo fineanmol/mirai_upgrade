@@ -8,16 +8,20 @@ import com.google.firebase.database.FirebaseDatabase
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
+import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_confirmation.*
+import kotlinx.android.synthetic.main.activity_confirmation.ivBack
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class ConfirmationActivity : AppBaseActivity() {
 
     private var ongoingAdv = SingleAdvertisementDetails()
+   // private lateinit var mMainBinding: ActivityProductDetailBinding
 
     private var mScreensAdapter: RecyclerViewAdapter<ScreenDataModel>? = null
     private var totalScreenPrice = 0
@@ -28,8 +32,12 @@ class ConfirmationActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
-        setToolbar(toolbar)
-        title = getString(R.string.title_advertisement_confirmation)
+      //  setToolbarWithoutBackButton(mMainBinding.toolbar)
+       /* toolbar_layout.title = "Advertisement"
+        ivBack.onClick {
+            onBackPressed()
+        }*/
+        /*title = getString(R.string.title_advertisement_confirmation)*/
         dbReference = FirebaseDatabase.getInstance().reference
 
         ongoingAdv = intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails

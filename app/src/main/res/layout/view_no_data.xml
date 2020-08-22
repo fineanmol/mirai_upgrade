@@ -4,7 +4,7 @@
     android:id="@+id/lottieNoData"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:visibility="gone"
+    android:visibility="visible"
     app:lottie_autoPlay="true"
     app:lottie_fileName="error_circle.json"
     app:lottie_loop="true" />
