@@ -37,7 +37,7 @@ class TransactionDetailsActivity : AppBaseActivity() {
 
         tansactionSupportBtn.onClick {
              try {
-                 val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.text_iqonicdesign_gmail_com), null))
+                 val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto:", getString(R.string.text_iqonicdesign_gmail_com), null))
                  emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Need help with Transaction "+ (mTransactionDetails?.transactionId))
                  emailIntent.putExtra(Intent.EXTRA_TEXT, "I am having an issue regarding the transaction ")
                  startActivity(Intent.createChooser(emailIntent, "Send email..."))

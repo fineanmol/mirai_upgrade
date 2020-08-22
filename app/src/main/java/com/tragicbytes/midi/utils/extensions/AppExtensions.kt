@@ -1072,11 +1072,14 @@ fun setWalletItem(
     item: TransactionDetails,
     context: WalletTransactionsActivity
 ) {
-    view.tPaymentId.text = item.transactionId
+    view.tPaymentId.text = "Payment Id\n"+ item.transactionId
+
     if(item.transactionStatus=="1") {
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.text = "+ ₹"  + item.transactionAmount
             view.tTransactionText.text= "Money Added"
+            view.tPaymentId.isGone()
+
 
         } else {
             view.tAmount.text = item.transactionAmount.currencyFormat()

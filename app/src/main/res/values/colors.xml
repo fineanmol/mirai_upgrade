@@ -39,6 +39,7 @@
     <color name="yellow">#FEBA39</color>
     <color name="light_gray">#ECECEC</color>
     <color name="green">#66953A</color>
+    <color name="green_dark">#007100</color>
     <color name="red">#F61929</color>
     <color name="light_green">#81C049</color>
     <color name="more_infoHeading_background">#DDDDDD</color>
