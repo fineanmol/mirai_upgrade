@@ -46,7 +46,7 @@ class MyBannerDetailsActivity : AppBaseActivity() {
 
     private fun setupLocationScreensAdapter() {
         mLocationScreensAdapter = RecyclerViewAdapter(
-            R.layout.item_screen_order_details,
+            R.layout.item_my_screen_card,
             onBind = { view, item, position -> setOrderedScreenData(view, item) })
 
         bannerScreensList.apply {
@@ -55,8 +55,8 @@ class MyBannerDetailsActivity : AppBaseActivity() {
         }
         bannerScreensList.adapter = mLocationScreensAdapter
 
-        /*mLocationScreensAdapter?.onItemClick = { pos, view, item ->
-
-        }*/
+        mLocationScreensAdapter?.onItemClick = { pos, view, item ->
+            showMyBannerScreenDetails(item)
+        }
     }
 }

@@ -21,8 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.MyBannerDetailsActivity"></activity>
-        <activity android:name=".activity.ScreenOrderDetails" />
+        <activity android:name=".activity.MyBannerScreenDetailsActivity"></activity>
+        <activity android:name=".activity.MyBannerDetailsActivity" />
         <activity android:name=".activity.ConfirmationActivity">
 
             <!--
