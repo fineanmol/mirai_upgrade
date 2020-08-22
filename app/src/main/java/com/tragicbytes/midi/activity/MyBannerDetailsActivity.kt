@@ -25,6 +25,7 @@ class MyBannerDetailsActivity : AppBaseActivity() {
         setToolbar(toolbar)
         title = "Banner Details"
 
+
         if(intent?.extras?.getSerializable(Constants.KeyIntent.DATA) != null){
             singleAdvertisementDetails=intent!!.getSerializableExtra(Constants.KeyIntent.DATA)  as SingleAdvertisementDetails
             bindData(singleAdvertisementDetails)
@@ -33,6 +34,8 @@ class MyBannerDetailsActivity : AppBaseActivity() {
             setupLocationScreensAdapter()
 
             mLocationScreensAdapter?.addItems(singleAdvertisementDetails.screens)
+
+            title = singleAdvertisementDetails.advId.toString()
 
         }
     }
@@ -47,7 +50,7 @@ class MyBannerDetailsActivity : AppBaseActivity() {
     private fun setupLocationScreensAdapter() {
         mLocationScreensAdapter = RecyclerViewAdapter(
             R.layout.item_my_screen_card,
-            onBind = { view, item, position -> setOrderedScreenData(view, item) })
+            onBind = { view, item, position -> setOrderedScreenData(view, item,this) })
 
         bannerScreensList.apply {
             adapter = mLocationScreensAdapter

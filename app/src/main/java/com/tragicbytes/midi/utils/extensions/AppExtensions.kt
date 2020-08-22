@@ -100,6 +100,7 @@ import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_confirm_screen_card.view.*
+import kotlinx.android.synthetic.main.item_my_screen_card.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
 import kotlinx.android.synthetic.main.item_product_new.view.tvOriginalPrice
@@ -202,23 +203,23 @@ fun updateTransactionDetails(
         .setValue(
             transactionsList
         ).addOnSuccessListener {
-        dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
-            .setValue(
-                ServerValue.TIMESTAMP
-            ).addOnSuccessListener {
-            /*fetchUserData(dbReference,onSuccess = {
-                onSuccess()
-            },
-            onFailed = {
-                onFailed()
-            })*/
-            onSuccess()
+            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
+                .setValue(
+                    ServerValue.TIMESTAMP
+                ).addOnSuccessListener {
+                    /*fetchUserData(dbReference,onSuccess = {
+                        onSuccess()
+                    },
+                    onFailed = {
+                        onFailed()
+                    })*/
+                    onSuccess()
+                }.addOnFailureListener {
+                    onFailed()
+                }
         }.addOnFailureListener {
             onFailed()
         }
-    }.addOnFailureListener {
-        onFailed()
-    }
 
 
 }
@@ -317,13 +318,18 @@ fun RecyclerView.rvItemAnimation() {
 }
 
 
+fun Context.openCustomTab(url: String) =
+    CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(url))
 
-fun Context.openCustomTab(url: String) = CustomTabsIntent.Builder().build().launchUrl(this, Uri.parse(url))
-
-fun ImageView.loadImageFromUrl(aImageUrl: String, aPlaceHolderImage: Int = R.drawable.placeholder, aErrorImage: Int = R.drawable.placeholder) {
+fun ImageView.loadImageFromUrl(
+    aImageUrl: String,
+    aPlaceHolderImage: Int = R.drawable.placeholder,
+    aErrorImage: Int = R.drawable.placeholder
+) {
     try {
         if (!aImageUrl.checkIsEmpty()) {
-            Glide.with(getAppInstance()).load(aImageUrl).placeholder(aPlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE).error(aErrorImage).into(this)
+            Glide.with(getAppInstance()).load(aImageUrl).placeholder(aPlaceHolderImage)
+                .diskCacheStrategy(DiskCacheStrategy.NONE).error(aErrorImage).into(this)
         } else {
             loadImageFromDrawable(aPlaceHolderImage)
         }
@@ -333,7 +339,8 @@ fun ImageView.loadImageFromUrl(aImageUrl: String, aPlaceHolderImage: Int = R.dra
 }
 
 fun ImageView.loadImageFromDrawable(@DrawableRes aPlaceHolderImage: Int) {
-    Glide.with(getAppInstance()).load(aPlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE).into(this)
+    Glide.with(getAppInstance()).load(aPlaceHolderImage).diskCacheStrategy(DiskCacheStrategy.NONE)
+        .into(this)
 }
 
 fun shareMyApp(context: Context, subject: String, message: String) {
@@ -375,7 +382,10 @@ enum class JsonFileCode {
     LOADER
 }
 
-fun Activity.openLottieDialog(jsonFileCode: JsonFileCode = JsonFileCode.NO_INTERNET, onLottieClick: () -> Unit) {
+fun Activity.openLottieDialog(
+    jsonFileCode: JsonFileCode = JsonFileCode.NO_INTERNET,
+    onLottieClick: () -> Unit
+) {
     val jsonFile: String = when (jsonFileCode) {
         JsonFileCode.NO_INTERNET -> "lottie/no_internet.json"
         JsonFileCode.LOADER -> "lottie/loader.json"
@@ -383,8 +393,13 @@ fun Activity.openLottieDialog(jsonFileCode: JsonFileCode = JsonFileCode.NO_INTER
 
     if (noInternetDialog == null) {
         noInternetDialog = Dialog(this, R.style.FullScreenDialog)
-        noInternetDialog?.setContentView(R.layout.dialog_no_internet); noInternetDialog?.setCanceledOnTouchOutside(false); noInternetDialog?.setCancelable(false)
-        noInternetDialog?.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+        noInternetDialog?.setContentView(R.layout.dialog_no_internet); noInternetDialog?.setCanceledOnTouchOutside(
+            false
+        ); noInternetDialog?.setCancelable(false)
+        noInternetDialog?.window?.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
         noInternetDialog?.rlLottie?.onClick {
             if (!isNetworkAvailable()) {
                 snackBarError(getAppInstance().getString(R.string.error_no_internet))
@@ -400,7 +415,14 @@ fun Activity.openLottieDialog(jsonFileCode: JsonFileCode = JsonFileCode.NO_INTER
     }
 }
 
-fun Activity.getAlertDialog(aMsgText: String, aTitleText: String = getString(R.string.lbl_dialog_title), aPositiveText: String = getString(R.string.lbl_yes), aNegativeText: String = getString(R.string.lbl_no), onPositiveClick: (dialog: DialogInterface, Int) -> Unit, onNegativeClick: (dialog: DialogInterface, Int) -> Unit): AlertDialog {
+fun Activity.getAlertDialog(
+    aMsgText: String,
+    aTitleText: String = getString(R.string.lbl_dialog_title),
+    aPositiveText: String = getString(R.string.lbl_yes),
+    aNegativeText: String = getString(R.string.lbl_no),
+    onPositiveClick: (dialog: DialogInterface, Int) -> Unit,
+    onNegativeClick: (dialog: DialogInterface, Int) -> Unit
+): AlertDialog {
     val builder = AlertDialog.Builder(this)
     builder.setTitle(aTitleText)
     builder.setMessage(aMsgText)
@@ -425,7 +447,14 @@ fun startOTPTimer(onTimerTick: (String) -> Unit, onTimerFinished: () -> Unit): C
     return object : CountDownTimer(60000, 1000) {
 
         override fun onTick(millisUntilFinished: Long) {
-            onTimerTick(String.format("00 : %d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))))
+            onTimerTick(
+                String.format(
+                    "00 : %d",
+                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)
+                    )
+                )
+            )
         }
 
         override fun onFinish() {
@@ -442,17 +471,20 @@ fun Activity.showProductDetail(model: ProductDataNew) {
 }
 
 
-fun Activity.selectScreen(view: View,model: ScreenDataModel,onSelect: (Int) -> Unit,onUnSelect: (Int) -> Unit) {
-    if(model.screenStatus=="1"){
-        if(view.screenSelectButton.isChecked){
+fun Activity.selectScreen(
+    view: View,
+    model: ScreenDataModel,
+    onSelect: (Int) -> Unit,
+    onUnSelect: (Int) -> Unit
+) {
+    if (model.screenStatus == "1") {
+        if (view.screenSelectButton.isChecked) {
             onUnSelect(model.screenPrice.toInt())
-        }
-        else{
+        } else {
             onSelect(model.screenPrice.toInt())
         }
         view.screenSelectButton.isChecked = !view.screenSelectButton.isChecked
-    }
-    else{
+    } else {
         snackBar("This screen is currently out of service.")
     }
 }
@@ -462,11 +494,13 @@ fun Activity.showTransactionDetail(model: TransactionDetails) {
         putExtra(DATA, model)
     }
 }
+
 fun Activity.showMyBannerDetails(model: SingleAdvertisementDetails) {
     launchActivity<MyBannerDetailsActivity> {
         putExtra(DATA, model)
     }
 }
+
 fun Activity.showMyBannerScreenDetails(model: ScreenDataModel) {
     launchActivity<MyBannerScreenDetailsActivity> {
         putExtra(DATA, model)
@@ -517,8 +551,8 @@ fun setExpandableListViewHeight(listView: ExpandableListView, group: Int) {
         if (((listView.isGroupExpanded(i)) && (i != group)) || ((!listView.isGroupExpanded(i)) && (i == group))) {
             for (j in 0 until listAdapter.getChildrenCount(i)) {
                 val listItem = listAdapter.getChildView(
-                        i, j, false, null,
-                        listView
+                    i, j, false, null,
+                    listView
                 )
                 listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED)
                 totalHeight += listItem.measuredHeight
@@ -528,7 +562,7 @@ fun setExpandableListViewHeight(listView: ExpandableListView, group: Int) {
 
     val params = listView.layoutParams
     var height =
-            totalHeight + (listView.dividerHeight * (listAdapter.groupCount - 1)) + (item / 2)/*+((totalHeight/(listAdapter.groupCount-1)))/2)*/
+        totalHeight + (listView.dividerHeight * (listAdapter.groupCount - 1)) + (item / 2)/*+((totalHeight/(listAdapter.groupCount-1)))/2)*/
     if (height < 10)
         height = 200
     params.height = height
@@ -610,7 +644,11 @@ fun AppBaseActivity.createCustomerByEmail(userDetails: UserDetailsModel, onApiSu
 //    })
 //}
 
-fun AppBaseActivity.signInEmail(user:FirebaseUser, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
+fun AppBaseActivity.signInEmail(
+    user: FirebaseUser,
+    onResult: (Boolean) -> Unit,
+    onError: (String) -> Unit
+) {
     showProgress(true)
 //    callApi(getRestApis(false).login(request = requestModel), onApiSuccess = {
 //        saveLoginResponse(it,false, password, onResult, onError)
@@ -624,7 +662,7 @@ fun AppBaseActivity.signInEmail(user:FirebaseUser, onResult: (Boolean) -> Unit, 
 //            signInEmail(user, onResult, onError)
 //        }
 //    })
-    saveLoginResponse(user,false,"",onResult,onError)
+    saveLoginResponse(user, false, "", onResult, onError)
 }
 
 
@@ -651,7 +689,13 @@ fun AppBaseActivity.signInEmail(user:FirebaseUser, onResult: (Boolean) -> Unit, 
 //    })
 //}
 
-fun AppBaseActivity.saveLoginResponse(it: FirebaseUser,isSocialLogin:Boolean, password: String, onResult: (Boolean) -> Unit, onError: (String) -> Unit) {
+fun AppBaseActivity.saveLoginResponse(
+    it: FirebaseUser,
+    isSocialLogin: Boolean,
+    password: String,
+    onResult: (Boolean) -> Unit,
+    onError: (String) -> Unit
+) {
 //    if (it.uid != null) {
 //        getSharedPrefInstance().setValue(USER_ID, it.uid)
 //    }
@@ -699,7 +743,10 @@ fun AppBaseActivity.saveLoginResponse(it: FirebaseUser,isSocialLogin:Boolean, pa
 })*/
 }
 
-fun AppBaseActivity.processPayment(requestModel: RequestModel, isContainRedirectUrl: Boolean = true) {
+fun AppBaseActivity.processPayment(
+    requestModel: RequestModel,
+    isContainRedirectUrl: Boolean = true
+) {
     showProgress(true)
     /*callApi(getRestApis().processPayment(requestModel), onApiSuccess = {
         showProgress(false)
@@ -813,7 +860,10 @@ fun isExistInCart(product: ProductDataNew, selectedColor: Boolean = false): Bool
     if (getSharedPrefInstance().getStringValue(CART_DATA) == "") {
         return false
     }
-    val cartList = Gson().fromJson<ArrayList<CartResponse>>(getSharedPrefInstance().getStringValue(CART_DATA), object : TypeToken<ArrayList<CartResponse>>() {}.type)
+    val cartList = Gson().fromJson<ArrayList<CartResponse>>(
+        getSharedPrefInstance().getStringValue(CART_DATA),
+        object : TypeToken<ArrayList<CartResponse>>() {}.type
+    )
     if (cartList != null && cartList.size > 0) {
         cartList.forEachIndexed { i: Int, model: CartResponse ->
             if (product.pro_id == model.pro_id.toInt()) {
@@ -832,21 +882,31 @@ fun getCartListFromPref(): ArrayList<CartResponse> {
     if (getSharedPrefInstance().getStringValue(CART_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson<ArrayList<CartResponse>>(getSharedPrefInstance().getStringValue(CART_DATA), object : TypeToken<ArrayList<CartResponse>>() {}.type)
+    return Gson().fromJson<ArrayList<CartResponse>>(
+        getSharedPrefInstance().getStringValue(CART_DATA),
+        object : TypeToken<ArrayList<CartResponse>>() {}.type
+    )
 }
 
 fun getWishListFromPref(): ArrayList<WishListData> {
     if (getSharedPrefInstance().getStringValue(WISHLIST_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson<ArrayList<WishListData>>(getSharedPrefInstance().getStringValue(WISHLIST_DATA), object : TypeToken<ArrayList<WishListData>>() {}.type)
+    return Gson().fromJson<ArrayList<WishListData>>(
+        getSharedPrefInstance().getStringValue(
+            WISHLIST_DATA
+        ), object : TypeToken<ArrayList<WishListData>>() {}.type
+    )
 }
 
 fun isExistInWishList(product: ProductDataNew): Boolean {
     if (getSharedPrefInstance().getStringValue(WISHLIST_DATA) == "") {
         return false
     }
-    val wishList = Gson().fromJson<ArrayList<WishListData>>(getSharedPrefInstance().getStringValue(WISHLIST_DATA), object : TypeToken<ArrayList<WishListData>>() {}.type)
+    val wishList = Gson().fromJson<ArrayList<WishListData>>(
+        getSharedPrefInstance().getStringValue(WISHLIST_DATA),
+        object : TypeToken<ArrayList<WishListData>>() {}.type
+    )
     if (wishList != null && wishList.size > 0) {
         wishList.forEachIndexed { i: Int, model: WishListData ->
             if (product.pro_id == model.pro_id) {
@@ -884,13 +944,13 @@ fun Activity.fetchAndStoreWishListData() {
 }
 
 fun Activity.addToWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
-   /* callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
-        fetchAndStoreWishListData(); onSuccess(true)
-    }, onApiError = {
-        snackBarError(it); fetchAndStoreWishListData(); onSuccess(false)
-    }, onNetworkError = {
-        noInternetSnackBar(); onSuccess(false)
-    })*/
+    /* callApi(getRestApis(false).addWishList(request = requestModel), onApiSuccess = {
+         fetchAndStoreWishListData(); onSuccess(true)
+     }, onApiError = {
+         snackBarError(it); fetchAndStoreWishListData(); onSuccess(false)
+     }, onNetworkError = {
+         noInternetSnackBar(); onSuccess(false)
+     })*/
 }
 
 fun Activity.removeFromWishList(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
@@ -907,54 +967,63 @@ fun getSlideImagesFromPref(): ArrayList<SliderImagesResponse> {
     if (getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson(getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA), object : TypeToken<ArrayList<SliderImagesResponse>>() {}.type)
+    return Gson().fromJson(
+        getSharedPrefInstance().getStringValue(SLIDER_IMAGES_DATA),
+        object : TypeToken<ArrayList<SliderImagesResponse>>() {}.type
+    )
 }
 
 fun getCategoryDataFromPref(): ArrayList<CategoryData> {
     if (getSharedPrefInstance().getStringValue(CATEGORY_DATA) == "") {
         return ArrayList()
     }
-    return Gson().fromJson(getSharedPrefInstance().getStringValue(CATEGORY_DATA), object : TypeToken<ArrayList<CategoryData>>() {}.type)
+    return Gson().fromJson(
+        getSharedPrefInstance().getStringValue(CATEGORY_DATA),
+        object : TypeToken<ArrayList<CategoryData>>() {}.type
+    )
 }
 
 fun setScreenItem(
     view: View,
     item: ScreenDataModel,
     context: LocationBasedScreensActivity
-){
+) {
     /** Close the expand menu at first time*/
-    view.screenSelectButton.isChecked=false
+    view.screenSelectButton.isChecked = false
     view.expandableLayout.visibility = View.GONE
     view.expandBtn.setOnClickListener {
         if (view.expandableLayout.visibility == View.GONE) {
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.VISIBLE
-            val result = rotate(180F,context)!!
+            val result = rotate(180F, context)!!
             view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null)
-            view.show.text="Show Less"
+            view.show.text = "Show Less"
         } else {
             TransitionManager.beginDelayedTransition(view.cardView, AutoTransition())
             view.expandableLayout.visibility = View.GONE
-            val result = rotate(0F,context)!!
+            val result = rotate(0F, context)!!
             view.show.setCompoundDrawablesWithIntrinsicBounds(result, null, null, null)
-            view.show.text="Show More"
+            view.show.text = "Show More"
 
         }
         view.pieChart.animateY(1500, Easing.EaseInBounce)
     }
 
-    setScreenData(view,item,context)
+    setScreenData(view, item, context)
 
-    setChartData(view,item,context)
-    setAgeDistributionChartData(view,item,context)
+    setChartData(view, item, context)
+    setAgeDistributionChartData(view, item, context)
 
 
 }
+
 fun rotate(
     degree: Float,
     context: LocationBasedScreensActivity
 ): Drawable? {
-    val iconBitmap: Bitmap = ResourcesCompat.getDrawable(context.resources, R.drawable.ic_arrow_down, null)!!.toBitmap()!!
+    val iconBitmap: Bitmap =
+        ResourcesCompat.getDrawable(context.resources, R.drawable.ic_arrow_down, null)!!
+            .toBitmap()!!
     val matrix = Matrix()
     matrix.postRotate(degree)
     val targetBitmap = Bitmap.createBitmap(
@@ -970,25 +1039,23 @@ fun rotate(
 }
 
 
-
 fun setScreenData(
     view: View,
     item: ScreenDataModel,
     context: LocationBasedScreensActivity
 ) {
-    view.screenTitle.text=item.screenId
-    view.screenStatus.text="• ${item.screenStatus}"
-    if (item.screenStatus=="0"){
+    view.screenTitle.text = item.screenId
+    view.screenStatus.text = "• ${item.screenStatus}"
+    if (item.screenStatus == "0") {
         view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.track_red))
-        view.screenStatus.text="• Stopped"
-    }
-    else{
+        view.screenStatus.text = "• Stopped"
+    } else {
         view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
-        view.screenStatus.text="• Running"
+        view.screenStatus.text = "• Running"
     }
-    view.locationTitle.text=item.screenLocation
-    view.addressTitle.text=item.screenCity+","+item.screenPincode
-    view.screen_price.text="$${item.screenPrice}"
+    view.locationTitle.text = item.screenLocation
+    view.addressTitle.text = item.screenCity + "," + item.screenPincode
+    view.screen_price.text = "$${item.screenPrice}"
 }
 
 fun setChartData(
@@ -996,11 +1063,11 @@ fun setChartData(
     item: ScreenDataModel,
     locationBasedScreensActivity: LocationBasedScreensActivity
 ) {
-    var maleValue=item.screenGenderRatio.toFloat()
+    var maleValue = item.screenGenderRatio.toFloat()
     view.pieChart.setUsePercentValues(true)
     val xvalues = ArrayList<PieEntry>()
     xvalues.add(PieEntry(maleValue, "Male"))
-    xvalues.add(PieEntry(100-maleValue, "Female"))
+    xvalues.add(PieEntry(100 - maleValue, "Female"))
     val dataSet = PieDataSet(xvalues, "")
     val data = PieData(dataSet)
 
@@ -1014,7 +1081,7 @@ fun setChartData(
     )
     dataSet.sliceSpace = 5f
     view.pieChart.description.text = "Gender Ratio"
-    view.pieChart.description.textSize=12f
+    view.pieChart.description.textSize = 12f
     view.pieChart.isDrawHoleEnabled = false
     data.setValueTextSize(13f)
     chartDetails(view.pieChart, Typeface.SANS_SERIF)
@@ -1050,12 +1117,30 @@ fun chartDetails(mChart: PieChart, tf: Typeface) {
 }
 
 
-fun setAgeDistributionChartData(view: View, item: ScreenDataModel, context: LocationBasedScreensActivity) {
+fun setAgeDistributionChartData(
+    view: View,
+    item: ScreenDataModel,
+    context: LocationBasedScreensActivity
+) {
 
 }
 
 
-fun setOrderedScreenData(view: View, item: ScreenDataModel) {
+fun setOrderedScreenData(
+    view: View,
+    item: ScreenDataModel,
+    context: MyBannerDetailsActivity
+) {
+
+    view.bScreenName.text = item.screenLocation
+    view.bScreenId.text = item.screenId
+    view.bScreenPrice.text = item.screenPrice.currencyFormat("INR")
+//view.bSubmittedDate.text =
+// view.bApprovedDate.text = item.screenId
+//view.tvDelivered.text = item.
+
+    view.ivCircleSubmitted.setCircleColor(ContextCompat.getColor(context, R.color.green))
+
 
 }
 
@@ -1078,12 +1163,12 @@ fun setWalletItem(
     item: TransactionDetails,
     context: WalletTransactionsActivity
 ) {
-    view.tPaymentId.text = "Payment Id\n"+ item.transactionId
+    view.tPaymentId.text = "Payment Id\n" + item.transactionId
 
-    if(item.transactionStatus=="1") {
+    if (item.transactionStatus == "1") {
         if (item.transactionAmount.isNotEmpty()) {
-            view.tAmount.text = "+ ₹"  + item.transactionAmount
-            view.tTransactionText.text= "Money Added"
+            view.tAmount.text = "+ ₹" + item.transactionAmount
+            view.tTransactionText.text = "Money Added"
             view.tPaymentId.isGone()
 
 
@@ -1091,37 +1176,36 @@ fun setWalletItem(
             view.tAmount.text = item.transactionAmount.currencyFormat()
 
         }
-    }
-    else if(item.transactionStatus=="0"){
+    } else if (item.transactionStatus == "0") {
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.track_red))
-            view.tAmount.text = "  ₹"+ item.transactionAmount
+            view.tAmount.text = "  ₹" + item.transactionAmount
             view.tIcon.setBackgroundResource(R.drawable.ic_round_cancel_24px)
-            view.tTransactionText.text= "Add Money Failed"
+            view.tTransactionText.text = "Add Money Failed"
 
         } else {
             view.tAmount.text = item.transactionAmount.currencyFormat()
 
 
         }
-    }
-    else if(item.transactionStatus=="2"){
+    } else if (item.transactionStatus == "2") {
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.red))
-            view.tAmount.text ="- ₹"+ item.transactionAmount.split("-").last().toString()
+            view.tAmount.text = "- ₹" + item.transactionAmount.split("-").last().toString()
             view.tIcon.setBackgroundResource(R.drawable.ic_star_black)
-            view.tTransactionText.text= "Paid to Advertisement"
+            view.tTransactionText.text = "Paid to Advertisement"
 
         } else {
-            view.tAmount.text ="+ ₹"+ item.transactionAmount
+            view.tAmount.text = "+ ₹" + item.transactionAmount
 
         }
     }
     view.tDate.text = getShortDate(item.transactionDate)
 
 }
-fun getShortDate(ts:Long?):String{
-    if(ts == null) return ""
+
+fun getShortDate(ts: Long?): String {
+    if (ts == null) return ""
     //Get instance of calendar
     val calendar = Calendar.getInstance(Locale.getDefault())
     //get current date from ts
@@ -1130,8 +1214,8 @@ fun getShortDate(ts:Long?):String{
     return android.text.format.DateFormat.format("E, dd MMM yyyy", calendar).toString()
 }
 
-fun getShortTime(ts:Long?):String{
-    if(ts == null) return ""
+fun getShortTime(ts: Long?): String {
+    if (ts == null) return ""
     //Get instance of calendar
     val calendar = Calendar.getInstance(Locale.getDefault())
     //get current date from ts
@@ -1139,15 +1223,16 @@ fun getShortTime(ts:Long?):String{
     //return formatted date
     return android.text.format.DateFormat.format("hh:mm a", calendar).toString()
 }
+
 fun setSelectedScreenItem(
     view: View,
     item: ScreenDataModel,
     context: ConfirmationActivity
-){
-    view.tScreenName.text=item.screenId
-    view.tTimeDistribution.text=item.screenActiveTime
-    view.tGenderRatio.text=item.screenGenderRatio
-    view.tAgeDistributtion.text =item.screenAgeGroups
+) {
+    view.tScreenName.text = item.screenId
+    view.tTimeDistribution.text = item.screenActiveTime
+    view.tGenderRatio.text = item.screenGenderRatio
+    view.tAgeDistributtion.text = item.screenAgeGroups
     view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")
 
 }
@@ -1158,15 +1243,24 @@ fun setBannerData(
     item: SingleAdvertisementDetails,
     position: Int
 ) {
-    if (item.advBannerUrl != null){
+    if (item.advBannerUrl != null) {
         fetchImageAsync(item.advBannerUrl,
-        onComplete = {
-            view.ivBannerPrev.setImageBitmap(it)
-        })
-        view.tvBannerId.text="Banner ${position+1}"
-        view.tvBannerEndDate.text="Expires On ${getShortDate(item.endOn.toLong())}"
+            onComplete = {
+                view.ivBannerPrev.setImageBitmap(it)
+            })
+        view.tvBannerId.text = "Banner ${position + 1}"
+        view.tvBannerEndDate.text = "Expires On ${getShortDate(item.endOn.toLong())}"
+        if (item.rejectionCount == "0") {
+            view.txt_review.text = "Pending"
+            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
+        }
+        if (item.rejectionCount == "NA") {
+            view.txt_review.text = "Live"
+            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
+        }
     }
 }
+
 fun Activity.fetchAndStoreAddressData() {
     /*callApi(getRestApis(false).getAddress(), onApiSuccess = {
         getSharedPrefInstance().setValue(KEY_USER_ADDRESS, Gson().toJson(it))
@@ -1178,6 +1272,7 @@ fun Activity.fetchAndStoreAddressData() {
         noInternetSnackBar()
     })*/
 }
+
 fun Activity.addAddress(address: Address, onSuccess: (Boolean) -> Unit) {
     /*callApi(getRestApis(false).addUpdateAddress(address), onApiSuccess = {
         fetchAndStoreAddressData()
@@ -1188,6 +1283,7 @@ fun Activity.addAddress(address: Address, onSuccess: (Boolean) -> Unit) {
         noInternetSnackBar(); onSuccess(false)
     })*/
 }
+
 fun Activity.removeAddress(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
     /*callApi(getRestApis(false).deleteAddress(request = requestModel), onApiSuccess = {
         fetchAndStoreAddressData(); onSuccess(true)
@@ -1197,7 +1293,8 @@ fun Activity.removeAddress(requestModel: RequestModel, onSuccess: (Boolean) -> U
         noInternetSnackBar(); onSuccess(false)
     })*/
 }
-fun Activity.changePassword(requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
+
+fun Activity.changePassword(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
     /*callApi(getRestApis().changePassword(getUserId().toInt(), requestModel), onApiSuccess = {
         snackBar(getString(R.string.msg_successpwd));onSuccess(true)
     }, onApiError = {
@@ -1207,7 +1304,7 @@ fun Activity.changePassword(requestModel: RequestModel, onSuccess: (Boolean) -> 
     })*/
 }
 
-fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -> Unit){
+fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -> Unit) {
     /*callApi(getRestApis().saveProfileImage( requestModel), onApiSuccess = {
         Log.e("res",it.profile_image)
         getSharedPrefInstance().setValue(USER_PROFILE, it.profile_image)
@@ -1220,15 +1317,22 @@ fun Activity.saveProfileImage(requestModel: RequestModel, onSuccess: (Boolean) -
 }
 
 @SuppressLint("MissingPermission")
-fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (String) -> Unit,onUploading:(Float)->Unit){
+fun Activity.saveLogoImageToStorage(
+    mContext: Context,
+    storageReference: StorageReference,
+    personalizedBannerBitmap: Bitmap,
+    onSuccess: (String) -> Unit,
+    onUploading: (Float) -> Unit
+) {
     var file = File.createTempFile("image", null, mContext.cacheDir)
-    personalizedBannerBitmap.saveAsync(file.path
+    personalizedBannerBitmap.saveAsync(
+        file.path
     ) {
         val ref =
-            storageReference.child("uploads/" + getStoredUserDetails().userId+System.currentTimeMillis())
+            storageReference.child("uploads/" + getStoredUserDetails().userId + System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-            onUploading((task.result.bytesTransferred/task.result.totalByteCount)*100F)
+            onUploading((task.result.bytesTransferred / task.result.totalByteCount) * 100F)
             if (!task.isSuccessful) {
                 task.exception?.let {
                     throw it
@@ -1238,7 +1342,7 @@ fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: Storage
         }).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val downloadUri = task.result
-                getSharedPrefInstance().setValue(ADS_BANNER_URL,downloadUri)
+                getSharedPrefInstance().setValue(ADS_BANNER_URL, downloadUri)
                 onSuccess(downloadUri.toString())
             } else {
                 snackBar(task.exception!!.localizedMessage)
@@ -1250,7 +1354,13 @@ fun Activity.saveLogoImageToStorage(mContext: Context, storageReference: Storage
 }
 
 
-fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: DatabaseReference, storageReference: StorageReference, personalizedBannerBitmap: Bitmap, onSuccess: (Boolean) -> Unit){
+fun AppBaseActivity.saveProfileImageToStorage(
+    mContext: Context,
+    dbReference: DatabaseReference,
+    storageReference: StorageReference,
+    personalizedBannerBitmap: Bitmap,
+    onSuccess: (Boolean) -> Unit
+) {
     var file = File.createTempFile("image", null, mContext.cacheDir)
     if (ActivityCompat.checkSelfPermission(
             this,
@@ -1266,10 +1376,15 @@ fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: Da
         // for ActivityCompat#requestPermissions for more details.
         return
     }
-    personalizedBannerBitmap.saveAsync(file.path
+    personalizedBannerBitmap.saveAsync(
+        file.path
     ) {
         val ref =
-            storageReference.child("uploads/" + getSharedPrefInstance().getStringValue(USER_DISPLAY_NAME)+"_Profile_Pic")
+            storageReference.child(
+                "uploads/" + getSharedPrefInstance().getStringValue(
+                    USER_DISPLAY_NAME
+                ) + "_Profile_Pic"
+            )
         val uploadTask = ref.putFile(Uri.fromFile(file))
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
             if (!task.isSuccessful) {
@@ -1297,17 +1412,19 @@ fun AppBaseActivity.saveProfileImageToStorage(mContext: Context, dbReference: Da
     }
 }
 
-fun Activity.addAdvertisement(advDetails: SingleAdvertisementDetails, onSuccess: (SingleAdvertisementDetails) -> Unit) {
+fun Activity.addAdvertisement(
+    advDetails: SingleAdvertisementDetails,
+    onSuccess: (SingleAdvertisementDetails) -> Unit
+) {
 
 
     try {
-        getSharedPrefInstance().setValue(ADV_DESC,advDetails.advDescription)
-        getSharedPrefInstance().setValue(ADV_BRAND,advDetails.advBrandName)
-        getSharedPrefInstance().setValue(ADV_NAME,advDetails.advName)
-        getSharedPrefInstance().setValue(ADV_TAG,advDetails.advTagline)
+        getSharedPrefInstance().setValue(ADV_DESC, advDetails.advDescription)
+        getSharedPrefInstance().setValue(ADV_BRAND, advDetails.advBrandName)
+        getSharedPrefInstance().setValue(ADV_NAME, advDetails.advName)
+        getSharedPrefInstance().setValue(ADV_TAG, advDetails.advTagline)
         onSuccess(advDetails)
-    }
-    catch (e:java.lang.Exception){
+    } catch (e: java.lang.Exception) {
         snackBar(e.localizedMessage)
     }
 //    dbReference.child(getSharedPrefInstance().getStringValue(USER_ID)).child("adDetails").setValue(adDetails).addOnCompleteListener {
@@ -1329,23 +1446,22 @@ fun AppBaseActivity.updateEmail(
 ) {
 
     user.updateEmail(newUserEmail).addOnCompleteListener { xit ->
-        if(xit.isSuccessful){
-            dbReference.child("UsersData/${user.uid}/userPersonalDetails/email").setValue(user.email).addOnCompleteListener {
-                if(it.isSuccessful){
+        if (xit.isSuccessful) {
+            dbReference.child("UsersData/${user.uid}/userPersonalDetails/email")
+                .setValue(user.email).addOnCompleteListener {
+                if (it.isSuccessful) {
                     showProgress(false)
-                    var localUserdata=getStoredUserDetails()
+                    var localUserdata = getStoredUserDetails()
                     localUserdata.userPersonalDetails.email = user.email.toString()
                     updateStoredUserDetails(localUserdata)
                     onApiSuccess("Email Updated!!!")
                     sendProfileUpdateBroadcast()
-                }
-                else{
+                } else {
                     showProgress(false)
                     snackBarError(it.exception!!.localizedMessage)
                 }
             }
-        }
-        else{
+        } else {
             showProgress(false)
             snackBarError(xit.exception!!.localizedMessage)
         }
@@ -1363,9 +1479,10 @@ fun AppBaseActivity.updateName(
         .setDisplayName(displayName)
         .build()
     user.updateProfile(profileUpdates).addOnCompleteListener { xit ->
-        if(xit.isSuccessful){
-            dbReference.child("UsersData/${user.uid}/userPersonalDetails/firstName").setValue(user.displayName?.split(" ")?.first()!!).addOnCompleteListener {
-                if(it.isSuccessful) {
+        if (xit.isSuccessful) {
+            dbReference.child("UsersData/${user.uid}/userPersonalDetails/firstName")
+                .setValue(user.displayName?.split(" ")?.first()!!).addOnCompleteListener {
+                if (it.isSuccessful) {
                     dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName")
                         .setValue(user.displayName?.split(" ")?.last()!!)
                     showProgress(false)
@@ -1377,14 +1494,12 @@ fun AppBaseActivity.updateName(
                     updateStoredUserDetails(localUserData)
                     onApiSuccess("Name Updated!!!")
                     sendProfileUpdateBroadcast()
-                }
-                else{
+                } else {
                     showProgress(false)
                     snackBarError(it.exception!!.localizedMessage)
                 }
             }
-        }
-        else{
+        } else {
             showProgress(false)
             snackBarError(xit.exception!!.localizedMessage)
         }
@@ -1392,102 +1507,103 @@ fun AppBaseActivity.updateName(
 }
 
 fun AppBaseActivity.updatePhone(
-    userId:String,
+    userId: String,
     dbReference: DatabaseReference,
     phone: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child("UsersData/${userId}/userPersonalDetails/phone").setValue(phone).addOnCompleteListener {
-        if(it.isSuccessful){
-            var localUserData=getStoredUserDetails()
-            localUserData.userPersonalDetails.phone=phone
-            updateStoredUserDetails(localUserData)
-            onApiSuccess("Phone Updated")
+    dbReference.child("UsersData/${userId}/userPersonalDetails/phone").setValue(phone)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                var localUserData = getStoredUserDetails()
+                localUserData.userPersonalDetails.phone = phone
+                updateStoredUserDetails(localUserData)
+                onApiSuccess("Phone Updated")
+            } else {
+                showProgress(false)
+                snackBarError(it.exception!!.localizedMessage)
+            }
         }
-        else{
-            showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
-        }
-    }
 
 }
+
 fun AppBaseActivity.updateProfileUrl(
-    userId:String,
+    userId: String,
     dbReference: DatabaseReference,
     profileUrl: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child(userId).child("profileExtras/ProfileUrl").setValue(profileUrl).addOnCompleteListener {
-        if(it.isSuccessful){
-            getSharedPrefInstance().setValue(USER_PROFILE_URL, profileUrl)
-            onApiSuccess("Profile Pic Updated")
-        }
-        else{
-            showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
-        }
+    dbReference.child(userId).child("profileExtras/ProfileUrl").setValue(profileUrl)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                getSharedPrefInstance().setValue(USER_PROFILE_URL, profileUrl)
+                onApiSuccess("Profile Pic Updated")
+            } else {
+                showProgress(false)
+                snackBarError(it.exception!!.localizedMessage)
+            }
 
-    }
+        }
 
 }
 
 fun AppBaseActivity.updateDOB(
-    userId:String,
+    userId: String,
     dbReference: DatabaseReference,
     dob: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child("UsersData/${userId}/userPersonalDetails/dob").setValue(dob).addOnCompleteListener {
-        if(it.isSuccessful){
-            var localUserData=getStoredUserDetails()
-            localUserData.userPersonalDetails.dob=dob
-            updateStoredUserDetails(localUserData)
-            onApiSuccess("DOB Updated")
+    dbReference.child("UsersData/${userId}/userPersonalDetails/dob").setValue(dob)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                var localUserData = getStoredUserDetails()
+                localUserData.userPersonalDetails.dob = dob
+                updateStoredUserDetails(localUserData)
+                onApiSuccess("DOB Updated")
+            } else {
+                showProgress(false)
+                snackBarError(it.exception!!.localizedMessage)
+            }
         }
-        else{
-            showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
-        }
-    }
 }
 
 fun AppBaseActivity.updateORG(
-    userId:String,
+    userId: String,
     dbReference: DatabaseReference,
     org: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child("UsersData/${userId}/userPersonalDetails/company").setValue(org).addOnCompleteListener {
-        if(it.isSuccessful){
-            var localUserData=getStoredUserDetails()
-            localUserData.userPersonalDetails.company=org
-            updateStoredUserDetails(localUserData)
-            onApiSuccess("Organization Name Updated")
+    dbReference.child("UsersData/${userId}/userPersonalDetails/company").setValue(org)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                var localUserData = getStoredUserDetails()
+                localUserData.userPersonalDetails.company = org
+                updateStoredUserDetails(localUserData)
+                onApiSuccess("Organization Name Updated")
+            } else {
+                showProgress(false)
+                snackBarError(it.exception!!.localizedMessage)
+            }
         }
-        else{
-            showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
-        }
-    }
 }
 
 fun AppBaseActivity.updateGender(
-    userId:String,
+    userId: String,
     dbReference: DatabaseReference,
     gender: String,
     onApiSuccess: (String) -> Unit
 ) {
-    dbReference.child("UsersData/${userId}/userPersonalDetails/gender").setValue(gender).addOnCompleteListener {
-        if(it.isSuccessful){
-            var localUserData=getStoredUserDetails()
-            localUserData.userPersonalDetails.gender=gender
-            updateStoredUserDetails(localUserData)
-            onApiSuccess("Gender Updated")
+    dbReference.child("UsersData/${userId}/userPersonalDetails/gender").setValue(gender)
+        .addOnCompleteListener {
+            if (it.isSuccessful) {
+                var localUserData = getStoredUserDetails()
+                localUserData.userPersonalDetails.gender = gender
+                updateStoredUserDetails(localUserData)
+                onApiSuccess("Gender Updated")
+            } else {
+                showProgress(false)
+                snackBarError(it.exception!!.localizedMessage)
+            }
         }
-        else{
-            showProgress(false)
-            snackBarError(it.exception!!.localizedMessage)
-        }
-    }
 }
 

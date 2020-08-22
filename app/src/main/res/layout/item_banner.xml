@@ -59,9 +59,10 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/txt_review_layout"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_30sdp"
-                android:background="@drawable/ic_review_shape"
+                android:background="@drawable/ic_review_shape_black"
                 android:gravity="center">
 
                 <TextView

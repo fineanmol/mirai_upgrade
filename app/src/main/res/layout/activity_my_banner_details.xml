@@ -29,15 +29,15 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.7"
-                    android:background="@color/item_background">
+                    android:layout_weight="8.7"
+                    android:background="@color/gray_80">
 
                     <ImageView
                         android:id="@+id/ivProduct"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:contentDescription="@string/text_todo"
-                        android:src="@color/item_background" />
+                        android:src="@color/gray_80" />
 
                 </RelativeLayout>
 
@@ -66,9 +66,11 @@
                             android:visibility="visible">
 
                             <TextView
-                                style="@style/CartButton"
-                                android:drawableLeft="@drawable/ic_add"
-                                android:text="Order ID" />
+                                android:layout_width="wrap_content"
+                                android:layout_height="24dp"
+                                android:text="Order Id:"
+                                android:textColor="@color/textColorSecondary"
+                                android:textSize="@dimen/font_size_small" /> />
 
                         </LinearLayout>
 

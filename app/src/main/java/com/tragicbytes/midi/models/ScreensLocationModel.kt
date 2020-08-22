@@ -16,4 +16,5 @@ class ScreenDataModel:Serializable {
     var screenGenderRatio:String=""
     var screenAgeGroups:String=""
     var screenImpressions:String=""
+
 }

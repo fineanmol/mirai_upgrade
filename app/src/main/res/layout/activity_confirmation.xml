@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+            android:id="@+id/toolbar_layoutBtn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
@@ -38,18 +38,21 @@
                 app:layout_collapseMode="parallax">
 
                 <RelativeLayout
+                    android:layout_margin="@dimen/_5sdp"
                     android:id="@+id/rlViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_150sdp"
-                    android:background="@color/item_background_common">
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_210sdp"
+                    android:background="@drawable/tvscreenmockup">
 
                     <androidx.viewpager.widget.ViewPager
-                        android:id="@+id/productViewPager"
+                        android:id="@+id/confirmationViewPager"
+                        android:layout_margin="@dimen/_3sdp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="@dimen/_178sdp"
                         android:fitsSystemWindows="true"
+                        android:background="@color/white"
                         android:overScrollMode="never" />
-                    <!--<ImageView
+                  <!--  <ImageView
                         android:id="@+id/productViewPager"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

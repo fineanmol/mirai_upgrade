@@ -33,10 +33,11 @@ class ConfirmationActivity : AppBaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_confirmation)
       //  setToolbarWithoutBackButton(mMainBinding.toolbar)
-       /* toolbar_layout.title = "Advertisement"
+
+        toolbar_layoutBtn.title = "Advertisement Confirmation"
         ivBack.onClick {
             onBackPressed()
-        }*/
+        }
         /*title = getString(R.string.title_advertisement_confirmation)*/
         dbReference = FirebaseDatabase.getInstance().reference
 
@@ -47,6 +48,7 @@ class ConfirmationActivity : AppBaseActivity() {
         adv_end_date_time.text="End Date: ${getShortDate(ongoingAdv.endOn.toLong())}, ${getShortTime(ongoingAdv.endOn.toLong())}"
         adv_gender_pref.text = "Gender      :${ongoingAdv.advGenderPref}"
         adv_age_group_pref.text = "Age Group:${ongoingAdv.advAgePref[0]}"
+        
 
 
         screenCount.text = "Selected Screens (${ongoingAdv.screens.size})"

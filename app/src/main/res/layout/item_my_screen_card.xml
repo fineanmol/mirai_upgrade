@@ -35,7 +35,7 @@
                         android:text="Screen ID -"
                         android:textColor="@color/textColorPrimary" />
                     <TextView
-                        android:id="@+id/tvOrderId"
+                        android:id="@+id/bScreenId"
                         style="@style/Heading"
                         android:text="2563257326"
                         android:layout_marginStart="@dimen/spacing_control"
@@ -86,19 +86,48 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:layout_gravity="center_vertical"
+                            android:text="Name -" />
+
+                        <TextView
+                            android:id="@+id/bScreenName"
+                            style="@style/OrderTextView"
+                            tools:text="Ansal Plaza Screen"
+                            android:visibility="visible"
+                            android:layout_marginTop="0dp"
+                            android:textSize="@dimen/font_size_medium"
+                            android:layout_marginStart="@dimen/spacing_control"
+                            android:textColor="@color/blacklight" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_marginTop="@dimen/spacing_control"
+                        android:layout_marginEnd="@dimen/spacing_standard"
+                        android:layout_marginBottom="@dimen/spacing_standard"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/OrderTextView"
+                            android:layout_marginTop="0dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
                             android:text="Price -" />
 
                         <TextView
-                            android:id="@+id/tvTotalAmount"
+                            android:id="@+id/bScreenPrice"
                             style="@style/OrderTextView"
                             tools:text=" ₹100"
                             android:visibility="visible"
                             android:layout_marginTop="0dp"
-                            android:textSize="@dimen/font_size_normal"
+                            android:textSize="@dimen/font_size_medium"
                             android:layout_marginStart="@dimen/spacing_control"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
+
 
                 </LinearLayout>
                 <RelativeLayout
@@ -108,7 +137,7 @@
                     android:layout_marginBottom="@dimen/_15sdp">
 
                     <com.tragicbytes.midi.utils.CircleView
-                        android:id="@+id/ivCircle"
+                        android:id="@+id/ivCircleSubmitted"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         app:circle_gravity="bottom"
@@ -119,11 +148,11 @@
                         android:id="@+id/ivLine"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_40sdp"
-                        android:layout_below="@id/ivCircle"
+                        android:layout_below="@id/ivCircleSubmitted"
                         app:line_color="@color/track_grey" />
 
                     <com.tragicbytes.midi.utils.CircleView
-                        android:id="@+id/ivCircle1"
+                        android:id="@+id/ivCircleApproved"
                         android:layout_width="@dimen/_20sdp"
                         android:layout_height="@dimen/_20sdp"
                         android:layout_below="@id/ivLine"
@@ -137,19 +166,19 @@
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:text="Adv. Submitted"
-                        android:layout_toEndOf="@id/ivCircle"
+                        android:layout_toEndOf="@id/ivCircleSubmitted"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/font_size_small" />
 
                     <TextView
-                        android:id="@+id/tvDate"
+                        android:id="@+id/bSubmittedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvTrack1"
                         android:text="18 Aug 2020"
                         android:layout_marginStart="@dimen/spacing_standard"
-                        android:layout_toEndOf="@id/ivCircle"
+                        android:layout_toEndOf="@id/ivCircleSubmitted"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_nano" />
@@ -161,7 +190,7 @@
                         android:layout_below="@id/ivLine"
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_marginTop="-6dp"
-                        android:layout_toEndOf="@id/ivCircle1"
+                        android:layout_toEndOf="@id/ivCircleApproved"
                         android:text="Adv. Approved"
                         android:drawablePadding="@dimen/spacing_middle"
                         android:textAppearance="@style/FontMedium"
@@ -169,13 +198,13 @@
                         android:textSize="@dimen/font_size_small" />
 
                     <TextView
-                        android:id="@+id/tvDeliveryDate"
+                        android:id="@+id/bApprovedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvTrack2"
                         android:text="19 Aug 2020"
                         android:layout_marginStart="@dimen/spacing_standard"
-                        android:layout_toEndOf="@id/ivCircle"
+                        android:layout_toEndOf="@id/ivCircleApproved"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_nano"
@@ -185,9 +214,9 @@
                         android:id="@+id/tvDelivered"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvDeliveryDate"
+                        android:layout_below="@id/bApprovedDate"
                         android:layout_marginStart="@dimen/spacing_standard"
-                        android:layout_toEndOf="@id/ivCircle"
+                        android:layout_toEndOf="@id/ivCircleApproved"
                         android:text="@string/lbl_delivery_status"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"

@@ -121,8 +121,8 @@
     <string name="lbl_my_orders">My Orders</string>
     <string name="lbl_address_manager">Address Manager</string>
     <string name="lbl_verify_now">Verify now</string>
-    <string name="lbl_get_newest_offers">Get newest offers</string>
-    <string name="lbl_please_verify_your_email_or_number">Please verify your email or number</string>
+    <string name="lbl_get_newest_offers">and advertise in a smart way </string>
+    <string name="lbl_please_verify_your_email_or_number">Please verify your Email</string>
     <string name="lbl_remove">Remove</string>
     <string name="lbl_move_to_cart">Move to Cart</string>
     <string name="lbl_enable">Enable</string>
