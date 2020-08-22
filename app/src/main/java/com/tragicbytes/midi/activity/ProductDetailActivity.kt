@@ -637,7 +637,7 @@ class ProductDetailActivity : AppBaseActivity(){
                                     adsDetails.advTagline=advDetails.advTagline
                                     adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
                                     adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
-                                    adsDetails.advRange = rangeVal.toString()
+                                    adsDetails.advRange = rangeVal.text.toString()
                                     var localUserDetails=getStoredUserDetails()
                                     var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                                     advDetails.add(adsDetails)
