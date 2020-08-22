@@ -37,7 +37,7 @@ class TransactionDetailsActivity : AppBaseActivity() {
 
         tansactionSupportBtn.onClick {
              try {
-                 val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.text_iqonicdesign_gmail_com), null))
+                 val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto:", getString(R.string.text_iqonicdesign_gmail_com), null))
                  emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Need help with Transaction "+ (mTransactionDetails?.transactionId))
                  emailIntent.putExtra(Intent.EXTRA_TEXT, "I am having an issue regarding the transaction ")
                  startActivity(Intent.createChooser(emailIntent, "Send email..."))
@@ -71,9 +71,9 @@ class TransactionDetailsActivity : AppBaseActivity() {
             "2" -> {
                 transactionAmount.text= mTransactionDetails.transactionAmount.currencyFormat("INR")
                 transactionRemark.text="Money Paid to Advertisement"
-                transactionAmount.setTextColor(resources.getColor(R.color.green))
-                transactionRemark.setTextColor(resources.getColor(R.color.green))
-                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green))
+                transactionAmount.setTextColor(resources.getColor(R.color.green_dark))
+                transactionRemark.setTextColor(resources.getColor(R.color.green_dark))
+                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green_dark))
                 transactionIcon.isGone()
             }
             else -> transactionRemark.text=""

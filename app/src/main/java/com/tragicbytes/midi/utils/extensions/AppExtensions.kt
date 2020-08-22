@@ -163,7 +163,11 @@ fun fetchUserData(
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
-                onFailed("Cancelled while fetching details!")
+                try {
+                    onFailed("Cancelled while fetching details!")
+                } catch (e: Exception) {
+
+                }
             }
         })
 }
@@ -289,6 +293,7 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(KEY_ADDRESS)
     getSharedPrefInstance().removeKey(KEY_USER_ADDRESS)
 }
+
 fun clearAdsDataPref() {
     getSharedPrefInstance().removeKey(ADV_LOGO)
     getSharedPrefInstance().removeKey(ADV_NAME)
@@ -1073,11 +1078,14 @@ fun setWalletItem(
     item: TransactionDetails,
     context: WalletTransactionsActivity
 ) {
-    view.tPaymentId.text = item.transactionId
+    view.tPaymentId.text = "Payment Id\n"+ item.transactionId
+
     if(item.transactionStatus=="1") {
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.text = "+ ₹"  + item.transactionAmount
             view.tTransactionText.text= "Money Added"
+            view.tPaymentId.isGone()
+
 
         } else {
             view.tAmount.text = item.transactionAmount.currencyFormat()
