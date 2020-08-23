@@ -35,6 +35,7 @@ class SingleAdvertisementDetails:Serializable{
     var advUserBannerLogo:String=""
     var advBannerUrl:String=""
     var advGenderPref:String=""
+    var advOverallStatus:String=""
     var advAgePref:ArrayList<String> =ArrayList()
     var advRange:String=""
     var startFrom:String=""
@@ -53,6 +54,7 @@ class TransactionDetails: Serializable {
     var transactionAmount:String=""
     var transactionDate:Long= Long.MIN_VALUE
     var transactionId:String=""
+    var orderId:String=""
     var transactionMode:String=""
     var email: String=""
     var phone: String = ""

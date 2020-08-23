@@ -3,6 +3,7 @@ package com.tragicbytes.midi.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.tragicbytes.midi.AppBaseActivity
@@ -105,9 +106,11 @@ class ConfirmationActivity : AppBaseActivity() {
         var newTransactionsDetails = TransactionDetails()
         newTransactionsDetails.transactionStatus = 2.toString()
         newTransactionsDetails.email = getStoredUserDetails().userPersonalDetails.email
-        newTransactionsDetails.transactionId = "ORDER001"
+        newTransactionsDetails.transactionId = "pay_ORDER001"
         newTransactionsDetails.transactionAmount = (-totalScreenPrice).toString()
+        newTransactionsDetails.orderId = onGoingAdv.advId.toString()
         newTransactionsDetails.phone = getStoredUserDetails().userPersonalDetails.phone
+
         updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
             updateWalletAmount(dbReference, onSuccess = {
                 showProgress(false)
@@ -118,14 +121,14 @@ class ConfirmationActivity : AppBaseActivity() {
                 snackBar("Payment Processed. Processing Advertisement")
                 dbReference.child("UsersData/${getStoredUserDetails().userId}")
                     .setValue(localUserData).addOnSuccessListener {
-                        snackBar("Congrats! Your Advertisement Submitted for Approval.")
+                        snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
                     }
             }, onFailed = {
-                snackBar("Error Occured")
+                snackBarError("Error Occurred")
                 showProgress(false)
             })
         }, onFailed = {
-            snackBar("Unable to process Transaction")
+            snackBarError("Unable to process Transaction")
         })
     }
 

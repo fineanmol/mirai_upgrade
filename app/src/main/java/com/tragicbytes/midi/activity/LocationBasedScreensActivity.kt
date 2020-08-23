@@ -66,7 +66,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             dialog.show()
         }
         sContinue.onClick {
-            var ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
+            val ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
             ongoingAdv.screens=selectedScreens
             launchActivity<ConfirmationActivity> {
                 putExtra("ongoing_adv",ongoingAdv)
@@ -105,7 +105,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     private fun fetchLocationBasedScreens(location: String) {
         selectedScreens.clear()
         totalAmount = 0
-        sTotalScreenAmount.text = getString(R.string.RS)+" "+"$totalAmount"
+        sTotalScreenAmount.text = "$totalAmount".currencyFormat("INR")
         dbReference.child("AvailableLocations/${location}/screenData")
             .addValueEventListener(
                 object : ValueEventListener {
@@ -154,7 +154,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                     totalAmount -= it
                     selectedScreens.remove(screensList[pos])
                 })
-            sTotalScreenAmount.text = "$$totalAmount"
+            sTotalScreenAmount.text = "$totalAmount".currencyFormat("INR")
         }
     }
 

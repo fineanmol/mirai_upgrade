@@ -41,8 +41,8 @@
                     android:layout_margin="@dimen/_5sdp"
                     android:id="@+id/rlViewPager"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_210sdp"
-                    android:background="@drawable/tvscreenmockup">
+                    android:layout_height="@dimen/_185sdp"
+                    android:background="@drawable/screen_mockup_black">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/confirmationViewPager"

@@ -1055,7 +1055,7 @@ fun setScreenData(
     }
     view.locationTitle.text = item.screenLocation
     view.addressTitle.text = item.screenCity + "," + item.screenPincode
-    view.screen_price.text = "$${item.screenPrice}"
+    view.screen_price.text = "${item.screenPrice}".currencyFormat("INR")
 }
 
 fun setChartData(
@@ -1250,12 +1250,16 @@ fun setBannerData(
             })
         view.tvBannerId.text = "Banner ${position + 1}"
         view.tvBannerEndDate.text = "Expires On ${getShortDate(item.endOn.toLong())}"
-        if (item.rejectionCount == "0") {
+        if (item.advOverallStatus == "0") {
             view.txt_review.text = "Pending"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
         }
-        if (item.rejectionCount == "NA") {
+        else if (item.advOverallStatus == "1") {
             view.txt_review.text = "Live"
+            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
+        }
+        else if (item.advOverallStatus == "2") {
+            view.txt_review.text = "Partially Live"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
         }
     }
