@@ -11,6 +11,7 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
@@ -79,6 +80,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
 
         Checkout.preload(applicationContext)
+        getSharedPrefInstance().removeKey(Constants.SharedPref.ADS_BANNER_URL)
         dbReference = FirebaseDatabase.getInstance().reference
         storageReference=FirebaseStorage.getInstance().reference
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
@@ -565,14 +567,14 @@ class ProductDetailActivity : AppBaseActivity(){
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ), onResult = {
                     if (it) {
+                        val adsDetails=SingleAdvertisementDetails()
                         showProgress(true)
                         this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
                             storageReference!!,
                             myImages[0],
                             onSuccess = { bannerImageUrl ->
-                                showProgress(false)
+                                /*showProgress(false)
                                 var startDate = startDateVal.text.toString()
-//                                if (startDate == "Today") startDate = LocalDate.now().toString()
 
                                 if(intent.getSerializableExtra(DATA)!=null){
                                     mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
@@ -580,7 +582,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
                                 //region When Create Ads
                                 if (mProductModel!!.name == "Custom Banner") {
-                                    /*val adsDetails = AdDetailsModel.AdsCompleteDetails(
+                                    *//*val adsDetails = AdDetailsModel.AdsCompleteDetails(
                                         adDetails,
                                         adsGender,
                                         adsAgeGroup,
@@ -588,12 +590,11 @@ class ProductDetailActivity : AppBaseActivity(){
                                         endDateVal.text.toString(),
                                         startTimeVal.text.toString(),
                                         endTimeVal.text.toString(),
-                                        *//*"₹" + rangeVal.textToString(),*//*
+                                        *//**//*"₹" + rangeVal.textToString(),*//**//*
                                         bannerImageUrl
                                     )
-                                    saveBannerDetailsToDB(adsDetails)*/
+                                    saveBannerDetailsToDB(adsDetails)*//*
                                 } else {
-                                    val adsDetails=SingleAdvertisementDetails()
                                     adsDetails.advId=generateString()
                                     getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
                                     adsDetails.advAgePref.add(advAgeGroupPref)
@@ -604,22 +605,47 @@ class ProductDetailActivity : AppBaseActivity(){
                                     adsDetails.advTagline=advDetails.advTagline
                                     adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
                                     adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
-                                    /*adsDetails.advRange = rangeVal.text.toString()*/
+                                    *//*adsDetails.advRange = rangeVal.text.toString()*//*
                                     var localUserDetails=getStoredUserDetails()
                                     var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                                     advDetails.add(adsDetails)
                                     localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
                                     saveBannerDetailsToDB(localUserDetails,adsDetails)
-                                }
+                                }*/
+                                Log.d("xxx","upload-success")
                             },onUploading = {
-                                if(it>5F){
+                                /*if(it>5F){
                                     determinate.resetIcon()
                                     determinate.visibility=View.VISIBLE
                                     determinate.setProgress(5F)
                                 }
                                 determinate.showShadow(true)
                                 determinate.showProgress(true)
-                                determinate.setProgress(it)
+                                determinate.setProgress(it)*/
+                                Log.d("xxx","uploading${it}")
+                                adsDetails.advId=generateString()
+                                getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
+                                adsDetails.advAgePref.add(advAgeGroupPref)
+                                adsDetails.advGenderPref=advGenderPref
+//                                adsDetails.advBannerUrl=bannerImageUrl
+                                adsDetails.advBrandName= advDetails.advBrandName
+                                adsDetails.advDescription=advDetails.advDescription
+                                adsDetails.advTagline=advDetails.advTagline
+                                adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
+                                adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
+                                /*adsDetails.advRange = rangeVal.text.toString()*/
+                                var localUserDetails=getStoredUserDetails()
+                                var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
+                                advDetails.add(adsDetails)
+                                localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
+                                snackBar("Ads Details Saved")
+                                showProgress(false)
+                                launchActivity<LocationBasedScreensActivity> {
+                                    putExtra("ongoing_adv", adsDetails)
+                                }
+                            },
+                            onFailed = {
+                                Log.d("xxx","upload-failed")
                             }
                         )
                     } else {
@@ -662,11 +688,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 showProgress(false)
 
             }*/
-        snackBar("Ads Saved")
-        showProgress(false)
-        launchActivity<LocationBasedScreensActivity> {
-            putExtra("ongoing_adv", adsDetails)
-        }
+
     }
 
     private fun generateString(): String? {

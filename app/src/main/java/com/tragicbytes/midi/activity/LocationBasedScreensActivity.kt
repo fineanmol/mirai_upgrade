@@ -15,10 +15,12 @@ import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.ScreensLocationModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlin.properties.Delegates
 
 class LocationBasedScreensActivity : AppBaseActivity() {
     private var mQuntity: String = "1"
@@ -41,6 +43,17 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         title = getString(R.string.title_location)
 
         dbReference = FirebaseDatabase.getInstance().reference
+
+
+        var foo:String by Delegates.observable("") { property, oldValue, newValue ->
+
+            Log.d("loggg","gggol")
+
+        }
+
+        if(!getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL).isNullOrBlank()){
+            determinate.visibility=View.VISIBLE
+        }
 
         rcvScreens.setVerticalLayout()
 
