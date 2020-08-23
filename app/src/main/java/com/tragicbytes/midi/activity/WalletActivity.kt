@@ -122,6 +122,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             newTransactionsDetails.transactionId = paymentData.paymentId
             newTransactionsDetails.transactionAmount = addAmount.textToString()
             newTransactionsDetails.phone = paymentData.userContact
+            newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {
                     walletAmount.text =
@@ -154,6 +155,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             newTransactionsDetails.transactionId = paymentData.paymentId
             newTransactionsDetails.transactionAmount = addAmount.textToString()
             newTransactionsDetails.phone = paymentData.userContact
+            newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
 
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {

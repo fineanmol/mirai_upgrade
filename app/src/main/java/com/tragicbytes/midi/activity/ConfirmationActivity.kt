@@ -104,6 +104,7 @@ class ConfirmationActivity : AppBaseActivity() {
         newTransactionsDetails.transactionAmount = (-totalScreenPrice).toString()
         newTransactionsDetails.orderId = onGoingAdv.advId.toString()
         newTransactionsDetails.phone = getStoredUserDetails().userPersonalDetails.phone
+        newTransactionsDetails.transactionMessage="Transaction For Banner ${newTransactionsDetails.transactionId}"
 
         updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
             updateWalletAmount(dbReference, onSuccess = {

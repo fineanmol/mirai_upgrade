@@ -59,4 +59,5 @@ class TransactionDetails: Serializable {
     var transactionMode:String=""
     var email: String=""
     var phone: String = ""
+    var transactionMessage:String=""
 }
