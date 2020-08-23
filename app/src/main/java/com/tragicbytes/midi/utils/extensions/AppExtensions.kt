@@ -1328,7 +1328,8 @@ fun Activity.saveLogoImageToStorage(
     storageReference: StorageReference,
     personalizedBannerBitmap: Bitmap,
     onSuccess: (String) -> Unit,
-    onUploading: (Float) -> Unit
+    onUploading: (Float) -> Unit,
+    onFailed: (String) -> Unit
 ) {
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(
@@ -1351,6 +1352,7 @@ fun Activity.saveLogoImageToStorage(
                 getSharedPrefInstance().setValue(ADS_BANNER_URL, downloadUri)
                 onSuccess(downloadUri.toString())
             } else {
+                onFailed(task.exception!!.localizedMessage)
                 snackBar(task.exception!!.localizedMessage)
             }
         }.addOnFailureListener {
