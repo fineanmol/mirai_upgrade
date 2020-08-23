@@ -73,7 +73,6 @@ class ProductDetailActivity : AppBaseActivity(){
     private var mYear: Int = 0
     private var mDay: Int = 0
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         makeTransparentStatusBar()
@@ -190,18 +189,11 @@ class ProductDetailActivity : AppBaseActivity(){
         mIsRangeExist = true
 
 
+        val sdf = SimpleDateFormat("dd-M-yyyy")
+        val currentDate = sdf.format(Date())
+        startDateVal.text=currentDate
 
         startDateVal.onClick {
-//            getSharedPrefInstance().removeKey(Constants.AdvTimeDetails.Start_Date)
-            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Calendar.getInstance()
-            } else {
-                TODO("VERSION.SDK_INT < N")
-            }
-            mYear = c[Calendar.YEAR]
-
-            mMonth = c[Calendar.MONTH]
-            mDay = c[Calendar.DAY_OF_MONTH]
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -210,23 +202,10 @@ class ProductDetailActivity : AppBaseActivity(){
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
             datePickerDialog.show()
-            val coMonth = c[Calendar.MONTH]
-            val coDay = c[Calendar.DAY_OF_MONTH]
-
-//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Date,startDateVal.text.toString())
             mIsStartDateExist = !startDateVal.text.isNullOrEmpty()
         }
 
         endDateVal.onClick {
-
-            val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Calendar.getInstance()
-            } else {
-                TODO("VERSION.SDK_INT < N")
-            }
-            mYear = c[Calendar.YEAR]
-            mMonth = c[Calendar.MONTH]
-            mDay = c[Calendar.DAY_OF_MONTH]
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -234,48 +213,36 @@ class ProductDetailActivity : AppBaseActivity(){
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
-
             datePickerDialog.show()
-            val coMonth = c[Calendar.MONTH]
-            val coDay = c[Calendar.DAY_OF_MONTH]
-//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Date,endDateVal.text.toString())
             mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
         }
 
+        val sdf2 = SimpleDateFormat("HH:mm")
+        val currentTime = sdf2.format(Date())
+        startTimeVal.text=currentTime
         startTimeVal.onClick {
-            val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                startTimeVal.text = SimpleDateFormat("HH:mm").format(cal.time)
+                startTimeVal.text = "$hour:$minute"
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
                 timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
+                0,0,
                 true
             ).show()
-//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.Start_Time,startTimeVal.text.toString())
-
             mIsStartTimeExist = true
         }
 
         endTimeVal.onClick {
-            val cal = Calendar.getInstance()
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                cal.set(Calendar.HOUR_OF_DAY, hour)
-                cal.set(Calendar.MINUTE, minute)
-                endTimeVal.text = SimpleDateFormat("HH:mm").format(cal.time)
+                endTimeVal.text = "$hour:$minute"
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
                 timeSetListener,
-                cal.get(Calendar.HOUR_OF_DAY),
-                cal.get(Calendar.MINUTE),
+                0,0,
                 true
             ).show()
-//            getSharedPrefInstance().setValue(Constants.AdvTimeDetails.End_Time,endTimeVal.text.toString())
             mIsEndTimeExist = true
         }
 
