@@ -156,10 +156,5 @@ class ConfirmationActivity : AppBaseActivity() {
             rvItemAnimation()
         }
         rcvScreens.adapter = mScreensAdapter
-
-
     }
-
-
-
 }

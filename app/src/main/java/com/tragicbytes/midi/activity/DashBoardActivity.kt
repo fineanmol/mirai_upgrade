@@ -417,7 +417,7 @@ class DashBoardActivity : AppBaseActivity() {
         if (isLoggedIn()) {
             val user = FirebaseAuth.getInstance().currentUser!!
             civProfile.loadImageFromUrl(
-                user.photoUrl.toString(),
+                getStoredUserDetails().userPersonalDetails.userProfilePic,
                 aPlaceHolderImage = R.drawable.ic_profile
             )
         }
