@@ -15,6 +15,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import android.view.animation.AnimationUtils
@@ -150,6 +151,7 @@ fun fetchUserData(
                     val dbContent =
                         dataSnapshot.getValue(UserDetailsModel::class.java)
                     if (dbContent != null) {
+                        Log.d("xxx","UserDetails Updated!")
                         getSharedPrefInstance().setValue(
                             Constants.SharedPref.USER_DETAILS_OBJECT,
                             Gson().toJson(dbContent)

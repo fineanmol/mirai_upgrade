@@ -14,7 +14,6 @@ import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.UserAdvertisementDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 
 class MyBannersFragment : BaseFragment() {
@@ -46,13 +45,28 @@ class MyBannersFragment : BaseFragment() {
                 (activity as DashBoardActivity).loadHomeFragment()
             }
         }
-        loadApis()
+        refreshLayout.setOnRefreshListener {
+            loadApis()
+            refreshLayout.isRefreshing=false
+        }
+        refreshLayout.viewTreeObserver.addOnScrollChangedListener {
+            if(refreshLayout != null) {
+                refreshLayout.isEnabled = scrollView.scrollY == 0
+            }
+
+        }
+        loadImages()
     }
 
     //region APIs
     private fun loadApis() {
+        showProgress()
         if (isNetworkAvailable()) {
-            loadImages()
+            fetchUserData(dbReference,onSuccess = {
+                loadImages()
+            },onFailed = {
+                snackBar(it)
+            })
         } else {
             activity?.openLottieDialog { loadApis(); onNetworkRetry?.invoke() }
         }
@@ -77,14 +91,14 @@ class MyBannersFragment : BaseFragment() {
                             rcvNewestProduct.hide()
                             toast("Error Occured!")
                             }
-
-
                     }
                 }
-
             )*/
+
+        mAdsCompleteDetailsAdapter?.clearItems()
         mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails)
         llNoItems.visibility=View.GONE
+        hideProgress()
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
