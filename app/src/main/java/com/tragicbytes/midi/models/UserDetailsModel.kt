@@ -43,6 +43,7 @@ class SingleAdvertisementDetails:Serializable{
     var screens =ScreensLocationModel().screenData
     var rejectionCount:String="0"
     var advCost:String=""
+    var advSubmittedOn:String=""
 }
 
 class UserWalletDetails {

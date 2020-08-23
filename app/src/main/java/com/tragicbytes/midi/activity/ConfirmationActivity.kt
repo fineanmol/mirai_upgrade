@@ -3,9 +3,11 @@ package com.tragicbytes.midi.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ServerValue
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
@@ -49,8 +51,6 @@ class ConfirmationActivity : AppBaseActivity() {
         adv_end_date_time.text="End Date: ${getShortDate(ongoingAdv.endOn.toLong())}, ${getShortTime(ongoingAdv.endOn.toLong())}"
         adv_gender_pref.text = "Gender      :${ongoingAdv.advGenderPref}"
         adv_age_group_pref.text = "Age Group:${ongoingAdv.advAgePref[0]}"
-        
-
 
         screenCount.text = "Selected Screens (${ongoingAdv.screens.size})"
         ongoingAdv.screens.forEach { screenDataModel: ScreenDataModel ->
@@ -58,20 +58,14 @@ class ConfirmationActivity : AppBaseActivity() {
             totalScreenPrice += (screenDataModel.screenPrice).toInt()
         }
 
-//        finalScreenAmount.text= totalScreenPrice.toString().currencyFormat("INR")
-//        walletBalance.text = userWalletAmount.currencyFormatNegative("INR")
         finalpayAmount.text = totalScreenPrice.toString().currencyFormat("INR")
-
-        /*finalAmountPrice = if(totalScreenPrice > userWalletAmount.toInt())
-            totalScreenPrice - userWalletAmount.toInt()
-        else 0
-        finalAmount.text = finalAmountPrice.toString().currencyFormat("INR")*/
 
         rcvScreens.setVerticalLayout()
 
         setupScreensAdapter()
 
         mScreensAdapter?.addItems(ongoingAdv.screens)
+
 
         if (totalScreenPrice > getStoredUserDetails().userWalletDetails.totalAmount.toInt())
             tPayBtn.text =
@@ -116,12 +110,21 @@ class ConfirmationActivity : AppBaseActivity() {
                 showProgress(false)
                 var localUserData = getStoredUserDetails()
                 var advList = localUserData.userAdvertisementDetails.singleAdvertisementDetails
+                onGoingAdv.advCost=totalScreenPrice.toString()
                 advList.add(onGoingAdv)
                 localUserData.userAdvertisementDetails.singleAdvertisementDetails = advList
                 snackBar("Payment Processed. Processing Advertisement")
                 dbReference.child("UsersData/${getStoredUserDetails().userId}")
                     .setValue(localUserData).addOnSuccessListener {
-                        snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
+                        dbReference.child("UsersData/${getStoredUserDetails().userId}/userAdvertisementDetails/singleAdvertisementDetails/${localUserData.userAdvertisementDetails.singleAdvertisementDetails.size - 1}/advSubmittedOn")
+                            .setValue(
+                                ServerValue.TIMESTAMP
+                            ).addOnSuccessListener {
+                                snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
+                            }
+                            .addOnFailureListener {
+                                snackBarError("Error Occurred")
+                            }
                     }
             }, onFailed = {
                 snackBarError("Error Occurred")
