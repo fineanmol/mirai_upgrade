@@ -248,9 +248,10 @@ class ProductDetailActivity : AppBaseActivity(){
 
         bannerUpload.onClick {
             if (validateAllValue()) {
+                snackBar("Looks Good")
                 val dialog = getAlertDialog(
                     "While your Banner is processing, Please continue with next details",
-                    "Information",
+                    "Information!",
                     onPositiveClick = { dialog, i ->
 
 
@@ -554,7 +555,7 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
     private fun updateDbValues() {
-        snackBar("Details filled")
+      //  snackBar("Details filled")
         showProgress(true)
 
         try {
@@ -565,12 +566,14 @@ class ProductDetailActivity : AppBaseActivity(){
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ), onResult = {
                     if (it) {
-                        showProgress(true)
+                       // showProgress(true)
                         this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
                             storageReference!!,
                             myImages[0],
                             onSuccess = { bannerImageUrl ->
+
                                 showProgress(false)
+
                                 var startDate = startDateVal.text.toString()
 //                                if (startDate == "Today") startDate = LocalDate.now().toString()
 
@@ -614,13 +617,14 @@ class ProductDetailActivity : AppBaseActivity(){
                             },onUploading = {
                                 if(it>5F){
                                     determinate.resetIcon()
-                                    determinate.visibility=View.VISIBLE
+                                    determinate.visibility= View.VISIBLE
                                     determinate.setProgress(5F)
                                 }
                                 determinate.showShadow(true)
                                 determinate.showProgress(true)
                                 determinate.setProgress(it)
                             }
+
                         )
                     } else {
                         showProgress(false)
