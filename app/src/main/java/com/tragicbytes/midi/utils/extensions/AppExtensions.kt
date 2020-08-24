@@ -1134,7 +1134,7 @@ fun setOrderedScreenData(
     view.bScreenName.text = item.screenLocation
     view.bScreenId.text = item.screenId
     view.bScreenPrice.text = item.screenPrice.currencyFormat("INR")
-    view.bSubmittedDate.text = item.screenAdvSubmittedOn.toString()
+    view.bSubmittedDate.text = getShortDate(singleAdvertisementDetails.advSubmittedOn)
     view.tvApprovedTitle.text = "Status Pending"
     view.ivCircleSubmitted.setCircleColor(ContextCompat.getColor(context, R.color.yellow))
 

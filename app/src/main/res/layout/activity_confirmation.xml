@@ -49,6 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_178sdp"
                         android:layout_margin="@dimen/_3sdp"
+                        android:scaleType="fitCenter"
                         android:background="@color/white"
                         android:fitsSystemWindows="true"
                         android:overScrollMode="never" />
