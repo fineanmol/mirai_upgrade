@@ -209,12 +209,6 @@ fun updateTransactionDetails(
                 .setValue(
                     ServerValue.TIMESTAMP
                 ).addOnSuccessListener {
-                    /*fetchUserData(dbReference,onSuccess = {
-                        onSuccess()
-                    },
-                    onFailed = {
-                        onFailed()
-                    })*/
                     onSuccess()
                 }.addOnFailureListener {
                     onFailed()
@@ -251,7 +245,9 @@ fun updateWalletAmount(
                                     val localUserDetails = getStoredUserDetails()
                                     localUserDetails.userWalletDetails.totalAmount =
                                         sum.toString()
+/*
                                     updateStoredUserDetails(localUserDetails)
+*/
                                     onSuccess(sum.toString())
                                 }
                         }

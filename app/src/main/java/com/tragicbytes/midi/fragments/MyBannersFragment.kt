@@ -97,7 +97,6 @@ class MyBannersFragment : BaseFragment() {
 
         mAdsCompleteDetailsAdapter?.clearItems()
         mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails)
-        llNoItems.visibility=View.GONE
         hideProgress()
     }
 

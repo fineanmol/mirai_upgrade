@@ -63,14 +63,6 @@ class HomeFragment : BaseFragment() {
         dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
-        fetchUserData(dbReference, onSuccess = {
-      //      snackBar("it")
-            hideProgress()
-        },
-            onFailed = {
-            //    snackBar(it)
-                hideProgress()
-            })
 
         rcvNewestProduct.setVerticalLayout()
         rcvRecentSearch.setHorizontalLayout()
@@ -86,6 +78,7 @@ class HomeFragment : BaseFragment() {
         loadApis()
 
         refreshLayout.setOnRefreshListener {
+
             loadApis()
             refreshLayout.isRefreshing=false
         }
@@ -103,6 +96,12 @@ class HomeFragment : BaseFragment() {
     //region APIs
     private fun loadApis() {
         if (isNetworkAvailable()) {
+            fetchUserData(dbReference, onSuccess = {
+                snackBar(it)
+            },
+                onFailed = {
+                    snackBar(it)
+                })
             listAllProducts()
 //            listAllProductCategories();
             getSliders()

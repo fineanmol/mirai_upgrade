@@ -446,7 +446,7 @@
             android:indeterminate="false"
             android:max="100"
             android:src="@drawable/bg_circle_primary"
-            android:visibility="visible"
+            android:visibility="gone"
             app:fbb_autoStart="true"
             app:fbb_endBitmap="@drawable/ic_fab_complete"
             app:fbb_progressColor="#8a2be2"
