@@ -88,21 +88,18 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_baseline_phone_android_24"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="Create Ads From Text" />
 
                 <TextView
                     android:id="@+id/adsImagesBtn"
                     style="@style/SidebarLabel.SidebarOption"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="Ads from Images" />
 
                 <TextView
                     android:id="@+id/paidAdsBtn"
                     style="@style/SidebarLabel.SidebarOption"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="My Ads" />
 
                 <TextView
@@ -110,7 +107,6 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_profile_tab"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="Profile" />
 
                 <TextView
@@ -118,7 +114,6 @@
                     style="@style/SidebarLabel.SidebarOption"
                     android:drawableStart="@drawable/ic_baseline_account_balance_wallet_24"
                     android:gravity="center_vertical"
-                    android:paddingStart="@dimen/_46sdp"
                     android:text="Wallet" />
 
                 <View
