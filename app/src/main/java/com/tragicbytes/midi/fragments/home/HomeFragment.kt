@@ -95,7 +95,7 @@ class HomeFragment : BaseFragment() {
     private fun loadApis() {
         if (isNetworkAvailable()) {
             fetchUserData(dbReference, onSuccess = {
-                snackBar(it)
+//                snackBar(it)
             },
                 onFailed = {
                     snackBar(it)

@@ -151,17 +151,17 @@ fun fetchUserData(
                     val dbContent =
                         dataSnapshot.getValue(UserDetailsModel::class.java)
                     if (dbContent != null) {
-                        Log.d("xxx","UserDetails Updated!")
+                        Log.d("xxx", "UserDetails Updated!")
                         getSharedPrefInstance().setValue(
                             Constants.SharedPref.USER_DETAILS_OBJECT,
                             Gson().toJson(dbContent)
                         )
-                        onSuccess("UserDetails Updated")
+                   //     onSuccess("UserDetails Updated")
                     }
 
 
                 } else {
-                    onFailed("Erorr occurred while fetching details!")
+                    onFailed("Error occurred while fetching details!")
                 }
             }
 
@@ -1127,17 +1127,51 @@ fun setAgeDistributionChartData(
 fun setOrderedScreenData(
     view: View,
     item: ScreenDataModel,
+    singleAdvertisementDetails: SingleAdvertisementDetails,
     context: MyBannerDetailsActivity
 ) {
 
     view.bScreenName.text = item.screenLocation
     view.bScreenId.text = item.screenId
     view.bScreenPrice.text = item.screenPrice.currencyFormat("INR")
-//view.bSubmittedDate.text =
-// view.bApprovedDate.text = item.screenId
-//view.tvDelivered.text = item.
+    view.bSubmittedDate.text = item.screenAdvSubmittedOn.toString()
+    view.tvApprovedTitle.text = "Status Pending"
+    view.ivCircleSubmitted.setCircleColor(ContextCompat.getColor(context, R.color.yellow))
 
-    view.ivCircleSubmitted.setCircleColor(ContextCompat.getColor(context, R.color.green))
+
+    /** 1==Screen Ads Approved*/
+    if (item.screenApprovedStatus == "1") {
+        view.bApprovedDate.visibility =View.VISIBLE
+        view.tvDelivered.visibility= View.VISIBLE
+        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.green))
+        view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.green))
+        view.tvApprovedTitle.text = "Adv. Approved"
+        if (item.screenAdminComment.isNullOrEmpty()) {
+            view.tvDelivered.text = "Your Advertisement has been Published"
+        } else {
+            view.tvDelivered.text = item.screenAdminComment
+        }
+    }
+
+    /** 0==Screen Ads Rejected*/
+    if (item.screenApprovedStatus == "0") {
+        view.bApprovedDate.visibility =View.VISIBLE
+        view.tvDelivered.visibility= View.VISIBLE
+        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.tvDelivered.text = item.screenAdminComment
+        view.tvApprovedTitle.text = "Adv. Rejected"
+        view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
+        view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.track_red))
+        if (item.screenAdminComment.isNullOrEmpty()) {
+            view.tvDelivered.text = "Your Advertisement has been Rejected"
+        } else {
+            view.tvDelivered.text = item.screenAdminComment
+        }
+    }
+
+
+
 
 
 }
@@ -1248,17 +1282,18 @@ fun setBannerData(
             })
         view.tvBannerId.text = "Banner ${position + 1}"
         view.tvBannerEndDate.text = "Expires On ${getShortDate(item.endOn.toLong())}"
-        if (item.advOverallStatus == "0") {
-            view.txt_review.text = "Pending"
+        if (item.advOverallStatus == "0" || item.advOverallStatus == "") {
+            view.txt_review.text = "Pending Review"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
-        }
-        else if (item.advOverallStatus == "1") {
+        } else if (item.advOverallStatus == "1") {
             view.txt_review.text = "Live"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
-        }
-        else if (item.advOverallStatus == "2") {
+        } else if (item.advOverallStatus == "2") {
             view.txt_review.text = "Partially Live"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
+        } else if (item.advOverallStatus == "3") {
+            view.txt_review.text = "Rejected"
+            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape)
         }
     }
 }
@@ -1326,7 +1361,7 @@ fun Activity.saveLogoImageToStorage(
     onSuccess: (String) -> Unit,
     onUploading: (Float) -> Unit,
     onFailed: (String) -> Unit,
-    onUploadStart:()->Unit
+    onUploadStart: () -> Unit
 ) {
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(
@@ -1335,9 +1370,9 @@ fun Activity.saveLogoImageToStorage(
         val ref =
             storageReference.child("uploads/" + getStoredUserDetails().userId + System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
-        var showDialog=true
+        var showDialog = true
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
-            if (task.result.bytesTransferred>0 && showDialog){
+            if (task.result.bytesTransferred > 0 && showDialog) {
                 val dialog = getAlertDialog(
                     "While your Banner is processing, Please continue with next details",
                     "Information",
@@ -1348,7 +1383,7 @@ fun Activity.saveLogoImageToStorage(
                         dialog.dismiss()
                     })
                 dialog.show()
-                showDialog=false
+                showDialog = false
             }
             onUploading((task.result.bytesTransferred / task.result.totalByteCount) * 100F)
             if (!task.isSuccessful) {
@@ -1468,18 +1503,18 @@ fun AppBaseActivity.updateEmail(
         if (xit.isSuccessful) {
             dbReference.child("UsersData/${user.uid}/userPersonalDetails/email")
                 .setValue(user.email).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    showProgress(false)
-                    var localUserdata = getStoredUserDetails()
-                    localUserdata.userPersonalDetails.email = user.email.toString()
-                    updateStoredUserDetails(localUserdata)
-                    onApiSuccess("Email Updated!!!")
-                    sendProfileUpdateBroadcast()
-                } else {
-                    showProgress(false)
-                    snackBarError(it.exception!!.localizedMessage)
+                    if (it.isSuccessful) {
+                        showProgress(false)
+                        var localUserdata = getStoredUserDetails()
+                        localUserdata.userPersonalDetails.email = user.email.toString()
+                        updateStoredUserDetails(localUserdata)
+                        onApiSuccess("Email Updated!!!")
+                        sendProfileUpdateBroadcast()
+                    } else {
+                        showProgress(false)
+                        snackBarError(it.exception!!.localizedMessage)
+                    }
                 }
-            }
         } else {
             showProgress(false)
             snackBarError(xit.exception!!.localizedMessage)
@@ -1501,23 +1536,23 @@ fun AppBaseActivity.updateName(
         if (xit.isSuccessful) {
             dbReference.child("UsersData/${user.uid}/userPersonalDetails/firstName")
                 .setValue(user.displayName?.split(" ")?.first()!!).addOnCompleteListener {
-                if (it.isSuccessful) {
-                    dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName")
-                        .setValue(user.displayName?.split(" ")?.last()!!)
-                    showProgress(false)
-                    var localUserData = getStoredUserDetails()
-                    localUserData.userPersonalDetails.firstName =
-                        user.displayName?.split(" ")?.first()!!
-                    localUserData.userPersonalDetails.lastName =
-                        user.displayName?.split(" ")?.last()!!
-                    updateStoredUserDetails(localUserData)
-                    onApiSuccess("Name Updated!!!")
-                    sendProfileUpdateBroadcast()
-                } else {
-                    showProgress(false)
-                    snackBarError(it.exception!!.localizedMessage)
+                    if (it.isSuccessful) {
+                        dbReference.child("UsersData/${user.uid}/userPersonalDetails/lastName")
+                            .setValue(user.displayName?.split(" ")?.last()!!)
+                        showProgress(false)
+                        var localUserData = getStoredUserDetails()
+                        localUserData.userPersonalDetails.firstName =
+                            user.displayName?.split(" ")?.first()!!
+                        localUserData.userPersonalDetails.lastName =
+                            user.displayName?.split(" ")?.last()!!
+                        updateStoredUserDetails(localUserData)
+                        onApiSuccess("Name Updated!!!")
+                        sendProfileUpdateBroadcast()
+                    } else {
+                        showProgress(false)
+                        snackBarError(it.exception!!.localizedMessage)
+                    }
                 }
-            }
         } else {
             showProgress(false)
             snackBarError(xit.exception!!.localizedMessage)

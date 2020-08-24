@@ -275,6 +275,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
         bannerUpload.onClick {
             if (validateAllValue()) {
+                snackBar("Looks Good")
                 /*val dialog = getAlertDialog(
                     "While your Banner is processing, Please continue with next details",
                     "Information",
@@ -582,7 +583,7 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
     private fun updateDbValues() {
-        snackBar("Details filled")
+      //  snackBar("Details filled")
         showProgress(true)
 
         try {

@@ -31,7 +31,7 @@ class MyBannerDetailsActivity : AppBaseActivity() {
             bindData(singleAdvertisementDetails)
             bannerScreensList.setVerticalLayout()
 
-            setupLocationScreensAdapter()
+            setupLocationScreensAdapter(singleAdvertisementDetails)
 
             mLocationScreensAdapter?.addItems(singleAdvertisementDetails.screens)
 
@@ -47,10 +47,10 @@ class MyBannerDetailsActivity : AppBaseActivity() {
         bEndDate.text=getShortDate(singleAdvertisementDetails.endOn.toLong())
     }
 
-    private fun setupLocationScreensAdapter() {
+    private fun setupLocationScreensAdapter(singleAdvertisementDetails: SingleAdvertisementDetails) {
         mLocationScreensAdapter = RecyclerViewAdapter(
             R.layout.item_my_screen_card,
-            onBind = { view, item, position -> setOrderedScreenData(view, item,this) })
+            onBind = { view, item, position -> setOrderedScreenData(view, item,singleAdvertisementDetails,this) })
 
         bannerScreensList.apply {
             adapter = mLocationScreensAdapter

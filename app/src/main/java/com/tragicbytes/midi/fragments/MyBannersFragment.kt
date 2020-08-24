@@ -100,7 +100,11 @@ class MyBannersFragment : BaseFragment() {
         if(mAdsCompleteDetailsAdapter?.size!! >0){
             llNoItems.visibility=View.GONE
         }
-        hideProgress()
+
+        runDelayed (2000){
+            hideProgress()
+        }
+
     }
 
     private fun setupAdsCompleteDetailsAdapter() {
