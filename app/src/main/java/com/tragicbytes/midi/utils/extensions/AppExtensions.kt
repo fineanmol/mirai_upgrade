@@ -1329,7 +1329,8 @@ fun Activity.saveLogoImageToStorage(
     personalizedBannerBitmap: Bitmap,
     onSuccess: (String) -> Unit,
     onUploading: (Float) -> Unit,
-    onFailed: (String) -> Unit
+    onFailed: (String) -> Unit,
+    onUploadStart:()->Unit
 ) {
     var file = File.createTempFile("image", null, mContext.cacheDir)
     personalizedBannerBitmap.saveAsync(
@@ -1338,7 +1339,21 @@ fun Activity.saveLogoImageToStorage(
         val ref =
             storageReference.child("uploads/" + getStoredUserDetails().userId + System.currentTimeMillis())
         val uploadTask = ref.putFile(Uri.fromFile(file))
+        var showDialog=true
         uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
+            if (task.result.bytesTransferred>0 && showDialog){
+                val dialog = getAlertDialog(
+                    "While your Banner is processing, Please continue with next details",
+                    "Information",
+                    onPositiveClick = { dialog, i ->
+                        onUploadStart()
+                    },
+                    onNegativeClick = { dialog, i ->
+                        dialog.dismiss()
+                    })
+                dialog.show()
+                showDialog=false
+            }
             onUploading((task.result.bytesTransferred / task.result.totalByteCount) * 100F)
             if (!task.isSuccessful) {
                 task.exception?.let {

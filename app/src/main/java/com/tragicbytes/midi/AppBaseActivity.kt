@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.gms.ads.*
 import com.tragicbytes.midi.WooBoxApp.Companion.noInternetDialog
 import com.tragicbytes.midi.activity.DashBoardActivity
+import com.tragicbytes.midi.activity.LocationBasedScreensActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.utils.Constants.SharedPref.LANGUAGE
 import com.tragicbytes.midi.utils.Constants.THEME.DARK
@@ -22,9 +23,11 @@ import com.tragicbytes.midi.utils.extensions.changeToolbarFont
 import com.tragicbytes.midi.utils.extensions.getSharedPrefInstance
 import com.tragicbytes.midi.utils.extensions.launchActivityWithNewTask
 import com.tragicbytes.midi.utils.extensions.switchToDarkMode
+import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.layout_abmob.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 import java.util.*
+import kotlin.properties.Delegates
 
 
 open class AppBaseActivity : AppCompatActivity() {
@@ -32,6 +35,8 @@ open class AppBaseActivity : AppCompatActivity() {
     var language: Locale? = null
     private var themeApp: Int = 0
     var isAdShown=false
+
+
 
     fun setToolbarWithoutBackButton(mToolbar: Toolbar) {
         setSupportActionBar(mToolbar)
@@ -55,6 +60,7 @@ open class AppBaseActivity : AppCompatActivity() {
         }
         themeApp = WooBoxApp.appTheme
         language = Locale(WooBoxApp.language)
+
     }
 
     fun showBannerAds() {

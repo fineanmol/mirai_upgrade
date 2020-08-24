@@ -2,6 +2,7 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -10,16 +11,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ServerValue
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.databinding.ActivityProductDetailBinding
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_confirmation.*
 import kotlinx.android.synthetic.main.activity_confirmation.ivBack
-import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 class ConfirmationActivity : AppBaseActivity() {
 
@@ -90,7 +89,12 @@ class ConfirmationActivity : AppBaseActivity() {
             if(finalAmountPrice>0)
             putExtra("amountNeedForAdv",finalAmountPrice.toString()) }*/
         }
-
+        val myImages = ArrayList<String>()
+        myImages.add(ongoingAdv.advBannerUrl)
+        val imageAdapter = ProductImageAdapter(myImages)
+        confirmationViewPager.adapter = null
+        confirmationViewPager.adapter = imageAdapter
+        confirmationViewPager.adapter?.notifyDataSetChanged()
     }
 
     private fun placeOrder(

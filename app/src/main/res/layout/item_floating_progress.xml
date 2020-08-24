@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/floatingProgress"
+    android:orientation="vertical">
+
+    <mbanje.kurt.fabbutton.FabButton
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:id="@+id/determinate"
+        android:color="#f5d300"
+        android:src="@drawable/bg_circle_primary"
+        android:visibility="visible"
+        android:layout_centerInParent="true"
+        android:indeterminate="false"
+        android:max="100"
+        app:fbb_autoStart="true"
+        app:fbb_progressColor="#8a2be2"
+        app:fbb_progressWidthRatio="0.1"
+        app:fbb_endBitmap="@drawable/ic_fab_complete"
+        app:fbb_showEndBitmap="true">
+
+    </mbanje.kurt.fabbutton.FabButton>
+
+</LinearLayout>

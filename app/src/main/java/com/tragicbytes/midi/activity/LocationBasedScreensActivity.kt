@@ -18,8 +18,14 @@ import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
+import kotlinx.android.synthetic.main.activity_location_based_screens.determinate
+import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.log
 import kotlin.properties.Delegates
 
 class LocationBasedScreensActivity : AppBaseActivity() {
@@ -35,6 +41,29 @@ class LocationBasedScreensActivity : AppBaseActivity() {
 
     private var screensList = ArrayList<ScreenDataModel>()
 
+    private var firstTrigger=true
+
+    var foo2:String by Delegates.observable("") { property, oldValue, newValue ->
+
+        Log.d("xxx","locationActivty")
+
+
+    }
+
+    var ongoingAdv=SingleAdvertisementDetails()
+
+    object SignalChange {
+        var refreshListListeners = ArrayList<() -> Unit>()
+
+        // fires off every time value of the property changes
+        var property1: String by Delegates.observable("initial value") { property, oldValue, newValue ->
+            // do your stuff here
+            refreshListListeners.forEach {
+                it()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +72,19 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         title = getString(R.string.title_location)
 
         dbReference = FirebaseDatabase.getInstance().reference
+        ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
+        firstTrigger=true
 
-
-        var foo:String by Delegates.observable("") { property, oldValue, newValue ->
-
-            Log.d("loggg","gggol")
-
-        }
-
-        if(!getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL).isNullOrBlank()){
+        if(getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL).isNotEmpty()){
             determinate.visibility=View.VISIBLE
+            determinate.setProgress(100F)
+            determinate.showShadow(true)
+            determinate.showProgress(true)
+            ongoingAdv.advBannerUrl=getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL)
         }
+
+        SignalChange.refreshListListeners.add { uploadStatus() }
+
 
         rcvScreens.setVerticalLayout()
 
@@ -79,16 +110,34 @@ class LocationBasedScreensActivity : AppBaseActivity() {
             dialog.show()
         }
         sContinue.onClick {
-            val ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
-            ongoingAdv.screens=selectedScreens
-            launchActivity<ConfirmationActivity> {
-                putExtra("ongoing_adv",ongoingAdv)
+            if (selectedScreens.size > 0 && ongoingAdv.advBannerUrl.isNotEmpty()) {
+                ongoingAdv.screens = selectedScreens
+                launchActivity<ConfirmationActivity> {
+                    putExtra("ongoing_adv", ongoingAdv)
+                }
+            }
+
+            else{
+                snackBarError("Select screen or Reupload Image.")
             }
         }
 
 
         setBarChart()
 
+    }
+
+    fun uploadStatus(){
+        if (firstTrigger){
+            determinate.visibility= View.VISIBLE
+            determinate.showShadow(true)
+            determinate.showProgress(true)
+            firstTrigger=false
+        }
+        determinate.setProgress(SignalChange.property1.toFloat())
+        if(SignalChange.property1=="100"){
+            Log.d("xxx",getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL))
+        }
     }
 
     private fun getAvailableLocationList(list: ArrayList<String>) {

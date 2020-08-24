@@ -147,7 +147,7 @@
         android:layout_marginStart="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_20sdp">
 
-
+        <!--<include layout="@layout/item_floating_progress" />-->
         <mbanje.kurt.fabbutton.FabButton
             android:layout_width="@dimen/button_size"
             android:layout_height="@dimen/button_size"
@@ -162,9 +162,7 @@
             app:fbb_progressColor="#8a2be2"
             app:fbb_progressWidthRatio="0.1"
             app:fbb_endBitmap="@drawable/ic_fab_complete"
-            app:fbb_showEndBitmap="true">
-
-        </mbanje.kurt.fabbutton.FabButton>
+            app:fbb_showEndBitmap="true"/>
 
     </LinearLayout>
     <LinearLayout
