@@ -13,6 +13,7 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
+import com.tragicbytes.midi.fragments.MyBannersFragment
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
@@ -126,6 +127,8 @@ class ConfirmationActivity : AppBaseActivity() {
                                 ServerValue.TIMESTAMP
                             ).addOnSuccessListener {
                                 snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
+                                launchActivity<DashBoardActivity>()
+                                finish()
                             }
                             .addOnFailureListener {
                                 snackBarError("Error Occurred")

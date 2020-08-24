@@ -69,10 +69,8 @@ class HomeFragment : BaseFragment() {
 
         setClickEventListener()
 
-//        ; setupNewArrivalProductAdapter(); setupFeaturedProductAdapter();setTestimonialAdapter()
         setupNewArrivalProductAdapter()
         setupRecentProductAdapter()
-//        setupOfferProductAdapter(); setupSuggestedProductAdapter(); setupYouMayLikeProductAdapter(); setupDealProductAdapter()
 
 
         loadApis()

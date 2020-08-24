@@ -302,7 +302,7 @@ class DashBoardActivity : AppBaseActivity() {
           rvCategory.isNestedScrollingEnabled = false*/
     }
 
-    private fun loadFragment(aFragment: Fragment) {
+    fun loadFragment(aFragment: Fragment) {
         if (selectedFragment != null) {
             if (selectedFragment == aFragment) return
             hideFragment(selectedFragment!!)
