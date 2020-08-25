@@ -93,12 +93,15 @@
                 <TextView
                     android:id="@+id/adsImagesBtn"
                     style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_baseline_add_photo_alternate_24"
                     android:gravity="center_vertical"
                     android:text="Create Ads from Images" />
 
                 <TextView
                     android:id="@+id/paidAdsBtn"
                     style="@style/SidebarLabel.SidebarOption"
+                    android:drawableStart="@drawable/ic_baseline_view_carousel_24"
+
                     android:gravity="center_vertical"
                     android:text="My Ads" />
 
