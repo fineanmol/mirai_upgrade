@@ -56,7 +56,7 @@
                     android:layout_marginStart="@dimen/spacing_standard"
                     android:layout_marginEnd="@dimen/spacing_standard"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ic_profile"
+                    android:src="@drawable/mountain_placeholder"
                     app:civ_border_overlay="true"
                     app:civ_border_color="@color/view_color"
                     app:civ_border_width="@dimen/_4sdp" />

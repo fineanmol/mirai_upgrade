@@ -23,7 +23,6 @@
             android:textAppearance="@style/FontMedium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{(view) -> callback.onClick(view,model)}"
             android:layout_margin="@dimen/spacing_standard"
             android:gravity="center"
             android:background="@drawable/bg_size"
@@ -33,7 +32,7 @@
             android:paddingBottom="@dimen/spacing_control"
             android:src="@drawable/ic_check"
             android:textColor="@color/textColorPrimary"
-            tools:text="XXL"
+            tools:text="18-24"
             android:textSize="@dimen/font_size_small"
             android:tint="@color/white"
             tools:ignore="MissingPrefix" />

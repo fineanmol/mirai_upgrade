@@ -67,9 +67,9 @@
     <string name="lbl_more">More</string>
     <string name="lbl_price">Price</string>
     <string name="lbl_select_all">Select All</string>
-    <string name="lbl_colors">Gender</string>
+    <string name="lbl_colors">Target Gender</string>
     <string name="rs">\u20B9</string>
-    <string name="lbl_size">Age Range</string>
+    <string name="lbl_size">Target Age Range</string>
     <string name="lbl_discount">Discount</string>
     <string name="lbl_ratings">Ratings</string>
     <string name="lbl_reset">Reset</string>
@@ -348,7 +348,7 @@
     <string name="hint_address_line_1">Address 1*</string>
     <string name="hint_address_line_2">Address 2</string>
     <string name="lbl_change_dashboard">Change Dashboard</string>
-    <string name="lbl_more_info">More Info</string>
+    <string name="lbl_more_info">Preferred time to display</string>
     <string name="lbl_please_wait">Please Wait</string>
     <string name="lbl_try_later">Please Try Again Later</string>
     <string name="lbl_profile_saved">Profile Saved Successfully</string>

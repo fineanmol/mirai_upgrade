@@ -60,7 +60,7 @@ class AdvertisementFormActivity : AppBaseActivity() {
         }
         else{
             var defaultImageBitmap=BitmapFactory.decodeResource(applicationContext.resources,
-                R.drawable.ic_profile)
+                R.drawable.mountain_placeholder)
             ivAdsImage.setImageBitmap(defaultImageBitmap)
             encodedImage=""
 

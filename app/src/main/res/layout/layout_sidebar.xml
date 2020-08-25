@@ -94,7 +94,7 @@
                     android:id="@+id/adsImagesBtn"
                     style="@style/SidebarLabel.SidebarOption"
                     android:gravity="center_vertical"
-                    android:text="Ads from Images" />
+                    android:text="Create Ads from Images" />
 
                 <TextView
                     android:id="@+id/paidAdsBtn"
