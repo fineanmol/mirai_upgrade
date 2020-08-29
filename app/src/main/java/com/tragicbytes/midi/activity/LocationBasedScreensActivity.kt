@@ -5,27 +5,23 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.*
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.ScreenDataModel
-import com.tragicbytes.midi.models.ScreensLocationModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
-import kotlinx.android.synthetic.main.activity_location_based_screens.determinate
-import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
+import kotlinx.android.synthetic.main.item_screen.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.math.log
 import kotlin.properties.Delegates
 
 class LocationBasedScreensActivity : AppBaseActivity() {
@@ -37,20 +33,20 @@ class LocationBasedScreensActivity : AppBaseActivity() {
 
     private var totalAmount = 0
 
-    private var selectedScreens:ArrayList<ScreenDataModel> = ArrayList()
+    private var selectedScreens: ArrayList<ScreenDataModel> = ArrayList()
 
     private var screensList = ArrayList<ScreenDataModel>()
 
-    private var firstTrigger=true
+    private var firstTrigger = true
 
-    var foo2:String by Delegates.observable("") { property, oldValue, newValue ->
+    var foo2: String by Delegates.observable("") { property, oldValue, newValue ->
 
-        Log.d("xxx","locationActivty")
+        Log.d("xxx", "locationActivty")
 
 
     }
 
-    var ongoingAdv=SingleAdvertisementDetails()
+    var ongoingAdv = SingleAdvertisementDetails()
 
     object SignalChange {
         var refreshListListeners = ArrayList<() -> Unit>()
@@ -72,15 +68,18 @@ class LocationBasedScreensActivity : AppBaseActivity() {
         title = getString(R.string.title_location)
 
         dbReference = FirebaseDatabase.getInstance().reference
-        ongoingAdv=intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
-        firstTrigger=true
+        ongoingAdv = intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
+        firstTrigger = true
 
-        if(getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL).isNotEmpty()){
-            determinate.visibility=View.VISIBLE
+        if (getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL)
+                .isNotEmpty()
+        ) {
+            determinate.visibility = View.VISIBLE
             determinate.setProgress(100F)
             determinate.showShadow(true)
             determinate.showProgress(true)
-            ongoingAdv.advBannerUrl=getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL)
+            ongoingAdv.advBannerUrl =
+                getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL)
         }
 
         SignalChange.refreshListListeners.add { uploadStatus() }
@@ -115,9 +114,7 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                 launchActivity<ConfirmationActivity> {
                     putExtra("ongoing_adv", ongoingAdv)
                 }
-            }
-
-            else{
+            } else {
                 snackBarError("Select screen or Reupload Image.")
             }
         }
@@ -127,16 +124,20 @@ class LocationBasedScreensActivity : AppBaseActivity() {
 
     }
 
-    fun uploadStatus(){
-        if (firstTrigger){
-            determinate.visibility= View.VISIBLE
+    fun uploadStatus() {
+        if (firstTrigger) {
+            determinate.visibility = View.VISIBLE
             determinate.showShadow(true)
             determinate.showProgress(true)
-            firstTrigger=false
+            firstTrigger = false
         }
         determinate.setProgress(SignalChange.property1.toFloat())
-        if(SignalChange.property1=="100"){
-            Log.d("xxx",getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL))
+        if (SignalChange.property1 == "100") {
+            determinate.visibility = View.GONE
+            Log.d(
+                "xxx",
+                getSharedPrefInstance().getStringValue(Constants.SharedPref.ADS_BANNER_URL)
+            )
         }
     }
 
@@ -189,7 +190,8 @@ class LocationBasedScreensActivity : AppBaseActivity() {
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        toast("Unable to fetch locations")
+                        //   toast("Unable to fetch locations")
+                        snackBarError("Unable to fetch locations")
                     }
                 }
 
@@ -221,37 +223,26 @@ class LocationBasedScreensActivity : AppBaseActivity() {
     }
 
 
-    private fun setBarChart() {
-        val entries = ArrayList<BarEntry>()
-        entries.add(BarEntry(8f, 0f))
-        entries.add(BarEntry(2f, 1f))
-        entries.add(BarEntry(5f, 2f))
-        entries.add(BarEntry(20f, 3f))
-        entries.add(BarEntry(15f, 4f))
-        entries.add(BarEntry(19f, 5f))
+    fun setBarChart() {
+        val NoOfEmp = ArrayList<BarEntry>()
 
-        val barDataSet = BarDataSet(entries, "Cells")
-
-        val labels = ArrayList<String>()
-        labels.add("18-Jan")
-        labels.add("19-Jan")
-        labels.add("20-Jan")
-        labels.add("21-Jan")
-        labels.add("22-Jan")
-        labels.add("23-Jan")
+        NoOfEmp.add(BarEntry(945f, 0f))
+        NoOfEmp.add(BarEntry(1040f, 1f))
+        NoOfEmp.add(BarEntry(1133f, 2f))
+        NoOfEmp.add(BarEntry(1240f, 3f))
+        NoOfEmp.add(BarEntry(1369f, 4f))
+        NoOfEmp.add(BarEntry(1487f, 5f))
+        NoOfEmp.add(BarEntry(1501f, 6f))
+        NoOfEmp.add(BarEntry(1645f, 7f))
+        NoOfEmp.add(BarEntry(1578f, 8f))
+        NoOfEmp.add(BarEntry(1695f, 9f))
 
 
-        /* val data = BarData(labels, barDataSet)
-
-
-
-         ageBarChart.data = data // set the data and list of lables into chart
-        // ageBarChart.description.text="Set Bar Chart Description"
-
-         //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
-         barDataSet.color = resources.getColor(R.color.colorAccent)
-
-       ageBarChart.animateY(5000)*/
+        val bardataset = BarDataSet(NoOfEmp, "Age Groups")
+      //  ageWiseChartGraph.animateY(5000)
+        val data = BarData(bardataset)
+        bardataset.setColors(*ColorTemplate.COLORFUL_COLORS)
+     //   ageWiseChartGraph.data = data
     }
 
     override fun onResume() {

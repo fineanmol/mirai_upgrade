@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class MyBannerScreenDetailsActivity : AppBaseActivity() {
 
-    private var screenDataModel=ScreenDataModel()
+    private var screenDataModel = ScreenDataModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_my_banner_screen_details)
@@ -24,22 +24,29 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         setToolbar(toolbar)
         title = "Screen Details"
 
-        if(intent?.extras?.getSerializable(Constants.KeyIntent.DATA) != null){
-            screenDataModel=intent.getSerializableExtra(Constants.KeyIntent.DATA) as ScreenDataModel
+        if (intent?.extras?.getSerializable(Constants.KeyIntent.DATA) != null) {
+            screenDataModel =
+                intent.getSerializableExtra(Constants.KeyIntent.DATA) as ScreenDataModel
             setPieChartData(screenDataModel)
-           // setLineChart()
+            // setLineChart()
             barChart(screenDataModel)
+            activeTime.text= screenDataModel.screenActiveTime.toString()
+            location.text= screenDataModel.screenLocation
+            city.text= screenDataModel.screenCity
+            comment.text= screenDataModel.screenAdminComment
+
+
         }
     }
 
     private fun setPieChartData(screenDataModel: ScreenDataModel) {
-        var maleValue = screenDataModel.screenGenderRatio.toFloat()
 
+        var maleValue = screenDataModel.screenGenderRatio.toFloat()
         val listPie = ArrayList<PieEntry>()
         val listColors = ArrayList<Int>()
         listPie.add(PieEntry(maleValue, "Male"))
         listColors.add(resources.getColor(R.color.pie1))
-        listPie.add(PieEntry(100-maleValue, "Female"))
+        listPie.add(PieEntry(100 - maleValue, "Female"))
         listColors.add(resources.getColor(R.color.pie2))
 
 
@@ -57,7 +64,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         pieChart.animateY(1400, Easing.EaseInOutQuad)
     }
 
-    private fun setLineChart(){
+    private fun setLineChart() {
         //Part1
         val entries = ArrayList<Entry>()
 
@@ -87,7 +94,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
 
 //Part7
         lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.axisMaximum = 5F+0.1f
+        lineChart.xAxis.axisMaximum = 5F + 0.1f
 
 //Part8
         lineChart.setTouchEnabled(true)
@@ -106,25 +113,24 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
     }
 
     fun barChart(screenDataModel: ScreenDataModel) {
-    val NoOfEmp = ArrayList<BarEntry>()
+        val NoOfEmp = ArrayList<BarEntry>()
 
-    NoOfEmp.add(BarEntry(945f, 0f))
-    NoOfEmp.add(BarEntry(1040f, 1f))
-    NoOfEmp.add(BarEntry(1133f, 2f))
-    NoOfEmp.add(BarEntry(1240f, 3f))
-    NoOfEmp.add(BarEntry(1369f, 4f))
-    NoOfEmp.add(BarEntry(1487f, 5f))
-    NoOfEmp.add(BarEntry(1501f, 6f))
-    NoOfEmp.add(BarEntry(1645f, 7f))
-    NoOfEmp.add(BarEntry(1578f, 8f))
-    NoOfEmp.add(BarEntry(1695f, 9f))
+        NoOfEmp.add(BarEntry(945f, 0f))
+        NoOfEmp.add(BarEntry(1040f, 1f))
+        NoOfEmp.add(BarEntry(1133f, 2f))
+        NoOfEmp.add(BarEntry(1240f, 3f))
+        NoOfEmp.add(BarEntry(1369f, 4f))
+        NoOfEmp.add(BarEntry(1487f, 5f))
+        NoOfEmp.add(BarEntry(1501f, 6f))
+        NoOfEmp.add(BarEntry(1645f, 7f))
+        NoOfEmp.add(BarEntry(1578f, 8f))
+        NoOfEmp.add(BarEntry(1695f, 9f))
 
 
-
-    val bardataset = BarDataSet(NoOfEmp, "No Of Employee")
-    ageWiseChart.animateY(5000)
-    val data = BarData( bardataset)
-    bardataset.setColors(*ColorTemplate.COLORFUL_COLORS)
-    ageWiseChart.setData(data)
-}
+        val bardataset = BarDataSet(NoOfEmp, "Age Groups")
+        ageWiseChart.animateY(5000)
+        val data = BarData(bardataset)
+        bardataset.setColors(*ColorTemplate.COLORFUL_COLORS)
+        ageWiseChart.setData(data)
+    }
 }

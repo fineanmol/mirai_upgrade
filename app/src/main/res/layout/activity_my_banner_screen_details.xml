@@ -11,7 +11,7 @@
 
     <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_below="@+id/appBar"
     android:clipToPadding="false"
     android:overScrollMode="never"
@@ -26,17 +26,144 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/gray_80" />
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="14.5dp"
-                android:layout_weight="1"
-                android:text="Screen Details 1"
-                android:layout_marginTop="20dp"
-                android:textAppearance="@dimen/font_size_normal"
-                android:textColor="@color/blacklight"
-                android:textSize="14sp" />
+                android:layout_marginTop="@dimen/_15sdp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/activeTimeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_25sdp"
+                    android:layout_weight="1"
+                    android:text="Screen Active Time: "
+
+                    android:textAppearance="@dimen/font_size_normal"
+                    android:textColor="@color/blacklight"
+                    android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/activeTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_toEndOf="@+id/activeTimeTitle"
+
+                        android:text="9:00AM - 5:00PM"
+                        android:textAppearance="@dimen/font_size_large"
+                        android:textColor="@color/google_red"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/locationTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25sdp"
+                        android:layout_weight="1"
+                        android:text="Location: "
+                        android:textAppearance="@dimen/font_size_normal"
+                        android:textColor="@color/blacklight"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_toEndOf="@+id/locationTitle"
+                        android:layout_weight="1"
+                        android:text="New Delhi"
+                        android:textAppearance="@dimen/font_size_large"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/cityTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25sdp"
+                        android:layout_weight="1"
+                        android:text="City: "
+                        android:textAppearance="@dimen/font_size_normal"
+                        android:textColor="@color/blacklight"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/city"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_toEndOf="@+id/cityTitle"
+                        android:layout_weight="1"
+
+                        android:text="New Delhi"
+                        android:textAppearance="@dimen/font_size_large"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/commentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_25sdp"
+                        android:layout_weight="1"
+                        android:text="Information: "
+
+                        android:textAppearance="@dimen/font_size_normal"
+                        android:textColor="@color/blacklight"
+                        android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_toEndOf="@+id/commentTitle"
+                        android:layout_weight="1"
+                        android:text="Screen is in Review"
+                        android:textAppearance="@dimen/font_size_large"
+                        android:textColor="@color/green_dark"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -59,7 +186,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="14.5dp"
                     android:layout_weight="1"
                     android:text="Gender Ratio "
                     android:layout_marginTop="-25dp"
@@ -75,6 +201,7 @@
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_120sdp"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_10sdp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp" />
 
@@ -100,7 +227,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginLeft="14.5dp"
                 android:layout_weight="1"
                 android:layout_marginTop="-25dp"
                 android:text="Age Wise Distribution"
@@ -116,12 +242,13 @@
             android:layout_width="@dimen/_120sdp"
             android:layout_height="@dimen/_120sdp"
             android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="315dp"
+            android:layout_height="15dp"
             android:background="@color/gray_80" />
 
 

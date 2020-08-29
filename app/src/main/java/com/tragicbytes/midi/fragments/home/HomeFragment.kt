@@ -113,9 +113,9 @@ class HomeFragment : BaseFragment() {
     private fun getSliders() {
 //        val images = getSlideImagesFromPref()
         val images=ArrayList<SliderImagesResponse>()
-        var sliderImage1=SliderImagesResponse("","",R.drawable.top_banner)
+        var sliderImage1=SliderImagesResponse("","",R.drawable.upload_banner_3)
         var sliderImage2=SliderImagesResponse("","",R.drawable.top_banner_2)
-        var sliderImage3=SliderImagesResponse("","",R.drawable.upload_banner_3)
+        var sliderImage3=SliderImagesResponse("","",R.drawable.top_banner)
 
         images.add(sliderImage1)
         images.add(sliderImage2)
@@ -155,16 +155,7 @@ class HomeFragment : BaseFragment() {
                 removeKey(TERM_CONDITION)
                 removeKey(COPYRIGHT_TEXT)
                 setValue(DEFAULT_CURRENCY, "&#36")
-//                setValue(KEY_ORDER_COUNT, it.total_order)
-//                setValue(THEME_COLOR, it.theme_color)
-//                setValue(WHATSAPP, it.social_link?.whatsapp)
-//                setValue(FACEBOOK, it.social_link?.facebook)
-//                setValue(TWITTER, it.social_link?.twitter)
-//                setValue(INSTAGRAM, it.social_link?.instagram)
-//                setValue(CONTACT, it.social_link?.contact)
-//                setValue(PRIVACY_POLICY, it.social_link?.privacy_policy)
-//                setValue(TERM_CONDITION, it.social_link?.term_condition)
-//                setValue(COPYRIGHT_TEXT, it.social_link?.copyright_text)
+
             }
 
             dbReference.child("AppData/imageTemplates")

@@ -27,8 +27,8 @@
     <string name="lbl_faq">FAQ</string>
     <string name="lbl_help">Help</string>
     <string name="lbl_contact_us">Contact us</string>
-    <string name="lbl_newest_product">Newest Product</string>
-    <string name="lbl_recent_search">Recent Product</string>
+    <string name="lbl_newest_product">Available Templates</string>
+    <string name="lbl_recent_search">Recent Template</string>
     <string name="lbl_top_selling">Top Selling</string>
     <string name="lbl_Featured">Featured Products</string>
     <string name="lbl_offers">Offers</string>
