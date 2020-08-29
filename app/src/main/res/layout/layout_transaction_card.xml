@@ -20,17 +20,18 @@
             android:id="@+id/tIcon"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
+            android:layout_marginTop="@dimen/spacing_small"
             android:background="@drawable/ic_checkbox_circle_fill"
             android:contentDescription="@string/text_todo"
             android:padding="@dimen/_1sdp"
-            android:layout_marginTop="@dimen/spacing_small"
             android:scaleType="fitXY" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
+            android:id="@+id/frstLayout"
+            android:layout_width="@dimen/_150sdp"
             android:layout_height="wrap_content"
-            android:gravity="start"
             android:layout_marginStart="@dimen/_10sdp"
+            android:gravity="start"
             android:paddingTop="@dimen/spacing_control"
             android:paddingBottom="@dimen/spacing_standard">
 
@@ -43,44 +44,6 @@
                 android:textAppearance="@style/FontSemiBold"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_size_small" />
-            <TextView
-                android:id="@+id/tAmount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:layout_marginEnd="@dimen/spacing_middle"
-                android:layout_marginStart="@dimen/_175sdp"
-                android:text="+ \u20B9 loading.."
-                android:textAppearance="@style/FontSemiBold"
-                android:textColor="@color/green"
-                android:textSize="@dimen/font_size_small" />
-            <TextView
-                android:id="@+id/tRefund"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:visibility="gone"
-                android:background="@drawable/bg_primary_light"
-                android:layout_marginTop="22dp"
-                android:layout_marginEnd="@dimen/spacing_middle"
-                android:layout_marginStart="@dimen/_170sdp"
-                android:text="Refund"
-                android:textAppearance="@style/FontSemiBold"
-                android:textColor="@color/green"
-                android:textSize="@dimen/font_size_nano" />
-            <TextView
-                android:id="@+id/tRightArrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:layout_marginTop="@dimen/spacing_mlarge"
-                android:layout_marginEnd="@dimen/spacing_small"
-                android:layout_marginStart="@dimen/_205sdp"
-                android:background="@drawable/ic_keyboard_arrow_right_black"
-                android:textAppearance="@style/FontSemiBold"
-                android:textColor="@color/green"
-              />
 
             <TextView
                 android:id="@+id/tPaymentId"
@@ -92,17 +55,63 @@
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_size_micro"
                 tools:text="Payment Id pay_wyueyuwyue" />
+
             <TextView
                 android:id="@+id/tDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tPaymentId"
-                android:singleLine="true"
                 android:layout_marginTop="@dimen/spacing_medium"
+                android:singleLine="true"
                 android:text="Tuesday, Mar 17,2020"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_size_micro" />
 
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_2sdp"
+            >
+            <TextView
+                android:id="@+id/tAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:text="+ \u20B9 loading.."
+                android:layout_marginStart="@dimen/_28sdp"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/green"
+                android:textSize="@dimen/font_size_small" />
+
+            <TextView
+                android:id="@+id/tRefund"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="@dimen/spacing_middle"
+                android:background="@drawable/bg_primary_light"
+                android:text="Refund"
+                android:layout_marginStart="@dimen/_30sdp"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/green_dark"
+                android:textSize="@dimen/_7sdp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tRightArrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:background="@drawable/ic_keyboard_arrow_right_black"
+                android:layout_marginStart="@dimen/_60sdp"
+                android:textAppearance="@style/FontSemiBold"
+                android:textColor="@color/green" />
 
         </RelativeLayout>
 
