@@ -127,12 +127,12 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_100sdp"
+        android:layout_marginBottom="@dimen/_60sdp"
         android:background="@color/background_color"
         android:clipToPadding="false"
         android:fillViewport="true"
         android:overScrollMode="never"
-        android:paddingBottom="@dimen/_40sdp"
+        android:paddingBottom="@dimen/_25sdp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 

@@ -67,6 +67,7 @@
     <color name="pie1">#08F7FE</color>
     <color name="pie2">#FE53BB</color>
     <color name="aliceBackground">#0b2a43</color>
+    <color name="aliceBackground_light">#0F5E9E</color>
 
 
     <array name="rainbow">

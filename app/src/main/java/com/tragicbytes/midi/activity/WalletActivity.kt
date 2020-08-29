@@ -12,9 +12,11 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
+import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
+import java.util.*
 
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
@@ -54,6 +56,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             }
 
 
+
         }
 
         refreshWalletAmount.onClick {
@@ -64,7 +67,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                 showProgress(false)
                 snackBar("Wallet Refresh Successfully")
             }, onFailed = {
-                snackBar("Error Occured")
+                snackBar("Error Occurred")
                 showProgress(false)
             })
         }
@@ -157,6 +160,16 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             newTransactionsDetails.phone = paymentData.userContact
             newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
 
+            Notify
+                .with(this)
+                .content { // this: Payload.Content.Default
+                    title = "Wallet Amount Refilled"
+                    text =
+                        """${addAmount.textToString().currencyFormat("INR")} has been successfully added to your Wallet!"""
+                }
+                .show()
+
+
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {
                     walletAmount.text =
@@ -169,11 +182,11 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                         finish()
                     }
                 }, onFailed = {
-                    snackBar("Error Occured")
+                    snackBarError("Error Occurred")
                     showProgress(false)
                 })
             }, onFailed = {
-                snackBar("Unable to process Transaction")
+                snackBarError("Unable to process Transaction")
             })
 
         }
