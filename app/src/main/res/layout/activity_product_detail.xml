@@ -10,6 +10,7 @@
             type="com.tragicbytes.midi.models.ProductDataNew" />
 
     </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/htab_maincontent"
         android:layout_width="match_parent"
@@ -92,6 +93,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <ImageView
                             android:id="@+id/ivBack"
                             android:layout_width="@dimen/_25sdp"
@@ -132,10 +134,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background_color"
-            android:fillViewport="true"
-            android:paddingBottom="@dimen/_40sdp"
             android:clipToPadding="false"
+            android:fillViewport="true"
             android:overScrollMode="never"
+            android:paddingBottom="@dimen/_40sdp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
@@ -143,8 +145,6 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/spacing_standard"
                 android:orientation="vertical">
-
-
 
 
                 <RelativeLayout
@@ -162,23 +162,23 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/_14sdp"
                         android:background="@drawable/bg_ractangal"
-                        tools:text="50% Off"
                         android:backgroundTint="@color/red"
-                        android:paddingTop="@dimen/spacing_control_half"
-                        android:paddingBottom="@dimen/spacing_control_half"
                         android:paddingStart="@dimen/spacing_standard"
+                        android:paddingTop="@dimen/spacing_control_half"
                         android:paddingEnd="@dimen/spacing_standard"
+                        android:paddingBottom="@dimen/spacing_control_half"
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/commonColorWhite"
-                        android:textSize="@dimen/font_size_small" />
+                        android:textSize="@dimen/font_size_small"
+                        tools:text="50% Off" />
 
                     <TextView
                         android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{model.name}"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_toStartOf="@id/tvItemProductDiscount"
+                        android:text="@{model.name}"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_medium" />
@@ -189,11 +189,11 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvName"
                         android:layout_marginTop="@dimen/spacing_standard"
-                        tools:text="$80"
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/font_size_xlarge"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:text="$80" />
 
                     <TextView
                         android:id="@+id/tvItemProductOriginalPrice"
@@ -206,34 +206,34 @@
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_toEndOf="@id/tvPrice"
                         android:gravity="center_vertical"
-                        tools:text="$50"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
-                        android:textSize="@dimen/font_size_medium" />
+                        android:textSize="@dimen/font_size_medium"
+                        tools:text="$50" />
 
                     <TextView
                         android:id="@+id/txAvailability"
-                        android:layout_below="@id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/lbl_availability"
+                        android:layout_below="@id/tvPrice"
                         android:layout_marginTop="@dimen/spacing_standard"
+                        android:text="@string/lbl_availability"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_medium" />
 
                     <TextView
                         android:id="@+id/tvAvailability"
-                        android:layout_toEndOf="@id/txAvailability"
-                        android:layout_below="@id/tvPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/lbl_in_stock"
+                        android:layout_below="@id/tvPrice"
                         android:layout_marginStart="@dimen/spacing_control_half"
                         android:layout_marginTop="@dimen/spacing_standard"
+                        android:layout_toEndOf="@id/txAvailability"
+                        android:text="@string/lbl_in_stock"
                         android:textAppearance="@style/FontMedium"
-                        android:textStyle="bold"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/font_size_medium" />
+                        android:textSize="@dimen/font_size_medium"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -245,28 +245,28 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnOutOfStock"
+                        style="@style/MaterialButtonStyle.Filled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MaterialButtonStyle.Filled"
-                        android:text="@string/lbl_out_stock"
-                        android:layout_weight="1"
-                        android:enabled="false"
-                        android:visibility="gone"
-                        android:textColor="@color/textColorSecondary"
-                        android:backgroundTint="@color/light_gray"
                         android:layout_marginStart="@dimen/spacing_middle"
                         android:layout_marginEnd="@dimen/spacing_middle"
+                        android:layout_weight="1"
+                        android:backgroundTint="@color/light_gray"
+                        android:enabled="false"
+                        android:text="@string/lbl_out_stock"
+                        android:textColor="@color/textColorSecondary"
+                        android:visibility="gone"
                         app:cornerRadius="@dimen/spacing_control" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnAddCard"
+                        style="@style/MaterialButtonStyle.Stroked"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        style="@style/MaterialButtonStyle.Stroked"
-                        android:text="@string/lbl_add_to_cart"
-                        android:layout_weight="1"
                         android:layout_marginStart="@dimen/spacing_middle"
                         android:layout_marginEnd="@dimen/spacing_middle"
+                        android:layout_weight="1"
+                        android:text="@string/lbl_add_to_cart"
                         app:cornerRadius="@dimen/spacing_control" />
 
                     <TextView
@@ -303,13 +303,13 @@
                         android:layout_marginStart="@dimen/spacing_standard_new"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         app:hnc_defaultExpand="false"
-                        app:hnc_moreLessGravity="right"
-                        app:hnc_textSize="@dimen/font_size_micro"
                         app:hnc_maxLine="3"
+                        app:hnc_moreLessGravity="right"
                         app:hnc_moreLessShow="true"
                         app:hnc_moreLessTextColor="@color/textColorSecondary"
                         app:hnc_moreLessTextSize="@dimen/font_size_small"
-                        app:hnc_textColor="@color/textColorSecondary" />
+                        app:hnc_textColor="@color/textColorSecondary"
+                        app:hnc_textSize="@dimen/font_size_micro" />
 
                     <TextView
                         style="@style/Heading"
@@ -388,9 +388,8 @@
                         <TextView
                             android:id="@+id/startDateVal"
                             style="@style/MoreInfoSubheading"
-                            android:textAlignment="center"
                             android:text="Choose Date"
-                             />
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -409,20 +408,19 @@
                         <TextView
                             android:id="@+id/endDateVal"
                             style="@style/MoreInfoSubheading"
-                            android:textAlignment="center"
                             android:text="@string/choose_date"
-                            />
+                            android:textAlignment="center" />
                     </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/llLength"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/MoreInfo_heading"
@@ -435,13 +433,13 @@
 
                     <LinearLayout
                         android:id="@+id/llHeight"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/MoreInfo_heading"
@@ -455,12 +453,12 @@
                     <LinearLayout
                         android:id="@+id/llWidth"
                         android:layout_width="match_parent"
-                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/spacing_standard_new"
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_marginEnd="@dimen/spacing_standard_new"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <TextView
                             style="@style/MoreInfo_heading"
@@ -486,11 +484,9 @@
 
                         <TextView
                             android:id="@+id/startTimeVal"
-                            android:textAlignment="center"
                             style="@style/MoreInfoSubheading"
-                            />
+                            android:textAlignment="center" />
                     </LinearLayout>
-
 
 
                     <LinearLayout
@@ -508,10 +504,10 @@
 
                         <TextView
                             android:id="@+id/endTimeVal"
-                            android:textAlignment="center"
                             style="@style/MoreInfoSubheading"
-                           />
+                            android:textAlignment="center" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -531,28 +527,27 @@
                         <EditText
                             android:id="@+id/rangeVal"
                             style="@style/MoreInfoSubheading"
-                            android:textAlignment="center"
-                            android:singleLine="true"
                             android:inputType="number"
+                            android:singleLine="true"
+                            android:textAlignment="center"
 
                             />
-                        </LinearLayout>
+                    </LinearLayout>
 
                 </LinearLayout>
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/selectLocation"
+                    style="@style/MaterialButtonStyle.Filled"
                     android:layout_width="@dimen/_130sdp"
-                    android:visibility="visible"
-                    android:layout_marginTop="@dimen/spacing_xxlarge"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/spacing_middle"
+                    android:layout_marginTop="@dimen/spacing_xxlarge"
                     android:layout_marginEnd="@dimen/spacing_middle"
-                    app:cornerRadius="@dimen/spacing_control"
-                    style="@style/MaterialButtonStyle.Filled"
                     android:text="@string/lbl_cancel"
-                    />
+                    android:visibility="visible"
+                    app:cornerRadius="@dimen/spacing_control" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/bannerUpload"
@@ -573,31 +568,33 @@
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center|bottom"
             android:layout_marginStart="@dimen/_200sdp"
-            android:layout_marginBottom="@dimen/_120sdp">
+            android:layout_marginBottom="@dimen/_120sdp"
+            android:visibility="gone">
 
 
-        <mbanje.kurt.fabbutton.FabButton
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/determinate"
-            android:color="#f5d300"
-            android:src="@drawable/bg_circle_primary"
-            android:visibility="gone"
-            android:layout_centerInParent="true"
-            android:indeterminate="false"
-            android:max="100"
-            app:fbb_autoStart="true"
-            app:fbb_progressColor="#8a2be2"
-            app:fbb_progressWidthRatio="0.1"
-            app:fbb_endBitmap="@drawable/ic_fab_complete"
-            app:fbb_showEndBitmap="true">
+            <mbanje.kurt.fabbutton.FabButton
+                android:id="@+id/determinate"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_centerInParent="true"
+                android:color="#f5d300"
+                android:indeterminate="false"
+                android:max="100"
+                android:src="@drawable/bg_circle_primary"
+                android:visibility="gone"
+                app:fbb_autoStart="true"
+                app:fbb_endBitmap="@drawable/ic_fab_complete"
+                app:fbb_progressColor="#8a2be2"
+                app:fbb_progressWidthRatio="0.1"
+                app:fbb_showEndBitmap="true">
 
-        </mbanje.kurt.fabbutton.FabButton>
+            </mbanje.kurt.fabbutton.FabButton>
 
         </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

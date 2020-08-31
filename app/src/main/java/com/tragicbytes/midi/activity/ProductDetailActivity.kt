@@ -32,6 +32,7 @@ import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
 import com.tragicbytes.midi.utils.extensions.*
+import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_product_detail.*
 import kotlinx.android.synthetic.main.activity_product_detail.determinate
 import kotlinx.android.synthetic.main.activity_product_detail.dots
@@ -112,6 +113,15 @@ class ProductDetailActivity : AppBaseActivity(){
             determinate.setProgress(bannerUploadStatus.toFloat())
             if(bannerUploadStatus=="100"){
                 Log.d("xxx","success")
+                Notify
+                    .with(this)
+                    .asBigText  {
+                        title = "Uploaded Successfully"
+                        expandedText = "Banner is uploaded Successfully!"
+                        bigText = "Please Proceeds with next details"
+                    }
+
+                    .show()
             }
         }
 
@@ -244,7 +254,7 @@ class ProductDetailActivity : AppBaseActivity(){
             mIsEndDateExist = !endDateVal.text.isNullOrEmpty()
         }
 
-        val sdf2 = SimpleDateFormat("HH:mm")
+        val sdf2 = SimpleDateFormat("hh:mm a")
         val currentTime = sdf2.format(Date())
         startTimeVal.text=currentTime
         startTimeVal.onClick {
@@ -301,10 +311,10 @@ class ProductDetailActivity : AppBaseActivity(){
 
     private fun validateAllValue(): Boolean {
         if (!mIsGenderExist) {
-            snackBar("Gender Required ", Snackbar.LENGTH_SHORT)
+            snackBar("Target Gender Required ", Snackbar.LENGTH_SHORT)
             return false
         } else if (!mIsAgeGroupExist) {
-            snackBar("Age Group Required", Snackbar.LENGTH_SHORT)
+            snackBar("Target Age Range Required", Snackbar.LENGTH_SHORT)
             return false
         } else if (!mIsAgeGroupExist) {
             snackBar("Start Date Required", Snackbar.LENGTH_SHORT)
@@ -596,7 +606,7 @@ class ProductDetailActivity : AppBaseActivity(){
                     if (it) {
                         firstTrigger=true
                         val adsDetails=SingleAdvertisementDetails()
-                        adsDetails.advId=generateString()
+                        adsDetails.advId="adv_" +generateOrderId(14).toString()
                         getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
                         adsDetails.advAgePref.add(advAgeGroupPref)
                         adsDetails.advGenderPref=advGenderPref
@@ -664,9 +674,24 @@ class ProductDetailActivity : AppBaseActivity(){
                                 }
                                 bannerUploadStatus=it.toString()
                                 Log.d("xxx","uploading${it}")
+                                Notify
+                                    .with(this)
+                                    .asBigText  {
+                                        title = "Uploading files"
+                                        expandedText = "The Banner is being uploaded!"
+                                        bigText = "uploading ${it} %"
+                                    }
+                                    .show()
                             },
                             onFailed = {
                                 Log.d("xxx","upload-failed")
+                                Notify
+                                    .with(this)
+                                    .asBigText  {
+                                        title = "Uploading Failed"
+                                        expandedText = "The Banner uploading is failed!"
+                                    }
+                                    .show()
                             },
                             onUploadStart={
                                 launchActivity<LocationBasedScreensActivity> {

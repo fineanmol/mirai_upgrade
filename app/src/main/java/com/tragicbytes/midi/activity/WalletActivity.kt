@@ -126,6 +126,14 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             newTransactionsDetails.transactionAmount = addAmount.textToString()
             newTransactionsDetails.phone = paymentData.userContact
             newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
+            Notify
+                .with(this)
+                .content { // this: Payload.Content.Default
+                    title = "Wallet Refilled Failed"
+                    text =
+                        """Transaction of ${addAmount.textToString().currencyFormat("INR")} has been failed !"""
+                }
+                .show()
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                 updateWalletAmount(dbReference, onSuccess = {
                     walletAmount.text =

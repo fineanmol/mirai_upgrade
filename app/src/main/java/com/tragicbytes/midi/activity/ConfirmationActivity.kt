@@ -18,8 +18,10 @@ import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
+import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
 import kotlinx.android.synthetic.main.activity_confirmation.ivBack
+import kotlinx.android.synthetic.main.activity_wallet.*
 
 class ConfirmationActivity : AppBaseActivity() {
 
@@ -105,7 +107,7 @@ class ConfirmationActivity : AppBaseActivity() {
         var newTransactionsDetails = TransactionDetails()
         newTransactionsDetails.transactionStatus = 2.toString()
         newTransactionsDetails.email = getStoredUserDetails().userPersonalDetails.email
-        newTransactionsDetails.transactionId = "pay_ORDER001"
+        newTransactionsDetails.transactionId = "pay_" +generateOrderId(14).toString()
         newTransactionsDetails.transactionAmount = (-totalScreenPrice).toString()
         newTransactionsDetails.orderId = onGoingAdv.advId.toString()
         newTransactionsDetails.phone = getStoredUserDetails().userPersonalDetails.phone
@@ -127,6 +129,14 @@ class ConfirmationActivity : AppBaseActivity() {
                                 ServerValue.TIMESTAMP
                             ).addOnSuccessListener {
                                 snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
+                                Notify
+                                    .with(this)
+                                    .content { // this: Payload.Content.Default
+                                        title = "Advertisement Submitted for Approval"
+                                        text =
+                                            """It'll be live on Screens in no time once it approves.!"""
+                                    }
+                                    .show()
                                 launchActivity<DashBoardActivity>()
                                 finish()
                             }

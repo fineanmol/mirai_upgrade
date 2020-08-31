@@ -190,3 +190,8 @@ fun String.isJsonValid(): Boolean {
 fun String.isValidColor(): Boolean {
     return (contains("#") && length >= 6)
 }
+
+fun generateOrderId(intRange:Int=7): String? {
+    val uuid: String = UUID.randomUUID().toString()
+    return uuid.replace("-".toRegex(), "").slice(0..intRange).toString()
+}
