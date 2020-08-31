@@ -17,11 +17,14 @@ import com.tragicbytes.midi.fragments.MyBannersFragment
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
+import com.tragicbytes.midi.utils.DateTimeUnits
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
 import kotlinx.android.synthetic.main.activity_confirmation.ivBack
 import kotlinx.android.synthetic.main.activity_wallet.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ConfirmationActivity : AppBaseActivity() {
 
@@ -53,6 +56,8 @@ class ConfirmationActivity : AppBaseActivity() {
         adv_end_date_time.text="End Date: ${getShortDate(ongoingAdv.endOn.toLong())}, ${getShortTime(ongoingAdv.endOn.toLong())}"
         adv_gender_pref.text = "Gender      :${ongoingAdv.advGenderPref}"
         adv_age_group_pref.text = "Age Group:${ongoingAdv.advAgePref[0]}"
+
+    //    getDateDiff(ongoingAdv.startFrom.toDate(),ongoingAdv.startFrom.toDate(),DateTimeUnits.DAYS)
 
         screenCount.text = "Selected Screens (${ongoingAdv.screens.size})"
         ongoingAdv.screens.forEach { screenDataModel: ScreenDataModel ->
@@ -132,9 +137,9 @@ class ConfirmationActivity : AppBaseActivity() {
                                 Notify
                                     .with(this)
                                     .asBigText  {
-                                        title = "Advertisement Processed #〽adeInIndia✨"
-                                        expandedText = "Congrats!🎉 Your Advertisement submitted for approval!"
-                                        bigText = "We will notify you once it goes live.🔥"
+                                        title = "Congrats!\uD83C\uDF89 Advertisement Processed #MadeInIndia✨"
+                                        expandedText = "Your Advertisement is submitted for approval!"
+                                        bigText = "We will notify you once it goes live.🔥\uD83D\uDD25"
                                     }
                                     .show()
                                 launchActivity<DashBoardActivity>()

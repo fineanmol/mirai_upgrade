@@ -115,16 +115,16 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
     fun barChart(screenDataModel: ScreenDataModel) {
         val NoOfEmp = ArrayList<BarEntry>()
 
-        NoOfEmp.add(BarEntry(945f, 0f))
-        NoOfEmp.add(BarEntry(1040f, 1f))
-        NoOfEmp.add(BarEntry(1133f, 2f))
-        NoOfEmp.add(BarEntry(1240f, 3f))
-        NoOfEmp.add(BarEntry(1369f, 4f))
-        NoOfEmp.add(BarEntry(1487f, 5f))
-        NoOfEmp.add(BarEntry(1501f, 6f))
-        NoOfEmp.add(BarEntry(1645f, 7f))
-        NoOfEmp.add(BarEntry(1578f, 8f))
-        NoOfEmp.add(BarEntry(1695f, 9f))
+        NoOfEmp.add(BarEntry(94f, 0f))
+        NoOfEmp.add(BarEntry(100f, 1f))
+        NoOfEmp.add(BarEntry(113f, 2f))
+        NoOfEmp.add(BarEntry(120f, 3f))
+        NoOfEmp.add(BarEntry(139f, 4f))
+        NoOfEmp.add(BarEntry(147f, 5f))
+        NoOfEmp.add(BarEntry(151f, 6f))
+        NoOfEmp.add(BarEntry(165f, 7f))
+        NoOfEmp.add(BarEntry(158f, 8f))
+        NoOfEmp.add(BarEntry(165f, 9f))
 
 
         val bardataset = BarDataSet(NoOfEmp, "Age Groups")

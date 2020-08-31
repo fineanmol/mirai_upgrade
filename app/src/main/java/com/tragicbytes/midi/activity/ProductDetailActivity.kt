@@ -31,6 +31,7 @@ import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
+import com.tragicbytes.midi.utils.DateTimeUnits
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_product_detail.*
@@ -116,9 +117,9 @@ class ProductDetailActivity : AppBaseActivity(){
                 Notify
                     .with(this)
                     .asBigText  {
-                        title = "Uploaded Successfully📢"
-                        expandedText = "Your banner is uploaded successfully!⚡"
-                        bigText = "Please Proceeds by filling next details."
+                        title = "Uploaded Successfully! 📢📣"
+                        expandedText = "Your banner is uploaded successfully ⚡⚡"
+                        bigText = "Please proceed by filling next details."
                     }
 
                     .show()
@@ -284,24 +285,26 @@ class ProductDetailActivity : AppBaseActivity(){
         }
 
         bannerUpload.onClick {
-            if (validateAllValue()) {
-                snackBar("Looks Good")
-                /*val dialog = getAlertDialog(
-                    "While your Banner is processing, Please continue with next details",
-                    "Information",
-                    onPositiveClick = { dialog, i ->
+
+             if (validateAllValue()) {
+                 snackBar("Looks Good")
+                 val dialog = getAlertDialog(
+                     "While your Banner is processing, Please continue with next details",
+                     "Information",
+                     onPositiveClick = { dialog, i ->
 
 
-                            updateDbValues()
+                             updateDbValues()
 
-                    },
-                    onNegativeClick = { dialog, i ->
-                        dialog.dismiss()
-                    })
-                dialog.show()*/
-                updateDbValues()
+                     },
+                     onNegativeClick = { dialog, i ->
+                         dialog.dismiss()
+                     })
+                 dialog.show()
+               // updateDbValues()
 
-            }
+
+             }
 
         }
 
