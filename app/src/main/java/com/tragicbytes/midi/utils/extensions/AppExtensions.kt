@@ -1004,7 +1004,7 @@ fun setScreenItem(
             view.show.text = "Show More"
 
         }
-        view.pieChart.animateY(1500, Easing.EaseInBounce)
+        view.pieChart.animateY(1500, Easing.EasingOption.EaseInBounce)
     }
 
     setScreenData(view, item, context)
@@ -1264,7 +1264,7 @@ fun setSelectedScreenItem(
     view.tScreenName.text = item.screenId
     view.tTimeDistribution.text = item.screenActiveTime
     view.tGenderRatio.text = item.screenGenderRatio
-    view.tAgeDistributtion.text = item.screenAgeGroups
+//    view.tAgeDistributtion.text = item.screenAgeGroups
     view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")
 
 }

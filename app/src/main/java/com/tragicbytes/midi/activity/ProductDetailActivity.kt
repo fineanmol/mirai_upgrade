@@ -407,7 +407,7 @@ class ProductDetailActivity : AppBaseActivity(){
         val genderList = ArrayList<String>()
         val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups = listOf("13-17", "18-24", "25-34", "35-44","45+")
+        val ageGroups = listOf("Below 18", "18-35", "25-34", "35-44","45+")
 
         if (genders.isNotEmpty()) {
 

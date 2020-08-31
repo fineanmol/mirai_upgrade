@@ -1,11 +1,17 @@
 package com.tragicbytes.midi.activity
 
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.HorizontalBarChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.*
-import com.github.mikephil.charting.utils.ColorTemplate
+import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
+import com.tragicbytes.midi.models.AgeGroupDetail
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.makeTransparentStatusBar
@@ -14,6 +20,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 class MyBannerScreenDetailsActivity : AppBaseActivity() {
+
+    lateinit var skillRatingChart : HorizontalBarChart
 
     private var screenDataModel = ScreenDataModel()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,8 +36,9 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
             screenDataModel =
                 intent.getSerializableExtra(Constants.KeyIntent.DATA) as ScreenDataModel
             setPieChartData(screenDataModel)
-            // setLineChart()
-            barChart(screenDataModel)
+//            setBarChart(screenDataModel.screenAgeGroupPref)
+//            barChart(screenDataModel)
+            setSkillGraph(screenDataModel.screenAgeGroupPref)
             activeTime.text= screenDataModel.screenActiveTime.toString()
             location.text= screenDataModel.screenLocation
             city.text= screenDataModel.screenCity
@@ -38,6 +47,38 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
 
         }
     }
+
+/*    private fun setBarChart(screenAgeGroupPref: AgeGroupDetail) {
+        val labels = arrayListOf(
+            "Below18", "18-35", "35-50",
+            "Above50"
+        )
+
+        ageWiseChart.xAxis.valueFormatter = IndexAxisValueFormatter(labels)
+//        ageWiseChart.xAxis.position = XAxis.XAxisPosition.BOTTOM
+
+        ageWiseChart.setDrawGridBackground(false)
+        ageWiseChart.axisLeft.isEnabled = false
+        ageWiseChart.axisRight.isEnabled = false
+        ageWiseChart.description.isEnabled = false
+
+        val entries = arrayListOf(
+            BarEntry(0f, screenAgeGroupPref.generationZ.toFloat()),
+            BarEntry(1f, screenAgeGroupPref.generationY.toFloat()),
+            BarEntry(2f, screenAgeGroupPref.generationX.toFloat()),
+            BarEntry(3f, screenAgeGroupPref.babyBoomers.toFloat())
+        )
+        val set = BarDataSet(entries, "BarDataSet")
+        set.valueTextSize = 12f
+
+        ageWiseChart.data = BarData(set)
+        ageWiseChart.invalidate()
+
+        //barDataSet.setColors(ColorTemplate.COLORFUL_COLORS)
+        set.color = resources.getColor(R.color.colorAccent)
+
+        ageWiseChart.animateY(5000)
+    }*/
 
     private fun setPieChartData(screenDataModel: ScreenDataModel) {
 
@@ -61,76 +102,101 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         pieChart.isDrawHoleEnabled = false
         pieChart.description.isEnabled = false
         pieChart.setEntryLabelColor(R.color.black)
-        pieChart.animateY(1400, Easing.EaseInOutQuad)
+        pieChart.animateY(1400, Easing.EasingOption.EaseInBounce)
     }
 
-    private fun setLineChart() {
-        //Part1
-        val entries = ArrayList<Entry>()
+    /**
+     * Set up the axes along with other necessary details for the horizontal bar chart.
+     */
+    fun setSkillGraph(screenAgeGroupPref: AgeGroupDetail) {
 
-//Part2
-        entries.add(Entry(1f, 10f))
-        entries.add(Entry(2f, 2f))
-        entries.add(Entry(3f, 7f))
-        entries.add(Entry(4f, 20f))
-        entries.add(Entry(5f, 16f))
+        skillRatingChart = ageWiseChart
 
-//Part3
-        val vl = LineDataSet(entries, "My Type")
+        skillRatingChart.setDrawBarShadow(false)
+        val description = Description()
+        description.text = ""
+        skillRatingChart.description = description
+        skillRatingChart.legend.setEnabled(false)
+        skillRatingChart.setPinchZoom(false)
+        skillRatingChart.setDrawValueAboveBar(false)
 
-//Part4
-        vl.setDrawValues(false)
-        vl.setDrawFilled(true)
-        vl.lineWidth = 3f
-        vl.fillColor = R.color.pie2
-        vl.fillAlpha = R.color.pie1
-
-//Part5
-        lineChart.xAxis.labelRotationAngle = 0f
-
-//Part6
-        lineChart.data = LineData(vl)
+        //Display the axis on the left (contains the labels 1*, 2* and so on)
+        val xAxis = skillRatingChart.getXAxis()
+        xAxis.setDrawGridLines(false)
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
+        xAxis.setEnabled(true)
+        xAxis.setDrawAxisLine(false)
 
 
-//Part7
-        lineChart.axisRight.isEnabled = false
-        lineChart.xAxis.axisMaximum = 5F + 0.1f
+        val yLeft = skillRatingChart.axisLeft
 
-//Part8
-        lineChart.setTouchEnabled(true)
-        lineChart.setPinchZoom(true)
+//Set the minimum and maximum bar lengths as per the values that they represent
+        yLeft.axisMaximum = 100f
+        yLeft.axisMinimum = 0f
+        yLeft.isEnabled = false
 
-//Part9
-        lineChart.description.text = "Days"
-        lineChart.setNoDataText("No forex yet!")
+        //Set label count to 5 as we are displaying 5 star rating
+        xAxis.labelCount = 4
 
-//Part10
-        lineChart.animateX(1800, Easing.EaseInExpo)
+//Now add the labels to be added on the vertical axis
+        val values = arrayOf("Generation Z", "Generation Y", "Generation X", "Baby Boomer")
+        xAxis.valueFormatter = XAxisValueFormatter(values)
 
-//Part11
-//        val markerView = CustomMarker(this@ShowForexActivity, R.layout.marker_view)
-//        lineChart.marker = markerView
+        val yRight = skillRatingChart.axisRight
+        yRight.setDrawAxisLine(true)
+        yRight.setDrawGridLines(false)
+        yRight.isEnabled = false
+
+        //Set bar entries and add necessary formatting
+        setGraphData(screenAgeGroupPref)
+
+        //Add animation to the graph
+        skillRatingChart.animateY(2000,Easing.EasingOption.EaseInBounce)
     }
 
-    fun barChart(screenDataModel: ScreenDataModel) {
-        val NoOfEmp = ArrayList<BarEntry>()
+    class XAxisValueFormatter(private val values: Array<String>) :
+        IAxisValueFormatter {
+        override fun getFormattedValue(value: Float, axis: AxisBase): String {
+            // "value" represents the position of the label on the axis (x or y)
+            return values[value.toInt()]
+        }
 
-        NoOfEmp.add(BarEntry(94f, 0f))
-        NoOfEmp.add(BarEntry(100f, 1f))
-        NoOfEmp.add(BarEntry(113f, 2f))
-        NoOfEmp.add(BarEntry(120f, 3f))
-        NoOfEmp.add(BarEntry(139f, 4f))
-        NoOfEmp.add(BarEntry(147f, 5f))
-        NoOfEmp.add(BarEntry(151f, 6f))
-        NoOfEmp.add(BarEntry(165f, 7f))
-        NoOfEmp.add(BarEntry(158f, 8f))
-        NoOfEmp.add(BarEntry(165f, 9f))
-
-
-        val bardataset = BarDataSet(NoOfEmp, "Age Groups")
-        ageWiseChart.animateY(5000)
-        val data = BarData(bardataset)
-        bardataset.setColors(*ColorTemplate.COLORFUL_COLORS)
-        ageWiseChart.setData(data)
     }
+
+    private fun setGraphData(screenAgeGroupPref: AgeGroupDetail) {
+
+        //Add a list of bar entries
+        val entries = ArrayList<BarEntry>()
+        entries.add(BarEntry(0f, screenAgeGroupPref.generationZ.toFloat()))
+        entries.add(BarEntry(1f, screenAgeGroupPref.generationY.toFloat()))
+        entries.add(BarEntry(2f, screenAgeGroupPref.generationX.toFloat()))
+        entries.add(BarEntry(3f, screenAgeGroupPref.babyBoomers.toFloat()))
+
+        //Note : These entries can be replaced by real-time data, say, from an API
+
+        val barDataSet = BarDataSet(entries, "Bar Data Set")
+
+        //Set the colors for bars with first color for 1*, second for 2* and so on
+        barDataSet.setColors(
+            ContextCompat.getColor(skillRatingChart.context, R.color.green),
+            ContextCompat.getColor(skillRatingChart.context, R.color.pie1),
+            ContextCompat.getColor(skillRatingChart.context, R.color.pie2),
+            ContextCompat.getColor(skillRatingChart.context, R.color.track_yellow)
+        )
+
+        //Set bar shadows
+        ageWiseChart.setDrawBarShadow(true)
+//        barDataSet.barShadowColor = Color(40, 150, 150, 150)
+        val data = BarData(barDataSet)
+
+        //Set the bar width
+        //Note : To increase the spacing between the bars set the value of barWidth to < 1f
+        data.barWidth = 0.9f
+
+        //Finally set the data and refresh the graph
+        ageWiseChart.data = data
+        ageWiseChart.invalidate()
+
+    }
+
 }
