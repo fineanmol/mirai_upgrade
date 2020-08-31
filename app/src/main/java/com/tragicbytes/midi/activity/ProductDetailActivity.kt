@@ -288,7 +288,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
              if (validateAllValue()) {
                  snackBar("Looks Good")
-                 val dialog = getAlertDialog(
+                /* val dialog = getAlertDialog(
                      "While your Banner is processing, Please continue with next details",
                      "Information",
                      onPositiveClick = { dialog, i ->
@@ -300,8 +300,8 @@ class ProductDetailActivity : AppBaseActivity(){
                      onNegativeClick = { dialog, i ->
                          dialog.dismiss()
                      })
-                 dialog.show()
-               // updateDbValues()
+                 dialog.show()*/
+               updateDbValues()
 
 
              }
@@ -407,7 +407,7 @@ class ProductDetailActivity : AppBaseActivity(){
         val genderList = ArrayList<String>()
         val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups = listOf("Below 18", "18-35", "25-34", "35-44","45+")
+        val ageGroups = listOf("Below 18", "18-35", "35-50","50+")
 
         if (genders.isNotEmpty()) {
 

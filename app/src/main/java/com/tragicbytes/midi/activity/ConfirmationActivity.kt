@@ -2,7 +2,6 @@ package com.tragicbytes.midi.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import com.google.android.material.snackbar.Snackbar
@@ -13,17 +12,13 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.fragments.MyBannersFragment
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
-import com.tragicbytes.midi.utils.DateTimeUnits
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
 import kotlinx.android.synthetic.main.activity_confirmation.ivBack
-import kotlinx.android.synthetic.main.activity_wallet.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ConfirmationActivity : AppBaseActivity() {
@@ -65,13 +60,19 @@ class ConfirmationActivity : AppBaseActivity() {
         ongoingAdv.screens.forEach { screenDataModel: ScreenDataModel ->
 
             totalScreenPrice += (screenDataModel.screenPrice).toInt()
+            totalScreenPrice =
+                (totalScreenPrice * ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1)).toInt()
+
         }
+
+        var mScreenDataValue= ScreenDataModel()
+        mScreenDataValue.screenNoOfDays= (((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString())
 
         finalpayAmount.text = totalScreenPrice.toString().currencyFormat("INR")
 
         rcvScreens.setVerticalLayout()
 
-        setupScreensAdapter()
+        setupScreensAdapter(ongoingAdv)
 
         mScreensAdapter?.addItems(ongoingAdv.screens)
 
@@ -174,10 +175,11 @@ class ConfirmationActivity : AppBaseActivity() {
         }
     }
 
-    private fun setupScreensAdapter() {
+    private fun setupScreensAdapter(ongoingAdv: SingleAdvertisementDetails) {
         mScreensAdapter = RecyclerViewAdapter(
             R.layout.item_confirm_screen_card,
-            onBind = { view, item, position -> setSelectedScreenItem(view, item, this) })
+            onBind = {
+                    view, item, position -> setSelectedScreenItem(view, item, ongoingAdv,this) })
 
         rcvScreens.apply {
             adapter = mScreensAdapter

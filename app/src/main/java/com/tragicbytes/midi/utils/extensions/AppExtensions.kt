@@ -1259,13 +1259,14 @@ fun getShortTime(ts: Long?): String {
 fun setSelectedScreenItem(
     view: View,
     item: ScreenDataModel,
+    ongoingAdv: SingleAdvertisementDetails,
     context: ConfirmationActivity
 ) {
     view.tScreenName.text = item.screenId
     view.tTimeDistribution.text = item.screenActiveTime
     view.tGenderRatio.text = item.screenGenderRatio
-//    view.tAgeDistributtion.text = item.screenAgeGroups
-    view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")
+    view.tAgeDistributtion.text =   "\nBelow 18 ="+item.screenAgeGroupPref.generationZ +"%"+"\n18-34 ="+item.screenAgeGroupPref.generationY+"%"+"\n35-50 ="+item.screenAgeGroupPref.generationX+"%"+ "\n50+ ="+item.screenAgeGroupPref.babyBoomers+"%"
+    view.tScreenPrice.text = ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString() + " * " +item.screenPrice.currencyFormat("INR")
 
 }
 

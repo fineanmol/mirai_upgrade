@@ -20,7 +20,6 @@ import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.dialog_quantity.*
-import kotlinx.android.synthetic.main.item_screen.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.properties.Delegates
 
