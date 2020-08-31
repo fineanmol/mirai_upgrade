@@ -19,7 +19,7 @@ class ScreenDataModel:Serializable {
     var screenAdvApprovedOn:String=""
     var screenAdminComment:String="Your Advertisement is under Review"
     var screenApprovedStatus: String = ""
-    var screenNoOfDays: String = ""
+
 }
 class AgeGroupDetail:Serializable {
     var generationZ: String = "0"

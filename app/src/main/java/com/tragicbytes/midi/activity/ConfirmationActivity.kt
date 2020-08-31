@@ -65,8 +65,6 @@ class ConfirmationActivity : AppBaseActivity() {
 
         }
 
-        var mScreenDataValue= ScreenDataModel()
-        mScreenDataValue.screenNoOfDays= (((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString())
 
         finalpayAmount.text = totalScreenPrice.toString().currencyFormat("INR")
 
