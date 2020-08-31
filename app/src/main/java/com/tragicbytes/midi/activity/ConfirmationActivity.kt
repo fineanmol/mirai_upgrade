@@ -57,6 +57,8 @@ class ConfirmationActivity : AppBaseActivity() {
         adv_gender_pref.text = "Gender      :${ongoingAdv.advGenderPref}"
         adv_age_group_pref.text = "Age Group:${ongoingAdv.advAgePref[0]}"
 
+        Log.d("xxx",((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString())
+
     //    getDateDiff(ongoingAdv.startFrom.toDate(),ongoingAdv.startFrom.toDate(),DateTimeUnits.DAYS)
 
         screenCount.text = "Selected Screens (${ongoingAdv.screens.size})"
