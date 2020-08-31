@@ -116,9 +116,9 @@ class ProductDetailActivity : AppBaseActivity(){
                 Notify
                     .with(this)
                     .asBigText  {
-                        title = "Uploaded Successfully"
-                        expandedText = "Banner is uploaded Successfully!"
-                        bigText = "Please Proceeds with next details"
+                        title = "Uploaded Successfully📢"
+                        expandedText = "Your banner is uploaded successfully!⚡"
+                        bigText = "Please Proceeds by filling next details."
                     }
 
                     .show()
@@ -265,7 +265,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 this@ProductDetailActivity,
                 timeSetListener,
                 0,0,
-                true
+                false
             ).show()
             mIsStartTimeExist = true
         }
@@ -278,7 +278,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 this@ProductDetailActivity,
                 timeSetListener,
                 0,0,
-                true
+                false
             ).show()
             mIsEndTimeExist = true
         }

@@ -131,10 +131,10 @@ class ConfirmationActivity : AppBaseActivity() {
                                 snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
                                 Notify
                                     .with(this)
-                                    .content { // this: Payload.Content.Default
-                                        title = "Advertisement Submitted for Approval"
-                                        text =
-                                            """It'll be live on Screens in no time once it approves.!"""
+                                    .asBigText  {
+                                        title = "Advertisement Processed #〽adeInIndia✨"
+                                        expandedText = "Congrats!🎉 Your Advertisement submitted for approval!"
+                                        bigText = "We will notify you once it goes live.🔥"
                                     }
                                     .show()
                                 launchActivity<DashBoardActivity>()
