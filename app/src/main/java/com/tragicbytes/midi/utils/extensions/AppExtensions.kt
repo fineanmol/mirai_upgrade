@@ -102,6 +102,7 @@ import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_confirm_screen_card.view.*
+import kotlinx.android.synthetic.main.item_my_screen_card.*
 import kotlinx.android.synthetic.main.item_my_screen_card.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
@@ -1242,11 +1243,20 @@ fun setOrderedScreenData(
     if (item.screenApprovedStatus == "0") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
+        view.ivCircleSupport.visibility=View.VISIBLE
+        view.ivCircleSupport.onClick {
+            if(view.tvRefundMsg.visibility==View.VISIBLE){
+                view.tvRefundMsg.visibility=View.GONE
+            }
+            else
+            view.tvRefundMsg.visibility=View.VISIBLE
+        }
         view.bApprovedDate.text = item.screenAdvApprovedOn
         view.tvDelivered.text = item.screenAdminComment
         view.tvApprovedTitle.text = "Adv. Rejected"
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.track_red))
+
         if (item.screenAdminComment.isNullOrEmpty()) {
             view.tvDelivered.text = "Your Advertisement has been Rejected"
         } else {

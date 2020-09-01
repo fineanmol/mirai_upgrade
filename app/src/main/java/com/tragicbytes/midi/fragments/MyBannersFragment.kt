@@ -38,6 +38,8 @@ class MyBannersFragment : BaseFragment() {
         dbReference = FirebaseDatabase.getInstance().reference
 
         publishedBannersList.setVerticalLayout()
+        
+
         setupAdsCompleteDetailsAdapter()
 
         btnShopNow.onClick {

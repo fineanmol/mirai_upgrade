@@ -406,4 +406,5 @@
     <string name="lbl_clear_ads_details">Clear Data</string>
     <string name="for_advertisement_payment">For Screen Advertisement</string>
     <string name="miraivizion_com">miraivizion.com</string>
+    <string name="refund_msg">We\'ve processed your refund, and you should expect to see the amount appear in your mirai wallet in the next 24ー48 hours.</string>
 </resources>

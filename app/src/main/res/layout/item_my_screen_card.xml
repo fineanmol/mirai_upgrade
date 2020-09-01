@@ -196,7 +196,17 @@
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/font_size_small" />
-
+                    <TextView
+                        android:id="@+id/ivCircleSupport"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_15sdp"
+                        android:layout_marginTop="-5dp"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:background="@drawable/ic_outline_help_outline_24"
+                        android:layout_below="@id/ivLine"
+                        android:layout_toEndOf="@+id/tvApprovedTitle"
+                        android:visibility="gone"
+                         />
                     <TextView
                         android:id="@+id/bApprovedDate"
                         android:layout_width="wrap_content"
@@ -220,6 +230,20 @@
                         android:text="@string/lbl_delivery_status"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
+                        android:textSize="@dimen/font_size_nano"
+                        android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/tvRefundMsg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_25sdp"
+                        android:layout_below="@id/tvDelivered"
+                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginStart="@dimen/spacing_standard"
+                        android:layout_toEndOf="@id/ivCircleApproved"
+                        android:text="@string/refund_msg"
+                        android:textAppearance="@style/FontMedium"
+                        android:textColor="@color/textColorPrimary"
                         android:textSize="@dimen/font_size_nano"
                         android:visibility="gone" />
 

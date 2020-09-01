@@ -89,8 +89,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             //    paymentValue.text = PaymentAmount
 
             val options = JSONObject()
-            options.put("name", "Nightowl Developers")
-            options.put("description", "Dominal Charges")
+            options.put("name", "Mirai Vizion")
+            options.put("description", "Refill Amount")
             //You can omit the image option to fetch the image from dashboard
             options.put("image", "https://nightowldevelopers.com/img/logo.webp")
             options.put("currency", "INR")
@@ -168,14 +168,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             newTransactionsDetails.phone = paymentData.userContact
             newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
 
-            Notify
-                .with(this)
-                .content { // this: Payload.Content.Default
-                    title = "Wallet Amount Refilled"
-                    text =
-                        """${addAmount.textToString().currencyFormat("INR")} has been successfully added to your Wallet!"""
-                }
-                .show()
+
 
 
             updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
@@ -199,7 +192,17 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         }
         addAmount.isEnabled=true
+
         addAmount.isClickable=true
+
+        Notify
+            .with(this)
+            .content { // this: Payload.Content.Default
+                title = "Wallet Amount Refilled"
+                text =
+                    """${addAmount.textToString().currencyFormat("INR")} has been successfully added to your Wallet!"""
+            }
+            .show()
         showProgress(false)
     }
 }

@@ -93,6 +93,7 @@
                     android:visibility="visible"
                     android:layout_gravity="center">
                     <ImageView
+                        android:visibility="gone"
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="@dimen/_100sdp"
                         android:src="@drawable/image_upload_icon">
