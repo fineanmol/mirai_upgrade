@@ -217,7 +217,7 @@
                                     android:layout_marginLeft="20dp"
                                     android:layout_marginRight="20dp" />
 
-                                <com.github.mikephil.charting.charts.BarChart
+                                <com.github.mikephil.charting.charts.HorizontalBarChart
                                     android:id="@+id/ageWiseChartGraph"
                                     android:layout_width="@dimen/_120sdp"
                                     android:layout_height="@dimen/_120sdp"

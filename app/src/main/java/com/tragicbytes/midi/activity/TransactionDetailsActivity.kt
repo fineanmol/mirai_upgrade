@@ -76,6 +76,14 @@ class TransactionDetailsActivity : AppBaseActivity() {
                 topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green_dark))
                 transactionIcon.isGone()
             }
+            "3" -> {
+                transactionAmount.text="+ ₹"+ mTransactionDetails.transactionAmount.split("-").last().toString()
+                transactionRemark.text="Money Reverted to your wallet for Id : ${mTransactionDetails.orderId}"
+                transactionAmount.setTextColor(resources.getColor(R.color.green_dark))
+                transactionRemark.setTextColor(resources.getColor(R.color.green_dark))
+                topRelativeLayout.setBackgroundColor(resources.getColor(R.color.green_dark))
+                transactionIcon.isGone()
+            }
             else -> transactionRemark.text=""
         }
 
