@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.layout_walk.view.*
 
 class WalkAdapter : PagerAdapter() {
 
-    private val mImg = arrayOf(R.drawable.ic_walk, R.drawable.ic_walk, R.drawable.ic_walk)
+    private val mImg = arrayOf(R.drawable.ic_walk, R.drawable.ic_walk1, R.drawable.ic_walk2)
 
     override fun isViewFromObject(v: View, `object`: Any): Boolean {
         return v === `object` as View

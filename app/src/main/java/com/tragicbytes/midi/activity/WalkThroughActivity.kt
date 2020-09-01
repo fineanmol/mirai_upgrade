@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.activity_walk_through.*
 
 class WalkThroughActivity : AppBaseActivity() {
     private var mCount: Int? = null
-    private var mHeading = arrayOf("Hi, We are Mirai Technologies!", "Most Unique Styles!", "Create Till You Drop!")
-    private val mSubHeading = arrayOf("We make around your city Affordable,\n easy and efficient.", "Crate the most trending ads on the biggest Android Platform.", "Grab the best ads pieces at bargain prices.")
+    private var mHeading = arrayOf("Hi, We are Mirai Technologies!", "Advertise on BillBoard!", "Effective Communications!")
+    private val mSubHeading = arrayOf("We make around your city Affordable,\n easy and efficient.", "By Choosing us, you can advertise \non high traffic Billboards.", "Out of All, Digital Advertising is the most\n effective way to promote your brand")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
