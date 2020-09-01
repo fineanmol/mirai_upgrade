@@ -155,7 +155,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentSuccess(rzpPaymentId: String?, paymentData: PaymentData?) {
-        snackBar("Payment Successful: $rzpPaymentId \n" + " data: ${paymentData?.orderId}")
+        snackBar("Payment Successful: $rzpPaymentId ")
         showProgress(false)
 
         if(paymentData != null) {

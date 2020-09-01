@@ -2,7 +2,9 @@ package com.tragicbytes.midi.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.tragicbytes.midi.utils.extensions.inflate
 
 class RecyclerViewAdapter<T>(private val layout: Int, val onBind: (view: View, item: T, position: Int) -> Unit) : RecyclerView.Adapter<RecyclerViewAdapter<T>.ViewHolder<T>>() {
@@ -62,7 +64,12 @@ class RecyclerViewAdapter<T>(private val layout: Int, val onBind: (view: View, i
     override fun getItemCount(): Int = if (size != 0) items.size else size
 
     override fun onBindViewHolder(holder: ViewHolder<T>, pos: Int) {
-        holder.bind(items[pos], pos)
+
+        try {
+            holder.bind(items[pos], pos)
+        } catch (e: Exception) {
+
+        }
     }
 
 }

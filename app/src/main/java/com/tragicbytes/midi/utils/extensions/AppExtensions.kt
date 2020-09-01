@@ -1199,7 +1199,9 @@ fun setWalletItem(
 
     if (item.transactionStatus == "1") {
         if (item.transactionAmount.isNotEmpty()) {
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.green))
             view.tAmount.text = "+ ₹" + item.transactionAmount
+            view.tIcon.setBackgroundResource(R.drawable.ic_checkbox_circle_fill)
             view.tTransactionText.text = "Money Added"
             view.tPaymentId.isGone()
 
@@ -1226,6 +1228,18 @@ fun setWalletItem(
             view.tAmount.text = "- ₹" + item.transactionAmount.split("-").last().toString()
             view.tIcon.setBackgroundResource(R.drawable.ic_star_black)
             view.tTransactionText.text = "Paid to Advertisement"
+
+        } else {
+            view.tAmount.text = "+ ₹" + item.transactionAmount
+
+        }
+    }
+    else if (item.transactionStatus == "3") {
+        if (item.transactionAmount.isNotEmpty()) {
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.green))
+            view.tAmount.text = "+ ₹" + item.transactionAmount.split("-").last().toString()
+            view.tIcon.setBackgroundResource(R.drawable.ic_checkbox_circle_fill)
+            view.tTransactionText.text = "Amount Reverted"
 
         } else {
             view.tAmount.text = "+ ₹" + item.transactionAmount
