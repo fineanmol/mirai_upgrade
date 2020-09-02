@@ -42,9 +42,11 @@ class AccountActivity : AppBaseActivity() {
                     getString(R.string.lbl_logout_confirmation),
                     onPositiveClick = { dialog, i ->
                         clearLoginPref()
-                        getSharedPrefInstance().removeKey(Constants.SharedPref.USER_DETAILS_OBJECT)
+                       // getSharedPrefInstance().removeKey(Constants.SharedPref.USER_DETAILS_OBJECT)
                         FirebaseAuth.getInstance().signOut()
-                        launchActivity<SignInUpActivity>()
+                        launchActivity<SignInUpActivity>{
+                            putExtra(Constants.KeyIntent.LOGIN, "TRUE")
+                        }
                     },
                     onNegativeClick = { dialog, i ->
                         dialog.dismiss()
