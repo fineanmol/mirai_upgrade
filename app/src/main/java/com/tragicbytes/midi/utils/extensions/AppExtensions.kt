@@ -102,7 +102,6 @@ import com.tragicbytes.midi.utils.SharedPrefUtils
 import kotlinx.android.synthetic.main.dialog_no_internet.*
 import kotlinx.android.synthetic.main.item_banner.view.*
 import kotlinx.android.synthetic.main.item_confirm_screen_card.view.*
-import kotlinx.android.synthetic.main.item_my_screen_card.*
 import kotlinx.android.synthetic.main.item_my_screen_card.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.*
 import kotlinx.android.synthetic.main.item_product_new.view.ivProduct
@@ -158,7 +157,7 @@ fun fetchUserData(
                             Constants.SharedPref.USER_DETAILS_OBJECT,
                             Gson().toJson(dbContent)
                         )
-                   //     onSuccess("UserDetails Updated")
+                        //     onSuccess("UserDetails Updated")
                     }
 
 
@@ -1163,7 +1162,7 @@ fun setAgeDistributionChartData(
     yRight.isEnabled = false
 
     //Set bar entries and add necessary formatting
-    setGraphData(screenAgeGroupPref,skillRatingChart,view)
+    setGraphData(screenAgeGroupPref, skillRatingChart, view)
 
     //Add animation to the graph
     skillRatingChart.animateY(2000, Easing.EasingOption.EaseInBounce)
@@ -1307,7 +1306,7 @@ fun setWalletItem(
         }
     } else if (item.transactionStatus == "0") {
         if (item.transactionAmount.isNotEmpty()) {
-            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.track_red))
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.textColorSecondary))
             view.tAmount.text = "  ₹" + item.transactionAmount
             view.tIcon.setBackgroundResource(R.drawable.ic_round_cancel_24px)
             view.tTransactionText.text = "Add Money Failed"
@@ -1319,9 +1318,9 @@ fun setWalletItem(
         }
     } else if (item.transactionStatus == "2") {
         if (item.transactionAmount.isNotEmpty()) {
-            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.red))
+            view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.black))
             view.tAmount.text = "- ₹" + item.transactionAmount.split("-").last().toString()
-            view.tIcon.setBackgroundResource(R.drawable.ic_star_black)
+            view.tIcon.setBackgroundResource(R.drawable.ic_star_black) /**ad_icon*/
             view.tTransactionText.text = "Paid to Advertisement"
 
         } else {
@@ -1366,6 +1365,31 @@ fun getShortTime(ts: Long?): String {
     return android.text.format.DateFormat.format("hh:mm a", calendar).toString()
 }
 
+// Used to convert 24hr format to 12hr format with AM/PM values
+fun updateTime(hours: Int, mins: Int): String {
+    var hours = hours
+    var timeSet = ""
+    when {
+        hours > 12 -> {
+            hours -= 12
+            timeSet = "PM"
+        }
+        hours == 0 -> {
+            hours += 12
+            timeSet = "AM"
+        }
+        hours == 12 -> timeSet = "PM"
+        else -> timeSet = "AM"
+    }
+    var minutes = ""
+    minutes = if (mins < 10) "0$mins" else mins.toString()
+
+    val aTime = StringBuilder().append(hours).append(':')
+        .append(minutes).append(" ").append(timeSet).toString()
+    return aTime
+
+}
+
 fun setSelectedScreenItem(
     view: View,
     item: ScreenDataModel,
@@ -1393,19 +1417,34 @@ fun setBannerData(
             })
         view.tvBannerId.text = "Banner ${position + 1}"
         view.tvBannerEndDate.text = "Expires On ${getShortDate(item.endOn.toLong())}"
-        if (item.advOverallStatus == "0" || item.advOverallStatus == "") {
+
+        if(item.screens.size.toInt()>0 || !item.screens.isNullOrEmpty() )
+        {
+        item.screens.forEach { screenDataModel: ScreenDataModel ->
+            if(!screenDataModel.screenApprovedStatus.isNullOrEmpty()){
+                view.txt_review.text = "Adv Reviewed"
+                view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
+            }
+            else{
+                view.txt_review.text = "Pending Review"
+                view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
+            }
+        }
+        }
+
+       /* if (item.advOverallStatus == "0" || item.advOverallStatus == "") {
             view.txt_review.text = "Pending Review"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
         } else if (item.advOverallStatus == "1") {
-            view.txt_review.text = "Live"
-            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
+            view.txt_review.text = "Adv Reviewed"
+            view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_black)
         } else if (item.advOverallStatus == "2") {
             view.txt_review.text = "Partially Live"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape_green)
         } else if (item.advOverallStatus == "3") {
             view.txt_review.text = "Rejected"
             view.txt_review_layout.setBackgroundResource(R.drawable.ic_review_shape)
-        }
+        }*/
     }
 }
 

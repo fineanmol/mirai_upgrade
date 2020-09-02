@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
@@ -117,7 +118,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 Notify
                     .with(this)
                     .asBigText  {
-                        title = "Uploaded Successfully! 📢📣"
+                        title = "Uploaded Successfully! 📢"
                         expandedText = "Your banner is uploaded successfully ⚡⚡"
                         bigText = "Please proceed by filling next details."
                     }
@@ -225,9 +226,10 @@ class ProductDetailActivity : AppBaseActivity(){
         }*/
 
         mIsRangeExist = true
+        mIsStartTimeExist = true
 
 
-        val sdf = SimpleDateFormat("dd-M-yyyy")
+        val sdf = SimpleDateFormat("d-M-yyyy")
         val currentDate = sdf.format(Date())
         startDateVal.text=currentDate
 
@@ -235,7 +237,7 @@ class ProductDetailActivity : AppBaseActivity(){
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    startDateVal.text = dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year
+                    startDateVal.text = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
@@ -257,10 +259,13 @@ class ProductDetailActivity : AppBaseActivity(){
 
         val sdf2 = SimpleDateFormat("hh:mm a")
         val currentTime = sdf2.format(Date())
-        startTimeVal.text=currentTime
+        startTimeVal.text=currentTime.toString()
+
         startTimeVal.onClick {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                startTimeVal.text = "$hour:$minute"
+               // startTimeVal.text = "$hour:$minute"
+                startTimeVal.text=  updateTime(hour,minute)
+                mIsStartTimeExist = true
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
@@ -268,12 +273,12 @@ class ProductDetailActivity : AppBaseActivity(){
                 0,0,
                 false
             ).show()
-            mIsStartTimeExist = true
+
         }
 
         endTimeVal.onClick {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                endTimeVal.text = "$hour:$minute"
+                endTimeVal.text = updateTime(hour,minute)
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
@@ -288,19 +293,6 @@ class ProductDetailActivity : AppBaseActivity(){
 
              if (validateAllValue()) {
                  snackBar("Looks Good")
-                /* val dialog = getAlertDialog(
-                     "While your Banner is processing, Please continue with next details",
-                     "Information",
-                     onPositiveClick = { dialog, i ->
-
-
-                             updateDbValues()
-
-                     },
-                     onNegativeClick = { dialog, i ->
-                         dialog.dismiss()
-                     })
-                 dialog.show()*/
                updateDbValues()
 
 
@@ -313,6 +305,7 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
     private fun validateAllValue(): Boolean {
+
         if (!mIsGenderExist) {
             snackBar("Target Gender Required ", Snackbar.LENGTH_SHORT)
             return false
@@ -331,7 +324,10 @@ class ProductDetailActivity : AppBaseActivity(){
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } /*else if (rangeVal.textToString().isEmpty()) {
+        } /*else if (advDetails.advName=="Test Name" || advDetails.advName.isEmpty()) {
+            snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
+            return false
+        }*//*else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
         }*/ else {
@@ -387,7 +383,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
             }
             else{
-                snackBar("Something went wrong!Please retry.")
+                snackBar("Something went wrong! Please retry.")
             }
             showProgress(false)
         }
@@ -721,6 +717,8 @@ class ProductDetailActivity : AppBaseActivity(){
         val date = formatter.parse("$startDate $startTime") as Date
         return date.time.toString()
     }
+
+
 
     private fun saveBannerDetailsToDB(
         localUserDetails: UserDetailsModel,

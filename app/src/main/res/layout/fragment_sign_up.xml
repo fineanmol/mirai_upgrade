@@ -52,7 +52,7 @@
                     android:hint="@string/hint_first_name"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="Nikhil" />
+                   />
 
                 <EditText
                     android:id="@+id/edtLastName"
@@ -65,7 +65,7 @@
                     android:hint="@string/hint_last_name"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
-                    android:text="Nishad" />
+                    />
 
             </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
                 android:singleLine="true"
-                android:text="test@gmail.com" />
+                />
 
             <EditText
                 android:id="@+id/edtPassword"
@@ -93,7 +93,7 @@
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="zxcvbnm." />
+                />
 
             <EditText
                 android:id="@+id/edtConfirmPassword"
@@ -106,7 +106,7 @@
                 android:hint="@string/hint_confirm_password"
                 android:inputType="textPassword"
                 android:singleLine="true"
-                android:text="zxcvbnm." />
+               />
             <TextView
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_width="match_parent"

@@ -18,8 +18,6 @@ import com.tragicbytes.midi.models.TransactionDetails
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
-import kotlinx.android.synthetic.main.activity_confirmation.ivBack
-import kotlin.collections.ArrayList
 
 class ConfirmationActivity : AppBaseActivity() {
 
@@ -47,12 +45,19 @@ class ConfirmationActivity : AppBaseActivity() {
         ongoingAdv = intent?.getSerializableExtra("ongoing_adv") as SingleAdvertisementDetails
 
 
-        adv_start_date_time.text="Start Date: ${getShortDate(ongoingAdv.startFrom.toLong())}, ${getShortTime(ongoingAdv.startFrom.toLong())}"
-        adv_end_date_time.text="End Date: ${getShortDate(ongoingAdv.endOn.toLong())}, ${getShortTime(ongoingAdv.endOn.toLong())}"
+        adv_start_date_time.text="Start Date: ${getShortDate(ongoingAdv.startFrom.toLong())}, ${getShortTime(
+            ongoingAdv.startFrom.toLong()
+        )}"
+        adv_end_date_time.text="End Date: ${getShortDate(ongoingAdv.endOn.toLong())}, ${getShortTime(
+            ongoingAdv.endOn.toLong()
+        )}"
         adv_gender_pref.text = "Gender      :${ongoingAdv.advGenderPref}"
         adv_age_group_pref.text = "Age Group:${ongoingAdv.advAgePref[0]}"
 
-        Log.d("xxx",((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString())
+        Log.d(
+            "xxx",
+            ((ongoingAdv.endOn.toLong() - ongoingAdv.startFrom.toLong()) / (1000 * 60 * 60 * 24) + 1).toString()
+        )
 
     //    getDateDiff(ongoingAdv.startFrom.toDate(),ongoingAdv.startFrom.toDate(),DateTimeUnits.DAYS)
 
@@ -124,7 +129,7 @@ class ConfirmationActivity : AppBaseActivity() {
                 showProgress(false)
                 var localUserData = getStoredUserDetails()
                 var advList = localUserData.userAdvertisementDetails.singleAdvertisementDetails
-                onGoingAdv.advCost=totalScreenPrice.toString()
+                onGoingAdv.advCost = totalScreenPrice.toString()
                 advList.add(onGoingAdv)
                 localUserData.userAdvertisementDetails.singleAdvertisementDetails = advList
                 snackBar("Payment Processed. Processing Advertisement")
@@ -134,16 +139,23 @@ class ConfirmationActivity : AppBaseActivity() {
                             .setValue(
                                 ServerValue.TIMESTAMP
                             ).addOnSuccessListener {
-                                snackBar("Congrats! Your Advertisement Submitted for Approval.",Snackbar.LENGTH_LONG)
+                                snackBar(
+                                    "Congrats! Your Advertisement Submitted for Approval.",
+                                    Snackbar.LENGTH_LONG
+                                )
                                 Notify
                                     .with(this)
-                                    .asBigText  {
-                                        title = "Congrats!\uD83C\uDF89 Advertisement Processed #MadeInIndia✨"
-                                        expandedText = "Your Advertisement is submitted for approval!"
-                                        bigText = "We will notify you once it goes live.🔥\uD83D\uDD25"
+                                    .asBigText {
+                                        title =
+                                            "Congrats!\uD83C\uDF89 Advertisement Processed #MadeInIndia✨"
+                                        expandedText =
+                                            "Your Advertisement is submitted for approval!"
+                                        bigText =
+                                            "We will notify you once it goes live.🔥\uD83D\uDD25"
                                     }
                                     .show()
-//                                launchActivity<DashBoardActivity>()
+
+                                launchActivity<DashBoardActivity>()
 //                                finish()
                             }
                             .addOnFailureListener {
@@ -176,8 +188,14 @@ class ConfirmationActivity : AppBaseActivity() {
     private fun setupScreensAdapter(ongoingAdv: SingleAdvertisementDetails) {
         mScreensAdapter = RecyclerViewAdapter(
             R.layout.item_confirm_screen_card,
-            onBind = {
-                    view, item, position -> setSelectedScreenItem(view, item, ongoingAdv,this) })
+            onBind = { view, item, position ->
+                setSelectedScreenItem(
+                    view,
+                    item,
+                    ongoingAdv,
+                    this
+                )
+            })
 
         rcvScreens.apply {
             adapter = mScreensAdapter

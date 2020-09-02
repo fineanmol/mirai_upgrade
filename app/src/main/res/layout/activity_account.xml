@@ -140,6 +140,7 @@
                 android:text="@string/lbl_my_offers" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/profileButton"
                 style="@style/AccountLabel"
                 android:text="@string/profile" />
