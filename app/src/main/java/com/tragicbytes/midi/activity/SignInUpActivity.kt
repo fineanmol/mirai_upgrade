@@ -61,7 +61,7 @@ class SignInUpActivity : AppBaseActivity() {
         /**
          * Load Default Fragment
          */
-        if (intent?.extras?.getString(Constants.KeyIntent.LOGIN) == "TRUE") loadSignInFragment()
+        if (intent?.extras?.getString(Constants.KeyIntent.LOGIN) == "TRUE" || intent?.extras?.getString(Constants.KeyIntent.LOGIN).isNullOrEmpty()) loadSignInFragment()
         else {
             loadSignUpFragment()
         }
@@ -147,6 +147,8 @@ class SignInUpActivity : AppBaseActivity() {
             ?.addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     //region LoginMethod
+                    getSharedPrefInstance().setValue(Constants.KeyIntent.LOGIN, "TRUE")
+                    getSharedPrefInstance().setValue(Constants.SharedPref.IS_LOGGED_IN, true)
                     val user = FirebaseAuth.getInstance().currentUser
                     Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                     var type = "Email"
@@ -204,7 +206,7 @@ class SignInUpActivity : AppBaseActivity() {
                         }
                     } else {
                         onFailed()
-                        snackBar("Erorr occurred while fetching details!")
+                        snackBar("Error occurred while fetching details!")
                     }
                 }
 
