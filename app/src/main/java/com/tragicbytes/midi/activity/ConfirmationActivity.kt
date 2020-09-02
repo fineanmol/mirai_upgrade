@@ -143,8 +143,8 @@ class ConfirmationActivity : AppBaseActivity() {
                                         bigText = "We will notify you once it goes live.🔥\uD83D\uDD25"
                                     }
                                     .show()
-                                launchActivity<DashBoardActivity>()
-                                finish()
+//                                launchActivity<DashBoardActivity>()
+//                                finish()
                             }
                             .addOnFailureListener {
                                 snackBarError("Error Occurred")
