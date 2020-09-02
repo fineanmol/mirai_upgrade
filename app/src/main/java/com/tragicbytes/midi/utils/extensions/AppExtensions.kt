@@ -293,6 +293,7 @@ fun clearLoginPref() {
     getSharedPrefInstance().removeKey(KEY_DASHBOARD)
     getSharedPrefInstance().removeKey(KEY_ADDRESS)
     getSharedPrefInstance().removeKey(KEY_USER_ADDRESS)
+    getSharedPrefInstance().removeKey(USER_DETAILS_OBJECT)
 }
 
 fun clearAdsDataPref() {
