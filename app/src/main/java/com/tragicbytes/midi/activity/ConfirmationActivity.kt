@@ -156,7 +156,7 @@ class ConfirmationActivity : AppBaseActivity() {
                                     .show()
 
                                 launchActivity<DashBoardActivity>()
-//                                finish()
+                                finish()
                             }
                             .addOnFailureListener {
                                 snackBarError("Error Occurred")
