@@ -190,6 +190,8 @@ fun updateStoredUserDetails(userDetailsModel: UserDetailsModel) {
     )
 }
 
+
+
 fun updateTransactionDetails(
     newTransactionsDetails: TransactionDetails,
     dbReference: DatabaseReference,
@@ -211,6 +213,7 @@ fun updateTransactionDetails(
                     ServerValue.TIMESTAMP
                 ).addOnSuccessListener {
                     onSuccess()
+
                 }.addOnFailureListener {
                     onFailed()
                 }

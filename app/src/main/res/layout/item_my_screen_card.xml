@@ -227,7 +227,7 @@
                         android:layout_below="@id/bApprovedDate"
                         android:layout_marginStart="@dimen/spacing_standard"
                         android:layout_toEndOf="@id/ivCircleApproved"
-                        android:text="@string/lbl_delivery_status"
+                        android:text="Your Advertisement is under review."
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_nano"

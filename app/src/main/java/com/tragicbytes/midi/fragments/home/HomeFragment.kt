@@ -194,7 +194,7 @@ class HomeFragment : BaseFragment() {
                                 rcvNewestProduct.hide()
                                 }
 
-                            toast("Error Occured!")
+                          //  toast("Error Occured!")
                         }
                     }
 
