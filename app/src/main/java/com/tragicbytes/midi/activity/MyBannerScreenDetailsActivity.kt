@@ -85,6 +85,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         var maleValue = screenDataModel.screenGenderRatio.toFloat()
         val listPie = ArrayList<PieEntry>()
         val listColors = ArrayList<Int>()
+
         listPie.add(PieEntry(maleValue, "Male"))
         listColors.add(resources.getColor(R.color.pie1))
         listPie.add(PieEntry(100 - maleValue, "Female"))
@@ -102,7 +103,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         pieChart.isDrawHoleEnabled = false
         pieChart.description.isEnabled = false
         pieChart.setEntryLabelColor(R.color.black)
-        pieChart.animateY(1400, Easing.EasingOption.EaseInBounce)
+        pieChart.animateY(1400, Easing.EasingOption.EaseInCirc)
     }
 
     /**
@@ -186,7 +187,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
 
         //Set bar shadows
         ageWiseChart.setDrawBarShadow(true)
-//        barDataSet.barShadowColor = Color(40, 150, 150, 150)
+//      barDataSet.barShadowColor = Color(40, 150, 150, 150)
         val data = BarData(barDataSet)
 
         //Set the bar width

@@ -118,13 +118,14 @@ class DashBoardActivity : AppBaseActivity() {
             supportFragmentManager.beginTransaction()
                 .remove(supportFragmentManager.findFragmentById(R.id.container)!!).commit()
         }
-        selectedDashboard =
+        mHomeFragment = HomeFragment()
+        /*selectedDashboard =
             getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD, 0)
         if (selectedDashboard == 0) {
             mHomeFragment = HomeFragment()
-        } else if (selectedDashboard == 1) {
+        } *//*else if (selectedDashboard == 1) {
             mHomeFragment = HomeFragment2()
-        }
+        }*/
 
 
         setToolbar(toolbar); setUpDrawerToggle(); loadHomeFragment(); setListener()

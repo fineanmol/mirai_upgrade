@@ -15,6 +15,7 @@ import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
+import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
@@ -27,6 +28,7 @@ class ConfirmationActivity : AppBaseActivity() {
     private var mScreensAdapter: RecyclerViewAdapter<ScreenDataModel>? = null
     private var totalScreenPrice = 0
     private var finalAmountPrice = 0
+    private var requestcode =22
 
     private lateinit var dbReference: DatabaseReference
 
@@ -88,13 +90,14 @@ class ConfirmationActivity : AppBaseActivity() {
 
         tPayBtn.onClick {
             if (totalScreenPrice > getStoredUserDetails().userWalletDetails.totalAmount.toInt()) {
-                launchActivity<WalletActivity>((21)) {
+                launchActivity<WalletActivity>(21) {
                     putExtra(
                         "pending_amount",
                         totalScreenPrice - getStoredUserDetails().userWalletDetails.totalAmount.toInt()
                     )
                 }
             } else {
+                showProgress(true)
                 placeOrder(ongoingAdv, dbReference)
             }
 
@@ -154,12 +157,23 @@ class ConfirmationActivity : AppBaseActivity() {
                                             "We will notify you once it goes live.🔥\uD83D\uDD25"
                                     }
                                     .show()
+                                showProgress(false)
 
-                                launchActivity<DashBoardActivity>()
-//                                finish()
+
                             }
                             .addOnFailureListener {
                                 snackBarError("Error Occurred")
+                            }
+                            .addOnCompleteListener {
+
+                                showProgress(false)
+                                finishActivity(requestcode)
+                                finishAndRemoveTask()
+
+                                launchActivity<DashBoardActivity>()
+
+
+                                //finish()
                             }
                     }
             }, onFailed = {
@@ -168,7 +182,10 @@ class ConfirmationActivity : AppBaseActivity() {
             })
         }, onFailed = {
             snackBarError("Unable to process Transaction")
+            showProgress(false)
         })
+       /* launchActivity<DashBoardActivity>()
+        finish()*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -21,6 +21,7 @@ import java.util.*
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     private lateinit var dbReference: DatabaseReference
+    private var requestcode= 23
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +34,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         if (intent?.extras?.get("pending_amount") != null) {
             addAmount.setText(intent?.extras?.get("pending_amount").toString())
         }
-        walletAmount.text =
-            getStoredUserDetails().userWalletDetails.totalAmount.currencyFormat("INR")
+        walletAmount.text = getStoredUserDetails().userWalletDetails.totalAmount.currencyFormat("INR")
         loadActivity()
     }
 
@@ -80,11 +80,9 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         /*
         *  You need to pass current activity in order to let Razorpay create CheckoutActivity
         * */
-        val activity: Activity = this
-        val co = Checkout()
-
-
         try {
+            val activity: Activity = this
+            val co = Checkout()
             val PaymentAmount = amountToAdd + "00.00" //Rs 1
             //    paymentValue.text = PaymentAmount
 
@@ -150,7 +148,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         }
         addAmount.isEnabled=true
         addAmount.isClickable=true
-        snackBar("Error $errorCode : $errorDescription")
+        snackBarError("Error $errorCode : $errorDescription")
         showProgress(false)
     }
 
@@ -176,11 +174,14 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                     walletAmount.text =
                       it.currencyFormat("INR")
                     showProgress(false)
-                    snackBar("Wallet Refresh Successfully")
+
                     if (intent?.extras?.get("pending_amount") != null) {
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
-                        finish()
+                        intent.extras?.remove("pending_amount")
+                        finishActivity(requestcode)
+                        finishAndRemoveTask()
+
                     }
                 }, onFailed = {
                     snackBarError("Error Occurred")
@@ -192,8 +193,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
         }
         addAmount.isEnabled=true
-
         addAmount.isClickable=true
+        addAmount.text.clear()
 
         Notify
             .with(this)
