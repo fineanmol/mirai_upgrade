@@ -9,6 +9,15 @@ import retrofit2.http.*
 
 interface RestApis {
 
+    @POST("/")
+    fun sendNotification(@Body request:NotificationModel): Call<NotificationResponse>
+
+    @POST("subscribe")
+    fun subscribeToTopic(@Body request:NotificationModel): Call<NotificationResponse>
+
+    @POST("unsubscribe")
+    fun unsubscribeFromTopic(@Body request:NotificationModel): Call<NotificationResponse>
+
     @POST("woobox-api/api/v1/woocommerce/get-dashboard")
     fun dashboard(@Body request: RequestModel): Call<DashboardResponse>
 

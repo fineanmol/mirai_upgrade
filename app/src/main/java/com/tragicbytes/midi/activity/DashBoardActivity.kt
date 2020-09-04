@@ -1,15 +1,26 @@
 package com.tragicbytes.midi.activity
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
@@ -20,6 +31,7 @@ import com.tragicbytes.midi.fragments.UploadBannerFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment2
 import com.tragicbytes.midi.models.CategoryData
+import com.tragicbytes.midi.models.NotificationModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.PROFILE_UPDATE
@@ -54,6 +66,54 @@ class DashBoardActivity : AppBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
+        if (checkGooglePlayServices()) {
+            FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    // 2
+                    if (!task.isSuccessful) {
+                        Log.w("TAG", "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+                    // 3
+                    val token = task.result?.token
+
+                    // 4
+                    val msg = "TOKEN$token"
+                    Log.d("TAG", msg)
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
+                })
+
+        } else {
+            //You won't be able to send notifications to this device
+            Log.w("TAG", "Device doesn't have google play services")
+        }
+        FirebaseMessaging.getInstance().subscribeToTopic(getStoredUserDetails().userId)
+            .addOnCompleteListener { task ->
+                var msg = "true"
+                if (!task.isSuccessful) {
+                    msg = "false"
+                }
+                Log.d("TAG", "subscrided $msg")
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+        FirebaseMessaging.getInstance().subscribeToTopic("admin")
+            .addOnCompleteListener { task ->
+                var msg = "true"
+                if (!task.isSuccessful) {
+                    msg = "false"
+                }
+                Log.d("TAG", "subscrided $msg")
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+        var n=NotificationModel()
+        n.notifyBody="From App"
+        n.notifyTitle="Hurrraayyyyyyyyyy"
+        n.topic= "admin"
+        callApi(getNotificationRestApis().sendNotification(n), onApiSuccess = { it ->
+            Log.d("xxx",it.toString())
+        },onApiError = {
+            Log.d("xxx12",it.toString())
+        },onNetworkError = {})
         if (supportFragmentManager.findFragmentById(R.id.container) != null) {
             supportFragmentManager.beginTransaction()
                 .remove(supportFragmentManager.findFragmentById(R.id.container)!!).commit()
@@ -89,6 +149,11 @@ class DashBoardActivity : AppBaseActivity() {
             /*  onAction(WISHLIST_UPDATE) { setWishCount() }*/
         }
         setUserInfo(); tvVersionCode.text = String.format("%S %S", "V", getAppVersionName())
+        // TODO: check in bundle extras for notification data
+        /*val bundle = intent.extras
+        if (bundle != null) {
+            text_view_notification.text = bundle.getString("text")
+        }*/
     }
 
     override fun onResume() {
@@ -422,5 +487,42 @@ class DashBoardActivity : AppBaseActivity() {
             )
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        //TODO: Register the receiver for notifications
+        LocalBroadcastManager.getInstance(this).registerReceiver(messageReceiver, IntentFilter("MyData"))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        // TODO: Unregister the receiver for notifications
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(messageReceiver)
+
+    }
+
+    // TODO: Add a method for receiving notifications
+    private val messageReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+//            text_view_notification.text = intent.extras?.getString("message")
+        }
+    }
+
+    private fun checkGooglePlayServices(): Boolean {
+        // 1
+        val status = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)
+        // 2
+        return if (status != ConnectionResult.SUCCESS) {
+            Log.e("TAG", "Error")
+            // ask user to update google play services and manage the error.
+            false
+        } else {
+            // 3
+            Log.i("TAG", "Google play services updated")
+            true
+        }
+    }
+
+
 
 }

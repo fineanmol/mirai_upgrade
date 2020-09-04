@@ -7,6 +7,7 @@ import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp.Companion.getAppInstance
 import com.tragicbytes.midi.network.RestApis
 import com.tragicbytes.midi.network.RetrofitClientFactory
+import com.tragicbytes.midi.network.RetrofitNotificationClientFactory
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Buffer
@@ -18,6 +19,9 @@ import retrofit2.Response
 
 fun getRestApis(useSignature: Boolean = true): RestApis {
     return RetrofitClientFactory().getRetroFitClient(useSignature).create(RestApis::class.java)
+}
+fun getNotificationRestApis(): RestApis {
+    return RetrofitNotificationClientFactory().getRetroFitNotificationClient().create(RestApis::class.java)
 }
 
 fun <T> callApi(call: Call<T>, onApiSuccess: (T) -> Unit = {}, onApiError: (aError: String) -> Unit = {}, onNetworkError: () -> Unit = {}) {
