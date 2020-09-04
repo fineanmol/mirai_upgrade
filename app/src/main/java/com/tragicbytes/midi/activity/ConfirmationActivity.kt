@@ -12,10 +12,10 @@ import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.adapter.ProductImageAdapter
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
+import com.tragicbytes.midi.models.NotificationModel
 import com.tragicbytes.midi.models.ScreenDataModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.models.TransactionDetails
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_confirmation.*
@@ -146,6 +146,19 @@ class ConfirmationActivity : AppBaseActivity() {
                                     "Congrats! Your Advertisement Submitted for Approval.",
                                     Snackbar.LENGTH_LONG
                                 )
+                                var notification=NotificationModel()
+                                notification.notifyTitle="Hurrraayyyyyyyyyy!!!New Adv Submitted."
+                                notification.notifyBody="From "+ getStoredUserDetails().userPersonalDetails.firstName+" "+getStoredUserDetails().userPersonalDetails.lastName
+                                notification.topic= "admin"
+                                callApi(getNotificationRestApis().sendNotification(notification), onApiSuccess = { it ->
+                                    Log.d("xxx",it.toString())
+                                },onApiError = {
+                                    Log.d("xxx",it)
+                                },onNetworkError = {})
+                                if (supportFragmentManager.findFragmentById(R.id.container) != null) {
+                                    supportFragmentManager.beginTransaction()
+                                        .remove(supportFragmentManager.findFragmentById(R.id.container)!!).commit()
+                                }
                                 Notify
                                     .with(this)
                                     .asBigText {

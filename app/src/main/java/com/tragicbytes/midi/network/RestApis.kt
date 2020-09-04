@@ -9,13 +9,13 @@ import retrofit2.http.*
 
 interface RestApis {
 
-    @POST("/")
+    @POST("/notify")
     fun sendNotification(@Body request:NotificationModel): Call<NotificationResponse>
 
-    @POST("subscribe")
+    @POST("/notify/subscribe")
     fun subscribeToTopic(@Body request:NotificationModel): Call<NotificationResponse>
 
-    @POST("unsubscribe")
+    @POST("/notify/unsubscribe")
     fun unsubscribeFromTopic(@Body request:NotificationModel): Call<NotificationResponse>
 
     @POST("woobox-api/api/v1/woocommerce/get-dashboard")

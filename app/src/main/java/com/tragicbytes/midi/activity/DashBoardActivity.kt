@@ -94,30 +94,15 @@ class DashBoardActivity : AppBaseActivity() {
                     msg = "false"
                 }
                 Log.d("TAG", "subscrided $msg")
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
-        FirebaseMessaging.getInstance().subscribeToTopic("admin")
+        FirebaseMessaging.getInstance().subscribeToTopic("com.tragicbytes.midi")
             .addOnCompleteListener { task ->
                 var msg = "true"
                 if (!task.isSuccessful) {
                     msg = "false"
                 }
                 Log.d("TAG", "subscrided $msg")
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
             }
-        var n=NotificationModel()
-        n.notifyBody="From App"
-        n.notifyTitle="Hurrraayyyyyyyyyy"
-        n.topic= "admin"
-        callApi(getNotificationRestApis().sendNotification(n), onApiSuccess = { it ->
-            Log.d("xxx",it.toString())
-        },onApiError = {
-            Log.d("xxx12",it.toString())
-        },onNetworkError = {})
-        if (supportFragmentManager.findFragmentById(R.id.container) != null) {
-            supportFragmentManager.beginTransaction()
-                .remove(supportFragmentManager.findFragmentById(R.id.container)!!).commit()
-        }
         mHomeFragment = HomeFragment()
         /*selectedDashboard =
             getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD, 0)
