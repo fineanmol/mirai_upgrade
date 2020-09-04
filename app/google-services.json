@@ -1,58 +1,34 @@
 {
   "project_info": {
-    "project_number": "47906656153",
-    "firebase_url": "https://mirai-vizion.firebaseio.com",
-    "project_id": "mirai-vizion",
-    "storage_bucket": "mirai-vizion.appspot.com"
+    "project_number": "260185012851",
+    "firebase_url": "https://midi-trio.firebaseio.com",
+    "project_id": "midi-trio",
+    "storage_bucket": "midi-trio.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:47906656153:android:1f4c7e73c8f75507b24d08",
+        "mobilesdk_app_id": "1:260185012851:android:56332932911cea43728806",
         "android_client_info": {
           "package_name": "com.tragicbytes.midi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "47906656153-smguodh01u8fqr1f1qfvur656bvspmvb.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tragicbytes.midi",
-            "certificate_hash": "91b7f93c3a32bbe916e8af4507a95b746c6f578f"
-          }
-        },
-        {
-          "client_id": "47906656153-ef9oqih7ktvo15b9ugelcstravv2hp5m.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tragicbytes.midi",
-            "certificate_hash": "13d839a53d34eb5c3b6b81af86d0e3fd39d48513"
-          }
-        },
-        {
-          "client_id": "47906656153-otp02kbrlsdub2tr6h4gi03h7qjfgtti.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tragicbytes.midi",
-            "certificate_hash": "75b4fd31c3293ed2e33964f9470b137090ea4072"
-          }
-        },
-        {
-          "client_id": "47906656153-o6dd007bv174vbpu7bi65078r7muaerd.apps.googleusercontent.com",
+          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDVDun-hw9u5HYVUN3ZmZ3kZEy8fbdoQNU"
+          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "47906656153-o6dd007bv174vbpu7bi65078r7muaerd.apps.googleusercontent.com",
+              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -61,51 +37,27 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:47906656153:android:b90489836e187c65b24d08",
+        "mobilesdk_app_id": "1:260185012851:android:834e95b3fcef8c40728806",
         "android_client_info": {
-          "package_name": "nightowl.developers.midi"
+          "package_name": "nightowl.developers.miditest"
         }
       },
       "oauth_client": [
         {
-          "client_id": "47906656153-t4p0fb23k52979teuevdiso8adanrkd2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nightowl.developers.midi",
-            "certificate_hash": "91b7f93c3a32bbe916e8af4507a95b746c6f578f"
-          }
-        },
-        {
-          "client_id": "47906656153-6jvmet8taa0fj2hfvlkv15njuqsr2vbr.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nightowl.developers.midi",
-            "certificate_hash": "13d839a53d34eb5c3b6b81af86d0e3fd39d48513"
-          }
-        },
-        {
-          "client_id": "47906656153-aceb8kcnrvvn881ha5nq684gqt0r9717.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "nightowl.developers.midi",
-            "certificate_hash": "75b4fd31c3293ed2e33964f9470b137090ea4072"
-          }
-        },
-        {
-          "client_id": "47906656153-o6dd007bv174vbpu7bi65078r7muaerd.apps.googleusercontent.com",
+          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDVDun-hw9u5HYVUN3ZmZ3kZEy8fbdoQNU"
+          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "47906656153-o6dd007bv174vbpu7bi65078r7muaerd.apps.googleusercontent.com",
+              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
