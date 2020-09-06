@@ -1056,6 +1056,7 @@ fun setScreenData(
         view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
         view.screenStatus.text = "• Running"
     }
+    view.screenActiveTime.text= item.screenActiveTime
     view.locationTitle.text = item.screenLocation
     view.addressTitle.text = item.screenCity + "," + item.screenPincode
     view.screen_price.text = "${item.screenPrice}".currencyFormat("INR")
