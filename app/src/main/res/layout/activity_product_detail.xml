@@ -166,6 +166,7 @@
                         android:paddingStart="@dimen/spacing_standard"
                         android:paddingTop="@dimen/spacing_control_half"
                         android:paddingEnd="@dimen/spacing_standard"
+                        android:visibility="gone"
                         android:paddingBottom="@dimen/spacing_control_half"
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/commonColorWhite"
@@ -192,6 +193,7 @@
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/font_size_xlarge"
+                        android:visibility="gone"
                         android:textStyle="bold"
                         tools:text="$80" />
 
@@ -206,6 +208,7 @@
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_toEndOf="@id/tvPrice"
                         android:gravity="center_vertical"
+                        android:visibility="gone"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_medium"

@@ -180,11 +180,11 @@ class ProductDetailActivity : AppBaseActivity(){
         mMainBinding.model = mProductModel
 
         when {
-            mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
-                mProductModel.sale_price.currencyFormat()
-            else -> tvPrice.text = mProductModel.price.toString().currencyFormat()
+//            mProductModel.sale_price!!.isNotEmpty() -> tvPrice.text =
+//                mProductModel.sale_price.currencyFormat()
+//            else -> tvPrice.text = mProductModel.price.toString().currencyFormat()
         }
-        tvItemProductOriginalPrice.text = mProductModel.regular_price?.currencyFormat()
+      /*  tvItemProductOriginalPrice.text = mProductModel.regular_price?.currencyFormat()
         tvItemProductOriginalPrice.applyStrike()
         if (mProductModel.regular_price != null && mProductModel.regular_price.isNotEmpty()) {
             val mrp = mProductModel.regular_price.toDouble()
@@ -207,7 +207,7 @@ class ProductDetailActivity : AppBaseActivity(){
 
         } else {
             tvItemProductDiscount.hide()
-        }
+        }*/
         toolbar_layout.setCollapsedTitleTypeface(fontSemiBold())
         toolbar_layout.setExpandedTitleTypeface(fontSemiBold())
         toolbar_layout.title = mProductModel.name
