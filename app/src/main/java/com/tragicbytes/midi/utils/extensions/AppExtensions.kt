@@ -1277,14 +1277,14 @@ fun setOrderedScreenData(
 
 fun setProductItem(view: View, item: ProductDataNew) {
     view.tvProductName.text = item.name
-    if (item.sale_price!!.isNotEmpty()) {
+   /* if (item.sale_price!!.isNotEmpty()) {
         view.tvDiscountPrice.text = item.sale_price.currencyFormat()
     } else {
         view.tvDiscountPrice.text = item.price?.currencyFormat()
     }
-    view.ratingBar.rating = item.average_rating!!.toFloat()
-    view.tvOriginalPrice.text = item.regular_price?.currencyFormat()
-    view.tvOriginalPrice.applyStrike()
+   // view.ratingBar.rating = item.average_rating!!.toFloat()
+  //  view.tvOriginalPrice.text = item.regular_price?.currencyFormat()
+  //  view.tvOriginalPrice.applyStrike()*/
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
