@@ -232,7 +232,7 @@ fun updateWalletAmount(
 ) {
     try {
         dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-            .addValueEventListener(
+            .addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
