@@ -206,4 +206,30 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             .show()
         showProgress(false)
     }
+
+    override fun onStart() {
+        super.onStart()
+        showProgress(true)
+        updateWalletAmount(dbReference, onSuccess = {
+            walletAmount.text =
+                it.currencyFormat("INR")
+            showProgress(false)
+        }, onFailed = {
+            snackBar("Error Occurred")
+            showProgress(false)
+        })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showProgress(true)
+        updateWalletAmount(dbReference, onSuccess = {
+            walletAmount.text =
+                it.currencyFormat("INR")
+            showProgress(false)
+        }, onFailed = {
+            snackBar("Error Occurred")
+            showProgress(false)
+        })
+    }
 }
