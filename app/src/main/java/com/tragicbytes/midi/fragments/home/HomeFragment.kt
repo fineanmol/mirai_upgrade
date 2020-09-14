@@ -230,11 +230,13 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupNewArrivalProductAdapter() {
-        mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position -> setProductItem(view, item) })
+        mNewArrivalProductAdapter = RecyclerViewAdapter(R.layout.item_product_new, onBind = { view, item, position ->
+            setProductItem(view, item)
+        })
 
         rcvNewestProduct.apply {
             layoutManager = GridLayoutManager(activity, 2, RecyclerView.HORIZONTAL, false)
-            setHasFixedSize(true)
+          //  setHasFixedSize(true)
             adapter = mNewArrivalProductAdapter
             rvItemAnimation()
         }

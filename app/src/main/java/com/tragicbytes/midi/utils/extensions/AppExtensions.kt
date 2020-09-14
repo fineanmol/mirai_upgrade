@@ -1244,7 +1244,7 @@ fun setOrderedScreenData(
     }
 
     /** 0==Screen Ads Rejected*/
-    if (item.screenApprovedStatus == "0") {
+    if (item.screenApprovedStatus == "2") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
         view.ivCircleSupport.visibility=View.VISIBLE
@@ -1261,7 +1261,7 @@ fun setOrderedScreenData(
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.track_red))
 
-        if (item.screenAdminComment.isNullOrEmpty()) {
+        if (item.screenAdminComment.isNullOrEmpty() || item.screenAdminComment=="Your Advertisement is under Review") {
             view.tvDelivered.text = "Your Advertisement has been Rejected"
         } else {
             view.tvDelivered.text = item.screenAdminComment
