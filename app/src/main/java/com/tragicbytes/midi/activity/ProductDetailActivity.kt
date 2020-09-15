@@ -142,6 +142,7 @@ class ProductDetailActivity : AppBaseActivity() {
                     "1000",
                     "500"
                 )
+
                 mProductModel = userUploadBannerModel
                 setDetails(mProductModel!!)
             }
@@ -319,9 +320,7 @@ class ProductDetailActivity : AppBaseActivity() {
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } else if (advDetails.advName == "Custom Banner") {
-            return true
-        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty()) {
+        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty() || advDetails.advId !=null) {
             snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
             return false
         }/*else if (rangeVal.textToString().isEmpty()) {
@@ -367,6 +366,8 @@ class ProductDetailActivity : AppBaseActivity() {
             }
         } else {
             if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
+
+                advDetails.advName = "Custom Banner"
                 val encodeByte: ByteArray =
                     Base64.decode(
                         (this.application as WooBoxApp).getUserUploadImageEncoded(),
