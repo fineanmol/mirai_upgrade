@@ -203,7 +203,7 @@ fun updateTransactionDetails(
     var transactionsList = localStoredUserDetails.userWalletDetails.transactionsDetails
     transactionsList.add(newTransactionsDetails)
     localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
-    updateStoredUserDetails(localStoredUserDetails)
+//    updateStoredUserDetails(localStoredUserDetails)
     dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
         .setValue(
             transactionsList
