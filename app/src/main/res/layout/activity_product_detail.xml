@@ -166,11 +166,11 @@
                         android:paddingStart="@dimen/spacing_standard"
                         android:paddingTop="@dimen/spacing_control_half"
                         android:paddingEnd="@dimen/spacing_standard"
-                        android:visibility="gone"
                         android:paddingBottom="@dimen/spacing_control_half"
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/commonColorWhite"
                         android:textSize="@dimen/font_size_small"
+                        android:visibility="gone"
                         tools:text="50% Off" />
 
                     <TextView
@@ -193,8 +193,8 @@
                         android:textAppearance="@style/FontSemiBold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/font_size_xlarge"
-                        android:visibility="gone"
                         android:textStyle="bold"
+                        android:visibility="gone"
                         tools:text="$80" />
 
                     <TextView
@@ -208,10 +208,10 @@
                         android:layout_marginEnd="@dimen/spacing_standard_new"
                         android:layout_toEndOf="@id/tvPrice"
                         android:gravity="center_vertical"
-                        android:visibility="gone"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorSecondary"
                         android:textSize="@dimen/font_size_medium"
+                        android:visibility="gone"
                         tools:text="$50" />
 
                     <TextView
@@ -539,36 +539,35 @@
 
                 </LinearLayout>
 
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/selectLocation"
-                    style="@style/MaterialButtonStyle.Filled"
-                    android:layout_width="@dimen/_130sdp"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/spacing_middle"
-                    android:layout_marginTop="@dimen/spacing_xxlarge"
-                    android:layout_marginEnd="@dimen/spacing_middle"
-                    android:text="@string/lbl_cancel"
-                    android:visibility="visible"
-                    app:cornerRadius="@dimen/spacing_control" />
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginEnd="@dimen/spacing_standard_new"
+                    android:layout_marginStart="@dimen/spacing_standard_new"
+                    android:orientation="horizontal">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/bannerUpload"
-                    style="@style/MaterialButtonStyle.Success"
-                    android:layout_width="@dimen/_130sdp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_150sdp"
-                    android:layout_marginTop="-54dp"
-                    android:layout_marginEnd="@dimen/spacing_middle"
-                    android:drawableEnd="@drawable/ic_baseline_add_circle_24"
-                    android:drawablePadding="@dimen/_40sdp"
-                    android:paddingLeft="30dip"
-                    android:paddingRight="26dip"
-                    android:text="@string/lbl_upload_banner"
-                    android:visibility="visible"
-                    app:cornerRadius="@dimen/spacing_control" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/selectLocation"
+                        style="@style/MaterialButtonStyle.Filled"
+                        android:layout_width="@dimen/_130sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_medium"
+                        android:text="@string/lbl_cancel"
+                        android:visibility="visible"
+                        app:cornerRadius="@dimen/spacing_control" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/bannerUpload"
+                        style="@style/MaterialButtonStyle.Success"
+                        android:layout_width="@dimen/_130sdp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/spacing_medium"
+                        android:text="@string/lbl_upload_banner"
+                        android:visibility="visible"
+                        app:cornerRadius="@dimen/spacing_control" />
 
+                </LinearLayout>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

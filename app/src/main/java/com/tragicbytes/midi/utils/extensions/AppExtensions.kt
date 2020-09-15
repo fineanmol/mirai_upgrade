@@ -1324,7 +1324,7 @@ fun setWalletItem(
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.black))
             view.tAmount.text = "- ₹" + item.transactionAmount.split("-").last().toString()
-            view.tIcon.setBackgroundResource(R.drawable.ic_star_black) /**ad_icon*/
+            view.tIcon.setBackgroundResource(R.drawable.ad_icon) /**ic_star_black*/
             view.tTransactionText.text = "Paid to Advertisement"
 
         } else {
@@ -1400,11 +1400,16 @@ fun setSelectedScreenItem(
     ongoingAdv: SingleAdvertisementDetails,
     context: ConfirmationActivity
 ) {
-    view.tScreenName.text = item.screenId
+    var dateDifference= ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toInt()
+    var totalPrice= item.screenPrice.toInt() * dateDifference
+    view.tScreenLocation.text ="Loc : "+ item.screenLocation
+    view.tTime.text = item.screenActiveTime
+    view.tScreenCity.text = item.screenCity +", "+ item.screenPincode
+    view.tScreenName.text = "Id: "+item.screenId
     view.tTimeDistribution.text = item.screenActiveTime
     view.tGenderRatio.text = item.screenGenderRatio
     view.tAgeDistributtion.text =   "\nBelow 18 ="+item.screenAgeGroupPref.generationZ +"%"+"\n18-34 ="+item.screenAgeGroupPref.generationY+"%"+"\n35-50 ="+item.screenAgeGroupPref.generationX+"%"+ "\n50+ ="+item.screenAgeGroupPref.babyBoomers+"%"
-    view.tScreenPrice.text = ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString() + " * " +item.screenPrice.currencyFormat("INR")
+    view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")+ " * "+ dateDifference.toString()+ " = " + totalPrice.toString().currencyFormat("INR")
 
 }
 

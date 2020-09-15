@@ -223,6 +223,17 @@
                             android:textAppearance="@dimen/font_size_medium"
                             android:textColor="@color/blacklight"
                             android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/dateDifferenceValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_xxlarge"
+                            android:layout_marginTop="3.8dp"
+                            android:text="Total No. of Days: "
+                            android:textAppearance="@dimen/font_size_medium"
+                            android:textColor="@color/blacklight"
+                            android:textSize="13sp"  />
                     </LinearLayout>
 
                     <View

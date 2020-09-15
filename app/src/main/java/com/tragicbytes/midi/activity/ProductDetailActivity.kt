@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DatabaseReference
@@ -32,12 +31,9 @@ import com.tragicbytes.midi.models.UserDetailsModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.KeyIntent.DATA
 import com.tragicbytes.midi.utils.Constants.KeyIntent.USER_UPLOAD_BANNER
-import com.tragicbytes.midi.utils.DateTimeUnits
 import com.tragicbytes.midi.utils.extensions.*
 import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_product_detail.*
-import kotlinx.android.synthetic.main.activity_product_detail.determinate
-import kotlinx.android.synthetic.main.activity_product_detail.dots
 import kotlinx.android.synthetic.main.item_color.view.*
 import kotlinx.android.synthetic.main.item_size.view.*
 import java.text.DateFormat
@@ -48,10 +44,10 @@ import kotlin.math.pow
 import kotlin.math.roundToInt
 import kotlin.properties.Delegates
 
-class ProductDetailActivity : AppBaseActivity(){
+class ProductDetailActivity : AppBaseActivity() {
 
-    private var advGenderPref: String="Female"
-    private var advAgeGroupPref: String=""
+    private var advGenderPref: String = "Female"
+    private var advAgeGroupPref: String = ""
     private lateinit var mMainBinding: ActivityProductDetailBinding
     private lateinit var dbReference: DatabaseReference
     private var storageReference: StorageReference? = null
@@ -67,14 +63,14 @@ class ProductDetailActivity : AppBaseActivity(){
     private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
-    private var advDetails: SingleAdvertisementDetails=SingleAdvertisementDetails()
+    private var advDetails: SingleAdvertisementDetails = SingleAdvertisementDetails()
     private var mIsAllDetailsFilled: Boolean = false
     private var colorAdapter: RecyclerViewAdapter<String>? = null
     private var ageGroupAdapter: RecyclerViewAdapter<String>? = null
     private var mMonth = 0
     private var mYear: Int = 0
     private var mDay: Int = 0
-    private var firstTrigger=true
+    private var firstTrigger = true
 
     object UploadInProductSignalChange {
         private var refreshListListeners = ArrayList<() -> Unit>()
@@ -82,7 +78,7 @@ class ProductDetailActivity : AppBaseActivity(){
         // fires off every time value of the property changes
         var bannerUploadStatus: String by Delegates.observable("initial value") { property, oldValue, newValue ->
             // do your stuff here
-            LocationBasedScreensActivity.SignalChange.property1=newValue
+            LocationBasedScreensActivity.SignalChange.property1 = newValue
             refreshListListeners.forEach {
                 it()
             }
@@ -97,7 +93,7 @@ class ProductDetailActivity : AppBaseActivity(){
         Checkout.preload(applicationContext)
         getSharedPrefInstance().removeKey(Constants.SharedPref.ADS_BANNER_URL)
         dbReference = FirebaseDatabase.getInstance().reference
-        storageReference=FirebaseStorage.getInstance().reference
+        storageReference = FirebaseStorage.getInstance().reference
         mMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_product_detail)
         setToolbarWithoutBackButton(mMainBinding.toolbar)
         toolbar_layout.title = "Advertisement"
@@ -106,18 +102,18 @@ class ProductDetailActivity : AppBaseActivity(){
         }
 
         LocationBasedScreensActivity.SignalChange.refreshListListeners.add {
-            if (firstTrigger){
-                determinate.visibility= View.VISIBLE
+            if (firstTrigger) {
+                determinate.visibility = View.VISIBLE
                 determinate.showShadow(true)
                 determinate.showProgress(true)
-                firstTrigger=false
+                firstTrigger = false
             }
             determinate.setProgress(bannerUploadStatus.toFloat())
-            if(bannerUploadStatus=="100"){
-                Log.d("xxx","success")
+            if (bannerUploadStatus == "100") {
+                Log.d("xxx", "success")
                 Notify
                     .with(this)
-                    .asBigText  {
+                    .asBigText {
                         title = "Uploaded Successfully! 📢"
                         expandedText = "Your banner is uploaded successfully ⚡⚡"
                         bigText = "Please proceed by filling next details."
@@ -175,7 +171,6 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
 
-
     private fun setDetails(mProductModel: ProductDataNew) {
         mMainBinding.model = mProductModel
 
@@ -184,37 +179,36 @@ class ProductDetailActivity : AppBaseActivity(){
 //                mProductModel.sale_price.currencyFormat()
 //            else -> tvPrice.text = mProductModel.price.toString().currencyFormat()
         }
-      /*  tvItemProductOriginalPrice.text = mProductModel.regular_price?.currencyFormat()
-        tvItemProductOriginalPrice.applyStrike()
-        if (mProductModel.regular_price != null && mProductModel.regular_price.isNotEmpty()) {
-            val mrp = mProductModel.regular_price.toDouble()
-            var discountPrice: Double = when {
-                mProductModel.sale_price.isNotEmpty() -> mProductModel.sale_price.toDouble()
-                else -> mProductModel.price!!.toDouble()
-            }
-            if (mrp != 0.0) {
-                val sub = mrp - discountPrice
-                val discount = round(((sub * 100) / mrp), 2)
-                if (discount == 0.0) {
-                    tvItemProductDiscount.hide()
-                } else {
-                    tvItemProductDiscount.show()
-                    tvItemProductDiscount.text = "${discount.toInt()}% Off"
-                }
-            } else {
-                tvItemProductDiscount.hide()
-            }
+        /*  tvItemProductOriginalPrice.text = mProductModel.regular_price?.currencyFormat()
+          tvItemProductOriginalPrice.applyStrike()
+          if (mProductModel.regular_price != null && mProductModel.regular_price.isNotEmpty()) {
+              val mrp = mProductModel.regular_price.toDouble()
+              var discountPrice: Double = when {
+                  mProductModel.sale_price.isNotEmpty() -> mProductModel.sale_price.toDouble()
+                  else -> mProductModel.price!!.toDouble()
+              }
+              if (mrp != 0.0) {
+                  val sub = mrp - discountPrice
+                  val discount = round(((sub * 100) / mrp), 2)
+                  if (discount == 0.0) {
+                      tvItemProductDiscount.hide()
+                  } else {
+                      tvItemProductDiscount.show()
+                      tvItemProductDiscount.text = "${discount.toInt()}% Off"
+                  }
+              } else {
+                  tvItemProductDiscount.hide()
+              }
 
-        } else {
-            tvItemProductDiscount.hide()
-        }*/
+          } else {
+              tvItemProductDiscount.hide()
+          }*/
         toolbar_layout.setCollapsedTitleTypeface(fontSemiBold())
         toolbar_layout.setExpandedTitleTypeface(fontSemiBold())
         toolbar_layout.title = mProductModel.name
         if (mProductModel.name.toString() == "Custom Banner") btnAddCard.hide() else btnAddCard.show()
 
         intHeaderView()
-
 
 
         /*submitForPaymentBtn.onClick {
@@ -231,13 +225,14 @@ class ProductDetailActivity : AppBaseActivity(){
 
         val sdf = SimpleDateFormat("d-M-yyyy")
         val currentDate = sdf.format(Date())
-        startDateVal.text=currentDate
+        startDateVal.text = currentDate
 
         startDateVal.onClick {
             val datePickerDialog = DatePickerDialog(
                 this@ProductDetailActivity,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    startDateVal.text = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                    startDateVal.text =
+                        (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
                 }, mYear, mMonth, mDay
             )
             datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
@@ -259,18 +254,18 @@ class ProductDetailActivity : AppBaseActivity(){
 
         val sdf2 = SimpleDateFormat("hh:mm a")
         val currentTime = sdf2.format(Date())
-        startTimeVal.text=currentTime.toString()
+        startTimeVal.text = currentTime.toString()
 
         startTimeVal.onClick {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-               // startTimeVal.text = "$hour:$minute"
-                startTimeVal.text=  updateTime(hour,minute)
+                // startTimeVal.text = "$hour:$minute"
+                startTimeVal.text = updateTime(hour, minute)
                 mIsStartTimeExist = true
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
                 timeSetListener,
-                0,0,
+                0, 0,
                 false
             ).show()
 
@@ -278,12 +273,12 @@ class ProductDetailActivity : AppBaseActivity(){
 
         endTimeVal.onClick {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                endTimeVal.text = updateTime(hour,minute)
+                endTimeVal.text = updateTime(hour, minute)
             }
             TimePickerDialog(
                 this@ProductDetailActivity,
                 timeSetListener,
-                0,0,
+                0, 0,
                 false
             ).show()
             mIsEndTimeExist = true
@@ -291,12 +286,12 @@ class ProductDetailActivity : AppBaseActivity(){
 
         bannerUpload.onClick {
 
-             if (validateAllValue()) {
-                 snackBar("Looks Good")
-               updateDbValues()
+            if (validateAllValue()) {
+                snackBar("Looks Good")
+                updateDbValues()
 
 
-             }
+            }
 
         }
 
@@ -324,10 +319,12 @@ class ProductDetailActivity : AppBaseActivity(){
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } /*else if (advDetails.advName=="Test Name" || advDetails.advName.isEmpty()) {
+        } else if (advDetails.advName == "Custom Banner") {
+            return true
+        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty()) {
             snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
             return false
-        }*//*else if (rangeVal.textToString().isEmpty()) {
+        }/*else if (rangeVal.textToString().isEmpty()) {
             snackBar("Range Required", Snackbar.LENGTH_SHORT)
             return false
         }*/ else {
@@ -347,10 +344,10 @@ class ProductDetailActivity : AppBaseActivity(){
 
     private fun intHeaderView() {
         var advDetails = SingleAdvertisementDetails()
-        advDetails.advName="Test Name"
-        advDetails.advDescription="Test adv description"
-        advDetails.advTagline="#ourTagLine"
-        advDetails.advBrandName="Test Brand"
+        advDetails.advName = "Test Name"
+        advDetails.advDescription = "Test adv description"
+        advDetails.advTagline = "#ourTagLine"
+        advDetails.advBrandName = "Test Brand"
         showProgress(true)
 
         if (mProductModel!!.full.toString().isNotEmpty()) {
@@ -369,10 +366,14 @@ class ProductDetailActivity : AppBaseActivity(){
                 }
             }
         } else {
-            if(intent?.extras?.getString(USER_UPLOAD_BANNER)=="TRUE"){
+            if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
                 val encodeByte: ByteArray =
-                    Base64.decode((this.application as WooBoxApp).getUserUploadImageEncoded(), Base64.DEFAULT)
-                val personalizedBannerBitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+                    Base64.decode(
+                        (this.application as WooBoxApp).getUserUploadImageEncoded(),
+                        Base64.DEFAULT
+                    )
+                val personalizedBannerBitmap =
+                    BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
 
                 myImages.add(personalizedBannerBitmap)
                 val imageAdapter = PersonalizedProductImageAdapter(myImages)
@@ -381,8 +382,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 productViewPager.adapter?.notifyDataSetChanged()
                 dots.attachViewPager(productViewPager)
                 dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-            }
-            else{
+            } else {
                 snackBar("Something went wrong! Please retry.")
             }
             showProgress(false)
@@ -403,7 +403,7 @@ class ProductDetailActivity : AppBaseActivity(){
         val genderList = ArrayList<String>()
         val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups = listOf("Below 18", "18-35", "35-50","50+")
+        val ageGroups = listOf("Below 18", "18-35", "35-50", "50+")
 
         if (genders.isNotEmpty()) {
 
@@ -468,7 +468,7 @@ class ProductDetailActivity : AppBaseActivity(){
                 })
             colorAdapter?.onItemClick = { pos, view, item ->
                 mColorFlag = pos
-                advGenderPref= genderList[pos]
+                advGenderPref = genderList[pos]
                 mIsGenderExist = true && advGenderPref.isNotEmpty()
                 colorAdapter?.notifyDataSetChanged()
                 getSelectedColors()
@@ -592,7 +592,7 @@ class ProductDetailActivity : AppBaseActivity(){
     }
 
     private fun updateDbValues() {
-      //  snackBar("Details filled")
+        //  snackBar("Details filled")
         showProgress(true)
 
         try {
@@ -603,23 +603,30 @@ class ProductDetailActivity : AppBaseActivity(){
                     android.Manifest.permission.READ_EXTERNAL_STORAGE
                 ), onResult = {
                     if (it) {
-                        firstTrigger=true
-                        val adsDetails=SingleAdvertisementDetails()
-                        adsDetails.advId="adv_" +generateOrderId(14).toString()
-                        getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
+                        firstTrigger = true
+                        val adsDetails = SingleAdvertisementDetails()
+                        adsDetails.advId = "adv_" + generateOrderId(14).toString()
+                        getSharedPrefInstance().setValue(
+                            Constants.SharedPref.CURRENT_ADV_ID,
+                            adsDetails.advId
+                        )
                         adsDetails.advAgePref.add(advAgeGroupPref)
-                        adsDetails.advGenderPref=advGenderPref
+                        adsDetails.advGenderPref = advGenderPref
 //                                adsDetails.advBannerUrl=bannerImageUrl
-                        adsDetails.advBrandName= advDetails.advBrandName
-                        adsDetails.advDescription=advDetails.advDescription
-                        adsDetails.advTagline=advDetails.advTagline
-                        adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
-                        adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
+                        adsDetails.advBrandName = advDetails.advBrandName
+                        adsDetails.advDescription = advDetails.advDescription
+                        adsDetails.advTagline = advDetails.advTagline
+                        adsDetails.startFrom =
+                            getTimeStamp(startDateVal.text.toString(), startTimeVal.text.toString())
+                        adsDetails.endOn =
+                            getTimeStamp(endDateVal.text.toString(), endTimeVal.text.toString())
                         /*adsDetails.advRange = rangeVal.text.toString()*/
-                        var localUserDetails=getStoredUserDetails()
-                        var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
+                        var localUserDetails = getStoredUserDetails()
+                        var advDetails =
+                            localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
                         advDetails.add(adsDetails)
-                        localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
+                        localUserDetails.userAdvertisementDetails.singleAdvertisementDetails =
+                            advDetails
                         showProgress(true)
                         this@ProductDetailActivity.saveLogoImageToStorage(this@ProductDetailActivity,
                             storageReference!!,
@@ -664,18 +671,21 @@ class ProductDetailActivity : AppBaseActivity(){
                                     localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
                                     saveBannerDetailsToDB(localUserDetails,adsDetails)
                                 }*/
-                                bannerUploadStatus="100"
-                                getSharedPrefInstance().setValue(Constants.SharedPref.ADS_BANNER_URL, bannerImageUrl)
-                                Log.d("xxx","upload-success")
-                            },onUploading = {
-                                if(firstTrigger){
+                                bannerUploadStatus = "100"
+                                getSharedPrefInstance().setValue(
+                                    Constants.SharedPref.ADS_BANNER_URL,
+                                    bannerImageUrl
+                                )
+                                Log.d("xxx", "upload-success")
+                            }, onUploading = {
+                                if (firstTrigger) {
                                     snackBar("Ads Details Saved")
                                 }
-                                bannerUploadStatus=it.toString()
-                                Log.d("xxx","uploading${it}")
+                                bannerUploadStatus = it.toString()
+                                Log.d("xxx", "uploading${it}")
                                 Notify
                                     .with(this)
-                                    .asBigText  {
+                                    .asBigText {
                                         title = "Uploading files"
                                         expandedText = "The Banner is being uploaded!"
                                         bigText = "uploading ${it} %"
@@ -683,16 +693,16 @@ class ProductDetailActivity : AppBaseActivity(){
                                     .show()
                             },
                             onFailed = {
-                                Log.d("xxx","upload-failed")
+                                Log.d("xxx", "upload-failed")
                                 Notify
                                     .with(this)
-                                    .asBigText  {
+                                    .asBigText {
                                         title = "Uploading Failed"
-                                        expandedText = "The Banner uploading is failed!"
+                                        expandedText = "Banner uploading  failed!"
                                     }
                                     .show()
                             },
-                            onUploadStart={
+                            onUploadStart = {
                                 launchActivity<LocationBasedScreensActivity> {
                                     putExtra("ongoing_adv", adsDetails)
                                 }
@@ -706,8 +716,7 @@ class ProductDetailActivity : AppBaseActivity(){
                     }
                 })
 
-        }
-        catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -717,7 +726,6 @@ class ProductDetailActivity : AppBaseActivity(){
         val date = formatter.parse("$startDate $startTime") as Date
         return date.time.toString()
     }
-
 
 
     private fun saveBannerDetailsToDB(
