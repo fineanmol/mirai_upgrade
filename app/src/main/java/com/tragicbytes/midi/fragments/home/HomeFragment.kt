@@ -279,6 +279,7 @@ class HomeFragment : BaseFragment() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+
         }
     }
 
