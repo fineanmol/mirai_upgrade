@@ -199,37 +199,29 @@ fun updateTransactionDetails(
     onFailed: () -> Unit
 ) {
 
-//    var localStoredUserDetails = getStoredUserDetails()
-    var transactionsList = ArrayList<TransactionDetails>()
-//    localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
+    var localStoredUserDetails = getStoredUserDetails()
+    var transactionsList = localStoredUserDetails.userWalletDetails.transactionsDetails
+    transactionsList.add(newTransactionsDetails)
+    localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
 //    updateStoredUserDetails(localStoredUserDetails)
     dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-        .addListenerForSingleValueEvent(
-            object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
+        .setValue(
+            transactionsList
+        ).addOnSuccessListener {
+            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
+                .setValue(
+                    ServerValue.TIMESTAMP
+                ).addOnSuccessListener {
+                    onSuccess()
+
+                }.addOnFailureListener {
                     onFailed()
                 }
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    transactionsList=dataSnapshot.value as ArrayList<TransactionDetails>
-                    transactionsList.add(newTransactionsDetails)
-                    dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-                        .setValue(
-                            transactionsList
-                        ).addOnSuccessListener {
-                            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
-                                .setValue(
-                                    ServerValue.TIMESTAMP
-                                ).addOnSuccessListener {
-                                    onSuccess()
-                                }.addOnFailureListener {
-                                    onFailed()
-                                }
-                        }.addOnFailureListener {
-                            onFailed()
-                        }
-                }
-            }
-        )
+        }.addOnFailureListener {
+            onFailed()
+        }
+
+
 }
 
 
@@ -263,14 +255,10 @@ fun updateWalletAmount(
                                     onSuccess(sum.toString())
                                 }
                         }
-
-                        else{
-                            onFailed("")
-                        }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        onFailed("Database error.")
+                        onFailed("")
                     }
                 }
 
@@ -1244,7 +1232,7 @@ fun setOrderedScreenData(
     if (item.screenApprovedStatus == "1") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
-        view.bApprovedDate.text = item.screenAdvApprovedOn.toString()
+        view.bApprovedDate.text = item.screenAdvApprovedOn
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.text = "Adv. Approved"
@@ -1267,7 +1255,7 @@ fun setOrderedScreenData(
             else
             view.tvRefundMsg.visibility=View.VISIBLE
         }
-        view.bApprovedDate.text = item.screenAdvApprovedOn.toString()
+        view.bApprovedDate.text = item.screenAdvApprovedOn
         view.tvDelivered.text = item.screenAdminComment
         view.tvApprovedTitle.text = "Adv. Rejected"
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
