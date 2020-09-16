@@ -302,34 +302,46 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun validateAllValue(): Boolean {
-
-        if (!mIsGenderExist) {
-            snackBar("Target Gender Required ", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (!mIsAgeGroupExist) {
-            snackBar("Target Age Range Required", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (!mIsAgeGroupExist) {
-            snackBar("Start Date Required", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (!mIsEndDateExist) {
-            snackBar("End Date Required", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (!mIsStartTimeExist) {
-            snackBar("Start Time Required", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (!mIsEndTimeExist) {
-            snackBar("End Time Required", Snackbar.LENGTH_SHORT)
-            return false
-        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty() && !mIsImageBanner) {
-            snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
-            return false
-        }/*else if (rangeVal.textToString().isEmpty()) {
-            snackBar("Range Required", Snackbar.LENGTH_SHORT)
-            return false
-        }*/ else {
-            mIsAllDetailsFilled = true
+        try {
+            val startD =
+                getTimeStamp(startDateVal.text.toString(), startTimeVal.text.toString()).toLong()
+            val endD = getTimeStamp(endDateVal.text.toString(), endTimeVal.text.toString()).toLong()
+            val dateDif = ((endD - startD) / (1000 * 60 * 60 * 24) + 1).toInt()
+            if (!mIsGenderExist) {
+                snackBar("Target Gender Required ", Snackbar.LENGTH_SHORT)
+                return false
+            } else if (!mIsAgeGroupExist) {
+                snackBar("Target Age Range Required", Snackbar.LENGTH_SHORT)
+                return false
+            } else if (!mIsAgeGroupExist) {
+                snackBar("Start Date Required", Snackbar.LENGTH_SHORT)
+                return false
+            } else if (!mIsEndDateExist) {
+                snackBar("End Date Required", Snackbar.LENGTH_SHORT)
+                return false
+            } else if (!mIsStartTimeExist) {
+                snackBar("Start Time Required")
+                return false
+            } else if (!mIsStartTimeExist) {
+                snackBar("Start Time Required")
+                return false
+            } else if (dateDif <= 0) {
+                snackBarError("End Date should be greater or than Start Date")
+                return false
+            } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty() && !mIsImageBanner) {
+                snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
+                return false
+            }/*else if (rangeVal.textToString().isEmpty()) {
+                snackBar("Range Required", Snackbar.LENGTH_SHORT)
+                return false
+            }*/ else {
+                mIsAllDetailsFilled = true
+                return true
+            }
             return true
+        } catch (e: Exception) {
+            snackBarError(e.message.toString())
+            return false
         }
 
     }
@@ -368,7 +380,7 @@ class ProductDetailActivity : AppBaseActivity() {
         } else {
             if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
 
-                mIsImageBanner= true
+                mIsImageBanner = true
                 val encodeByte: ByteArray =
                     Base64.decode(
                         (this.application as WooBoxApp).getUserUploadImageEncoded(),
@@ -634,45 +646,7 @@ class ProductDetailActivity : AppBaseActivity() {
                             storageReference!!,
                             myImages[0],
                             onSuccess = { bannerImageUrl ->
-                                /*showProgress(false)
-                                var startDate = startDateVal.text.toString()
 
-                                if(intent.getSerializableExtra(DATA)!=null){
-                                    mProductModel = intent.getSerializableExtra(DATA) as ProductDataNew
-                                }
-
-                                //region When Create Ads
-                                if (mProductModel!!.name == "Custom Banner") {
-                                    *//*val adsDetails = AdDetailsModel.AdsCompleteDetails(
-                                        adDetails,
-                                        adsGender,
-                                        adsAgeGroup,
-                                        startDate,
-                                        endDateVal.text.toString(),
-                                        startTimeVal.text.toString(),
-                                        endTimeVal.text.toString(),
-                                        *//**//*"₹" + rangeVal.textToString(),*//**//*
-                                        bannerImageUrl
-                                    )
-                                    saveBannerDetailsToDB(adsDetails)*//*
-                                } else {
-                                    adsDetails.advId=generateString()
-                                    getSharedPrefInstance().setValue(Constants.SharedPref.CURRENT_ADV_ID, adsDetails.advId)
-                                    adsDetails.advAgePref.add(advAgeGroupPref)
-                                    adsDetails.advGenderPref=advGenderPref
-                                    adsDetails.advBannerUrl=bannerImageUrl
-                                    adsDetails.advBrandName= advDetails.advBrandName
-                                    adsDetails.advDescription=advDetails.advDescription
-                                    adsDetails.advTagline=advDetails.advTagline
-                                    adsDetails.startFrom=getTimeStamp(startDateVal.text.toString(),startTimeVal.text.toString())
-                                    adsDetails.endOn=getTimeStamp(endDateVal.text.toString(),endTimeVal.text.toString())
-                                    *//*adsDetails.advRange = rangeVal.text.toString()*//*
-                                    var localUserDetails=getStoredUserDetails()
-                                    var advDetails=localUserDetails.userAdvertisementDetails.singleAdvertisementDetails
-                                    advDetails.add(adsDetails)
-                                    localUserDetails.userAdvertisementDetails.singleAdvertisementDetails=advDetails
-                                    saveBannerDetailsToDB(localUserDetails,adsDetails)
-                                }*/
                                 bannerUploadStatus = "100"
                                 getSharedPrefInstance().setValue(
                                     Constants.SharedPref.ADS_BANNER_URL,
