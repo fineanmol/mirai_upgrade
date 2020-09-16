@@ -63,6 +63,7 @@ class ProductDetailActivity : AppBaseActivity() {
     private var mIsRangeExist: Boolean = false
     private var mIsStartTimeExist: Boolean = false
     private var mIsEndTimeExist: Boolean = false
+    private var mIsImageBanner: Boolean = false
     private var advDetails: SingleAdvertisementDetails = SingleAdvertisementDetails()
     private var mIsAllDetailsFilled: Boolean = false
     private var colorAdapter: RecyclerViewAdapter<String>? = null
@@ -320,7 +321,7 @@ class ProductDetailActivity : AppBaseActivity() {
         } else if (!mIsEndTimeExist) {
             snackBar("End Time Required", Snackbar.LENGTH_SHORT)
             return false
-        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty() || advDetails.advId !=null) {
+        } else if (advDetails.advName == "Test Name" || advDetails.advName.isEmpty() && !mIsImageBanner) {
             snackBar("Create Adv. First", Snackbar.LENGTH_SHORT)
             return false
         }/*else if (rangeVal.textToString().isEmpty()) {
@@ -367,7 +368,7 @@ class ProductDetailActivity : AppBaseActivity() {
         } else {
             if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
 
-                advDetails.advName = "Custom Banner"
+                mIsImageBanner= true
                 val encodeByte: ByteArray =
                     Base64.decode(
                         (this.application as WooBoxApp).getUserUploadImageEncoded(),
