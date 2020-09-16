@@ -199,29 +199,37 @@ fun updateTransactionDetails(
     onFailed: () -> Unit
 ) {
 
-    var localStoredUserDetails = getStoredUserDetails()
-    var transactionsList = localStoredUserDetails.userWalletDetails.transactionsDetails
-    transactionsList.add(newTransactionsDetails)
-    localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
+//    var localStoredUserDetails = getStoredUserDetails()
+    var transactionsList = ArrayList<TransactionDetails>()
+//    localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
 //    updateStoredUserDetails(localStoredUserDetails)
     dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-        .setValue(
-            transactionsList
-        ).addOnSuccessListener {
-            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
-                .setValue(
-                    ServerValue.TIMESTAMP
-                ).addOnSuccessListener {
-                    onSuccess()
-
-                }.addOnFailureListener {
+        .addListenerForSingleValueEvent(
+            object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
                     onFailed()
                 }
-        }.addOnFailureListener {
-            onFailed()
-        }
-
-
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    transactionsList=dataSnapshot.value as ArrayList<TransactionDetails>
+                    transactionsList.add(newTransactionsDetails)
+                    dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
+                        .setValue(
+                            transactionsList
+                        ).addOnSuccessListener {
+                            dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails/${transactionsList.size - 1}/transactionDate")
+                                .setValue(
+                                    ServerValue.TIMESTAMP
+                                ).addOnSuccessListener {
+                                    onSuccess()
+                                }.addOnFailureListener {
+                                    onFailed()
+                                }
+                        }.addOnFailureListener {
+                            onFailed()
+                        }
+                }
+            }
+        )
 }
 
 
@@ -262,7 +270,7 @@ fun updateWalletAmount(
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
-                        onFailed("")
+                        onFailed("Database error.")
                     }
                 }
 

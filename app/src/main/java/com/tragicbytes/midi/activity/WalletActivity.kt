@@ -227,7 +227,9 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                 it.currencyFormat("INR")
             showProgress(false)
         }, onFailed = {
-            snackBar("Error Occurred")
+            if(it!=""){
+                snackBar("Error Occurred")
+            }
             showProgress(false)
         })
     }
