@@ -1244,7 +1244,7 @@ fun setOrderedScreenData(
     if (item.screenApprovedStatus == "1") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
-        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.bApprovedDate.text = item.screenAdvApprovedOn.toString()
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.text = "Adv. Approved"
@@ -1267,7 +1267,7 @@ fun setOrderedScreenData(
             else
             view.tvRefundMsg.visibility=View.VISIBLE
         }
-        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.bApprovedDate.text = item.screenAdvApprovedOn.toString()
         view.tvDelivered.text = item.screenAdminComment
         view.tvApprovedTitle.text = "Adv. Rejected"
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
