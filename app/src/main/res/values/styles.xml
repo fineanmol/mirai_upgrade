@@ -340,10 +340,11 @@
         <item name="fontPath">@string/font_medium</item>
     </style>
 
+    <!--Product Detail Color Dialog box Colours-->
     <style name="CollapsingTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!--<item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/white</item>
-        <item name="colorAccent">@color/colorAccent</item>-->
+        <item name="colorPrimary">@color/colorPrimary</item><!--Text Button-->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item><!--Top Banner-->
     </style>
 
     <style name="FontMedium">
