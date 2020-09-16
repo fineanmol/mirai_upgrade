@@ -1,6 +1,6 @@
 package com.tragicbytes.midi.fragments.home
 
-import android.app.Activity
+import android.R.attr.fragment
 import android.os.Bundle
 import android.os.Handler
 import android.view.*
@@ -29,6 +29,7 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.TWITTER
 import com.tragicbytes.midi.utils.Constants.SharedPref.WHATSAPP
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_home.*
+
 
 class HomeFragment : BaseFragment() {
 
@@ -87,6 +88,11 @@ class HomeFragment : BaseFragment() {
 
         }
 
+        view.setOnKeyListener { v, keyCode, event ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                true
+            } else false
+        }
 
 
     }
@@ -275,5 +281,6 @@ class HomeFragment : BaseFragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     //endregion
 }

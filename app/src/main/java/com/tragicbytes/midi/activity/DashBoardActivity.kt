@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -61,7 +62,7 @@ class DashBoardActivity : AppBaseActivity() {
     private var storageReference: StorageReference? = null
 
     //endregion
-
+    private var doubleBackToExitPressedOnce = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +81,7 @@ class DashBoardActivity : AppBaseActivity() {
                     // 4
                     val msg = "TOKEN$token"
                     Log.d("TAG", msg)
-                    Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
+//                    Toast.makeText(baseContext, msg, Toast.LENGTH_LONG).show()
                 })
 
         } else {
@@ -382,12 +383,21 @@ class DashBoardActivity : AppBaseActivity() {
 
     //region Common
     override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
         when {
             drawerLayout.isDrawerOpen(GravityCompat.START) -> drawerLayout.closeDrawer(GravityCompat.START)
             !mHomeFragment.isVisible -> loadHomeFragment()
+            mHomeFragment.isVisible -> snackBar("Please click BACK again to exit")
             else -> super.onBackPressed()
         }
+        this.doubleBackToExitPressedOnce = true
+
+        Handler().postDelayed(Runnable { doubleBackToExitPressedOnce = false }, 2000)
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -508,6 +518,8 @@ class DashBoardActivity : AppBaseActivity() {
             true
         }
     }
+
+
 
 
 

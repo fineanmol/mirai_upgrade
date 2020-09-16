@@ -179,8 +179,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
                         val intent = Intent()
                         setResult(Activity.RESULT_OK, intent)
                         intent.extras?.remove("pending_amount")
-                        finishActivity(requestcode)
-                        finishAndRemoveTask()
+                        finish()
 
                     }
                 }, onFailed = {

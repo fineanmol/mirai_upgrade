@@ -255,6 +255,10 @@ fun updateWalletAmount(
                                     onSuccess(sum.toString())
                                 }
                         }
+
+                        else{
+                            onFailed("")
+                        }
                     }
 
                     override fun onCancelled(databaseError: DatabaseError) {
