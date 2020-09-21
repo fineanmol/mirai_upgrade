@@ -19,7 +19,7 @@
 
             <RelativeLayout
                 android:id="@+id/rl_head"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_180sdp">
 
@@ -42,7 +42,7 @@
 
             <RelativeLayout
                 android:id="@+id/rlRecentSearch"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_standard_new"
@@ -68,7 +68,7 @@
 
             <RelativeLayout
                 android:id="@+id/rlNewestProduct"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_standard_new"
@@ -87,6 +87,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvNewestProduct"
                 style="@style/RecycleView"
+                android:scrollbars="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/spacing_standard"

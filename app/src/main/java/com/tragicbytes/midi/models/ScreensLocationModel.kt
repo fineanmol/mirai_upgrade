@@ -16,7 +16,7 @@ class ScreenDataModel:Serializable {
     var screenGenderRatio:String=""
     var screenAgeGroupPref=AgeGroupDetail()
     var screenImpressions:String=""
-    var screenAdvApprovedOn:String=""
+    var screenAdvApprovedOn:Long=0L
     var screenAdminComment:String="Your Advertisement is under Review"
     var screenApprovedStatus: String = ""
 

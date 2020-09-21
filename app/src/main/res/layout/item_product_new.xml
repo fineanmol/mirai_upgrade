@@ -47,6 +47,7 @@
                  android:layout_marginTop="@dimen/spacing_control_half"
                  android:progressTint="@color/yellow"
                  android:rating="4"
+                 android:visibility="gone"
                  style="@style/Widget.AppCompat.RatingBar.Small"/>
             <TextView
                 android:id="@+id/tvDiscountPrice"
@@ -57,6 +58,7 @@
                 android:singleLine="true"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/font_size_medium"
+                android:visibility="gone"
                 android:textAppearance="@style/FontSemiBold"
                 tools:text="$100" />
 
@@ -70,6 +72,7 @@
                 android:layout_marginStart="@dimen/spacing_control"
                 android:layout_marginBottom="1dp"
                 android:singleLine="true"
+                android:visibility="gone"
                 android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/font_size_small"
                 tools:text="$150" />

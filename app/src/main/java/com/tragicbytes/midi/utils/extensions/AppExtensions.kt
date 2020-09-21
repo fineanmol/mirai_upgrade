@@ -203,7 +203,7 @@ fun updateTransactionDetails(
     var transactionsList = localStoredUserDetails.userWalletDetails.transactionsDetails
     transactionsList.add(newTransactionsDetails)
     localStoredUserDetails.userWalletDetails.transactionsDetails = transactionsList
-    updateStoredUserDetails(localStoredUserDetails)
+//    updateStoredUserDetails(localStoredUserDetails)
     dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
         .setValue(
             transactionsList
@@ -232,7 +232,7 @@ fun updateWalletAmount(
 ) {
     try {
         dbReference.child("UsersData/${getStoredUserDetails().userId}/userWalletDetails/transactionsDetails")
-            .addValueEventListener(
+            .addListenerForSingleValueEvent(
                 object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.exists()) {
@@ -1056,6 +1056,7 @@ fun setScreenData(
         view.screenStatus.setTextColor(ContextCompat.getColor(context, R.color.green))
         view.screenStatus.text = "• Running"
     }
+    view.screenActiveTime.text= item.screenActiveTime
     view.locationTitle.text = item.screenLocation
     view.addressTitle.text = item.screenCity + "," + item.screenPincode
     view.screen_price.text = "${item.screenPrice}".currencyFormat("INR")
@@ -1231,7 +1232,7 @@ fun setOrderedScreenData(
     if (item.screenApprovedStatus == "1") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
-        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.bApprovedDate.text = getShortDate(item.screenAdvApprovedOn)
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.green))
         view.tvApprovedTitle.text = "Adv. Approved"
@@ -1243,7 +1244,7 @@ fun setOrderedScreenData(
     }
 
     /** 0==Screen Ads Rejected*/
-    if (item.screenApprovedStatus == "0") {
+    if (item.screenApprovedStatus == "2") {
         view.bApprovedDate.visibility =View.VISIBLE
         view.tvDelivered.visibility= View.VISIBLE
         view.ivCircleSupport.visibility=View.VISIBLE
@@ -1254,13 +1255,13 @@ fun setOrderedScreenData(
             else
             view.tvRefundMsg.visibility=View.VISIBLE
         }
-        view.bApprovedDate.text = item.screenAdvApprovedOn
+        view.bApprovedDate.text = getShortDate(item.screenAdvApprovedOn)
         view.tvDelivered.text = item.screenAdminComment
         view.tvApprovedTitle.text = "Adv. Rejected"
         view.ivCircleApproved.setCircleColor(ContextCompat.getColor(context, R.color.red))
         view.tvApprovedTitle.setTextColor(ContextCompat.getColor(context, R.color.track_red))
 
-        if (item.screenAdminComment.isNullOrEmpty()) {
+        if (item.screenAdminComment.isNullOrEmpty() || item.screenAdminComment=="Your Advertisement is under Review") {
             view.tvDelivered.text = "Your Advertisement has been Rejected"
         } else {
             view.tvDelivered.text = item.screenAdminComment
@@ -1276,14 +1277,14 @@ fun setOrderedScreenData(
 
 fun setProductItem(view: View, item: ProductDataNew) {
     view.tvProductName.text = item.name
-    if (item.sale_price!!.isNotEmpty()) {
+   /* if (item.sale_price!!.isNotEmpty()) {
         view.tvDiscountPrice.text = item.sale_price.currencyFormat()
     } else {
         view.tvDiscountPrice.text = item.price?.currencyFormat()
     }
-    view.ratingBar.rating = item.average_rating!!.toFloat()
-    view.tvOriginalPrice.text = item.regular_price?.currencyFormat()
-    view.tvOriginalPrice.applyStrike()
+   // view.ratingBar.rating = item.average_rating!!.toFloat()
+  //  view.tvOriginalPrice.text = item.regular_price?.currencyFormat()
+  //  view.tvOriginalPrice.applyStrike()*/
     if (item.full != null) view.ivProduct.loadImageFromUrl(item.full)
 }
 
@@ -1323,7 +1324,7 @@ fun setWalletItem(
         if (item.transactionAmount.isNotEmpty()) {
             view.tAmount.setTextColor(ContextCompat.getColor(context, R.color.black))
             view.tAmount.text = "- ₹" + item.transactionAmount.split("-").last().toString()
-            view.tIcon.setBackgroundResource(R.drawable.ic_star_black) /**ad_icon*/
+            view.tIcon.setBackgroundResource(R.drawable.ad_icon) /**ic_star_black*/
             view.tTransactionText.text = "Paid to Advertisement"
 
         } else {
@@ -1399,11 +1400,16 @@ fun setSelectedScreenItem(
     ongoingAdv: SingleAdvertisementDetails,
     context: ConfirmationActivity
 ) {
-    view.tScreenName.text = item.screenId
+    var dateDifference= ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toInt()
+    var totalPrice= item.screenPrice.toInt() * dateDifference
+    view.tScreenLocation.text ="Loc : "+ item.screenLocation
+    view.tTime.text = item.screenActiveTime
+    view.tScreenCity.text = item.screenCity +", "+ item.screenPincode
+    view.tScreenName.text = "Id: "+item.screenId
     view.tTimeDistribution.text = item.screenActiveTime
     view.tGenderRatio.text = item.screenGenderRatio
     view.tAgeDistributtion.text =   "\nBelow 18 ="+item.screenAgeGroupPref.generationZ +"%"+"\n18-34 ="+item.screenAgeGroupPref.generationY+"%"+"\n35-50 ="+item.screenAgeGroupPref.generationX+"%"+ "\n50+ ="+item.screenAgeGroupPref.babyBoomers+"%"
-    view.tScreenPrice.text = ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toString() + " * " +item.screenPrice.currencyFormat("INR")
+    view.tScreenPrice.text = item.screenPrice.currencyFormat("INR")+ " * "+ dateDifference.toString()+ " = " + totalPrice.toString().currencyFormat("INR")
 
 }
 

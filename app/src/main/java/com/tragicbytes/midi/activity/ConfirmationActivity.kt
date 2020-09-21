@@ -62,15 +62,17 @@ class ConfirmationActivity : AppBaseActivity() {
         )
 
     //    getDateDiff(ongoingAdv.startFrom.toDate(),ongoingAdv.startFrom.toDate(),DateTimeUnits.DAYS)
+        var dateDifference= ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1).toInt()
+        dateDifferenceValue.text= "Total No. of Days: $dateDifference"
 
         screenCount.text = "Selected Screens (${ongoingAdv.screens.size})"
         ongoingAdv.screens.forEach { screenDataModel: ScreenDataModel ->
 
             totalScreenPrice += (screenDataModel.screenPrice).toInt()
-            totalScreenPrice =
-                (totalScreenPrice * ((ongoingAdv.endOn.toLong()-ongoingAdv.startFrom.toLong())/(1000*60*60*24)+1)).toInt()
+
 
         }
+        totalScreenPrice *= dateDifference
 
 
         finalpayAmount.text = totalScreenPrice.toString().currencyFormat("INR")

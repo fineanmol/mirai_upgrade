@@ -84,7 +84,9 @@
             android:visibility="gone" />
     </LinearLayout>
 
+
     <ScrollView
+        android:id="@+id/scrollBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/resultLayout"
@@ -129,6 +131,7 @@
                 style="@style/RecycleView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_22sdp"
                 android:layout_marginStart="@dimen/spacing_standard_new"
                 android:layout_marginTop="@dimen/spacing_standard"
                 android:layout_marginEnd="@dimen/spacing_standard_new" />

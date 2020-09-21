@@ -796,40 +796,9 @@ class ViewAllProductFragment : BaseFragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_dashboard, menu)
-        val menuItem = menu.findItem(R.id.action_filter)
-        val menuWishItem = menu.findItem(R.id.action_cart)
-        if (mId != RECENTSEARCH) {
-            menuItem.isVisible = true
-        }
-        menuWishItem.isVisible = true
-        menuCart = menuWishItem.actionView
-        menuCart?.ivCart?.setColorFilter(activity!!.color(R.color.textColorPrimary))
-        menuWishItem.actionView.onClick {
-            activity?.launchActivity<MyCartActivity> { }
-        }
-        setCartCount()
-        super.onCreateOptionsMenu(menu, inflater)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> {
-                activity?.launchActivity<SearchActivity>()
-                true
-            }
-            R.id.action_filter -> {
-                if (mIsFilterDataLoaded) {
-                    openFilterBottomSheet()
-                } else {
-                    toast(mProductAttributeResponseMsg)
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
+
+
 
     private fun listFeaturedProducts(countLoadMore: Int = 1) {
         showProgress()

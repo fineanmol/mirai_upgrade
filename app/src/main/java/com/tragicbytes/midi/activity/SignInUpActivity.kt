@@ -275,7 +275,7 @@ class SignInUpActivity : AppBaseActivity() {
                         user.updateProfile(profileUpdates)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    snackBar("Profile updated!")
+                                   // snackBar("Profile updated!")
                                     try{
                                         dbReference = FirebaseDatabase.getInstance().reference
 
