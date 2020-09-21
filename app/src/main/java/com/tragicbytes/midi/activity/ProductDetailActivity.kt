@@ -338,7 +338,7 @@ class ProductDetailActivity : AppBaseActivity() {
                 mIsAllDetailsFilled = true
                 return true
             }
-            return true
+
         } catch (e: Exception) {
             snackBarError(e.message.toString())
             return false
