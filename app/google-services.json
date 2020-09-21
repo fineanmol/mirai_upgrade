@@ -1,63 +1,42 @@
 {
   "project_info": {
-    "project_number": "260185012851",
-    "firebase_url": "https://midi-trio.firebaseio.com",
-    "project_id": "midi-trio",
-    "storage_bucket": "midi-trio.appspot.com"
+    "project_number": "427681614383",
+    "firebase_url": "https://mirai-vizion-production.firebaseio.com",
+    "project_id": "mirai-vizion-production",
+    "storage_bucket": "mirai-vizion-production.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260185012851:android:56332932911cea43728806",
+        "mobilesdk_app_id": "1:427681614383:android:4a5402b9838bec580f94da",
         "android_client_info": {
-          "package_name": "com.tragicbytes.midi"
+          "package_name": "nightowl.developers.midi"
         }
       },
       "oauth_client": [
         {
-          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
+          "client_id": "427681614383-17m91omfkt2fqj7irug5n61ha9i92jcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nightowl.developers.midi",
+            "certificate_hash": "75b4fd31c3293ed2e33964f9470b137090ea4072"
+          }
+        },
+        {
+          "client_id": "427681614383-jk59h7gkq8k74t48s86v454osvakhepi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
+          "current_key": "AIzaSyDkU-CJSLeIf_FnBfnDn5YhqBpjs1c_SZo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:260185012851:android:834e95b3fcef8c40728806",
-        "android_client_info": {
-          "package_name": "nightowl.developers.miditest"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
+              "client_id": "427681614383-jk59h7gkq8k74t48s86v454osvakhepi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
