@@ -8,35 +8,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:260185012851:android:56332932911cea43728806",
-        "android_client_info": {
-          "package_name": "com.tragicbytes.midi"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyADCFLfyb0LKRdKQXSDCZKLhyw6bU7AXV4"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "260185012851-snhkunigvtco1u9to4vtsc7iphnogjrr.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:260185012851:android:834e95b3fcef8c40728806",
         "android_client_info": {
           "package_name": "nightowl.developers.miditest"
