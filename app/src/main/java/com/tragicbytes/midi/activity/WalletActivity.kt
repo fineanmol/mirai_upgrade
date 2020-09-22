@@ -106,7 +106,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             options.put("prefill", prefill)
             co.open(activity, options)
         } catch (e: Exception) {
-            snackBarError("Error in payment: " + e.message)
+//            snackBarError("Error in payment: " + e.message)
             e.printStackTrace()
         }
     }
@@ -153,57 +153,66 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentSuccess(rzpPaymentId: String?, paymentData: PaymentData?) {
-        snackBar("Payment Successful: $rzpPaymentId ")
-        showProgress(false)
+        try {
+            snackBar("Payment Successful: $rzpPaymentId ")
 
-        if(paymentData != null) {
+            showProgress(false)
 
-            val newTransactionsDetails = TransactionDetails()
-            newTransactionsDetails.transactionStatus = 1.toString()
-            newTransactionsDetails.email = paymentData.userEmail
-            newTransactionsDetails.transactionId = paymentData.paymentId
-            newTransactionsDetails.transactionAmount = addAmount.textToString()
-            newTransactionsDetails.phone = paymentData.userContact
-            newTransactionsDetails.transactionMessage="Transaction For Wallet ${newTransactionsDetails.transactionId}"
+            if (paymentData != null) {
+
+                val newTransactionsDetails = TransactionDetails()
+                newTransactionsDetails.transactionStatus = 1.toString()
+                newTransactionsDetails.email = paymentData.userEmail
+                newTransactionsDetails.transactionId = paymentData.paymentId
+                newTransactionsDetails.transactionAmount = addAmount.textToString()
+                newTransactionsDetails.phone = paymentData.userContact
+                newTransactionsDetails.transactionMessage =
+                    "Transaction For Wallet ${newTransactionsDetails.transactionId}"
 
 
 
 
-            updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
-                updateWalletAmount(dbReference, onSuccess = {
-                    walletAmount.text =
-                      it.currencyFormat("INR")
-                    showProgress(false)
+                updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
+                    updateWalletAmount(dbReference, onSuccess = {
+                        walletAmount.text =
+                            it.currencyFormat("INR")
+                        showProgress(false)
 
-                    if (intent?.extras?.get("pending_amount") != null) {
-                        val intent = Intent()
-                        setResult(Activity.RESULT_OK, intent)
-                        intent.extras?.remove("pending_amount")
-                        finish()
+                        if (intent?.extras?.get("pending_amount") != null) {
+                            val intent = Intent()
+                            setResult(Activity.RESULT_OK, intent)
+                            intent.extras?.remove("pending_amount")
+                            finish()
 
-                    }
+                        }
+                    }, onFailed = {
+                        snackBarError("Error Occurred")
+                        showProgress(false)
+                    })
                 }, onFailed = {
-                    snackBarError("Error Occurred")
-                    showProgress(false)
+                    snackBarError("Unable to process Transaction")
                 })
-            }, onFailed = {
-                snackBarError("Unable to process Transaction")
-            })
 
-        }
-        addAmount.isEnabled=true
-        addAmount.isClickable=true
-        addAmount.text.clear()
-
-        Notify
-            .with(this)
-            .content { // this: Payload.Content.Default
-                title = "Wallet Amount Refilled"
-                text =
-                    """${addAmount.textToString().currencyFormat("INR")} has been successfully added to your Wallet!"""
             }
-            .show()
-        showProgress(false)
+            addAmount.isEnabled = true
+            addAmount.isClickable = true
+            addAmount.text.clear()
+
+            Notify
+                .with(this)
+                .content { // this: Payload.Content.Default
+                    title = "Wallet Amount Refilled"
+                    text =
+                        """${addAmount.textToString()
+                            .currencyFormat("INR")} has been successfully added to your Wallet!"""
+                }
+                .show()
+            showProgress(false)
+        }
+        catch (e: Exception) {
+//        snackBarError("Error in payment: " + e.message)
+        e.printStackTrace()
+        }
     }
 
 //    override fun onStart() {
@@ -232,5 +241,6 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             }
             showProgress(false)
         })
+        showProgress(false)
     }
 }
