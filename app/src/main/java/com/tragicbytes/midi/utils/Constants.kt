@@ -23,7 +23,7 @@ object Constants {
          const val consumerSecret = "z5RTcjT0NseqCYbfTQXaSwSNC054HLp0SGGhqbMKlpWWtOTH"
          const val token = "gN3kZdeh2Yyh6Ntdvip4Mokf"
          const val tokenSecret = "EhhwL3Ta6GSevnG6aKd4pCdp2X3rosIivzubXmZxSLkByi31"
-        private const  val NOTIFICATION_DEFAULT_URL = "https://notification-server-290108.uc.r.appspot.com/"
+        private const  val NOTIFICATION_DEFAULT_URL = "https://mv-dev-fcm-notification-server.herokuapp.com/"
         const  val NOTIFICATION_BASE_URL= NOTIFICATION_DEFAULT_URL+"notify/"
     }
 
