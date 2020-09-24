@@ -67,7 +67,7 @@ class LocaleManager(context: Context) {
         }
 
         val locales = set.toTypedArray()
-        config.locales = LocaleList(*locales)
+     //   config.locales = LocaleList(*locales)
     }
 
     companion object {
