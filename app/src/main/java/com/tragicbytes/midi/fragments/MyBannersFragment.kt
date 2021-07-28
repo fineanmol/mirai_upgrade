@@ -98,7 +98,7 @@ class MyBannersFragment : BaseFragment() {
             )*/
 
         mAdsCompleteDetailsAdapter?.clearItems()
-        mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails)
+        mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails.reversed() as ArrayList<SingleAdvertisementDetails>)
         if(mAdsCompleteDetailsAdapter?.size!! >0){
             llNoItems.visibility=View.GONE
         }
