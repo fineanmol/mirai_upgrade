@@ -413,11 +413,11 @@ class ProductDetailActivity : AppBaseActivity() {
     }
 
     private fun bindData() {
-        txtDescription.setText("short description of the product. We can add as many short description here according to product id")
+        txtDescription.setText("Screen Pixels: 3840*2160 . short description of the product. We can add as many short description here according to product id")
         val genderList = ArrayList<String>()
         val genders = listOf("Male", "Female", "Not Specified", "All")
         val ageGroupList = ArrayList<String>()
-        val ageGroups = listOf("Below 18", "18-35", "35-50", "50+")
+        val ageGroups = listOf("Below 18", "18-35", "35-50", "All")
 
         if (genders.isNotEmpty()) {
 
