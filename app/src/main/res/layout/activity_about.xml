@@ -22,11 +22,11 @@
 
             <ImageView
                 android:id="@+id/ivAppLogo"
-                android:layout_width="@dimen/_100sdp"
-                android:layout_height="@dimen/_100sdp"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_200sdp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_large"
-                android:src="@drawable/ic_app_icon_ndc" />
+                android:src="@drawable/mirai_vizion_july" />
 
             <TextView
                 android:id="@+id/tvAppName"
@@ -35,7 +35,7 @@
                 android:layout_below="@id/ivAppLogo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_standard_new"
-                android:text="@string/nightowl_developers"
+                android:text="@string/mirai_vizion"
                 android:textAppearance="@style/FontBold"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_size_xxxlarge"
@@ -48,7 +48,7 @@
                 android:layout_below="@id/tvAppName"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_standard_new"
-                tools:text="© NightOwl Developers 2020 | All rights reserved"
+                tools:text="© InFuLog Pvt Ltd 2021 | All rights reserved"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_size_normal" />
 

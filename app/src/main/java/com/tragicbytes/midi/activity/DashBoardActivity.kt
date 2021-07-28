@@ -174,7 +174,7 @@ class DashBoardActivity : AppBaseActivity() {
             closeDrawer()
             enable(ivHome)
             loadFragment(mHomeFragment)
-            title = getString(R.string.home)
+            title = getString(R.string.lbl_upload_banner)
         }
         adsTextBtn.onClick {
             if (!isLoggedIn()) {
@@ -190,7 +190,7 @@ class DashBoardActivity : AppBaseActivity() {
             closeDrawer()
             enable(ivWishList)
             loadFragment(mWishListFragment)
-            title = getString(R.string.lbl_upload_banner)
+            title = getString(R.string.home)
         }
         adsImagesBtn.onClick {
             if (!isLoggedIn()) {

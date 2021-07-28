@@ -15,6 +15,7 @@ import com.tragicbytes.midi.WooBoxApp
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
 import com.tragicbytes.midi.activity.SearchActivity
+import com.tragicbytes.midi.activity.WalletActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.models.SliderImagesResponse
 import com.tragicbytes.midi.utils.Constants
@@ -89,10 +90,13 @@ class UploadBannerFragment : BaseFragment() {
 
     private fun getSliders() {
         val images=ArrayList<SliderImagesResponse>()
-        var sliderImage1= SliderImagesResponse("","",R.drawable.upload_image_banner)
-        var sliderImage2= SliderImagesResponse("","",R.drawable.upload_image_banner)
+        var sliderImage1=SliderImagesResponse("","",R.drawable.upload_banner_3)
+        var sliderImage2=SliderImagesResponse("","",R.drawable.top_banner_2)
+        var sliderImage3=SliderImagesResponse("","",R.drawable.top_banner)
+
         images.add(sliderImage1)
         images.add(sliderImage2)
+        images.add(sliderImage3)
 
         val sliderImagesAdapter = HomeSliderAdapter(activity!!, images)
         homeSlider.adapter = sliderImagesAdapter
@@ -114,13 +118,15 @@ class UploadBannerFragment : BaseFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_search -> {
-                activity?.launchActivity<SearchActivity>()
+            R.id.action_wallet -> {
+                activity?.launchActivity<WalletActivity>()
                 true
             }
             else -> super.onOptionsItemSelected(item)
+
         }
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

@@ -119,13 +119,18 @@ class HomeFragment : BaseFragment() {
     private fun getSliders() {
 //        val images = getSlideImagesFromPref()
         val images=ArrayList<SliderImagesResponse>()
-        var sliderImage1=SliderImagesResponse("","",R.drawable.upload_banner_3)
-        var sliderImage2=SliderImagesResponse("","",R.drawable.top_banner_2)
-        var sliderImage3=SliderImagesResponse("","",R.drawable.top_banner)
+        var sliderImage1= SliderImagesResponse("","",R.drawable.upload_image_banner)
+        var sliderImage2= SliderImagesResponse("","",R.drawable.upload_image_banner)
+
+        var sliderImage3=SliderImagesResponse("","",R.drawable.upload_banner_3)
+        var sliderImage4=SliderImagesResponse("","",R.drawable.top_banner_2)
+        var sliderImage5=SliderImagesResponse("","",R.drawable.top_banner)
 
         images.add(sliderImage1)
         images.add(sliderImage2)
         images.add(sliderImage3)
+        images.add(sliderImage4)
+        images.add(sliderImage5)
 
         val sliderImagesAdapter = HomeSliderAdapter(activity!!, images)
         homeSlider.adapter = sliderImagesAdapter
@@ -271,8 +276,8 @@ class HomeFragment : BaseFragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_dashboard, menu)
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+/** Wallet top icon commented below*/
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_wallet -> {
                 activity?.launchActivity<WalletActivity>()
@@ -281,7 +286,7 @@ class HomeFragment : BaseFragment() {
             else -> super.onOptionsItemSelected(item)
 
         }
-    }
+    }*/
 
     //endregion
 }

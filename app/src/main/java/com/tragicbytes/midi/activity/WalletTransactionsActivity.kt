@@ -11,6 +11,8 @@ import com.tragicbytes.midi.models.UserWalletDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_wallet_transactions.*
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class WalletTransactionsActivity : AppBaseActivity() {
 
@@ -46,6 +48,7 @@ class WalletTransactionsActivity : AppBaseActivity() {
                             storedUserDetails.userWalletDetails=userWalletDetails
                             updateStoredUserDetails(storedUserDetails)
                             mTransactionDetailsAdapter?.addItems(ArrayList(userWalletDetails.transactionsDetails))
+
                         }
                     }
 

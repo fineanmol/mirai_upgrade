@@ -140,7 +140,7 @@ class MyBannerScreenDetailsActivity : AppBaseActivity() {
         xAxis.labelCount = 4
 
 //Now add the labels to be added on the vertical axis
-        val values = arrayOf("50+", "45-50", "18-34", "Below 18")
+        val values = arrayOf("All", "45-50", "18-34", "Below 18")
         xAxis.valueFormatter = XAxisValueFormatter(values)
 
         val yRight = skillRatingChart.axisRight

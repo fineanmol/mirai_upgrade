@@ -26,11 +26,11 @@ class AboutActivity : AppBaseActivity() {
 
         getSharedPrefInstance().apply {
             whatsUp = getStringValue(WHATSAPP)
-            instagram = "https://www.instagram.com/nightowldevelopers"
+            instagram = "https://www.instagram.com/miraivizion"
             twitter = "https://twitter.com/dexterousdevs"
             facebook = "https://www.facebook.com/nightowldevelopers/"
-            contact = "7827327606"
-            copyRight = "© ND 2020 | All rights reserved"
+            contact = "7509408499"
+            copyRight = "© InFuLog Pvt Ltd 2021 | All rights reserved"
             privacy = "https://nightowldevelopers.com/privacy-policy.php"
             toc = "https://nightowldevelopers.com/terms-and-conditions.php"
         }
