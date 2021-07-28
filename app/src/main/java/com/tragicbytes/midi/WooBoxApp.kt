@@ -11,8 +11,10 @@ import com.tragicbytes.midi.utils.Constants.SharedPref.LANGUAGE
 import com.tragicbytes.midi.utils.LocaleManager
 import com.tragicbytes.midi.utils.SharedPrefUtils
 import com.tragicbytes.midi.utils.extensions.getSharedPrefInstance
+import io.github.inflationx.calligraphy3.CalligraphyConfig
+import io.github.inflationx.calligraphy3.CalligraphyInterceptor
+import io.github.inflationx.viewpump.ViewPump
 import okhttp3.OkHttpClient
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 
 
 class WooBoxApp : MultiDexApplication() {
@@ -37,11 +39,17 @@ class WooBoxApp : MultiDexApplication() {
         }
 
         // Set Custom Font
-        CalligraphyConfig.initDefault(
-            CalligraphyConfig.Builder().setDefaultFontPath(getString(R.string.font_regular))
-                .setFontAttrId(
-                    R.attr.fontPath
-                ).build()
+        ViewPump.init(
+            ViewPump.builder()
+                .addInterceptor(
+                    CalligraphyInterceptor(
+                        CalligraphyConfig.Builder()
+                            .setDefaultFontPath(getString(R.string.font_regular))
+                            .setFontAttrId(R.attr.fontPath)
+                            .build()
+                    )
+                )
+                .build()
         )
 
         /*   MobileAds.initialize(this) {}*/

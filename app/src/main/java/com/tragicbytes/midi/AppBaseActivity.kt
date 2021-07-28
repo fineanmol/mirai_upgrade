@@ -25,7 +25,7 @@ import com.tragicbytes.midi.utils.extensions.launchActivityWithNewTask
 import com.tragicbytes.midi.utils.extensions.switchToDarkMode
 import kotlinx.android.synthetic.main.activity_location_based_screens.*
 import kotlinx.android.synthetic.main.layout_abmob.*
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
+import io.github.inflationx.viewpump.ViewPumpContextWrapper
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -131,7 +131,7 @@ open class AppBaseActivity : AppCompatActivity() {
     }
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(updateBaseContextLocale(newBase!!)))
+        super.attachBaseContext(ViewPumpContextWrapper.wrap(updateBaseContextLocale(newBase!!)))
     }
 
     private fun updateBaseContextLocale(context: Context): Context {
