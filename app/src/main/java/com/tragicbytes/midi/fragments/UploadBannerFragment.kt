@@ -48,7 +48,9 @@ class UploadBannerFragment : BaseFragment() {
             loadApis()
             refreshLayout.isRefreshing=false
         }
+
         refreshLayout.viewTreeObserver.addOnScrollChangedListener {
+           if(refreshLayout!=null)
             refreshLayout.isEnabled = scrollView.scrollY == 0
         }
 

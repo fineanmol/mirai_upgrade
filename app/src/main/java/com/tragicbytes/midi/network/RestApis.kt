@@ -18,8 +18,8 @@ interface RestApis {
     @POST("/notify/unsubscribe")
     fun unsubscribeFromTopic(@Body request:NotificationModel): Call<NotificationResponse>
 
-    @POST("woobox-api/api/v1/woocommerce/get-dashboard")
-    fun dashboard(@Body request: RequestModel): Call<DashboardResponse>
+//    @POST("woobox-api/api/v1/woocommerce/get-dashboard")
+//    fun dashboard(@Body request: RequestModel): Call<DashboardResponse>
 
     /* @POST("jwt-auth/v1/token")
  fun login(@Body request: RequestModel): Call<LoginResponse>

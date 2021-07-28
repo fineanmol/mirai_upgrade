@@ -3,6 +3,7 @@ package com.tragicbytes.midi.activity
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.razorpay.Checkout
@@ -153,6 +154,7 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentSuccess(rzpPaymentId: String?, paymentData: PaymentData?) {
+        Log.d("Payment Success Start","Payment Success Start Message")
         try {
             snackBar("Payment Successful: $rzpPaymentId ")
 
@@ -174,8 +176,9 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
                 updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                     updateWalletAmount(dbReference, onSuccess = {
-                        walletAmount.text =
-                            it.currencyFormat("INR")
+                      //  walletAmount.text =    it.currencyFormat("INR")
+                        walletAmount.text = "₹$it"
+
                         showProgress(false)
 
                         if (intent?.extras?.get("pending_amount") != null) {
@@ -196,18 +199,20 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
             }
             addAmount.isEnabled = true
             addAmount.isClickable = true
-            addAmount.text.clear()
+
 
             Notify
                 .with(this)
                 .content { // this: Payload.Content.Default
                     title = "Wallet Amount Refilled"
                     text =
-                        """${addAmount.textToString()
-                            .currencyFormat("INR")} has been successfully added to your Wallet!"""
+                        """${"Rs"+ addAmount.textToString()
+                            } has been successfully added to your Wallet!"""
                 }
                 .show()
             showProgress(false)
+            Log.d("Payment Success End","Payment Success End Message")
+            addAmount.text.clear()
         }
         catch (e: Exception) {
 //        snackBarError("Error in payment: " + e.message)
@@ -232,8 +237,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         super.onResume()
         showProgress(true)
         updateWalletAmount(dbReference, onSuccess = {
-            walletAmount.text =
-                it.currencyFormat("INR")
+            walletAmount.text = "₹$it"
+        //    walletAmount.text =  it.currencyFormat("INR")
             showProgress(false)
         }, onFailed = {
             if(it!=""){

@@ -71,10 +71,11 @@ fun String.currencyFormat(code: String = "INR"): String {
         "${getDefaultCurrency().getHtmlString()}$this"
     }*/
 
-
+    //TODO("java.lang.IllegalArgumentException: Cannot format given Object as a Number")
     return when (code) {
         "USD" -> "$$this"
-        "INR" -> NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
+    //    "INR" -> NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
+
         else -> "₹$this"
     }
 }
@@ -88,7 +89,7 @@ fun String.currencyFormatNegative(code: String = "INR"): String {
 
     return when (code) {
         "USD" -> "$$this"
-        "INR" -> "-"+NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
+      //  "INR" -> "-"+NumberFormat.getCurrencyInstance(Locale("en", "IN")).format("$this".toDoubleOrNull())
         else -> "₹$this"
     }
 }

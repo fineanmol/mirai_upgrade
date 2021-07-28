@@ -150,77 +150,78 @@ class HomeFragment : BaseFragment() {
         showProgress()
         val requestModel = RequestModel()
         if (isLoggedIn()) requestModel.user_id = getUserId()
+        hideProgress()
+        dbReference.child("AppData/imageTemplates")
+            .addValueEventListener(
+                object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            rlNewestProduct.show()
+                            rcvNewestProduct.show()
+                            var myBannerList = ArrayList<ProductDataNew>()
 
-        callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = { it ->
-            if (activity == null) return@callApi
-            hideProgress()
-
-//            Log.d("XXXX12",it.toString())
-            getSharedPrefInstance().apply {
-                removeKey(WHATSAPP)
-                removeKey(FACEBOOK)
-                removeKey(TWITTER)
-                removeKey(INSTAGRAM)
-                removeKey(CONTACT)
-                removeKey(PRIVACY_POLICY)
-                removeKey(TERM_CONDITION)
-                removeKey(COPYRIGHT_TEXT)
-                setValue(DEFAULT_CURRENCY, "&#36")
-
-            }
-
-            dbReference.child("AppData/imageTemplates")
-                .addValueEventListener(
-                    object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                rlNewestProduct.show()
-                                rcvNewestProduct.show()
-                                var myBannerList = ArrayList<ProductDataNew>()
-
-                                dataSnapshot.children.forEach {
-                                    val bannerData =
-                                        it.getValue(ProductDataNew::class.java)!!
-                                    if (getRecentItems().size != 0) {
-                                        var recentProductUsedId =
-                                            getRecentItems()[0].pro_id.toString()
-                                        if ((bannerData.pro_id.toString() == recentProductUsedId)) {
-                                            addToRecentProduct(bannerData)
-                                            mRecentProductAdapter?.addItems(getRecentItems())
-                                        }
-                                    } else {
+                            dataSnapshot.children.forEach {
+                                val bannerData =
+                                    it.getValue(ProductDataNew::class.java)!!
+                                if (getRecentItems().size != 0) {
+                                    var recentProductUsedId =
+                                        getRecentItems()[0].pro_id.toString()
+                                    if ((bannerData.pro_id.toString() == recentProductUsedId)) {
+                                        addToRecentProduct(bannerData)
+                                        mRecentProductAdapter?.addItems(getRecentItems())
                                     }
-                                    myBannerList.add(bannerData)
+                                } else {
                                 }
-                                mNewArrivalProductAdapter?.addItems(myBannerList)
+                                myBannerList.add(bannerData)
                             }
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            if (rlNewestProduct != null) {
-                                    rlNewestProduct.hide()
-                                }
-
-                            if(rcvNewestProduct != null) {
-                                rcvNewestProduct.hide()
-                                }
-
-                          //  toast("Error Occured!")
+                            mNewArrivalProductAdapter?.addItems(myBannerList)
                         }
                     }
 
-                )
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        if (rlNewestProduct != null) {
+                            rlNewestProduct.hide()
+                        }
 
+                        if(rcvNewestProduct != null) {
+                            rcvNewestProduct.hide()
+                        }
 
+                        //  toast("Error Occured!")
+                    }
+                }
 
-            ivBanner1.show(); ivBanner1.loadImageFromUrl("http://iqonic.design/wp-themes/woobox_api/wp-content/uploads/2020/01/167-scaled.jpg ")
-            ivBanner1.onClick { /*activity?.openCustomTab("https://www.google.com/")*/ }
+            )
+//        callApi(getRestApis(false).dashboard(requestModel), onApiSuccess = { it ->
+//            if (activity == null) return@callApi
 //
-        }, onApiError = {
-            //toast(it)
-        }, onNetworkError = {
-            toast(R.string.error_no_internet)
-        })
+//
+////            Log.d("XXXX12",it.toString())
+//            getSharedPrefInstance().apply {
+//                removeKey(WHATSAPP)
+//                removeKey(FACEBOOK)
+//                removeKey(TWITTER)
+//                removeKey(INSTAGRAM)
+//                removeKey(CONTACT)
+//                removeKey(PRIVACY_POLICY)
+//                removeKey(TERM_CONDITION)
+//                removeKey(COPYRIGHT_TEXT)
+//                setValue(DEFAULT_CURRENCY, "&#36")
+//
+//            }
+
+
+
+
+//
+//            ivBanner1.show(); ivBanner1.loadImageFromUrl("http://iqonic.design/wp-themes/woobox_api/wp-content/uploads/2020/01/167-scaled.jpg ")
+//            ivBanner1.onClick { /*activity?.openCustomTab("https://www.google.com/")*/ }
+////
+//        }, onApiError = {
+//            //toast(it)
+//        }, onNetworkError = {
+//            toast(R.string.error_no_internet)
+//        })
     }
 
 
