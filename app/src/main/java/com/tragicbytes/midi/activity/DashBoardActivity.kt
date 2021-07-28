@@ -9,7 +9,6 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.GravityCompat
@@ -32,7 +31,6 @@ import com.tragicbytes.midi.fragments.UploadBannerFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment
 import com.tragicbytes.midi.fragments.home.HomeFragment2
 import com.tragicbytes.midi.models.CategoryData
-import com.tragicbytes.midi.models.NotificationModel
 import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.Constants.AppBroadcasts.PROFILE_UPDATE
@@ -51,7 +49,7 @@ class DashBoardActivity : AppBaseActivity() {
     //region Variables
     private var count: String = ""
     private lateinit var mHomeFragment: Fragment
-    private val mWishListFragment = UploadBannerFragment()
+    private val mUploadBannerFragment = UploadBannerFragment()
     private val mCartFragment = MyBannersFragment()
     private val mProfileFragment = ProfileFragment()
 
@@ -104,7 +102,7 @@ class DashBoardActivity : AppBaseActivity() {
                 }
                 Log.d("TAG", "subscrided $msg")
             }
-        mHomeFragment = HomeFragment()
+        mHomeFragment = UploadBannerFragment()
         /*selectedDashboard =
             getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD, 0)
         if (selectedDashboard == 0) {
@@ -173,7 +171,7 @@ class DashBoardActivity : AppBaseActivity() {
         llHome.onClick {
             closeDrawer()
             enable(ivHome)
-            loadFragment(mHomeFragment)
+            loadFragment(HomeFragment())
             title = getString(R.string.lbl_upload_banner)
         }
         adsTextBtn.onClick {
@@ -189,7 +187,7 @@ class DashBoardActivity : AppBaseActivity() {
             }
             closeDrawer()
             enable(ivWishList)
-            loadFragment(mWishListFragment)
+            loadFragment(mUploadBannerFragment)
             title = getString(R.string.home)
         }
         adsImagesBtn.onClick {
@@ -328,7 +326,7 @@ class DashBoardActivity : AppBaseActivity() {
     //region Fragment Setups
     private fun loadWishListFragment() {
         enable(ivWishList)
-        loadFragment(mWishListFragment)
+        loadFragment(mUploadBannerFragment)
         title = getString(R.string.lbl_wish_list)
     }
 
@@ -369,7 +367,7 @@ class DashBoardActivity : AppBaseActivity() {
     }
 
     internal fun loadHomeFragment() {
-        enable(ivHome)
+        enable(ivWishList)
         //if (!mHomeFragment.isAdded) loadFragment(mHomeFragment) else showFragment(mHomeFragment)
         loadFragment(mHomeFragment)
         title = getString(R.string.home)
