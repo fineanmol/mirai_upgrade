@@ -96,7 +96,7 @@ class PaymentActivity : AppBaseActivity(), PaymentResultListener {
         Log.d(this.localClassName, response)
     }
 
-    override fun onPaymentSuccess(razorpayPaymentID: String?) {
+    override fun onPaymentSuccess(razorpayPaymentID: String) {
         Log.d(this.localClassName, razorpayPaymentID)
 
         val requestModel = RequestModel().apply {

@@ -83,7 +83,7 @@ class CurveContainer : RelativeLayout {
             try {
                 outlineProvider = outlineProvider
             } catch (e: Exception) {
-                Log.d(TAG, e.message)
+                Log.d(TAG, e.message!!)
             }
 
         }
@@ -96,7 +96,7 @@ class CurveContainer : RelativeLayout {
                 try {
                     outline.setConvexPath(PathProvider.getOutlinePath(width, height, curvatureHeight, 0, 0))
                 } catch (e: Exception) {
-                    Log.d("Outline Path", e.message)
+                    Log.d("Outline Path", e.message!!)
                 }
 
             }
