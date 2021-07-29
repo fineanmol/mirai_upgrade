@@ -60,7 +60,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
+       // setHasOptionsMenu(true)
         dbReference = FirebaseDatabase.getInstance().reference
         imgLayoutParams = activity?.productLayoutParams()
 
