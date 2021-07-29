@@ -94,7 +94,7 @@ class DashBoardActivity : AppBaseActivity() {
                 }
                 Log.d("TAG", "subscrided $msg")
             }
-        FirebaseMessaging.getInstance().subscribeToTopic("com.tragicbytes.midi")
+        FirebaseMessaging.getInstance().subscribeToTopic("nightowl.developers.miditest")
             .addOnCompleteListener { task ->
                 var msg = "true"
                 if (!task.isSuccessful) {

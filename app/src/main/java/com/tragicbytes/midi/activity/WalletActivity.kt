@@ -17,7 +17,6 @@ import io.karn.notify.Notify
 import kotlinx.android.synthetic.main.activity_wallet.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONObject
-import java.util.*
 
 
 class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
@@ -176,8 +175,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
 
                 updateTransactionDetails(newTransactionsDetails, dbReference, onSuccess = {
                     updateWalletAmount(dbReference, onSuccess = {
-                      //  walletAmount.text =    it.currencyFormat("INR")
-                        walletAmount.text = "₹$it"
+                        walletAmount.text =    it.currencyFormat("INR")
+                       // walletAmount.text = "₹$it"
 
                         showProgress(false)
 
@@ -237,8 +236,8 @@ class WalletActivity : AppBaseActivity(), PaymentResultWithDataListener {
         super.onResume()
         showProgress(true)
         updateWalletAmount(dbReference, onSuccess = {
-            walletAmount.text = "₹$it"
-        //    walletAmount.text =  it.currencyFormat("INR")
+           // walletAmount.text = "₹$it"
+          walletAmount.text =  it.currencyFormat("INR")
             showProgress(false)
         }, onFailed = {
             if(it!=""){

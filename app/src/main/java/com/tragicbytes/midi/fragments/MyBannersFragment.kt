@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isNotEmpty
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.adapter.RecyclerViewAdapter
-import com.tragicbytes.midi.models.AdDetailsModel
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
-import com.tragicbytes.midi.models.UserAdvertisementDetails
-import com.tragicbytes.midi.utils.Constants
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
 
@@ -91,7 +88,7 @@ class MyBannersFragment : BaseFragment() {
                         if( (rlNewestProduct != null) and rlNewestProduct.isNotEmpty()) {
                             rlNewestProduct.hide()
                             rcvNewestProduct.hide()
-                            toast("Error Occured!")
+                            toast("Error Occurred!")
                             }
                     }
                 }
