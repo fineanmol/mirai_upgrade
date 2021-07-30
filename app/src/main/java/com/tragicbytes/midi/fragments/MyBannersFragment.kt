@@ -95,7 +95,13 @@ class MyBannersFragment : BaseFragment() {
             )*/
 
         mAdsCompleteDetailsAdapter?.clearItems()
-        mAdsCompleteDetailsAdapter?.addItems(getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails.reversed() as ArrayList<SingleAdvertisementDetails>)
+        val singleAdvList=getStoredUserDetails().userAdvertisementDetails.singleAdvertisementDetails
+        if(singleAdvList.isEmpty()){
+            mAdsCompleteDetailsAdapter?.addItems(singleAdvList)
+        }
+        else{
+            mAdsCompleteDetailsAdapter?.addItems(singleAdvList.reversed() as ArrayList<SingleAdvertisementDetails>)
+        }
         if(mAdsCompleteDetailsAdapter?.size!! >0){
             llNoItems.visibility=View.GONE
         }

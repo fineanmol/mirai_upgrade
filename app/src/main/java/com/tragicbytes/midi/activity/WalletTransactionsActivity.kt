@@ -47,8 +47,13 @@ class WalletTransactionsActivity : AppBaseActivity() {
                             var storedUserDetails=getStoredUserDetails()
                             storedUserDetails.userWalletDetails=userWalletDetails
                             updateStoredUserDetails(storedUserDetails)
-                            mTransactionDetailsAdapter?.addItems(userWalletDetails.transactionsDetails.reversed() as ArrayList<TransactionDetails>)
-
+                            val transactionList=userWalletDetails.transactionsDetails
+                            if(transactionList.isEmpty()){
+                                mTransactionDetailsAdapter?.addItems(transactionList)
+                            }
+                            else{
+                                mTransactionDetailsAdapter?.addItems(transactionList.reversed() as ArrayList<TransactionDetails>)
+                            }
                         }
                     }
 
