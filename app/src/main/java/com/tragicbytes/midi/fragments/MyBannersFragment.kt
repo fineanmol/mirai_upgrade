@@ -105,7 +105,7 @@ class MyBannersFragment : BaseFragment() {
             mAdsCompleteDetailsAdapter?.addItems(singleAdvList)
         }
         else{
-            val tempAdvCollection: Collection<SingleAdvertisementDetails> = HashSet<SingleAdvertisementDetails>(singleAdvList.reversed())
+            val tempAdvCollection: Collection<SingleAdvertisementDetails> = LinkedHashSet<SingleAdvertisementDetails>(singleAdvList.reversed())
 
             val tempSingleAdvList: List<SingleAdvertisementDetails> = ArrayList(tempAdvCollection)
             mAdsCompleteDetailsAdapter?.addItems(tempSingleAdvList as ArrayList<SingleAdvertisementDetails>)
