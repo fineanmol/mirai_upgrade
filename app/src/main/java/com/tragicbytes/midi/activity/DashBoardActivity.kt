@@ -20,7 +20,6 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.iid.FirebaseInstanceId
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.StorageReference
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
@@ -86,13 +85,13 @@ class DashBoardActivity : AppBaseActivity() {
             //You won't be able to send notifications to this device
             Log.w("TAG", "Device doesn't have google play services")
         }
-        FirebaseMessaging.getInstance().subscribeToTopic(getStoredUserDetails().userId)
+       /* FirebaseMessaging.getInstance().subscribeToTopic(getStoredUserDetails().userId)
             .addOnCompleteListener { task ->
                 var msg = "true"
                 if (!task.isSuccessful) {
                     msg = "false"
                 }
-                Log.d("TAG", "subscrided $msg")
+                Log.d("TAG", "subscribed $msg")
             }
         FirebaseMessaging.getInstance().subscribeToTopic("nightowl.developers.miditest")
             .addOnCompleteListener { task ->
@@ -100,8 +99,8 @@ class DashBoardActivity : AppBaseActivity() {
                 if (!task.isSuccessful) {
                     msg = "false"
                 }
-                Log.d("TAG", "subscrided $msg")
-            }
+                Log.d("TAG", "subscribed $msg")
+            }*/
         mHomeFragment = UploadBannerFragment()
         /*selectedDashboard =
             getSharedPrefInstance().getIntValue(Constants.SharedPref.KEY_DASHBOARD, 0)
