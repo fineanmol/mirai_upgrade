@@ -363,10 +363,37 @@ class ProductDetailActivity : AppBaseActivity() {
         showProgress(true)
 
         if (mProductModel!!.full.toString().isNotEmpty()) {
-            fetchImageAsync(mProductModel!!.full.toString()) {
-                if (it != null) {
+            try {
+                fetchImageAsync(mProductModel!!.full.toString()) {
+                    if (it != null) {
+                        val personalizedBannerBitmap =
+                            drawTextToBitmap(this, it, advDetails)!!
+                        myImages.add(personalizedBannerBitmap)
+                        val imageAdapter = PersonalizedProductImageAdapter(myImages)
+                        productViewPager.adapter = null
+                        productViewPager.adapter = imageAdapter
+                        productViewPager.adapter?.notifyDataSetChanged()
+                        dots.attachViewPager(productViewPager)
+                        dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
+                        showProgress(false)
+                    }
+                }
+            } catch (e: Exception) {
+                snackBar(e.message.toString(),Snackbar.LENGTH_SHORT)
+            }
+        } else {
+            try {
+                if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
+
+                    mIsImageBanner = true
+                    val encodeByte: ByteArray =
+                        Base64.decode(
+                            (this.application as WooBoxApp).getUserUploadImageEncoded(),
+                            Base64.DEFAULT
+                        )
                     val personalizedBannerBitmap =
-                        drawTextToBitmap(this, it, advDetails)!!
+                        BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
+
                     myImages.add(personalizedBannerBitmap)
                     val imageAdapter = PersonalizedProductImageAdapter(myImages)
                     productViewPager.adapter = null
@@ -374,32 +401,13 @@ class ProductDetailActivity : AppBaseActivity() {
                     productViewPager.adapter?.notifyDataSetChanged()
                     dots.attachViewPager(productViewPager)
                     dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-                    showProgress(false)
+                } else {
+                    snackBar("Something went wrong! Please retry.")
                 }
+                showProgress(false)
+            } catch (e: Exception) {
+                snackBar(e.message.toString(),Snackbar.LENGTH_SHORT)
             }
-        } else {
-            if (intent?.extras?.getString(USER_UPLOAD_BANNER) == "TRUE") {
-
-                mIsImageBanner = true
-                val encodeByte: ByteArray =
-                    Base64.decode(
-                        (this.application as WooBoxApp).getUserUploadImageEncoded(),
-                        Base64.DEFAULT
-                    )
-                val personalizedBannerBitmap =
-                    BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.size)
-
-                myImages.add(personalizedBannerBitmap)
-                val imageAdapter = PersonalizedProductImageAdapter(myImages)
-                productViewPager.adapter = null
-                productViewPager.adapter = imageAdapter
-                productViewPager.adapter?.notifyDataSetChanged()
-                dots.attachViewPager(productViewPager)
-                dots.setDotDrawable(R.drawable.bg_circle_primary, R.drawable.black_dot)
-            } else {
-                snackBar("Something went wrong! Please retry.")
-            }
-            showProgress(false)
         }
 
         setDescription()
