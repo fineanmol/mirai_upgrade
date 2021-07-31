@@ -1,6 +1,7 @@
 package com.tragicbytes.midi.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,10 @@ import com.tragicbytes.midi.adapter.RecyclerViewAdapter
 import com.tragicbytes.midi.models.SingleAdvertisementDetails
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.fragment_show_my_banners.*
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport.Session.User
+
+
+
 
 class MyBannersFragment : BaseFragment() {
 
@@ -100,7 +105,10 @@ class MyBannersFragment : BaseFragment() {
             mAdsCompleteDetailsAdapter?.addItems(singleAdvList)
         }
         else{
-            mAdsCompleteDetailsAdapter?.addItems(singleAdvList.reversed() as ArrayList<SingleAdvertisementDetails>)
+            val tempAdvCollection: Collection<SingleAdvertisementDetails> = HashSet<SingleAdvertisementDetails>(singleAdvList.reversed())
+
+            val tempSingleAdvList: List<SingleAdvertisementDetails> = ArrayList(tempAdvCollection)
+            mAdsCompleteDetailsAdapter?.addItems(tempSingleAdvList as ArrayList<SingleAdvertisementDetails>)
         }
         if(mAdsCompleteDetailsAdapter?.size!! >0){
             llNoItems.visibility=View.GONE
