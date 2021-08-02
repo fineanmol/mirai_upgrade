@@ -63,7 +63,7 @@ class UploadBannerFragment : BaseFragment() {
 
                         CropImage.activity()
 //                            .setMaxCropResultSize(2000,1000)
-                            .setAspectRatio(2, 3)
+                            .setAspectRatio(9, 16)
                             .setFixAspectRatio(true)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setCropShape(CropImageView.CropShape.RECTANGLE)

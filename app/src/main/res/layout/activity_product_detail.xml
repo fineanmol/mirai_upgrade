@@ -232,7 +232,7 @@
                         android:layout_marginStart="@dimen/spacing_control_half"
                         android:layout_marginTop="@dimen/spacing_standard"
                         android:layout_toEndOf="@id/txAvailability"
-                        android:text="@string/lbl_in_stock"
+                        android:text="Running"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/green"
                         android:textSize="@dimen/font_size_medium"
