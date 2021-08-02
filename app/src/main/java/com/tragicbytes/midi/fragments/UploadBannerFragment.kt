@@ -12,9 +12,7 @@ import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import com.tragicbytes.midi.R
 import com.tragicbytes.midi.WooBoxApp
-import com.tragicbytes.midi.activity.DashBoardActivity
 import com.tragicbytes.midi.activity.ProductDetailActivity
-import com.tragicbytes.midi.activity.SearchActivity
 import com.tragicbytes.midi.activity.WalletActivity
 import com.tragicbytes.midi.adapter.HomeSliderAdapter
 import com.tragicbytes.midi.models.SliderImagesResponse
@@ -65,12 +63,12 @@ class UploadBannerFragment : BaseFragment() {
 
                         CropImage.activity()
 //                            .setMaxCropResultSize(2000,1000)
-                            .setAspectRatio(2,1)
+                            .setAspectRatio(2, 3)
                             .setFixAspectRatio(true)
                             .setGuidelines(CropImageView.Guidelines.ON)
                             .setCropShape(CropImageView.CropShape.RECTANGLE)
-                            .setMinCropWindowSize(2000,1000)
-                            .setRequestedSize(2000,1000)
+                            .setMinCropWindowSize(2160,3840)
+                            .setRequestedSize(2160,3840)
                             .setOutputCompressQuality(40)
                             .start(context, this@UploadBannerFragment)
 
