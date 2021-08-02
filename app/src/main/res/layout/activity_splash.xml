@@ -36,7 +36,7 @@
             android:layout_height="@dimen/_200sdp"
             android:layout_gravity="center_horizontal"
             android:contentDescription="@string/text_todo"
-            android:src="@drawable/miraisplash" />
+            android:src="@drawable/mirai_vizion_july" />
 
         <TextView
             android:textAppearance="@style/FontBold"

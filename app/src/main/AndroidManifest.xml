@@ -101,12 +101,13 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity> <!-- Enable only if you are want Admob support -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="@string/ad_mob_app_id" />
+<!--        <meta-data-->
+<!--            android:name="com.google.android.gms.ads.APPLICATION_ID"-->
+<!--            android:value="@string/ad_mob_app_id" />-->
         <meta-data
             android:name="com.razorpay.ApiKey"
-            android:value="rzp_test_kSmpsC9llnnHCj" />
+            android:value="rzp_live_UmRnJp9ThUnvVz"
+            />
 
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"

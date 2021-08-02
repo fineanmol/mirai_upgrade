@@ -1,6 +1,5 @@
 package com.tragicbytes.midi.utils
 
-import com.tragicbytes.midi.models.AdDetailsModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -70,9 +69,9 @@ object Constants {
         const val THEME_COLOR = "theme_color"
         const val DEFAULT_CURRENCY = "₹"
         const val WHATSAPP = "917509408499"
-        const val FACEBOOK = "https://www.facebook.com/nightowldevelopers"
+        const val FACEBOOK = "https://www.facebook.com/miraivizion"
         const val TWITTER = "twitter"
-        const val INSTAGRAM = "https://www.instagram.com/nightowldevelopers"
+        const val INSTAGRAM = "https://www.instagram.com/miraivizion"
         const val CONTACT = "917509408499"
         const val PRIVACY_POLICY = "privacy_policy"
         const val TERM_CONDITION = "term_condition"
