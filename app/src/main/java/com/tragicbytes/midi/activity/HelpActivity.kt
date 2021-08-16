@@ -3,15 +3,11 @@ package com.tragicbytes.midi.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import com.tragicbytes.midi.AppBaseActivity
 import com.tragicbytes.midi.R
-import com.tragicbytes.midi.utils.Constants.AppBroadcasts.CART_COUNT_CHANGE
 import com.tragicbytes.midi.utils.extensions.*
 import kotlinx.android.synthetic.main.activity_help.*
-import kotlinx.android.synthetic.main.menu_cart.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class HelpActivity : AppBaseActivity() {
@@ -26,7 +22,7 @@ class HelpActivity : AppBaseActivity() {
         btnSubmit.onClick {
             when {
                 validate() -> {
-                    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.text_iqonicdesign_gmail_com), null))
+                    val emailIntent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", getString(R.string.miraivizion_gmail_com), null))
                     emailIntent.putExtra(Intent.EXTRA_TEXT, edtDescription.text.toString())
                     startActivity(Intent.createChooser(emailIntent, "Send email..."))
                     finish()

@@ -255,9 +255,10 @@
                         android:layout_marginEnd="@dimen/spacing_middle"
                         android:layout_weight="1"
                         android:backgroundTint="@color/light_gray"
+                        android:textColor="@color/textColorSecondary"
                         android:enabled="false"
                         android:text="@string/lbl_out_stock"
-                        android:textColor="@color/textColorSecondary"
+
                         android:visibility="gone"
                         app:cornerRadius="@dimen/spacing_control" />
 
@@ -488,7 +489,11 @@
                         <TextView
                             android:id="@+id/startTimeVal"
                             style="@style/MoreInfoSubheading"
-                            android:textAlignment="center" />
+                            android:backgroundTint="@color/light_gray"
+                            android:enabled="false"
+                            android:text="10:00 AM"
+                            android:textAlignment="center"
+                            android:textColor="@color/textColorSecondary"/>
                     </LinearLayout>
 
 
@@ -508,7 +513,11 @@
                         <TextView
                             android:id="@+id/endTimeVal"
                             style="@style/MoreInfoSubheading"
-                            android:textAlignment="center" />
+                            android:backgroundTint="@color/light_gray"
+                            android:enabled="false"
+                            android:text="10:00 PM"
+                            android:textAlignment="center"
+                            android:textColor="@color/textColorSecondary"/>
                     </LinearLayout>
 
                     <LinearLayout

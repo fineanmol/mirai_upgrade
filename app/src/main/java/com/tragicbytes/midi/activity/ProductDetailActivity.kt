@@ -256,12 +256,12 @@ class ProductDetailActivity : AppBaseActivity() {
 
         val sdf2 = SimpleDateFormat("hh:mm a")
         val currentTime = sdf2.format(Date())
-        startTimeVal.text = currentTime.toString()
+       // startTimeVal.text = currentTime.toString()
 
         startTimeVal.onClick {
             val timeSetListener = TimePickerDialog.OnTimeSetListener { timePicker, hour, minute ->
-                // startTimeVal.text = "$hour:$minute"
-                startTimeVal.text = updateTime(hour, minute)
+                startTimeVal.text = "10:00"
+               // startTimeVal.text = updateTime(hour, minute)
                 mIsStartTimeExist = true
             }
             TimePickerDialog(

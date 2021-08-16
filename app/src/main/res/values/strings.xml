@@ -263,7 +263,7 @@
     <string name="lbl_call_request">Call Request</string>
     <string name="lbl_email">Email</string>
     <string name="lbl_send_mail">Send mail</string>
-    <string name="lbl_email_to_woobox">Email to NightowlDevelopers</string>
+    <string name="lbl_email_to_woobox">Email to Mirai Vizion</string>
     <string name="lbl_from">From</string>
     <string name="lbl_description">Description</string>
     <string name="hint_description_here">Description here</string>
@@ -272,6 +272,7 @@
     <string name="title_contactus">Contact us</string>
     <string name="lbl_card_number">Card Number</string>
     <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
+    <string name="miraivizion_gmail_com" translatable="false">contactus@miraivizion.com</string>
     <string name="lbl_length">Length</string>
     <string name="lbl_width">Width</string>
     <string name="days">Days</string>
@@ -325,7 +326,7 @@
     <string name="lbl_sign_in_failed">Sign in failed</string>
     <string name="lbl_not_verified">Not Verified</string>
     <string name="lbl_verified">Verified Buyer</string>
-    <string name="contact_phone">+91 7906795249</string>
+    <string name="contact_phone">+91 9685099339</string>
 
     <string name="ad_mob_app_id" translatable="false">ca-app-pub-4937593957421986~3239804062</string>
     <string name="ad_mob_banner_id" translatable="false">ca-app-pub-4937593957421986/6921418147</string>
