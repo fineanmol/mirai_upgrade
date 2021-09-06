@@ -31,8 +31,8 @@ class AboutActivity : AppBaseActivity() {
             facebook = "https://www.facebook.com/miraivizion/"
             contact = "7509408499"
             copyRight = "© InFuLog Pvt Ltd 2021 | All rights reserved"
-            privacy = "https://miraivizion.com/"
-            toc = "https://miraivizion.com/"
+            privacy = "https://www.miraivizion.com/privacy-policy.html/"
+            toc = "https://www.miraivizion.com/"
         }
         if (copyRight.isEmpty()) {
             tvCopyRight.hide()

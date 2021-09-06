@@ -272,7 +272,7 @@
     <string name="title_contactus">Contact us</string>
     <string name="lbl_card_number">Card Number</string>
     <string name="text_iqonicdesign_gmail_com">nightowldevelopers@gmail.com</string>
-    <string name="miraivizion_gmail_com" translatable="false">contactus@miraivizion.com</string>
+    <string name="miraivizion_gmail_com" translatable="false">contact@miraivizion.com</string>
     <string name="lbl_length">Length</string>
     <string name="lbl_width">Width</string>
     <string name="days">Days</string>

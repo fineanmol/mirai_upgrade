@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/ivAppLogo"
-                android:layout_width="@dimen/_200sdp"
-                android:layout_height="@dimen/_200sdp"
+                android:layout_width="@dimen/_250sdp"
+                android:layout_height="@dimen/_250sdp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_large"
                 android:src="@drawable/mirai_vizion_july" />
@@ -36,6 +36,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/spacing_standard_new"
                 android:text="@string/mirai_vizion"
+                android:visibility="gone"
                 android:textAppearance="@style/FontBold"
                 android:textColor="@color/textColorPrimary"
                 android:textSize="@dimen/font_size_xxxlarge"

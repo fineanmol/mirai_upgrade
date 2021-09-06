@@ -45,14 +45,14 @@
 
                     <TextView
                         android:id="@+id/locationTitle"
-                        android:layout_marginTop="@dimen/spacing_small"
                         android:layout_width="@dimen/_150sdp"
                         android:layout_height="wrap_content"
+                        android:maxLength="17"
+                        android:layout_marginTop="@dimen/spacing_small"
+                        android:text="Ansal Plaza, SM Complex"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/textColorPrimary"
-                        android:textSize="@dimen/font_size_medium"
-                        android:text="Ansal Plaza, SM Complex"
-                        />
+                        android:textSize="@dimen/font_size_medium" />
                     <TextView
                         android:id="@+id/addressTitle"
                         android:layout_width="wrap_content"
@@ -75,17 +75,17 @@
                         android:textSize="@dimen/font_size_micro"
                         android:text="Screen Status"
                         />
+
                     <TextView
                         android:id="@+id/screenStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_65sdp"
                         android:layout_below="@+id/addressTitle"
+                        android:layout_marginStart="@dimen/_68sdp"
+                        android:text="• Running"
                         android:textAppearance="@style/FontMedium"
                         android:textColor="@color/green"
-                        android:textSize="@dimen/font_size_micro"
-                        android:text="• Running"
-                        />
+                        android:textSize="@dimen/font_size_micro" />
 
                     <TextView
 
@@ -184,10 +184,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Description is mandatory. Please ass it."
+                        android:text="Description is mandatory. Please assign it."
                         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                         android:layout_marginStart="18dp"
                         android:layout_marginEnd="18dp"
+                        android:visibility="gone"
                         android:textColor="@color/colorPrimary"/>
                     <TextView
                         android:layout_marginStart="18dp"
@@ -249,17 +250,17 @@
 
                                 <com.github.mikephil.charting.charts.PieChart
                                     android:id="@+id/pieChart"
-                                    android:layout_width="@dimen/_120sdp"
-                                    android:layout_height="@dimen/_120sdp"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="@dimen/_135sdp"
+                                    android:layout_height="@dimen/_135sdp"
+                                    android:layout_marginStart="20dp"
                                     android:layout_marginRight="20dp" />
 
                                 <com.github.mikephil.charting.charts.HorizontalBarChart
                                     android:id="@+id/ageWiseChartGraph"
-                                    android:layout_width="@dimen/_120sdp"
-                                    android:layout_height="@dimen/_120sdp"
+                                    android:layout_width="@dimen/_190sdp"
+                                    android:layout_height="@dimen/_125sdp"
                                     android:layout_gravity="center"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginLeft="-10dp"
                                     android:layout_marginRight="20dp" />
                             </LinearLayout>
 
